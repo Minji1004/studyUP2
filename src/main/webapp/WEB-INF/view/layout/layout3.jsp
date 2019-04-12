@@ -15,6 +15,7 @@
 <title>spring</title>
 
 	<link rel="stylesheet" href="<%=cp%>/resource/studyroom/css/srmain.css" />
+	<link rel="stylesheet" href="<%=cp%>/resource/study/css/study.css" />
 	<link rel="stylesheet" href="<%=cp%>/resource/css/lecture.css">
     <link rel="stylesheet" href="<%=cp%>/resource/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=cp%>/resource/css/jquery.fancybox.css">

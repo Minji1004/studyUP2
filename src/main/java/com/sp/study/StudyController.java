@@ -11,5 +11,15 @@ public class StudyController {
 	public String method() {
 		return ".study.main";
 	}
+	
+	@RequestMapping(value="/study/studyDetail")
+	public String studyDetail() {
+		return "study/studyDetail";
+	}
+	
+	@RequestMapping(value="/study/makeStudy")
+	public String makeStudy() {
+		return "study/makeStudy";
+	}
 
 }
