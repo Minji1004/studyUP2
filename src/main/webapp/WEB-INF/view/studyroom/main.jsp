@@ -403,7 +403,7 @@
 
 	<!-- 페이징 처리 -->
 	<div class="col-xs-12 col-sm-12 col-md-12" align="center">
-		<nav>
+		<nav>		
 			<ul class="pagination">
 				<li class="disabled"><a href="#" aria-label="previous"><span aria-hidden="true">&lt;</span></a></li>
 				<li class="active"><a href="#">1<span class="sr-only">(current)</span></a></li>
@@ -415,6 +415,8 @@
 			</ul>
 		</nav>
 	</div>
+	
+	
 	
 	<!-- The Modal -->
 	<div class="modal modal-center" id="srModal">
@@ -432,12 +434,12 @@
 									<h3 class="srModalTitle">오성스터디카페</h3>
 								</div>
 								<div class="srModalPicFrame">
-									<div id="slidePic7" class="carousel slide" data-ride="carousel" data-interval="false">
+									<div id="modalPic" class="carousel slide" data-ride="carousel" data-interval="false">
 										<!-- Indicators -->
 										<ol class="carousel-indicators">
-											<li data-target="#slidePic7" data-slide-to="0"></li>
-											<li data-target="#slidePic7" data-slide-to="1"></li>
-											<li data-target="#slidePic7" data-slide-to="2"></li>
+											<li data-target="#modalPic" data-slide-to="0"></li>
+											<li data-target="#modalPic" data-slide-to="1"></li>
+											<li data-target="#modalPic" data-slide-to="2"></li>
 										</ol>
 										
 										<!-- Wrapper for slides -->
@@ -445,6 +447,7 @@
 											<div class="item active">
 												<img class="srModalPic" src="<%=cp%>/resource/studyroom/images/pic02.jpg" alt="..." height="100%" width="100%">
 											</div>
+											
 											<div class="item">
 												<img class="srModalPic" src="<%=cp%>/resource/studyroom/images/pic03.jpg" alt="..." height="100%" width="100%">
 											</div>
@@ -452,20 +455,38 @@
 												<img class="srModalPic" src="<%=cp%>/resource/studyroom/images/pic04.jpg" alt="..." height="100%" width="100%">
 											</div>
 											
+											
 										</div>
 										<!-- Controls -->
-										<a class="left carousel-control" href="#slidePic7" role="button" data-slide="prev">
+										<a class="left carousel-control" href="#modalPic" role="button" data-slide="prev">
 											<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 											<span class="sr-only">Previous</span>
 										</a>
-										<a class="right carousel-control" href="#slidePic7" role="button" data-slide="next">
+										<a class="right carousel-control" href="#modalPic" role="button" data-slide="next">
 											<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 											<span class="sr-only">Next</span>
 										</a>
 									</div>
 								</div>
+								
+								<div class="srModalTable">
+									<table class="srModalInfo">
+										<tr class="srTableLine">
+											<td class="tableName">전화번호</td>
+											<td class="tableContent">010-####-1234</td>
+										</tr>
+										<tr class="srTableLine">
+											<td class="tableName">대표자</td>
+											<td class="tableContent">권오성</td>
+										</tr>
+										<tr class="srTableLine">
+											<td class="tableName">위치</td>
+											<td class="tableContent">서울 영등포구 여의도동</td>
+										</tr>
+									</table>
+								</div>
 								<div class="srModalIntro">
-									&nbsp;
+									<div class="srModalIntroContent">쾌적한 공간을 제공해드립니다!</div>
 								</div>
 							</div>
 						</div>
@@ -475,10 +496,11 @@
 						<div class="col-xs-12 col-sm-12 col-md-4">
 							&nbsp;
 						</div>
-					</div>
-					
-					<div class="modalButtons">
-						<button type="button" class="btn-srModal" data-dismiss="modal" onClick="close_pop();">Close</button>
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<div class="modalButtons">
+								<button type="button" class="btn-srModal" data-dismiss="modal" onClick="close_pop();">Close</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
