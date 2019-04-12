@@ -33,13 +33,24 @@ th{
 		</table>
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <th width="100" style="color: #787878;">번호</th>
-		      <th style="color: #787878;">아이디</th>
-		      <th width="150" style="color: #787878;">닉네임</th>
-		      <th width="150" style="color: #787878;">전화번호</th>
+		      <th width="80" style="color: #787878;">번호</th>
+		      <th width="130" style="color: #787878;">닉네임</th>
+		      <th width="130" style="color: #787878;">신고자</th>	      
+		      <th width="150" style="color: #787878;">신고된 게시물</th>
+		      <th width="150" style="color: #787878;">신고유형</th>
+		      <th style="color: #787878;">신고내용</th>
 		      <th width="120" style="color: #787878;">신고횟수</th>
-		      <th width="120" style="color: #787878;">등록일</th>
-		      <th width="120" style="color: #787878;">해제예정일</th>
+		      <th width="120" style="color: #787878;">신고일</th>
+		  </tr>
+		  <tr align="center" height="28"style="border-bottom: 1px solid #cccccc;">
+		  	  <th width="80">번호</th>
+		      <th width="130">닉네임</th>
+		      <th width="130">신고자</th>	      
+		      <th width="150">신고된 게시물</th>
+		      <th width="150">신고유형</th>
+		      <th>신고내용</th>
+		      <th width="120">신고횟수</th>
+		      <th width="120">신고일</th>
 		  </tr>
 		</table>
 		
@@ -68,6 +79,15 @@ th{
 		      <th width="120" style="color: #787878;">신고횟수</th>
 		      <th width="120" style="color: #787878;">등록일</th>
 		      <th width="120" style="color: #787878;">해제예정일</th>
+		  </tr>
+		  <tr align="center" height="28" style="border-bottom: 1px solid #cccccc;"> 
+		      <th width="100">번호</th>
+		      <th>아이디</th>
+		      <th width="150">닉네임</th>
+		      <th width="150">전화번호</th>
+		      <th width="120">신고횟수</th>
+		      <th width="120">등록일</th>
+		      <th width="120">해제예정일</th>
 		  </tr>
 		</table>
 	</div>
