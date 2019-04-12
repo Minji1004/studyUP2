@@ -6,55 +6,94 @@
 	String cp=request.getContextPath();
 %>
 <script type="text/javascript">
-	
-$(function(){
+
 	// 탭 클릭시	
 	$('#studyTab a').click(function (e) {
-		  e.preventDefault();
-		  $(this).tab('show');
+		  e.preventDefault()
+		  $(this).tab('show')
 	});
-});
-
-$(function(){
-	// 스터디 상세 페이지 보기
-	$(document).on("click",".study-content", function(){
-		var studyTitle = $(this).find(".study-title").html();
-		// var num=$(this).attr("data-num");
-		var num=1;
-		var url = "<%=cp%>/study/studyDetail?num="+num;
-		
-		$('#myStudyModal .modal-content').load(url, function() {
-			// $('#myStudyModal .modal-title').html(studyTitle);
-			$('#myStudyModal').modal('show');
-		});
+	
+	// thumb 클릭시	
+	$("#study1").click(function () {
+		$('#myStudyModal').modal('show');
 	});
-});
+	
 
-
-$(function(){
-	// 스터디 만들기
-	$(document).on("click",".makeStudy", function(){
-		
-		var url = "<%=cp%>/study/makeStudy";
-		
-		$('#myStudyInput .modal-content').load(url, function() {
-			$('#myStudyInput').modal('show');
-		});
+	// 사이드바
+	$(function(){
+		var idx="${subMenu}";
+		if(!idx) idx=1;
+		var subMenu=$(".list-group-item")[idx];
+		$(subMenu).addClass("active");
 	});
-});
-
-
-
-// 사이드바
-$(function(){
-	var idx="${subMenu}";
-	if(!idx) idx=1;
-	var subMenu=$(".list-group-item")[idx];
-	$(subMenu).addClass("active");
-});
 	
 </script>
 
+<style type="text/css">
+
+.sPicTagContent {
+	padding: 10px 10px 5px 10px;
+	font-family:'맑은고딕';
+	font-size: 9pt;
+	min-height: 30px;
+}
+.studyIntro {
+	min-height: 50px;
+	margin: auto;
+	padding-top :10px;
+	font-family:'맑은고딕'; 
+	font-weight: 600; 
+	font-size: 9pt; 
+	color : #cccccc;
+	vertical-align: middle;
+}
+
+.img-rounded {
+	height: 100%;
+	width: 95%;
+	max-height: 150px;
+	min-height: 150px;
+}
+
+.img-dialog {
+	height: 100%;
+	max-height: 200px;
+	min-height: 200px;
+	
+	max-width: 180px;
+	min-width: 180px;
+
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+	background: #04B486;
+	border-color: #04B486;
+}
+
+.nav-tabs a {
+    color: #0B614B;
+    text-decoration: none;
+}
+
+.dialog-content-title {
+	font-size: 17px;
+	padding-top: 30px;
+	font-weight: bold;
+}
+
+.dialog-content {
+	font-family:'맑은고딕';
+	font-size: 15px;
+	padding-top: 10px;
+}
+
+
+.smodal-body {
+   text-align: left;
+   min-height: 300px;
+}
+
+</style>
 
 <section class="section" id="srcontianer" >
 	<div class="container">
@@ -70,7 +109,7 @@ $(function(){
         </div>
         
         <div class="col-xs-12 col-sm-9"> 
-		  	<button type="button" class="btn makeStudy" style="background: #04B486; float: right;" >make 스터디</button>
+		  	<button type="button" class="btn" style="background: #04B486; float: right;" >make 스터디</button>
                
 			<div role="tabpanel">
 		
@@ -122,7 +161,7 @@ $(function(){
 							<div class="col-xs-12" style="height:10px"></div>
 							
 							<!-- 페이지 글 목록 -->
-							<div class="study-content col-xs-12 col-sm-6 col-md-4" data-num="${dto.num}">
+							<div class="col-xs-12 col-sm-6 col-md-4" id="study1" data-toggle="modal" data-target="#myStudyModal" >
 								<div class="col-xs-12 col-sm-12" style="background: #CEF6EC; margin-bottom: 2px">&nbsp;</div>
 								<div class="thumbnail" style="text-align: center; cursor:pointer;">
 									<div style="padding-top: 5px">
@@ -130,7 +169,7 @@ $(function(){
 									</div>
 									<div onclick="location.href='#';">
 										<div style="">
-											<div class="study-title" style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">수능 1등급!!!</div>
+											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">수능 1등급!!!</div>
 											<div class="studyIntro">의대 가고 싶은 사람 모여라</div>
 											<div>1/5</div>
 											<div class="row" style="margin-bottom: 10px" >
@@ -142,10 +181,6 @@ $(function(){
 									</div>
 								</div>
 							</div>
-							
-							
-							
-							
 							<div class="col-xs-12 col-sm-6 col-md-4">
 							<div class="col-xs-12 col-sm-12" style="background: #CEF6EC; margin-bottom: 2px">&nbsp;</div>
 								<div class="thumbnail" style="text-align: center; cursor:pointer;">
@@ -183,9 +218,6 @@ $(function(){
 									</div>
 								</div>
 							</div>
-							
-							
-							
 							<div class="col-xs-12 col-sm-6 col-md-4">
 								<div class="col-xs-12 col-sm-12" style="background: #F6CECE; margin-bottom: 2px">&nbsp;</div>
 								<div class="thumbnail" style="text-align: center; cursor:pointer;">
@@ -309,14 +341,29 @@ $(function(){
 </div>
 </section>
 
-<div class="smodal modal fade" id="myStudyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background: #FBFDF8;"></div>
-  </div>
-</div>
 
-<div class="smodal modal fade" id="myStudyInput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myStudyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="background: #FBFDF8;"></div>
+    <div class="modal-content"  style="background: #FBFDF8;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" align="center">수능 1등급 (1/5)</h4>
+      </div>
+      <div class="modal-body row smodal-body">
+      	<div class="col-xs-8 col-sm-5" align="center">
+      		<img class="img-circle img-dialog" src="<%=cp%>/resource/study/images/study1.jpg" alt="...">
+      	</div>
+      	<div class="col-xs-4 col-sm-7">
+      		<div class="dialog-content-title">의대 가고 싶은 사람 모여</div>
+      		<div class="dialog-content"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 나야나</div>
+      		<div class="dialog-content"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> 서울시 마포구</div>
+      		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 2018-10-12 ~ 2019-04-12</div>
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">apply</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
