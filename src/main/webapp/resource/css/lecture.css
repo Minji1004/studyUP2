@@ -1,0 +1,79 @@
+/* ==========================================================================
+	#register-teacher, studyRoom
+========================================================================== */
+
+#register {
+	background-position: center top;
+	background-repeat: no-repeat;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+	min-height: 1100px;
+	width: 100vw;
+	margin-left: calc(-50vw + 50%);
+}
+
+div #registerBox {	
+	margin: 60px auto;
+	background: rgba(25, 25, 25, 0.5);
+	width: 700px;
+	color: white;
+	line-height: 180%;
+	text-align: center;
+}
+
+div #registerBox h3{
+	color: white;
+}
+
+.buttons{
+	margin: 30px auto;	
+}
+
+#registerBox textarea{
+	margin: 0 auto;
+	width: 500px;
+	height: 100px;
+	text-align: left;
+	color: black;
+}
+
+#registerBox .check{
+	margin: 0 auto;
+	width: 500px;
+	text-align: left;
+}
+
+#registerBox table{
+	margin: 0 auto;
+	width: 500px;
+	text-align: left;
+}
+
+#registerBox table th{
+	width: 20%;
+}
+#registerBox table td input, #registerBox table td select{
+	width: 100%;
+	height: 30px;
+	color: black;
+	padding-left: 10px;
+}
+
+#regisgerBox .container{
+	text-align: left;
+}
+
+
+/* ==========================================================================
+	#lecture-main
+========================================================================== */
+
+#Lbanner {
+	background-image: none;
+	background-color: #E3CE9F;
+	width: 100vw;
+	margin-left: calc(-50vw + 50%);
+	min-height: 400px;
+}

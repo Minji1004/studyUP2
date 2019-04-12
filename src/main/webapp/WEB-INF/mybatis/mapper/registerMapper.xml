@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="register">
+
+<!-- 은행 리스트를 가져옴 -->
+<select id="bankList" resultType="com.sp.member.Bank">
+	SELECT bankNum, bankName FROM bank
+</select>
+
+<!-- 사업자 번호 등록-->
+<insert id="blicense" parameterType="map">
+	INSERT INTO blicense(blicenseNum, userNum, blicenseKindNum) VALUES(#{blicenseNum}, #{userNum}, #{blicenseKindNum})
+</insert>
+
+<!-- 은행계좌 등록함 -->
+<insert id="account" parameterType="map">
+	INSERT INTO user_bank(account, bankNum, userNum) VALUES(#{account}, #{bankNum}, #{userNum})
+</insert>
+<!-- insert 두번 -->
+
+
+
+</mapper>
