@@ -210,6 +210,18 @@ body {
 	min-height: 200px;
 	width: 100%;
 	}
+	
+	.srSecondModal {
+	margin-left : -24px;
+	}
+	
+	.srThirdModal {
+	margin-left : -24px;
+	}
+	
+}
+
+@media screen and (min-width: 768px) {
 }
 
 @media screen and (max-width: 991px) {
@@ -277,14 +289,12 @@ body {
 }
 
 .srFirstModal{
-	border-radius: 5px;
-	border-right: 1px solid #eeeeee;
-	border-bottom: 1px solid #eeeeee;
 	background-color: #ffffff;
 	display : inline-block;
 	overflow:hidden;
-	height: 80%;
+	height: 100%;
 	width : 95%;
+	border-radius: 5px;
 	border-top : 2px solid #cccccc;
 	border-left : 2px solid #cccccc;
 	border-right : 5px double #aaaaaa;
@@ -300,7 +310,10 @@ body {
 }
 
 .srModalTitle {
+	
 	font-weight: 700;
+	padding : 5px;
+	width : auto;
 }
 
 .srModalIntro {
@@ -325,20 +338,18 @@ body {
 }
 
 .srModalTable {
+	height: 130px;
 	width : 90%;
-	height : 120px;
 	display : inline-block;
 	vertical-align : middle;
-	align-content: left;
 	font-family: '굴림';
+	font-size: 9pt;
 	text-align: left;
-	border : 1px solid #257846;
 	margin : 10px 0px 5px 0px;
 }
 
 .srModalInfo {
 	width : 100%;
-	height : 100%;
 }
 
 .tableName {
@@ -347,8 +358,8 @@ body {
 	vertical-align: middle;
 	background-color : #76956045;
 	color : #333333;
-	border-right : 1px solid #257846;
 	padding : 2px 5px 2px 5px;
+	width : 30%;
 }
 
 .tableContent {
@@ -359,6 +370,65 @@ body {
 }
 
 .srTableLine {
+	border-top : 1px solid #257846;
 	border-bottom : 1px solid #257846;
 	height: 10px;
+	padding-top : 3px;
+	padding-bottom : 3px;
+}
+
+.srSecondModal {
+	width: 100%;
+	height: 200px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	overflow: auto;
+	border-radius: 5px;
+	border-top : 2px solid #cccccc;
+	border-left : 2px solid #cccccc;
+	border-right : 5px double #aaaaaa;
+	border-bottom : 5px double #aaaaaa;
+}
+
+.srThirdModal {
+	width: 100%;
+	height: 400px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	overflow: auto;
+	border-radius: 5px;
+	margin-top : 15px;
+	border-top : 2px solid #cccccc;
+	border-left : 2px solid #cccccc;
+	border-right : 5px double #aaaaaa;
+	border-bottom : 5px double #aaaaaa;
+}
+
+.srTimeButton {
+	background-color: #ffffff;
+	padding : 3px;
+	border-radius: 3px;
+	border : 1px solid #eeeeee;
+}
+
+.srTimeButton label {
+	height: 5px;
+	width: 35px;
+	background-color: #c0c0c0;
+	border-radius : 2px;
+	display: inline-block;
+	cursor:pointer;
+}
+
+.srTimeColor span {
+	font-size: 4pt;
+	color : #055828;
+}
+
+.srRoomName {
+	margin-top : 15px;
+	background-color: #298b6bc0;
+	color: #ffffff;
+	padding : 3px;
+	border-radius: 3px;
 }
