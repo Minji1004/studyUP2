@@ -26,12 +26,14 @@ public class RegisterController {
 		List<Integer> userType = info.getUserType();
 		String tel = info.getTel();
 		
+		System.out.println("모드는  "+mode);		
+		
 		for(int type: userType)	{
-			if(type==3&&mode.equals("teacher")) {
+			System.out.println("타입 리스트:  "+type);
+			if(type==3&&mode.equals("teacher")) 
 				return ".teacherLayout";
-			}
 			if(type==2&&mode.equals("studyroom"))
-				return mode+"/manage";
+				return mode+"/manage"; //재민오빠! 스터디룸 관리자 페이지로 가는 주소 넣어야함.
 		}		
 		
 		List<Bank> list = registerService.selectBank();
@@ -67,6 +69,11 @@ public class RegisterController {
 			info.getUserType().add(2);	
 		
 
-		return ".teacherLayout";
+		if(mode.equals("teacher"))
+			return ".teacherLayout";
+		else
+			return ".teacherLayout"; //재민오빠! 스터디룸 관리자 페이지로 보내야함.
+		
+		
 	}
 }
