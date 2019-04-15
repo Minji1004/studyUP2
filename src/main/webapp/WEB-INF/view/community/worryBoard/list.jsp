@@ -32,7 +32,7 @@
     <c:forEach var="dto" items="${list}">
                     <tr>
                         <td class="text-center">${dto.listNum}</td>
-                        <td><<a href="javascript:articleBoard('${dto.num}', '${pageNo}');">${dto.subject}</a></td>
+                        <td><a href="javascript:articleBoard('${dto.num}', '${pageNo}');">${dto.subject}</a></td>
                         <td class="text-center">${dto.userName}</td>
                         <td class="text-center">${dto.created}</td>
                         <td class="text-center">${dto.hitCount}</td>

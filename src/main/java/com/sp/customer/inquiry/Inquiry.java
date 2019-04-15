@@ -1,6 +1,6 @@
-package com.sp.customer.mtm;
+package com.sp.customer.inquiry;
 
-public class Mtm {
+public class Inquiry {
 	private int num;
 	private int type, parent, state;
 	private String userId, userName;

@@ -6,7 +6,7 @@ public class FaqBoard {
 	private String id;
 	private String subject;
 	private String content;
-	private String c_DT;
+	private String c_dT;
 
 	private int groupNum;
 	private int depth;
@@ -53,12 +53,12 @@ public class FaqBoard {
 		this.content = content;
 	}
 
-	public String getC_DT() {
-		return c_DT;
+	public String getC_dT() {
+		return c_dT;
 	}
 
-	public void setC_DT(String c_DT) {
-		this.c_DT = c_DT;
+	public void setC_dT(String c_dT) {
+		this.c_dT = c_dT;
 	}
 
 	public int getGroupNum() {

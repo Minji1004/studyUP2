@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller("faq.faqController")
 public class FaqController {
-	@RequestMapping(value="/faq/faq")
-	public String faq(Model model) throws Exception {
-		model.addAttribute("subMenu", "1");
-		return ".four.menu4.faq.faq";
+	@RequestMapping(value="/customer/faq/faq")
+	public String list(Model model) throws Exception {
+		model.addAttribute("subMenu", "3");
+		return ".customer.faq.list";
 	}
 }

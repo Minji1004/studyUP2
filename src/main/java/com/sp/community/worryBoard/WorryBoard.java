@@ -1,32 +1,31 @@
 package com.sp.community.worryBoard;
 
 public class WorryBoard {
-	private int f_PostNum;
+	private int w_postNum;
 	private int userNum;
-	private String Id;
-	private String Subject;
-	private String Content;
+	private String id;
+	private String subject;
+	private String content;
 	private int views;
-	private String c_DT;
-	private int FileNum;
-	private String og_FileName;
-	private String sv_FileName;
-	private int b_Like;
-	private int r_Num;
-	private int r_Like;
+	private String c_dT;
+	private int fileNum;
+	private String og_fileName;
+	private String sv_fileName;
+	private int b_like;
+	private int r_num;
+	private int r_like;
 
 	private int groupNum;
 	private int depth;
 	private int orderNo;
 	private int parent;
-	private Long gap;
 
-	public int getF_PostNum() {
-		return f_PostNum;
+	public int getW_postNum() {
+		return w_postNum;
 	}
 
-	public void setF_PostNum(int f_PostNum) {
-		this.f_PostNum = f_PostNum;
+	public void setW_postNum(int w_postNum) {
+		this.w_postNum = w_postNum;
 	}
 
 	public int getUserNum() {
@@ -38,27 +37,27 @@ public class WorryBoard {
 	}
 
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getSubject() {
-		return Subject;
+		return subject;
 	}
 
 	public void setSubject(String subject) {
-		Subject = subject;
+		this.subject = subject;
 	}
 
 	public String getContent() {
-		return Content;
+		return content;
 	}
 
 	public void setContent(String content) {
-		Content = content;
+		this.content = content;
 	}
 
 	public int getViews() {
@@ -69,60 +68,60 @@ public class WorryBoard {
 		this.views = views;
 	}
 
-	public String getC_DT() {
-		return c_DT;
+	public String getC_dT() {
+		return c_dT;
 	}
 
-	public void setC_DT(String c_DT) {
-		this.c_DT = c_DT;
+	public void setC_dT(String c_dT) {
+		this.c_dT = c_dT;
 	}
 
 	public int getFileNum() {
-		return FileNum;
+		return fileNum;
 	}
 
 	public void setFileNum(int fileNum) {
-		FileNum = fileNum;
+		this.fileNum = fileNum;
 	}
 
-	public String getOg_FileName() {
-		return og_FileName;
+	public String getOg_fileName() {
+		return og_fileName;
 	}
 
-	public void setOg_FileName(String og_FileName) {
-		this.og_FileName = og_FileName;
+	public void setOg_fileName(String og_fileName) {
+		this.og_fileName = og_fileName;
 	}
 
-	public String getSv_FileName() {
-		return sv_FileName;
+	public String getSv_fileName() {
+		return sv_fileName;
 	}
 
-	public void setSv_FileName(String sv_FileName) {
-		this.sv_FileName = sv_FileName;
+	public void setSv_fileName(String sv_fileName) {
+		this.sv_fileName = sv_fileName;
 	}
 
-	public int getB_Like() {
-		return b_Like;
+	public int getB_like() {
+		return b_like;
 	}
 
-	public void setB_Like(int b_Like) {
-		this.b_Like = b_Like;
+	public void setB_like(int b_like) {
+		this.b_like = b_like;
 	}
 
-	public int getR_Num() {
-		return r_Num;
+	public int getR_num() {
+		return r_num;
 	}
 
-	public void setR_Num(int r_Num) {
-		this.r_Num = r_Num;
+	public void setR_num(int r_num) {
+		this.r_num = r_num;
 	}
 
-	public int getR_Like() {
-		return r_Like;
+	public int getR_like() {
+		return r_like;
 	}
 
-	public void setR_Like(int r_Like) {
-		this.r_Like = r_Like;
+	public void setR_like(int r_like) {
+		this.r_like = r_like;
 	}
 
 	public int getGroupNum() {
@@ -155,14 +154,6 @@ public class WorryBoard {
 
 	public void setParent(int parent) {
 		this.parent = parent;
-
 	}
 
-	public Long getGap() {
-		return gap;
-	}
-
-	public void setGap(Long gap) {
-		this.gap = gap;
-	}
 }

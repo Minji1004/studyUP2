@@ -77,7 +77,7 @@
 
 <script type="text/javascript">
   function sendOk() {
-        var f = document.faqForm;
+        var f = document.inquiryForm;
 
 
         f.action="<%=cp%>/";
@@ -97,15 +97,15 @@
         <div class="col-xs-12 col-sm-9 body-frame-2">
                 
 		    <div class="body-title">
-		          <h3><span class="glyphicon glyphicon-book"></span> 자주하는 질문 </h3>
+		          <h3><span class="glyphicon glyphicon-book"></span> 1:1 문의 </h3>
 		    </div>
 		    
 		    <div class="alert alert-info">
-		        <i class="glyphicon glyphicon-info-sign"></i> 자주하는 질문을 확인 할수 있는입니다.
+		        <i class="glyphicon glyphicon-info-sign"></i> 문의를 남겨 두시면 답변해 드리겠습니다.
 		    </div>
 		    
 		    <div>
-		        <form name="faqForm" method="post">
+		        <form name="inquiryForm" method="post">
 		            <div class="bs-write">
 		                <table class="table">
 		                    <tbody>

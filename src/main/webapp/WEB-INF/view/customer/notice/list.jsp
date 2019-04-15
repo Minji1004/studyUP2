@@ -89,11 +89,11 @@ function searchList() {
         <div class="col-xs-12 col-sm-9 body-frame-2">
                 
 		    <div class="body-title">
-		          <h3><span class="glyphicon glyphicon-book"></span> 자주하는 질문 </h3>
+		          <h3><span class="glyphicon glyphicon-book"></span> 공지사항 </h3>
 		    </div>
 		    
 		    <div class="alert alert-info">
-		        <i class="glyphicon glyphicon-info-sign"></i> 자주하는 질문을 확인 할수 있는입니다.
+		        <i class="glyphicon glyphicon-info-sign"></i> 중요한 일정 및 알림, 이벤트 등은 공지사항 통해 고객님께 알려 드립니다.
 		    </div>
 		
 		    <div>

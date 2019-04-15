@@ -33,8 +33,7 @@ public class WorryBoardController {
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
 			Model model) throws Exception {
-		
-		
+				
 		return "community/worryBoard/list";
 	}
 	
@@ -50,9 +49,9 @@ public class WorryBoardController {
 	@ResponseBody
 	public Map<String, Object> createdSubmit(WorryBoard dto, HttpSession session)
 			throws Exception{
-		
-		
+	
 		Map<String, Object> model=new HashMap<>();
+		
 		return model;
 		
 	}
@@ -66,9 +65,6 @@ public class WorryBoardController {
 			HttpServletRequest req,
 			Model model) throws Exception{
 				
-
 		return "community/worryBoard/article";
 	}
-	
-
 }
