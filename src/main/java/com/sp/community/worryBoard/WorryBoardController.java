@@ -65,6 +65,10 @@ public class WorryBoardController {
 			HttpServletRequest req,
 			Model model) throws Exception{
 				
-		return "community/worryBoard/article";
+		return "comm"
+				+ ""
+				+ ""
+				+ ""
+				+ "unity/worryBoard/article";
 	}
 }
