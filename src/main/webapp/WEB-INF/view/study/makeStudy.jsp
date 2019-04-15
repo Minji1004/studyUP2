@@ -10,6 +10,7 @@ $('.studyDate').datepicker({
 	 format: "yyyy-mm-dd",
 	 language: "kr"
 });
+
 </script>
 
 <div class="modal-header">
@@ -17,50 +18,56 @@ $('.studyDate').datepicker({
    <h4 class="modal-title" id="myModalLabel" align="center">Make your study</h4>
 </div>
 
+<div class="smodal-body modal-body row">
 
-<form class="form-horizontal" name="studyForm" method="post">
-	<div class="form-group">
-		<label class="col-sm-2 control-label">스터디<br>이름</label>
-		<div class="col-sm-9">
-			<input type="text" class="form-control" id="studyName" placeholder="Your study name">
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label class="col-sm-2 control-label">스터디<br>설명</label>
-		<div class="col-sm-9">
-			<textarea id="studyIntro" class="form-control" rows="3"></textarea>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label class="col-sm-2 control-label">최대인원</label>
-		<div class="col-sm-2">
-			<input type="text" class="form-control" id="headcount" placeholder="인원">
-		</div>
-
-		<label class="col-sm-2 control-label">지역</label>
-		<div class="col-sm-5">
-			<input type="text" class="form-control" id="studyLocation" placeholder="studyLocation">
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label class="col-sm-2 control-label">시작일</label>
-		<div class="col-sm-3">
-			<input class="studyDate date form-control" id="studySday" placeholder="Start Day">
-		</div>
+	<form class="form-horizontal studyForm" name="studyForm" method="post" enctype="multipart/form-data">
+		<div class="col-xs-8 col-sm-3" align="center">
+	 		<img class="img-circle img-dialog input-img" src="<%=cp%>/resource/study/images/404-error.png">
+	 		<input type="file" id="studyImg">
+	 	</div>
+ 		<div class="col-xs-4 col-sm-9">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">스터디<br>이름</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="studyName" placeholder="Your study name">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">스터디<br>설명</label>
+				<div class="col-sm-9">
+					<textarea id="studyIntro" class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">최대인원</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="headcount" placeholder="인원">
+				</div>
 		
-		<label class="col-sm-2 col-md-offset-1 control-label">종료일</label>
-		<div class="col-sm-3">
-			<input class="studyDate date form-control" id="studyEday" placeholder="End Day">
-		</div>
-	</div>
-	
-	
-	
-</form>
+				<label class="col-sm-2 control-label">지역</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="studyLocation" placeholder="studyLocation">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">시작일</label>
+				<div class="col-sm-3">
+					<input class="studyDate date form-control" id="studySday" placeholder="Start Day">
+				</div>
+				
+				<label class="col-sm-2 col-md-offset-1 control-label">종료일</label>
+				<div class="col-sm-3">
+					<input class="studyDate date form-control" id="studyEday" placeholder="End Day">
+				</div>
+			</div>	
+ 		</div>
+	</form> 
+</div>
+
 <div class="modal-footer">
-   <button type="button" class="btn btn-primary">Make</button>
+   <button type="submit" class="btn btn-primary">Make</button>
    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
