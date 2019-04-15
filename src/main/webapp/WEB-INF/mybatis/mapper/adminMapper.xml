@@ -2,6 +2,29 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
+	<insert id="insertReport" parameterType="com.sp.admin.black.Report">
+		INSERT INTO report(reportBoard, reportBoardNum, replNum, reportUser, reportedUser, reportCause, reportType)
+		VALUES(#{reportBoard}, #{reportBoardNum}, #{reportBoardNum}, #{replNum}, #{reportUser}, #{reportedUser}, #{reportCause}, #{reportType})	
+	</insert>
 	
+	<select id="listReport" parameterType="map" resultType="com.sp.admin.black.Report">
+	select A.reportNum, A.reportBoard, A.reportBoardNum, A.replNum, A.reportUser, A.reportType, A.reportUserId, A.reportUserNickName,
+       B.reportedUser, B.reportedUserId, B.reportedNickName
+	from 
+	(       
+      SELECT R1.reportNum, R1.reportBoard, R1.reportBoardNum, R1.replNum, R1.reportUser, R1.reportType ,M1.userId reportUserId, M1.nickName reportUserNickName
+       FROM report AS R1
+       JOIN memberInfo AS M1
+       ON R1.reportUser = M1.userNum
+	) AS A
+	JOIN 
+	(       
+      SELECT R1.reportNum, R1.reportedUser, M1.userId reportedUserId, M1.nickName reportedNickName
+       FROM report AS R1
+       JOIN memberInfo AS M1
+       ON R1.reportedUser = M1.userNum   
+	) AS B
+	ON A.reportNum = B.reportNum;
+	</select>
 
 </mapper>
