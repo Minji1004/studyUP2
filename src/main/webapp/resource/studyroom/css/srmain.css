@@ -179,6 +179,288 @@ body {
 	height:10%;
 }
 
+.modal-dialog.modalcenter {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.btn-srModal {
+	float: right;
+	margin: 0px 5px 25px 0px;
+	border-radius: 3px;
+	border : 0px;
+	background-color: #769560;
+	color: #ffffff;
+	padding: 3px 10px 3px 10px;
+	font-size: 10pt;
+}
+
+.btn-srModalUpClose {
+	float: right;
+	margin-right : -15px;
+	border-radius: 3px;
+	border : 0px;
+	background-color: #769560;
+	color: #ffffff;
+	padding: 3px 10px 3px 10px;
+	font-size: 12pt;
+	z-index:1100;
+}
+
+.srFirstModal{
+	background-color: #ffffff;
+	display : inline-block;
+	overflow : hidden;
+	height: 617px;
+	width : 95%;
+	border-radius: 5px;
+	border-top : 2px solid #cccccc;
+	border-left : 2px solid #cccccc;
+	border-right : 5px double #aaaaaa;
+	border-bottom : 5px double #aaaaaa;
+}
+
+.srModalTitleArea {
+	padding : 10px 5px 5px 5px;
+	margin-top : 0px;
+	border-radius: 5px;
+	height: 15%;
+	width : 95%;
+}
+
+.srModalTitle {
+	
+	font-weight: 700;
+	padding : 5px;
+	width : auto;
+}
+
+.srModalIntro {
+	margin : 0px 12px 10px 12px;
+	border-radius: 5px;
+	padding: 8px;
+	font-family:'맑은고딕';
+	font-color: #000000;
+	width : 90%;
+	height: 150px;
+	line-height: 130px;
+	font-size: 10pt;
+	text-align: center;
+	background-color: #76956045;
+	border: 1px solid #257846;
+}
+
+.srModalIntroContent {
+	background-color: #fefefe;
+	border: 1px solid #257846;
+	color: #333333;
+}
+
+.srModalTable {
+	height: 90px;
+	width : 90%;
+	display : inline-block;
+	vertical-align : middle;
+	font-family: '굴림';
+	font-size: 9pt;
+	text-align: left;
+	margin : 8px 0px 0px 0px;
+}
+
+.srModalInfo {
+	width : 100%;
+}
+
+.srSecondModalInfo {
+	width : 85%;
+	padding : 10px;
+	margin-top : 10px;
+	font-size: 8pt;
+}
+
+.tableName {
+	text-align: center;
+	font-weight: 800;
+	vertical-align: middle;
+	background-color : #76956045;
+	color : #333333;
+	padding : 2px 5px 2px 5px;
+	width : 30%;
+}
+
+.secondTablePeople {
+	font-weight: 400;
+	vertical-align: middle;
+	padding-left : 5px;
+}
+
+.srTableLine {
+	border-top : 1px solid #257846;
+	border-bottom : 1px solid #257846;
+	height: 10px;
+	padding-top : 3px;
+	padding-bottom : 3px;
+}
+
+.srSecondOneModal {
+	width: 100%;
+	height: 150px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	border-radius: 5px;
+	border-top : 2px solid #cccccc;
+	border-left : 2px solid #cccccc;
+	border-right : 5px double #aaaaaa;
+	border-bottom : 5px double #aaaaaa;
+}
+
+.secondTableName {
+	text-align: center;
+	font-weight: 800;
+	vertical-align: middle;
+	background-color : #76956045;
+	color : #333333;
+	padding : 2px 5px 2px 5px;
+	width : 25%;
+}
+
+.tableContent {
+	font-weight: 400;
+	vertical-align: middle;
+	padding-left : 5px;
+	width : 70%;
+}
+
+.secondTableContent {
+	font-weight: 400;
+	vertical-align: middle;
+	padding-left : 5px;
+	width : 25%;
+	border : 1pt dotted #cccccc;
+}
+
+.srSecondTwoModal {
+	width: 100%;
+	height: 447px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	margin-top : 20px;
+	border-radius: 5px;
+	border-top : 2px solid #cccccc;
+	border-left : 2px solid #cccccc;
+	border-right : 5px double #aaaaaa;
+	border-bottom : 5px double #aaaaaa;
+}
+
+.srThirdModal {
+	height: 617px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	border-radius: 5px;
+	border-top : 2px solid #cccccc;
+	border-left : 2px solid #cccccc;
+	border-right : 5px double #aaaaaa;
+	border-bottom : 5px double #aaaaaa;
+}
+
+.srTimeButton {
+	background-color: #ffffff;
+	padding : 3px;
+	border-radius: 3px;
+	border : 1px solid #eeeeee;
+}
+
+.srTimeButton label {
+	height: 5px;
+	width: 35px;
+	background-color: #c0c0c0;
+	border-radius : 2px;
+	display: inline-block;
+	cursor:pointer;
+}
+
+.srTimeColor span {
+	font-size: 4pt;
+	color : #055828;
+}
+
+.srRoomName {
+	margin-top : 15px;
+	background-color: #ecfacd;
+	color: #555555;
+	padding : 3px;
+	border-radius: 3px;
+	border : 1px solid #88d0a9;
+}
+
+.modalName {
+	font-weight: 500;
+	color: #ffffff;
+	background-color: #a3c58f;
+	padding: 4px;
+	border-radius: 2px;
+}
+
+.scrollSecondOneModal {
+	height : 50px;
+	overflow: auto;
+}
+
+.scrollSecondTwoModal {
+	height : 345px;
+	overflow: auto;
+}
+
+.scrollThirdModal {
+	height : 517px;
+	overflow: auto;
+}
+
+
+
+.srModalTop {
+	border-bottom : 1px solid #cccccc;
+	width : 100%;
+	height : auto;
+}
+
+.srModalNext {
+	border-top : 1px solid #cccccc;
+	width : 100%;
+	height : auto;
+}
+
+.btn-srModalNext {
+	margin-top : 15px;
+	margin-right:  15px;
+	float: right;
+	border-radius: 3px;
+	border : 0px;
+	background-color: #769560;
+	color: #ffffff;
+	padding: 3px 10px 3px 10px;
+	font-size: 8pt;
+}
+
+.srModalBottomSpace {
+	height : 15px;
+}
+
+.srModalPeople {
+	float : left;
+	border-radius: 3px;
+	border : 2px solid #88d0a9;
+	margin : 15px 0px 0px 25px;
+	width : 150px;
+	font-size : 10px;
+}
+
+.srModalDatePicker {
+	margin-top : 24px;
+}
+
+
 @media screen and (min-width: 992px) {
 	.srPic {
 	display: flex;
@@ -210,7 +492,21 @@ body {
 	min-height: 200px;
 	width: 100%;
 	}
+	
+	.srSecondOneModal {
+	margin-left : -24px;
+	}
+	
+	.srSecondTwoModal {
+		margin-left : -24px;
+	}
+	
+	.srThirdModal {
+		width: 100%;
+	}
+	
 }
+
 
 @media screen and (max-width: 991px) {
 	.srPic {
@@ -219,146 +515,69 @@ body {
 	}
 	
 	.srPicTagContent {
-	background-color: #f6f6f6;
-	border-right : 1px solid #eeeeee;
-	border-bottom : 1px solid #eeeeee; 
-	margin: 5px 3px 8px 3px;
-	padding: 5px 8px 5px 8px;
-	font-family:'맑은고딕';
-	font-size: 10pt;
-	min-height: 90px;
-	line-height: 90px;
-	text-align: center;
+		background-color: #f6f6f6;
+		border-right : 1px solid #eeeeee;
+		border-bottom : 1px solid #eeeeee; 
+		margin: 5px 3px 8px 3px;
+		padding: 5px 8px 5px 8px;
+		font-family:'맑은고딕';
+		font-size: 10pt;
+		min-height: 90px;
+		line-height: 90px;
+		text-align: center;
 	}
 	
 	.srMySidenav {padding-top: 15px;}
 	
 	.srModalPicFrame {
-	border: 5px double #eeeeee;
-	min-height: 150px;
-	width : 90%;
+		border: 5px double #eeeeee;
+		min-height: 150px;
+		width : 90%;
 	}
 	
 	.srModalPic {
-	min-height: 150px;
-	width: 100%;
+		min-height: 150px;
+		width: 100%;
+	}
+	
+	.srSecondOneModal {
+		margin-left : -20px;
+	}
+	
+	.srSecondTwoModal {
+		margin-left : -20px;
+	}
+	
+	.srThirdModal {
+		margin-top : 25px;
+	}
+	
+	.srThirdModal {
+		margin-top : 25px;
+	}
+	
+	.srThirdModal {
+		width: 97.5%;
 	}
 }
 
-.modal-dialog.modalcenter {
-	display: inline-block;
-	text-align: left;
-	vertical-align: middle;
-}
-
-
-
-.btn-srModal {
-	float: right;
-	margin: 0px 5px 25px 0px;
-	border-radius: 3px;
-	border : 0px;
-	background-color: #769560;
-	color: #ffffff;
-	padding: 3px 10px 3px 10px;
-	font-size: 10pt;
-}
-
-.btn-srModalUpClose {
-	float: right;
-	margin-right : -15px;
-	border-radius: 3px;
-	border : 0px;
-	background-color: #769560;
-	color: #ffffff;
-	padding: 3px 10px 3px 10px;
-	font-size: 12pt;
-	z-index:1100;
-}
-
-.srFirstModal{
-	border-radius: 5px;
-	border-right: 1px solid #eeeeee;
-	border-bottom: 1px solid #eeeeee;
-	background-color: #ffffff;
-	display : inline-block;
-	overflow:hidden;
-	height: 80%;
-	width : 95%;
-	border-top : 2px solid #cccccc;
-	border-left : 2px solid #cccccc;
-	border-right : 5px double #aaaaaa;
-	border-bottom : 5px double #aaaaaa;
-}
-
-.srModalTitleArea {
-	padding : 10px 5px 5px 5px;
-	margin-top : 0px;
-	border-radius: 5px;
-	height: 15%;
-	width : 95%;
-}
-
-.srModalTitle {
-	font-weight: 700;
-}
-
-.srModalIntro {
-	margin : 10px 12px 10px 12px;
-	border-radius: 5px;
-	padding: 8px;
-	font-family:'맑은고딕';
-	font-color: #000000;
-	width : 90%;
-	height: 150px;
-	line-height: 130px;
-	font-size: 10pt;
-	text-align: center;
-	background-color: #76956045;
-	border: 1px solid #257846;
-}
-
-.srModalIntroContent {
-	background-color: #fefefe;
-	border: 1px solid #257846;
-	color: #333333;
-}
-
-.srModalTable {
-	width : 90%;
-	height : 120px;
-	display : inline-block;
-	vertical-align : middle;
-	align-content: left;
-	font-family: '굴림';
-	text-align: left;
-	border : 1px solid #257846;
-	margin : 10px 0px 5px 0px;
-}
-
-.srModalInfo {
-	width : 100%;
-	height : 100%;
-}
-
-.tableName {
-	text-align: center;
-	font-weight: 800;
-	vertical-align: middle;
-	background-color : #76956045;
-	color : #333333;
-	border-right : 1px solid #257846;
-	padding : 2px 5px 2px 5px;
-}
-
-.tableContent {
-	text-align: left;
-	font-weight: 400;
-	vertical-align: middle;
-	padding-left : 5px;
-}
-
-.srTableLine {
-	border-bottom : 1px solid #257846;
-	height: 10px;
+@media screen and (max-width: 768px) {
+	.srFirstModal {
+		width: 95%;
+	}
+	
+	.srSecondOneModal {
+		width: 95%;
+		margin-top: 15px;
+		margin-left: 0px;
+	}
+	
+	.srSecondTwoModal {
+		width: 95%;
+		margin-left: 0px;
+	}
+	
+	.srThirdModal {
+		width: 95%;
+	}
 }

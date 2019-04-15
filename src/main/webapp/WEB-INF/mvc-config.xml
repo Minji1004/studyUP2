@@ -61,6 +61,8 @@
     		<mvc:exclude-mapping path="/resource/**"/>
     		<mvc:exclude-mapping path="/main"/>
     		<mvc:exclude-mapping path="/study/**"/>
+      		<mvc:exclude-mapping path="/lecture/**"/>
+      		<mvc:exclude-mapping path="/studyroom/**"/>  		    		
     		<mvc:exclude-mapping path="/member/login"/>
     		<mvc:exclude-mapping path="/member/logout"/>
     		<mvc:exclude-mapping path="/member/member"/>
