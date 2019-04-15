@@ -77,6 +77,11 @@
 		
 	})();
 	
+	// datePicker 
+	$(function() {
+	    $( "#testDatepicker" ).datepicker({
+	    });
+	});
 </script>
 
 
@@ -517,6 +522,8 @@
 									</div>
 								</div>
 								
+								<h5 class="modalName">기본 정보</h5>
+								
 								<div class="srModalTable">
 									<table class="srModalInfo">
 										<tr class="srTableLine" style="border">
@@ -540,442 +547,574 @@
 							</div>
 						</div>
 						
-						
-						<div class="col-xs-12 col-sm-6 col-md-3">
-							<div class="srSecondModal">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<!-- 시간 선택 정보 -->
+							<div class="srSecondOneModal">
+								<div class="srModalTop">
+									<h5 class="modalName">날짜 선택</h5>
+								</div>
+								<div class="scrollSecondOneModal">
+									<input type="text" class="srModalDatePicker" id="testDatepicker"> 
+								</div>
+								
+								<!-- 하단 버튼 -->
+								<button type="button" class="btn-srModalNext" data-dismiss="modal">다음</button>
+								
+							</div>
+							
+							<!-- 방별 기본 정보 -->
+							<div class="srSecondTwoModal">
+								<div class="srModalTop">
+									<h5 class="modalName">인원 선택</h5>
+								</div>
+								<div class="scrollSecondTwoModal">
+									<form style="margin: 10px 0px 0px 25px; text-align: left; text-size: 8pt;">
+									  <input type="radio" name="srPay" value="room">룸
+									  <input type="radio" name="srPay" value="oneP">1인
+									</form>
+									<table class="srSecondModalInfo">
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName">방이름</td>
+											<td class="secondTableName" style="background-color: #76956020; border : 1pt dotted #cccccc;">가격</td>
+											<td class="secondTableName">최소/최대인원</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">수성</td>
+											<td class="secondTableContent">
+												8,000원
+											</td>
+											<td class="secondTablePeople">
+												4/6명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">금성</td>
+											<td class="secondTableContent">
+												7,000원
+											</td>
+											<td class="secondTablePeople">
+												6/10명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">화성</td>
+											<td class="secondTableContent">
+												12,000원
+											</td>
+											<td class="secondTablePeople">
+												12/20명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">수성</td>
+											<td class="secondTableContent">
+												8,000원
+											</td>
+											<td class="secondTablePeople">
+												4/6명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">금성</td>
+											<td class="secondTableContent">
+												7,000원
+											</td>
+											<td class="secondTablePeople">
+												6/10명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">화성</td>
+											<td class="secondTableContent">
+												12,000원
+											</td>
+											<td class="secondTablePeople">
+												12/20명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">수성</td>
+											<td class="secondTableContent">
+												8,000원
+											</td>
+											<td class="secondTablePeople">
+												4/6명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">금성</td>
+											<td class="secondTableContent">
+												7,000원
+											</td>
+											<td class="secondTablePeople">
+												6/10명
+											</td>
+										</tr>
+										<tr class="srTableLine" style="border">
+											<td class="secondTableName" style="background-color: #76956020">화성</td>
+											<td class="secondTableContent">
+												12,000원
+											</td>
+											<td class="secondTablePeople">
+												12/20명
+											</td>
+										</tr>
+									</table>
+									<div class="srModalBottomSpace"></div>
+								</div>
+								
+								
+								<!-- 하단 버튼 -->
+								<div class="srModalNext">
+									<input type="text" class="srModalPeople" placeholder=" 인원수를 입력하세요. ">
+									<button type="button" class="btn-srModalNext" data-dismiss="modal">다음</button>
+								</div>
+									
 							</div>
 						</div>
 						
 						
-						<div class="col-xs-12 col-sm-12 col-md-5">
+						
+						<div class="col-xs-12 col-sm-12 col-md-4">
 							<div class="srThirdModal">
-							
+								<div class="srModalTop">
+									<h5 class="modalName">시간 선택</h5>
+								</div>
 								<!-- 각 스터디 별 체크  -->
-								<div class="col-xs-12 col-sm-12 col-md-12">
-									<div class="srRoomName">수성</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|22:00|</span>
-										</label>
+								<div class="scrollThirdModal"> 
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="srRoomName">수성</div>
+										<div class="srTimeButton">
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|11:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|12:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|13:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|14:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|15:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|16:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|17:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|18:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|19:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|20:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|21:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|22:00|</span>
+											</label>
+										</div>
 									</div>
+									
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="srRoomName">금성</div>
+										<div class="srTimeButton">
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|11:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|12:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|13:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|14:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|15:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|16:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|17:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|18:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|19:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|20:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|21:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|22:00|</span>
+											</label>
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="srRoomName">지구</div>
+										<div class="srTimeButton">
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|11:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|12:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|13:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|14:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|15:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|16:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|17:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|18:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|19:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|20:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|21:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|22:00|</span>
+											</label>
+										</div>
+									</div>
+	
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="srRoomName">화성</div>
+										<div class="srTimeButton">
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|11:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|12:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|13:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|14:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|15:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|16:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|17:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|18:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|19:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|20:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|21:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|22:00|</span>
+											</label>
+										</div>
+									</div>								
+									
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="srRoomName">목성</div>
+										<div class="srTimeButton">
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|11:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|12:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|13:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|14:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|15:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|16:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|17:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|18:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|19:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|20:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|21:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|22:00|</span>
+											</label>
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="srRoomName">토성</div>
+										<div class="srTimeButton">
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|11:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|12:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|13:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|14:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|15:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|16:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|17:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|18:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|19:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|20:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|21:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|22:00|</span>
+											</label>
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="srRoomName">천왕성</div>
+										<div class="srTimeButton">
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|11:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|12:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|13:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|14:00|</span>
+											</label>
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|15:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|16:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|17:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|18:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off">
+												<span>|19:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|20:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|21:00|</span>
+											</label>
+											
+											<label class="srTimeColor">
+												<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
+												<span>|22:00|</span>
+											</label>
+										</div>
+									</div>
+									<div class="srModalBottomSpace"></div>
 								</div>
 								
-								<div class="col-xs-12 col-sm-12 col-md-12">
-									<div class="srRoomName">금성</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|22:00|</span>
-										</label>
-									</div>
-								</div>
-								
-								<div class="col-xs-12 col-sm-12 col-md-12">
-									<div class="srRoomName">지구</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|22:00|</span>
-										</label>
-									</div>
-								</div>
-
-								<div class="col-xs-12 col-sm-12 col-md-12">
-									<div class="srRoomName">화성</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|22:00|</span>
-										</label>
-									</div>
-								</div>								
-								
-								<div class="col-xs-12 col-sm-12 col-md-12">
-									<div class="srRoomName">목성</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|22:00|</span>
-										</label>
-									</div>
-								</div>
-								
-								<div class="col-xs-12 col-sm-12 col-md-12">
-									<div class="srRoomName">토성</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|22:00|</span>
-										</label>
-									</div>
-								</div>
-								
-								<div class="col-xs-12 col-sm-12 col-md-12">
-									<div class="srRoomName">천왕성</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off" checked="checked">
-											<span>|22:00|</span>
-										</label>
-									</div>
+								<!-- 하단 버튼 -->
+								<div class="srModalNext">
+									<button type="button" class="btn-srModalNext" data-dismiss="modal">다음</button>
+									<button style="float: left; margin-left : 15px;" type="button" class="btn-srModalNext" data-dismiss="modal">초기화</button>
 								</div>
 							</div>
 						</div>
@@ -987,6 +1126,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12">
 							<div class="modalButtons">
+								&nbsp;
 								<button type="button" class="btn-srModal" data-dismiss="modal" onClick="close_pop();">Close</button>
 							</div>
 						</div>
