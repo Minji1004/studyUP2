@@ -17,10 +17,11 @@
   <title>선생님 페이지</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="<%=cp%>/resource/css/bootstrap.min.css">
-  <link rel="stylesheet" href="<%=cp%>/resource/css/font-awesome.css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/font-awesome.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/ionicons.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/AdminLTE.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/skin-blue.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/css/teacher.css">
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 </head>
 

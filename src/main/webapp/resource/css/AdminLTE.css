@@ -9,6 +9,7 @@
  * Core: General Layout Style
  * -------------------------
  */
+
 html,
 body {
   height: 100%;
@@ -3003,6 +3004,7 @@ table.text-center th {
 }
 .profile-username {
 	font-size: 30px;
+	margin-bottom: 15px;
 }
 .post {
   border-bottom: 1px solid #d2d6de;
@@ -4629,3 +4631,5 @@ table.text-center th {
     white-space: normal !important;
   }
 }
+
+

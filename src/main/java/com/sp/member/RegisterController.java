@@ -26,10 +26,7 @@ public class RegisterController {
 		List<Integer> userType = info.getUserType();
 		String tel = info.getTel();
 		
-		System.out.println("모드는  "+mode);		
-		
 		for(int type: userType)	{
-			System.out.println("타입 리스트:  "+type);
 			if(type==3&&mode.equals("teacher")) 
 				return ".teacherLayout";
 			if(type==2&&mode.equals("studyroom"))
