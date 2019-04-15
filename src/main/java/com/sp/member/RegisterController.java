@@ -52,9 +52,9 @@ public class RegisterController {
 		map.put("userNum", info.getUserNum());
 		String mode = (String)map.get("mode");
 		if(mode.equals("teacher"))
-			map.put("blicenseKindNum", 1);
+			map.put("blicenseKindNum", 2);
 		else
-			map.put("blicenseKindNum", 0);	
+			map.put("blicenseKindNum", 1);	
 		
 		int result = registerService.insertRegister(map);
 		
