@@ -3,15 +3,28 @@ package com.sp.community.worryBoard;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.sp.common.dao.CommonDAO;
 
 @Service("worboard.worBoardService")
 public class WorryBoardServiceImpl implements WorryBoardService {
-
+	@Autowired
+	private CommonDAO dao;
+	
 	@Override
 	public int insertWorBoard(WorryBoard dto, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			int maxNum=dao.selectOne("worboard.w_postNum");
+			dto.setW_postNum(maxNum+1);
+			
+			result=dao.insertData("worboard.insertBoard",dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
