@@ -23,11 +23,11 @@
 
 // 자동으로 열리는 modal
 	$(document).ready(function(){
-		$('div.modal').modal({remote:'<%=cp%>/studyroom/modal/main'});
+		$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
 	});
 	
 	function close_pop(){
-		$('.modal').on('hidden.bs.modal', function(e)
+		$('#srModal').on('hidden.bs.modal', function(e)
 		    { 
 		        $(this).removeData();
 		 }) ;
@@ -70,13 +70,13 @@
 	// 외부 jsp모달 불러오기
 	$(function(){
 		$(".btn-srModal").click(function(){
-			$('div.modal').modal({remote:'<%=cp%>/studyroom/modal/main'});
+			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
 		});
 	});
 	
 	$(function(){
 		$(".btn-srModalCreate").click(function(){
-			$('div.modal').modal({remote:'<%=cp%>/studyroom/modal/created'});
+			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
 		});
 	});
 </script>
