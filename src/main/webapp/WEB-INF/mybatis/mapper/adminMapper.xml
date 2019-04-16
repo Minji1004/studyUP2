@@ -7,12 +7,16 @@
 		VALUES(#{reportBoard}, #{reportBoardNum}, #{reportBoardNum}, #{replNum}, #{reportUser}, #{reportedUser}, #{reportCause}, #{reportType})	
 	</insert>
 	
+	<select id="dataReportCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0) FROM report
+	</select>
+	
 	<select id="listReport" parameterType="map" resultType="com.sp.admin.black.Report">
-	select A.reportNum, A.reportBoard, A.reportBoardNum, A.replNum, A.reportUser, A.reportType, A.reportUserId, A.reportUserNickName,
+	select A.reportNum, A.reportBoard, A.reportBoardNum, A.replNum, A.reportUser, A.reportCause, A.reportType, A.reportUserId, A.reportUserNickName,
        B.reportedUser, B.reportedUserId, B.reportedNickName
 	from 
 	(       
-      SELECT R1.reportNum, R1.reportBoard, R1.reportBoardNum, R1.replNum, R1.reportUser, R1.reportType ,M1.userId reportUserId, M1.nickName reportUserNickName
+      SELECT R1.reportNum, R1.reportBoard, R1.reportBoardNum, R1.replNum, R1.reportUser, R1.reportCause, R1.reportType ,M1.userId reportUserId, M1.nickName reportUserNickName
        FROM report AS R1
        JOIN memberInfo AS M1
        ON R1.reportUser = M1.userNum
