@@ -13,7 +13,7 @@
                 <nav class="navigation" role="navigation">
                     <ul class="primary-nav">
 						<li><a href="<%=cp%>/mypage/main">마이페이지</a></li>
-						<li><a href="<%=cp%>/timer/main">타이머</a></li>
+						<li><a class="timer">타이머</a></li>
 						<li><a href="<%=cp%>/study/main">스터디</a></li>
 						<li><a href="<%=cp%>/studyroom/main">스터디룸</a></li>
 						<li><a href="<%=cp%>/lecture/main">강의</a></li>

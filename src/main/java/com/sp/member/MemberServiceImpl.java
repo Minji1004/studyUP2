@@ -25,28 +25,51 @@ public class MemberServiceImpl implements MemberService{
 		
 		return list;
 	}
+	
+	@Override
+	public int confirmUserId(String userId) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("member.checkUserId", userId);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return result;
+	}
 
 	@Override
 	public int insertMember(Member dto) {
+		int result = 0;
+		
+		try {
+			dao.insertData("member.insertMember");
+			int userId = dao.selectOne("member.selectMemberNum");
+			dto.setUserNum(userId);
+			result = dao.insertData("member.insertMemberInfo", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int updateMembership(Map<String, Object> map) {
 		
 		return 0;
 	}
 
 	@Override
-	public int updateMembership(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int updateLastLogin(String userId) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public int updateMember(Member dto) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
@@ -79,5 +102,7 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
