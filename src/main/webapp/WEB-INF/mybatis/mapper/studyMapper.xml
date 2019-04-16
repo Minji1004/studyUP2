@@ -8,6 +8,15 @@
 		VALUES(#{studyName}, #{studyIntro}, #{userId}, #{studyLocation}, 
 								#{studySday}, #{studyEday}, #{studyImg}, #{headcount})
 	</insert>
-
+	
+	
+	
+	<select id="listCategory" resultType="com.sp.study.Category">
+		SELECT categoryNum, categoryName FROM category
+	</select>
+   
+	<select id="listCourse" parameterType="Integer" resultType="com.sp.study.Category">
+		SELECT courseNum, categoryNum, courseName FROM course WHERE categoryNum=#{categoryNum}
+	</select>
 
 </mapper>

@@ -11,6 +11,101 @@ $('.studyDate').datepicker({
 	 language: "kr"
 });
 
+
+
+function makeStudy() {
+	var f = document.studyForm;
+	var str = f.studyName.value;
+	
+	if(!str) {
+		f.studyName.focus();
+		return false;
+	}
+	
+	str = f.studyIntro.value;
+	
+	if(!str) {
+		f.studyIntro.focus();
+		return false;
+	}
+	
+	
+	str = f.headcount.value;
+	var format = /^[0-9]$/g;
+	
+    if(! format.test(str)) {
+        f.headcount.focus();
+        return;
+    }
+	
+	if(!str) {
+		f.headcount.focus();
+		return false;
+	}
+	
+	str = f.studyLocation.value;
+	
+	if(!str) {
+		f.studyLocation.focus();
+		return false;
+	}
+	
+	
+	// 데이트피커
+	str = f.studySday.value;
+	
+	if(!str) {
+		f.studySday.focus();
+		return false;
+	}
+	
+	str = f.studyEday.value;
+	
+	if(!str) {
+		f.studyEday.focus();
+		return false;
+	}
+		
+	f.action = "<%=cp%>/study/${mode}";
+	
+	f.submit();	
+}
+
+
+function categoryList(){
+	// 분류 선택하면 아래에 체크박스가 나와서 과목을 선택할 수 있게
+	// categoryNum, courseNum
+	var categoryNum = $("#category").val();
+	
+	var url = "<%=cp%>/study/course"
+	$.ajax({
+		url:url, 
+		type:"get", 
+		data:{categoryNum:categoryNum},
+		dataType:"json",
+		success: function(data) {
+			// 기존내용 모두 지우기
+			$("#courseList").empty();
+			
+			$("#courseList").append("<label class='col-sm-2 control-label'>과목</label>");
+			
+			for(var i=0; i<data.listCourse.length; i++){
+				var courseNum = data.listCourse[i].courseNum;
+				var courseName = data.listCourse[i].courseName;
+			
+				$("#courseList").append("<div class='col-sm-3'><input type='checkbox' name='courseName'>"+courseName+"</div>");
+			}
+			
+			
+		}, 
+		error:function(jqXHR){
+			console.log(jqXHR.responseText);
+		}
+		
+	});	
+	
+}
+
 </script>
 
 <div class="modal-header">
@@ -23,51 +118,69 @@ $('.studyDate').datepicker({
 	<form class="form-horizontal studyForm" name="studyForm" method="post" enctype="multipart/form-data">
 		<div class="col-xs-8 col-sm-3" align="center">
 	 		<img class="img-circle img-dialog input-img" src="<%=cp%>/resource/study/images/404-error.png">
-	 		<input type="file" id="studyImg">
+	 		<input type="file" name="upload" class="studyImg">
 	 	</div>
  		<div class="col-xs-4 col-sm-9">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">스터디<br>이름</label>
 				<div class="col-sm-9">
-					<input type="text" class="form-control" id="studyName" placeholder="Your study name">
+					<input type="text" class="form-control" name="studyName" placeholder="Your study name">
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">스터디<br>설명</label>
 				<div class="col-sm-9">
-					<textarea id="studyIntro" class="form-control" rows="3"></textarea>
+					<textarea name="studyIntro" class="form-control" rows="3"></textarea>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">최대인원</label>
 				<div class="col-sm-2">
-					<input type="text" class="form-control" id="headcount" placeholder="인원">
+					<input type="text" class="form-control" name="headcount" placeholder="인원">
 				</div>
 		
 				<label class="col-sm-2 control-label">지역</label>
 				<div class="col-sm-5">
-					<input type="text" class="form-control" id="studyLocation" placeholder="studyLocation">
+					<input type="text" class="form-control" name="studyLocation" placeholder="studyLocation">
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">시작일</label>
 				<div class="col-sm-3">
-					<input class="studyDate date form-control" id="studySday" placeholder="Start Day">
+					<input class="studyDate date form-control" name="studySday" placeholder="Start Day">
 				</div>
 				
 				<label class="col-sm-2 col-md-offset-1 control-label">종료일</label>
 				<div class="col-sm-3">
-					<input class="studyDate date form-control" id="studyEday" placeholder="End Day">
+					<input class="studyDate date form-control" name="studyEday" placeholder="End Day">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">분류</label>
+				<div class="col-sm-5">
+					<select id="category" onchange="categoryList();" class="selectField">
+	                   <option value="">분류선택</option>
+	                   <c:forEach var="dto" items="${categorylist}">
+	                       <option value="${dto.categoryNum}" data-categoryNum="${dto.categoryNum}">${dto.categoryName}</option>
+	                   </c:forEach>
+	              	</select>				
 				</div>
 			</div>	
+			
+			<div class="form-group" id="courseList">
+				
+				
+			</div>			
+			
  		</div>
 	</form> 
 </div>
 
 <div class="modal-footer">
-   <button type="submit" class="btn btn-primary">Make</button>
+   <button type="button" onclick="makeStudy();" class="btn btn-primary">Make</button>
    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>

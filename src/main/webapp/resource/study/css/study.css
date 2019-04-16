@@ -67,8 +67,15 @@
 	margin-top: 10px;
 }
 
-#studyImg {
-	margin-top: 10px;
+.studyImg {
+	margin-top: 15px;
+}
+
+#category {
+	width: 70%;
+	margin-top: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
 
 
