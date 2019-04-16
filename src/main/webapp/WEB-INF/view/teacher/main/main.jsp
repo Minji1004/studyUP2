@@ -8,12 +8,28 @@
 
 
 <script type="text/javascript">
-	window.onload = function() {
+	$(document).ready(function(){
 		var e = document.getElementById('tBox');
 		e.style.height = (e.scrollHeight) + 'px';
-	}    
-    
+	});    
+	
+	$(document).ready(function(){
+		var $star = $(".star_rating");
+		var $result = $star.find("#output>b");
+		
+		 $(document)
+		 .on("focusin", ".star_rating>a", function(){
+			 $(this).parent().children("a").removeClass("on");
+			 $(this).addClass("on").prevAll("a").addClass("on");
+			 var index = $(".star_rating>a").index(this)+1;
+			$result.text(index);
+		 })
+
+		 
+	});
+	
 </script>
+
 
 
 <!-- Main content -->
@@ -62,11 +78,9 @@
 		</div>
 		<div class="box-body no-padding">
 			<form name="introduce" method="post">
-				<textarea id="tBox" class="read" readonly="readonly">여러분의 영어를 담당할 홍길동 선생님입니다! 잘 부탁드립니다.
-				영어 회화, 토익 스피킹, OPIC 준시하시는 모든 분들 연락주세요.</textarea>
+				<textarea id="tBox" class="read" readonly="readonly">여러분의 영어를 담당할 홍길동 선생님입니다!잘 부탁드립니다.&#10;영어 회화, 토익 스피킹, OPIC 준시하시는 모든 분들 연락주세요.</textarea>
 				<c:if test="${mode eq 'teacher'}">
-					<button class="btn" type="button"
-						style="float: right; margin-right: 20px;">수정하기</button>
+					<button class="btn" type="button" style="float: right; margin: 0 20px 10px;">수정하기</button>
 				</c:if>
 			</form>
 		</div>
@@ -105,22 +119,13 @@
 					<span style="font-weight: bold;">코멘트 쓰기</span><span> - 타인을
 						비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
 				</div>
-				<div class="star-box" style="text-align: center; margin: 10px;">
-					<span class="star-input">
-						<span class="input">
-					    	<input type="radio" name="star-input" value="1" id="p1">
-					    	<label for="p1">1</label>
-					    	<input type="radio" name="star-input" value="2" id="p2">
-					    	<label for="p2">2</label>
-					    	<input type="radio" name="star-input" value="3" id="p3">
-					    	<label for="p3">3</label>
-					    	<input type="radio" name="star-input" value="4" id="p4">
-					    	<label for="p4">4</label>
-					    	<input type="radio" name="star-input" value="5" id="p5">
-					    	<label for="p5">5</label>
-					  	</span>
-					  	<output for="star-input" ><b>0</b>점</output>						
-					</span>		
+				<div class="star_rating">
+					<a href="#">★</a>
+				    <a href="#">★</a>
+				    <a href="#">★</a>
+				    <a href="#">★</a>
+				    <a href="#">★</a>
+				    <span id="output"><b>0</b>점</span>
 				</div>
 				<div style="clear: both; padding-top: 10px;">
 					<textarea name="content" id="content" class="form-control"
@@ -151,7 +156,7 @@
 								</c:if>
 									</span> <span class="description">Shared publicly - 7:30 PM today</span>
 								</div>
-								<p>Lorem ipsum represents a long-held tradition for
+								<p>Lorem ipsum represents a long-held tradition for								
 									designers, typographers and the like. Some people hate it and
 									argue for its demise, but others ignore the hate as they create
 									awesome tools to help create filler text for everyone from
