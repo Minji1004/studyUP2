@@ -1,0 +1,16 @@
+@charset "UTF-8";
+.timer{
+	cursor: pointer;
+}
+
+.timer-modal-body {
+   text-align: left;
+   min-height: 200px;
+}
+.timer-modal-dialog {
+    width: 400px;
+    margin: 30px auto;
+}
+.dialog-content-location{
+	padding-left: 20px
+}

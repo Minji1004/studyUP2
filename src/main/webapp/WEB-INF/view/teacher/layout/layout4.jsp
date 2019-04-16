@@ -22,7 +22,11 @@
   <link rel="stylesheet" href="<%=cp%>/resource/css/AdminLTE.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/skin-blue.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/teacher.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/css/star.css">
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
+
+<!-- star-->
+<script src="<%=cp%>/resource/js/star.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">

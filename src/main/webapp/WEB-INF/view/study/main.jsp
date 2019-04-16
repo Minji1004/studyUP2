@@ -65,6 +65,7 @@ $(function(){
 
 
 $(function() {
+	// 이미지 미리보기
 	$("div").on("change", ".studyForm input[type='file']", function(e) {
 		var file = e.target.files[0];
 		

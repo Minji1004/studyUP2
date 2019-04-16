@@ -5,6 +5,7 @@ import java.util.Map;
 
 public interface MemberService {
 	public List<Member> loginMember(String userId);
+	public int confirmUserId(String userId);
 	
 	public int insertMember(Member dto);
 	
@@ -19,4 +20,5 @@ public interface MemberService {
 	
 	public int dataCount(Map<String, Object> map);
 	public List<Member> listMember(Map<String, Object> map);
+	
 }
