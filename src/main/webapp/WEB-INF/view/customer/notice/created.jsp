@@ -79,8 +79,17 @@
   function sendOk() {
         var f = document.noticeForm;
 
+        if(! f.subject.value){
+        	f.subject.focus();
+        	return;
+        }
+        
+        if(! f.content.value){
+        	f.content.focus();
+        	return;
+        }
 
-        f.action="<%=cp%>/";
+        f.action="<%=cp%>/customer/notice/${mode}";
         f.submit();
         
         return;
@@ -114,9 +123,9 @@
 		                            <td class="td2 col-md-5 col-sm-5">
 		                                ${sessionScope.member.userName}
 		                            </td>
-		                            <td class="td1" align="center">&nbsp;</td>
+		                            <td class="td1" align="center">공지여부</td>
 		                            <td class="td2 col-md-5 col-sm-5">
-		                                &nbsp;
+		                                <input type="checkbox" name="noticeWhether" value="1" ${noticeWhether==1?"checked='checked'":""}>
 		                            </td>
 		                        </tr>
 		                        <tr>

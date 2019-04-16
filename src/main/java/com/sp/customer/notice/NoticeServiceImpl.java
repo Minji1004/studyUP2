@@ -3,15 +3,33 @@ package com.sp.customer.notice;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.sp.common.dao.CommonDAO;
 
 @Service("customer.noticeService")
 public class NoticeServiceImpl implements NoticeService {
-
+	@Autowired
+	private CommonDAO dao;
+	
 	@Override
 	public int insertNotice(Notice dto, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			int maxNum=dao.selectOne("notice.maxNoticeNum");
+			int noticeNum=maxNum+1;
+			dto.setNoticeNum(noticeNum);
+			
+			dao.insertData("notice.insertNotice",dto);
+			
+			result=1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -22,8 +40,14 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<Notice> listNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notice> list=null;
+		
+		try {
+			list=dao.selectList("notice.listNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override

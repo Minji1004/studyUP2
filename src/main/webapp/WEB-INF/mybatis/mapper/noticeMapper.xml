@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<select id="maxNoticeNum" resultType="Integer">
+		select IFNULL(max(noticeNum), 0) from notice
+	</select>
+	
+	<insert id="insertNotice" parameterType="com.sp.customer.notice.Notice">
+		INSERT INTO notice(noticeNum, userId, subject, noticeWhether, content)
+		VALUES (#{noticeNum}, #{userId}, #{subject}, #{noticeWhether}, #{content})
+	</insert>
+	
+</mapper>
+
