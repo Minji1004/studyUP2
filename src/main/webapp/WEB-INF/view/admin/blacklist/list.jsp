@@ -36,12 +36,23 @@ th{
 		      <th width="100" style="color: #787878;">번호</th>
 		      <th style="color: #787878;">아이디</th>
 		      <th width="150" style="color: #787878;">닉네임</th>
-		      <th width="150" style="color: #787878;">전화번호</th>
-		      <th width="120" style="color: #787878;">신고횟수</th>
-		      <th width="120" style="color: #787878;">등록일</th>
-		      <th width="120" style="color: #787878;">해제예정일</th>
+		      <th width="150" style="color: #787878;">신고유형</th>
+		      <th width="150" style="color: #787878;">신고자</th>
+		      <th width="120" style="color: #787878;">신고일</th>
 		  </tr>
+		  
+		 <c:forEach var="rdto" items="${rlist}">
+		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+		       <th width="100" style="color: #787878;">${rdto.rlistNum }</th>
+		      <th style="color: #787878;">${rdto.reportedUserId}</th>
+		      <th width="150" style="color: #787878;">${rdto.reportedNickname}</th>
+		      <th width="150" style="color: #787878;">${rdto.reportType}</th>
+		      <th width="150" style="color: #787878;">${rdto.reportUserId}</th>
+		      <th width="120" style="color: #787878;">${rdto.reportDate}</th>
+		  </tr>		  
+		 </c:forEach>
 		</table>
+		
 		
 
 	</div>

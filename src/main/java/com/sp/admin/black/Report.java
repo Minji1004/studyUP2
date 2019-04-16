@@ -1,16 +1,25 @@
 package com.sp.admin.black;
 
 public class Report {
+	private int rlistNum;
 	private int reportNum;
 	private String reportBoard;
 	private int reportBoardNum;
 	private int replNum;
-	private int reportUser;
-	private int reportedUser;
+	private String reportUserId;
+	private String reportNickName;	
+	private String reportedUserId;
+	private String reportedNickname;
 	private String reportCause;
 	private int reportType;
 	private String reportDate;
 	
+	public int getRlistNum() {
+		return rlistNum;
+	}
+	public void setRlistNum(int rlistNum) {
+		this.rlistNum = rlistNum;
+	}
 	public int getReportNum() {
 		return reportNum;
 	}
@@ -34,7 +43,31 @@ public class Report {
 	}
 	public void setReplNum(int replNum) {
 		this.replNum = replNum;
-	}	
+	}
+	public String getReportUserId() {
+		return reportUserId;
+	}
+	public void setReportUserId(String reportUserId) {
+		this.reportUserId = reportUserId;
+	}
+	public String getReportNickName() {
+		return reportNickName;
+	}
+	public void setReportNickName(String reportNickName) {
+		this.reportNickName = reportNickName;
+	}
+	public String getReportedUserId() {
+		return reportedUserId;
+	}
+	public void setReportedUserId(String reportedUserId) {
+		this.reportedUserId = reportedUserId;
+	}
+	public String getReportedNickname() {
+		return reportedNickname;
+	}
+	public void setReportedNickname(String reportedNickname) {
+		this.reportedNickname = reportedNickname;
+	}
 	public String getReportCause() {
 		return reportCause;
 	}
@@ -53,16 +86,5 @@ public class Report {
 	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
 	}
-	public int getReportUser() {
-		return reportUser;
-	}
-	public void setReportUser(int reportUser) {
-		this.reportUser = reportUser;
-	}
-	public int getReportedUser() {
-		return reportedUser;
-	}
-	public void setReportedUser(int reportedUser) {
-		this.reportedUser = reportedUser;
-	}	
+	
 }
