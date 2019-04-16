@@ -2,11 +2,28 @@
 	#선생님 사이트
 ========================================================================== */
 
- #tBox{
-	border: none;
+ #tBox{	
 	width: 650px;
 	resize:none;
-	text-align:center;
+	text-align:center;		
+}
+
+.read{
+	border: none;
+	outline: none;
 	overflow: hidden;
 }
- 
+
+.score{
+	color: #f39c12;
+	font-weight: 700;
+}
+
+.starrr {
+  display: inline-block; }
+  .starrr a {
+    font-size: 16px;
+    padding: 0 1px;
+    cursor: pointer;
+    color: #FFD119;
+    text-decoration: none; }
