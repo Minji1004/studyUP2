@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StudyService {
+	// 스터디
 	public int insertStudy(Study dto, String pathname);
 	public List<Study> listStudy(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);

@@ -22,7 +22,7 @@
  	</div>
 </div>
 <div class="modal-footer">
-   <button type="button" class="btn btn-primary">apply</button>
+   <button type="button" class="btn btn-primary" id="studyApply" data-target ="#myStudyApply">apply</button>
    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
     

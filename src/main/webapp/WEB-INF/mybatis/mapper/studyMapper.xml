@@ -2,19 +2,42 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="study">
+	<!-- 스터디 번호 만들기 -->
+	<select id="maxStudyNum" resultType="Integer">
+		SELECT IFNULL(max(studyNum), 0) FROM study
+	</select>
+	
+	
+	<!-- 스터디 생성 -->
 	<insert id="insertStudy" parameterType="com.sp.study.Study">
-		INSERT INTO study(studyName, studyIntro, userId, studyLocation, 
+		INSERT INTO study(studyNum, studyName, studyIntro, userId, studyLocation, 
 								studySday, studyEday, studyImg, headcount)
-		VALUES(#{studyName}, #{studyIntro}, #{userId}, #{studyLocation}, 
+		VALUES(#{studyNum}, #{studyName}, #{studyIntro}, #{userId}, #{studyLocation}, 
 								#{studySday}, #{studyEday}, #{studyImg}, #{headcount})
 	</insert>
 	
+	<!-- 스터디 생성시 스터디의 과목 선택 -->
+	<insert id="insertStudyCourse" parameterType="com.sp.study.StudyCourse">
+		INSERT INTO studyCourseList(studyNum, courseNum)
+		VALUES(#{studyNum}, #{courseNum})	
+	</insert>
+	
+	<!-- 스터디 가입신청 -->
+	<insert id="applyStudy" parameterType="com.sp.study.ApplyStudy">
+		INSERT INTO applyStudy(studyNum, userId, goal, hope) 
+		VALUES(#{studyNum}, #{userId}, #{goal}, #{hope})	
+	</insert>
 	
 	
+	<!-- 스터디 리스트 가져오기 -->
+	
+	
+	<!-- 분류 가져오기 -->
 	<select id="listCategory" resultType="com.sp.study.Category">
 		SELECT categoryNum, categoryName FROM category
 	</select>
    
+   <!-- 과목 가져오기 -->
 	<select id="listCourse" parameterType="Integer" resultType="com.sp.study.Category">
 		SELECT courseNum, categoryNum, courseName FROM course WHERE categoryNum=#{categoryNum}
 	</select>

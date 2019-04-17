@@ -1,5 +1,7 @@
 package com.sp.study;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Study {
@@ -11,6 +13,9 @@ public class Study {
 	private String studySday, studyEday;
 	private String studyImg;
 	private MultipartFile upload;
+	
+	// jsp의 checkbox 이름
+	private List<Integer> courseNums;
 	
 	
 	public int getStudyNum() {
@@ -78,6 +83,12 @@ public class Study {
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+	public List<Integer> getCourseNums() {
+		return courseNums;
+	}
+	public void setCourseNums(List<Integer> courseNums) {
+		this.courseNums = courseNums;
 	}	
 
 }
