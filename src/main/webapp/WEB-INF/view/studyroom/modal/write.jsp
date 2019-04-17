@@ -90,15 +90,15 @@
 							<table class="srModalInfo">
 								<tr class="srTableLine" style="border">
 									<td class="tableName">전화번호</td>
-									<td><input type="text" id="" class="srInsertText" placeholder="010-XXXX-XXXX"></td>
+									<td><input type="text" id="" class="srInsertText" placeholder="010-XXXX-XXXX" style="padding-left:5px;"></td>
 								</tr>
 								<tr class="srTableLine">
 									<td class="tableName">대표자</td>
-									<td><input type="text" id="" class="srInsertText" placeholder="실명으로 기입해야 합니다."></td>
+									<td><input type="text" id="" class="srInsertText" placeholder="실명으로 기입해야 합니다." style="padding-left:5px;"></td>
 								</tr>
 								<tr class="srTableLine">
 									<td class="tableName">위치</td>
-									<td><input type="text" id="" class="srInsertText" placeholder="주소를 검색합니다."></td>
+									<td><input type="text" id="" class="srInsertText" placeholder="주소를 검색합니다." style="padding-left:5px;"></td>
 								</tr>
 							</table>
 						</div>
@@ -119,9 +119,9 @@
 						</div>
 						
 						<form style="margin: 10px 0px 0px 25px; text-align: left; text-size: 8pt;">
-						    기준&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp; 
-						  <input type="radio" name="srPay" value="room">룸&nbsp;&nbsp; 
-						  <input type="radio" name="srPay" value="oneP">1인
+						    	기준&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp; 
+						  	<input type="radio" name="srPay" value="room">룸&nbsp;&nbsp; 
+						  	<input type="radio" name="srPay" value="oneP">1인
 						</form>
 
 						<div class="scrollSecondTwoModal" style="height: 282px;"> 
@@ -135,7 +135,7 @@
 								</tr>
 								<tr class="srTableLine" style="border">
 									<td class="secondTableName" style="background-color: #76956020">
-										<input type="text" id="" class="srInsertText"  style="background-color: #76956001" placeholder="방이름">
+										<input type="text" id="" name="srRoomName" class="srInsertText"  style="background-color: #76956001" placeholder="방이름">
 									</td>
 									<td class="secondTableContent">
 										<input type="text" id="" class="srInsertText" placeholder="예) 8000">
@@ -174,10 +174,10 @@
 								</tr>
 								<tr class="srTableLine" style="border">
 									<td class="secondTablePeople">
-										<input type="text" id="" class="srInsertText" style="font-size: 10pt; text-align: center; border-right : 1pt dotted #cccccc; " placeholder="예) 10">
+										<input type="text" id="" name="srOpenTime" class="srInsertText" style="font-size: 10pt; text-align: center; border-right : 1pt dotted #cccccc; " placeholder="예) 10">
 									</td>
 									<td class="secondTablePeople">
-										<input type="text" id="" class="srInsertText" style="font-size: 10pt; text-align: center;" placeholder="예) 23">
+										<input type="text" id="" name="srCloseTime" class="srInsertText" style="font-size: 10pt; text-align: center;" placeholder="예) 23">
 									</td>
 								</tr>
 							</table>
@@ -194,11 +194,11 @@
 				<div class="col-xs-12 col-sm-12 col-md-4">
 					<div class="srThirdModal">
 						<div class="srModalTop">
-							<h5 class="modalName">운영시간 입력</h5>
+							<h5 class="modalName">운영시간 선택</h5>
 						</div>
 						<!-- 각 스터디 별 체크  -->
 						<div class="scrollThirdModal"> 
-							<div class="col-xs-12 col-sm-12 col-md-12">
+							<div class="col-xs-12 col-sm-12 col-md-12" id="srModalRoomTime">
 								<div class="srRoomName">수성</div>
 								<div class="srTimeButton">
 									<label class="srTimeColor">

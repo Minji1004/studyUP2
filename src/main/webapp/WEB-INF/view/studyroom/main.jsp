@@ -87,7 +87,7 @@
 	function insertRow(){
 		
 		var addRow = "<tr class='srTableLine' style='border'><td class='secondTableName' style='background-color: #76956020'>";
-			addRow += "<input type='text' id='' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
+			addRow += "<input type='text' id='' name='srRoomName' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
 			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 8000'></td>";
 			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 4'></td>";
 			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 8'></td>";
@@ -104,8 +104,33 @@
 		$(this).parent().parent().remove();
 	});
 	
+	
+	// write.jsp 마지막 리스트 새로확인
 	$(document).on("click","#srModalFullTime", function(){
+		// 먼저 안의 리스트를 지운다.
+		$("#srModalRoomTime").children().remove();
+		var opentime = $("input[name=srOpenTime]").val();
+		var closetime = $("input[name=srCloseTime]").val();
+		var temp = opentime;
+		$("input[name=srRoomName]").each(function(){
+			if($(this).val()){
+				if( opentime && closetime ) {
+					$divName = "<div class='srRoomName'>"+$(this).val()+"</div>"
+					$divTimeButton = $("<div class='srTimeButton'>");
+					$("#srModalRoomTime").append($divName);
+					$("#srModalRoomTime").append($divTimeButton);
+					for ( opentime ; opentime<closetime ; opentime++) {
+						var label  = "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
+							label += "<span>|"+opentime+":00|</span>";
+							$(".srTimeButton").last().append(label);
+							console.log($(this));
+					}
+				}
+			}
+			opentime = temp;
+		});
 		
+		$(".srTimeCB").hide();
 	});
 	
 </script>
