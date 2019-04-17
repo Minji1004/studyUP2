@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sp.common.dao.CommonDAO;
 
-@Service("worboard.worBoardService")
+@Service("worboard.WorBoardService")
 public class WorryBoardServiceImpl implements WorryBoardService {
 	@Autowired
 	private CommonDAO dao;
@@ -29,13 +29,26 @@ public class WorryBoardServiceImpl implements WorryBoardService {
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.selectOne("worboard.dataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
 	}
 
 	@Override
 	public List<WorryBoard> listWorBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+		List<WorryBoard> list=null;
+		
+		try {
+			//list=dao.selectList()
+		} catch (Exception e) {
+			
+		}
 		return null;
 	}
 

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<select id="maxNoticeNum" resultType="Integer">
+		select IFNULL(max(noticeNum), 0) from notice
+	</select>
+	
+	<insert id="insertNotice" parameterType="com.sp.customer.notice.Notice">
+		INSERT INTO notice(noticeNum, userId, subject, noticeWhether, content)
+		VALUES (#{noticeNum}, #{userId}, #{subject}, #{noticeWhether}, #{content})
+	</insert>
+	
+	<sql id="where-list">
+	    <if test="condition=='all' ">
+	       (INSTR(subject, #{keyword}) &gt; 0
+			    OR INSTR(content, #{keyword}) &gt; 0)
+	    </if>
+	    <if test="condition=='subject' ">
+	       INSTR(subject, #{keyword}) &gt; 0
+	    </if>
+	    <if test="condition=='content' ">
+	       INSTR(content, #{keyword}) &gt; 0
+	    </if>
+	    <if test="condition=='nickName' ">
+	       INSTR(nickName, #{keyword}) = 1
+	    </if>
+	    <if test="condition=='created' ">
+	       DATE_FORMAT(n.created, '%Y-%m-%d') = #{keyword}
+	    </if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+	     SELECT IFNULL(COUNT(*), 0)
+         FROM notice n
+         JOIN memberInfo m ON n.userId=m.userId
+	     <where>
+	     	<if test="keyword != null and keyword !='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>
+	</select>
+	
+	<select id="listNoticeTop" resultType="com.sp.customer.notice.Notice">
+       SELECT noticeNum, n.userId, nickName, subject, views,
+              DATE_FORMAT(n.created, '%Y-%m-%d') created
+       FROM notice n
+       JOIN memberInfo m ON n.userId=m.userId
+       WHERE noticeWhether=1
+       ORDER BY noticeNum DESC
+	</select>
+	
+	<select id="listNotice" parameterType="map" resultType="com.sp.customer.notice.Notice">
+       SELECT noticeNum, n.userId, nickName, subject, views,
+              n.created
+       FROM notice n
+       JOIN memberInfo m ON n.userId=m.userId
+       <where>
+	     	<if test="keyword != null and keyword !='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	   </where>
+       ORDER BY noticeNum DESC
+       LIMIT #{start}, #{rows}
+	</select>
+	
+	<select id="readNotice" parameterType="Integer" resultType="com.sp.customer.notice.Notice">
+		SELECT noticeNum, n.userId, nickName, subject, content, views, n.created
+        FROM notice n
+        JOIN memberInfo m ON n.userId=m.userId
+	    WHERE noticeNum=#{noticeNum}
+	</select>
+	
+	<select id="preReadNotice" parameterType="map" resultType="com.sp.customer.notice.Notice">
+		SELECT noticeNum, subject
+        FROM notice n
+        JOIN memberInfo m ON n.userId=m.userId
+		<where>
+			<if test="keyword !=null and keyword !='' ">
+				<include refid="where-list"/>
+			</if>
+			AND (noticeNum &gt; #{noticeNum})
+		</where>
+		ORDER BY noticeNum ASC
+		LIMIT 1
+	</select>	
+	
+	<select id="nextReadNotice" parameterType="map" resultType="com.sp.customer.notice.Notice">
+		SELECT noticeNum, subject
+        FROM notice n
+        JOIN memberInfo m ON n.userId=m.userId
+
+		<where>
+			<if test="keyword !=null and keyword !='' ">
+				<include refid="where-list"/>
+			</if>
+			AND (noticeNum &lt; #{noticeNum})
+		</where>
+		ORDER BY noticeNum DESC
+		LIMIT 1
+	</select>		
+		
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE notice SET views=views+1 WHERE noticeNum=#{noticeNum}
+	</update>
+	
+</mapper>
+

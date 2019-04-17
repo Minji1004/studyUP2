@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
 
-@Controller("worboard.worboardController")
+@Controller("worryboard.WorryBoardController")
 public class WorryBoardController {
 	@Autowired
 	private WorryBoardService service;

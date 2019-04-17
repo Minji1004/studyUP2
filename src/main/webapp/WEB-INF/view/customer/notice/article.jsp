@@ -104,35 +104,40 @@
 		                 <thead>
 		                     <tr>
 		                         <th colspan="2" style="text-align: center;">
-		                                 제목..
+		                                 ${dto.subject}
 		                         </th>
 		                     </tr>
 		                <thead>
 		                 <tbody>
 		                     <tr>
 		                         <td style="text-align: left;">
-		                             이름 : 홍길동
+		                             이름 : ${dto.nickName}
 		                         </td>
 		                         <td style="text-align: right;">
-		                          2015-02-02 10:10 <i></i>
-		                              조회 : 100
+		                          ${dto.created} <i></i>
+		                              조회 : ${dto.views}
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="height: 230px;">
-		                              내용 ...
+		                              ${dto.content}
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2">
 		                              <span style="display: inline-block; min-width: 45px;">이전글</span> :
-		                              작업중
+			                             <c:if test="${not empty preReadDto }">
+			                                  <a href="<%=cp%>/customer/notice/article?${query}&noticeNum=${preReadDto.noticeNum}">${preReadDto.subject}</a>
+			                              </c:if>					
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
 		                              <span style="display: inline-block; min-width: 45px;">다음글</span> :
-		                              작업중
+			                             <c:if test="${not empty nextReadDto }">
+			                                  <a href="<%=cp%>/customer/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}">${nextReadDto.subject}</a>
+			                              </c:if>					
+
 		                         </td>
 		                     </tr>                                          
 		                </tbody>
@@ -143,7 +148,7 @@
 		                		    <button type="button" class="btn btn-default btn-sm wbtn">삭제</button>
 		                		</td>
 		                		<td align="right">
-		                		    <button type="button" class="btn btn-default btn-sm wbtn"> 목록으로 </button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/notice/list?${query}';"> 목록으로 </button>
 		                		</td>
 		                	</tr>
 		                </tfoot>
