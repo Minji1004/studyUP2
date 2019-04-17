@@ -98,7 +98,7 @@ function searchList() {
 		
 		    <div>
 		        <div style="clear: both; height: 30px; line-height: 30px;">
-		            <div style="float: left;">25개(1/2 페이지)</div>
+		            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
 		            <div style="float: right;">&nbsp;</div>
 		        </div>
 		        
@@ -115,20 +115,37 @@ function searchList() {
 		                </thead>
 		                <tbody>
 		                
-		                    <tr>
-		                        <td class="text-center">1</td>
-		                        <td><a href="#">테스트 입니다.</a></td>
-		                        <td class="text-center">이이이</td>
-		                        <td class="text-center">2000-10-10</td>
-		                        <td class="text-center">10</td> 
-		                    </tr>
+    <c:forEach var="dto" items="${noticeList}">
+                    <tr>
+                        <td class="text-center"><span style="display: inline-block;width: 28px;height:18px;line-height:18px; background: #ED4C00;color: #FFFFFF">공지</span></td>
+                        <td><a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
+                        <td class="text-center">${dto.nickName}</td>
+                        <td class="text-center">${dto.created}</td>
+                        <td class="text-center">${dto.views}</td>
+                    </tr>
+     </c:forEach>                    
+    <c:forEach var="dto" items="${list}">
+                    <tr>
+                        <td class="text-center">${dto.listNum}</td>
+                        <td>
+                            <a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
+                            <c:if test="${dto.gap < 1}">
+                                <img src='<%=cp%>/resource/images/new.gif'>
+                            </c:if>
+                        </td>
+                        <td class="text-center">${dto.nickName}</td>
+                        <td class="text-center">${dto.created}</td>
+                        <td class="text-center">${dto.views}</td>
+                    </tr>
+     </c:forEach>                    
 		                    
 		                </tbody>
 		            </table>
 		        </div>
 		
 		        <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
-		           1 2 3
+					<c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
+					<c:if test="${dataCount!=0 }">${paging}</c:if>
 		        </div>        
 		        
 		        <div style="clear: both;">
@@ -138,11 +155,11 @@ function searchList() {
 		        		<div style="float: left; width: 60%; text-align: center;">
 		        		     <form name="searchForm" action="<%=cp%>/customer/notice/list" method="post" class="form-inline">
 								  <select class="form-control input-sm" name="condition" >
-									  <option value="all"     ${condition=="all"?"selected='selected'":""}>모두</option>
-									  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
-									  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-									  <option value="userName"    ${condition=="name"?"selected='selected'":""}>작성자</option>
-									  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
+									  <option value="all"       ${condition=="all"?"selected='selected'":""}>모두</option>
+									  <option value="subject"   ${condition=="subject"?"selected='selected'":""}>제목</option>
+									  <option value="content"   ${condition=="content"?"selected='selected'":""}>내용</option>
+									  <option value="nickName"  ${condition=="nickName"?"selected='selected'":""}>작성자</option>
+									  <option value="created"   ${condition=="created"?"selected='selected'":""}>등록일</option>
 								  </select>
 								  <input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">
 								  <button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>

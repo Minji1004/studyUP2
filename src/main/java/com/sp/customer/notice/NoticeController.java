@@ -38,7 +38,6 @@ public class NoticeController {
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
-			@RequestParam(defaultValue="") String spec,
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
@@ -66,51 +65,66 @@ public class NoticeController {
 			noticeList=service.listNoticeTop();
 		}
 		
-		int start=(current_page-1)*rows+1;
-		int end=current_page*rows;
+		int start=(current_page-1)*rows;
+		if(start<0)	start=0;
+		
 		map.put("start", start);
-		map.put("end", end);
+		map.put("rows", rows);
 		
 		List<Notice> list=service.listNotice(map);
 		
 		Date endDate=new Date();
+		long gap;
 		int listNum, n=0;
 		for(Notice dto:list) {
 			listNum=dataCount-(start+n-1);
 			dto.setListNum(listNum);
 			
-			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date beginDate=formatter.parse(dto.getCreated());
+			gap=(endDate.getTime()-beginDate.getTime())/(60*60*1000);
+			dto.setGap(gap);
+			
+			dto.setCreated(dto.getCreated().substring(0, 10));
+			
+			n++;
 		}
+		
 		String cp=req.getContextPath();
 		String query="";
-		String listUrl=cp+"/notice/list";
-		String articleUrl=cp+"/notice/article?page="+current_page;
+		String listUrl=cp+"/customer/notice/list";
+		String articleUrl=cp+"/customer/notice/article?page="+current_page;
 		if(keyword.length()!=0) {
 			query="condition="+condition+
 					"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
 		if(query.length()!=0) {
-			listUrl=cp+"/notice/list?"+query;
-			articleUrl=cp+"/notice/article?page="+current_page+"&"+query;
+			listUrl+="?"+query;
+			articleUrl+="&"+query;
 		}
 		
 		String paging=myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("total_page", total_page);
 		model.addAttribute("page", current_page);
+		model.addAttribute("paging", paging);
+
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
 		model.addAttribute("subMenu", "1");
 		return ".customer.notice.list";
 	}
 
 	@RequestMapping(value="/customer/notice/created", method=RequestMethod.GET)
 	public String createdForm(
-			Model model,
-			HttpSession session
+			Model model
 			) throws Exception {
-		//SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		model.addAttribute("mode","created");
 		
@@ -137,15 +151,48 @@ public class NoticeController {
 
 	@RequestMapping(value="/customer/notice/article")
 	public String article(
-			@RequestParam int num,
+			@RequestParam int noticeNum,
 			@RequestParam String page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
 			Model model) throws Exception {
 
-
+		keyword=URLDecoder.decode(keyword, "utf-8");
+		
+		String query="page="+page;
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+			}
+		
+		service.updateHitCount(noticeNum);
+		
+		Notice dto=service.readNotice(noticeNum);
+		if(dto==null) {
+			return "redirect:/customer/notice/list?"+query;
+		}
+		
+		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("noticeNum", noticeNum);
+		
+		Notice preReadDto=service.preReadNotice(map);
+		Notice nextReadDto=service.nextReadNotice(map);
+		
+		List<Notice> listFile=service.listFile(noticeNum);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("listFile",listFile);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
 		model.addAttribute("subMenu", "1");
+		
 		return ".customer.notice.article";
 	}
 
@@ -155,8 +202,26 @@ public class NoticeController {
 			@RequestParam String page,
 			HttpSession session,			
 			Model model	) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("memberInfo");
+		
+		if(! info.getUserId().equals("admin")) {
+			return "redirect:/customer/notice/list?page="+page;
+		}
+		
+		Notice dto=service.readNotice(num);
+		if(dto==null) {
+			return "redirect:/customer/notice/list?page="+page;
+		}
+		
+		List<Notice> listFile=service.listFile(num);
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);
 		
 		model.addAttribute("subMenu", "1");
+		
 		return ".customer.notice.created";
 	}
 
@@ -165,12 +230,21 @@ public class NoticeController {
 			Notice dto,
 			@RequestParam String page,
 			HttpSession session) throws Exception {
-
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		if(info.getUserId().equals("admin")) {
+			String root=session.getServletContext().getRealPath("/");
+			String pathname=root+"uploads"+File.separator+"notice";
+			
+			dto.setUserId(info.getUserId());
+			service.updateNotice(dto, pathname);
+		}
 		
 		return "redirect:/customer/notice/list?page="+page;
+		
 	}
 
-	@RequestMapping(value="/customer/notice/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/customer/notice/delete")
 	public String delete(
 			@RequestParam int num,
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -178,6 +252,8 @@ public class NoticeController {
 			@RequestParam(defaultValue="") String keyword,
 			HttpSession session) throws Exception {
 
+		
+		
 		return "redirect:/customer/notice/list";
 	}
 

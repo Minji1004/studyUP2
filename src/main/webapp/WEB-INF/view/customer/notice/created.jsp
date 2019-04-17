@@ -94,6 +94,36 @@
         
         return;
  }
+  
+ $(function(){
+		$("body").on("change", "input[name=upload]", function(){
+			if(! $(this).val()) {
+				return;	
+			}
+			
+			var b=false;
+			$("input[name=upload]").each(function(){
+				if(! $(this).val()) {
+					b=true;
+					return;
+				}
+			});
+			if(b)
+				return;
+
+			var $tr, $td, $input;
+			
+		    $tr=$("<tr>");
+		    $td=$("<td>", {class:"td1", html:"첨부"});
+		    $tr.append($td);
+		    $td=$("<td>", {class:"td3", colspan:"3"});
+		    $input=$("<input>", {type:"file", name:"upload", class:"form-control input-sm", style:"height: 35px;"});
+		    $td.append($input);
+		    $tr.append($td);
+		    
+		    $("#tb").append($tr);
+		});
+ });  
 </script>
 
 <section class="section" id="srcontianer" >
@@ -114,10 +144,10 @@
 		    </div>
 		    
 		    <div>
-		        <form name="noticeForm" method="post">
+		        <form name="noticeForm" method="post" enctype="multipart/form-data">
 		            <div class="bs-write">
 		                <table class="table">
-		                    <tbody>
+		                    <tbody id="tb">
 		                        <tr>
 		                            <td class="td1">작성자명</td>
 		                            <td class="td2 col-md-5 col-sm-5">
@@ -142,12 +172,20 @@
 		                            	<textarea name="content" class="form-control" rows="15" required="required">${dto.content}</textarea>
 		                            </td>
 		                        </tr>
+
+		                        <tr>
+		                            <td class="td1">첨부</td>
+		                            <td colspan="3" class="td3">
+		                                <input type="file" name="upload" class="form-control input-sm" style="height: 35px;">
+		                            </td>
+		                        </tr>
+		                        
 		                    </tbody>
 		                    <tfoot>
 		                        <tr>
 		                            <td colspan="4" style="text-align: center; padding-top: 15px;">
 		                                  <button type="button" class="btn btn-primary" onclick="sendOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-		                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/';"> 취소 </button>
+		                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/customer/notice/list';"> 취소 </button>
 		                            </td>
 		                        </tr>
 		                    </tfoot>

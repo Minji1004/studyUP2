@@ -34,8 +34,13 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.selectOne("notice.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
@@ -52,32 +57,62 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<Notice> listNoticeTop() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notice> list=null;
+		
+		try {
+			list=dao.selectList("notice.listNoticeTop");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
-	public int updateHitCount(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateHitCount(int noticeNum) {
+		int result=0;
+		
+		try {
+			result=dao.updateData("notice.updateHitCount", noticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public Notice readNotice(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Notice readNotice(int noticeNum) {
+		Notice dto=null;
+		
+		try {
+			dto=dao.selectOne("notice.readNotice", noticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Notice preReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto=null;
+		
+		try {
+			dto=dao.selectOne("notice.preReadNotice",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Notice nextReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto=null;
+		
+		try {
+			dto=dao.selectOne("notice.nextReadNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
@@ -87,7 +122,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int deleteNotice(int num, String pathname) {
+	public int deleteNotice(int noticeNum, String pathname) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -99,7 +134,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Notice> listFile(int num) {
+	public List<Notice> listFile(int noticeNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
