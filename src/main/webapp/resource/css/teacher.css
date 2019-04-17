@@ -5,8 +5,7 @@
  #tBox{	
 	width: 650px;
 	resize:none;
-	text-align:center;	
-	margin-bottom: 10px;	
+	text-align:center;		
 }
 
 .read{
@@ -20,26 +19,11 @@
 	font-weight: 700;
 }
 
-.star_rating{
-	text-align: center;
-	margin: 10px;
-	font-size: 40px;
-	letter-spacing: -10px
-}
-
-.star_rating a{
-    letter-spacing:0;
-    display:inline-block;
-    margin-left:5px;
-    color:#ccc;
-    text-decoration:none;    
-}
-.star_rating a:first-child {margin-left:0;}
-.star_rating .on {color: #F39C12;}
-
-#output{
-	letter-spacing: 2px;
-	font-size: 25px;
-	margin-left: 20px;
-	
-}
+.starrr {
+  display: inline-block; }
+  .starrr a {
+    font-size: 16px;
+    padding: 0 1px;
+    cursor: pointer;
+    color: #FFD119;
+    text-decoration: none; }

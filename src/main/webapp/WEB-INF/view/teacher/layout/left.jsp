@@ -18,7 +18,7 @@
           <img src="<%=cp%>/resource/images/team-1.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander 선생님</p>
+          <p>${teacher.nickname} 선생님</p>
         </div>
       </div>
 
@@ -37,7 +37,7 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>강사소개</span></a></li>
+        <li><a href="<%=cp%>/"><i class="fa fa-link"></i> <span>강사소개</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>강의목록</span></a></li>
 		<li><a href="#"><i class="fa fa-link"></i> <span>공지사항</span></a></li>
 		<li><a href="#"><i class="fa fa-link"></i> <span>질문답변</span></a></li>

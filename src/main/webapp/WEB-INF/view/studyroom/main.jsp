@@ -21,9 +21,11 @@
 	    //document.body.style.backgroundColor = "white";
 	}
 
-// 자동으로 열리는 modal
+
 	$(document).ready(function(){
-		$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
+		// 자동으로 열리는 modal
+		$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
+		
 	});
 	
 	function close_pop(){
@@ -79,6 +81,33 @@
 			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
 		});
 	});
+	
+	// 동적으로 input박스 추가하기
+	// 테이블 행 추가
+	function insertRow(){
+		
+		var addRow = "<tr class='srTableLine' style='border'><td class='secondTableName' style='background-color: #76956020'>";
+			addRow += "<input type='text' id='' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 8000'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 4'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 8'></td>";
+			addRow += "<td><button type='button' class='srRemoveRow' onclick='deleteRow();'>X</button></td></tr>";
+		
+		$('#srRoomInfoTable').append(addRow);
+	};
+	
+	function deleteLastRow(){
+		$('#srRoomInfoTable').children().children().last().remove();
+	};
+	
+	$(document).on("click",".srRemoveRow", function(){
+		$(this).parent().parent().remove();
+	});
+	
+	$(document).on("click","#srModalFullTime", function(){
+		
+	});
+	
 </script>
 
 

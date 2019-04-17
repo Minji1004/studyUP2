@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="teacher">
+
+	<select id="readTeacher" parameterType="String" resultType="com.sp.teacher.Teacher">
+	SELECT userNum, userId, nickname, userPwd, enabled, picture, content
+			FROM memberInfo 
+			LEFT JOIN introduce 
+			ON userId = tId
+		    WHERE userId = #{userId}
+	</select>
+	
+	<select id="readSubject" parameterType="String" resultType="map">
+		SELECT categoryName, courseName 
+			FROM subject s JOIN course c 
+			ON s.courseNum = c.courseNum 
+			JOIN category a
+			ON c.categoryNum = a.categoryNum
+			WHERE tId = #{userId}
+	</select>
+	
+	<update id="updateIntroduce" parameterType="com.sp.teacher.Teacher">
+		
+	</update>
+
+	    
+</mapper>
