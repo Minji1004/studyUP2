@@ -186,7 +186,7 @@ body {
 
 .btn-srModal {
 	float: right;
-	margin: 0px 5px 25px 0px;
+	margin: 0px 15px 25px 9px;
 	border-radius: 3px;
 	border : 0px;
 	background-color: #769560;
@@ -235,19 +235,18 @@ body {
 	padding : 10px 5px 5px 5px;
 	margin-top : 0px;
 	border-radius: 5px;
-	height: 15%;
+	height: 13%;
 	width : 95%;
 }
 
 .srModalTitle {
-	
 	font-weight: 700;
 	padding : 5px;
 	width : auto;
 }
 
 .srModalIntro {
-	margin : 0px 12px 10px 12px;
+	margin : 8px 12px 10px 12px;
 	border-radius: 5px;
 	padding: 8px;
 	font-family:'맑은고딕';
@@ -433,7 +432,6 @@ body {
 }
 
 
-
 .srModalTop {
 	border-bottom : 1px solid #cccccc;
 	width : 100%;
@@ -475,6 +473,67 @@ body {
 	margin-top : 24px;
 }
 
+/* --------------------- modal_write.jsp --------------------- */
+
+.srInsertPic {
+	height : 100%;
+	width : 100%;
+	border : 1px solid #cccccc;
+}
+
+.srModalPicFrame div span {
+	font-size: 14pt;
+	font-weight: 700;
+}
+
+.srInsertText {
+	padding-left : 0px;
+	border: none;
+	width: 100%;
+}
+
+.srInsertTextarea {
+	height : 100%;
+	width : 100%;
+	overflow: auto;
+	line-height: 1.4;
+	height : 125px;
+	border : none;
+}
+
+.srInsertIntro {
+	margin : 8px 12px 10px 12px;
+	border-radius: 5px;
+	padding: 8px;
+	font-family:'맑은고딕';
+	font-color: #000000;
+	width : 90%;
+	height: 150px;
+	font-size: 10pt;
+	text-align: center;
+	background-color: #76956045;
+	border: 1px solid #257846;
+}
+
+.srInsertPicClick {
+	cursor:pointer;
+}
+
+.srRemoveRow {
+	border : none;
+	border-radius: 50%;
+	background-color: #d84b6be0;
+	color: #ffffff; 
+	font-weight: 500;
+	font-size: 5px;
+	vertical-align: middle;
+}
+
+.srRemoveRow:hover {
+	background-color: #95203ae0;
+}
+
+/* --------------------- ChangeScreen --------------------- */
 
 @media screen and (min-width: 992px) {
 	.srPic {
@@ -596,3 +655,4 @@ body {
 		line-height: 59px;
 	}
 }
+
