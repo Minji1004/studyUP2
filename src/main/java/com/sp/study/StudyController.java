@@ -20,17 +20,12 @@ import com.sp.member.SessionInfo;
 @Controller("study.studyController")
 public class StudyController {
 	@Autowired
-	private StudyService service;
-	
+	private StudyService service;	
 	@Autowired
-	private CategoryService categoryService;
-/*	
+	private CategoryService categoryService;	
 	@Autowired
-	private MyUtil myUtil;
-	@Autowired
-	private FileManager fileManager;
-	*/
-	
+	private ApplyStudyService applyService;
+
 	@RequestMapping(value="/study/main", method=RequestMethod.GET)
 	public String method() {
 		return ".study.main";
@@ -39,7 +34,7 @@ public class StudyController {
 	@RequestMapping(value="/study/studyDetail")
 	public String studyDetail() {
 		return "study/studyDetail";
-	}
+	}	
 	
 	@RequestMapping(value="/study/makeStudy", method=RequestMethod.GET)
 	public String makeStudy(Model model) {
@@ -71,18 +66,7 @@ public class StudyController {
 		return "redirect:/study/main";
 	}
 		
-/*	
-	
-	@RequestMapping(value="/study/category")
-	public String category(Model model) throws Exception {
-		List<Category> list = categoryService.listCategory();
-		
-		model.addAttribute("categorylist", list);
-		System.out.println(list);
-		return "study/makeStudy";
-	}
-*/
-	
+	// 과목 가져오기
 	@RequestMapping(value="/study/course")
 	@ResponseBody
 	public Map<String, Object> courseList(
@@ -93,8 +77,28 @@ public class StudyController {
 		Map<String, Object> model = new HashMap<>();
 		model.put("listCourse", listCourse);
 		
-		return model;
-		
+		return model;		
 	} 
+	
+	// 가입신청 - apply for study	
+	@RequestMapping(value="/study/applyStudy", method=RequestMethod.GET)
+	public String applyStudy() {
+		return "study/applyStudy";
+	}
+	
+	@RequestMapping(value="/study/applyStudy", method=RequestMethod.POST)
+	public String applyStudySubmit(
+			@RequestParam int studyNum,
+			ApplyStudy dto,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		dto.setStudyNum(studyNum);
+		dto.setUserId(info.getUserId());
+		applyService.applyStudy(dto);
+		
+		return "redirect:/study/main";
+	}
 
 }

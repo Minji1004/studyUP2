@@ -36,8 +36,12 @@
 }
 
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-	background: #04B486;
-	border-color: #04B486;
+    z-index: 2;
+    color: #fff;
+    background-color: #04B486;
+    border-color: #04B486;
+    
+    
 }
 
 .nav-tabs a {
@@ -60,8 +64,9 @@
 
 .smodal-body {
    text-align: left;
-   min-height: 300px;
+   min-height: 230px;
 }
+
 
 #studyName {
 	margin-top: 10px;

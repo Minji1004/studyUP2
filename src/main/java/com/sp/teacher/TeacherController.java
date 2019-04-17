@@ -21,9 +21,6 @@ public class TeacherController {
 		
 		List<Integer> userType = info.getUserType();
 		
-		if(userType==null)
-			System.out.println("type은 null입니다.");
-		
 		model.addAttribute("mode", "teacher");
 		
 		for(int type: userType)	{
