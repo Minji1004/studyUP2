@@ -27,7 +27,27 @@ public class StudyServiceImpl implements StudyService{
 				dto.setStudyImg(studyImg);
 			}
 			
-			result = dao.insertData("study.insertStudy", dto);
+			int maxNum = dao.selectOne("study.maxStudyNum");
+			int studyNum = maxNum+1;
+			
+			dto.setStudyNum(studyNum);
+
+			dao.insertData("study.insertStudy", dto);
+			
+			if(dto.getCourseNums() != null) {
+				StudyCourse sdto;
+				for(int s : dto.getCourseNums()) {
+					sdto = new StudyCourse();
+					
+					sdto.setStudyNum(studyNum);
+					sdto.setCourseNum(s);
+					dao.insertData("study.insertStudyCourse", sdto);
+				}				
+			}
+			
+			
+			result = 1;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,5 +84,6 @@ public class StudyServiceImpl implements StudyService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

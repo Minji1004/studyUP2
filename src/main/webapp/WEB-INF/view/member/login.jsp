@@ -73,30 +73,7 @@ function sendLogin() {
     f.action = "<%=cp%>/member/login";
     f.submit();
 }
-/* 
-$(function(){
-	$("input:text[name=blicenseNum]").closest("tr").hide();
-	
-	$("body").on("click", ".radioUser", function(){
 
-		var radiocheck = $("input:radio[name='userKind']:checked").val();
-		if(radiocheck == "user"){
-			$("input:text[name=blicenseNum]").closest("tr").hide();
-		}else{
-			$("input:text[name=blicenseNum]").closest("tr").show();
-		}
-		
-		
-		var $userKind = $("input[name=userKind]").val()
-	 	if($userKind =="user" || $userKind == "admin"){
-			$("#blicenseNum").closest("tr").hide();
-		}else if($userKind == "studyroom" || $userKind == "teacher"){
-			$("#blicenseNum").closest("tr").show();
-		}  
-	});
-});
-
- */
 </script>
 
 <div class="body-container">
@@ -132,10 +109,6 @@ $(function(){
 		        <button type="button" onclick="sendLogin();" class="btnConfirm">로그인</button>
 		      </td>
 		  </tr>
-		  
-
-
-		  
 
 		  <tr align="center" height="45">
 		      <td>
@@ -151,5 +124,73 @@ $(function(){
 		  
 		  </table>
 		</form>           
+	</div>
+	
+
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<div align="center">
+		<a id="kakao-login-btn"></a> <a
+			href="http://developers.kakao.com/logout"></a>
+		<script type='text/javascript'>
+       
+          Kakao.init('65af174643593e739d37189cc96a7851');
+
+          Kakao.Auth.createLoginButton({
+                  container: '#kakao-login-btn',
+                  success: function(authObj) {
+                	  kakaoLoginForm();
+                	  console.log("createLoginButton");
+                  },
+                  fail: function(err) {
+                     alert(JSON.stringify(err));
+                  }
+           });
+
+          function kakaoLoginForm() {
+              Kakao.Auth.loginForm({
+              	success:function(authObj){
+              		getKakaoInfo();
+              	  console.log("loginForm");
+              	},
+  		     	fail:function(errorObj){
+  		     		console.log(errorObj)
+  		     	}
+              });
+           }
+          
+         function getKakaoInfo(){
+        	 
+        	 Kakao.API.request({
+                 url : '/v1/user/me',
+                 success : function(res) {
+                	 console.log("request");
+                    var sPerson = JSON.stringify(res);
+                    var oPerson = JSON.parse(sPerson);
+                    var pPerson = JSON.stringify(oPerson.properties);
+                    pPerson = JSON.parse(pPerson);
+                    
+                    var userId = "kakao_" + oPerson.id;
+                    var nickname = pPerson.nickname;
+                    console.log("id : " + userId +  " nickname : " +nickname);
+                    
+                    var query = "?userId=" + userId + "&nickname=" + nickname;
+                  
+                    var url = "<%=cp%>/member/kakaoLogin" + query;
+                    location.href = url;
+
+	              },
+	              fail : function(error) {
+	                 console.log("ERROR: " + error);
+	              } 
+					
+              });
+         }  	
+
+         function kakaoLogout(){
+        	 Kakao.Auth.logout(function(data){
+        		 alert(data);
+        	 });
+         }
+      </script>
 	</div>
 </div>

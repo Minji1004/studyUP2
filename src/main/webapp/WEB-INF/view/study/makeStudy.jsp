@@ -92,18 +92,19 @@ function categoryList(){
 			for(var i=0; i<data.listCourse.length; i++){
 				var courseNum = data.listCourse[i].courseNum;
 				var courseName = data.listCourse[i].courseName;
+				
+				if(i/6==1 && i>0)
+					$("#courseList").append("<div class='col-sm-2'>&nbsp;</div>")
+					
 			
-				$("#courseList").append("<div class='col-sm-3'><input type='checkbox' name='courseName'>"+courseName+"</div>");
-			}
-			
-			
+				$("#courseList").append("<div class='col-sm-3'><input type='checkbox' name='courseNums' value="+courseNum+">"+courseName+"</div>");
+			}			
 		}, 
 		error:function(jqXHR){
 			console.log(jqXHR.responseText);
 		}
 		
-	});	
-	
+	});		
 }
 
 </script>
@@ -171,8 +172,7 @@ function categoryList(){
 				</div>
 			</div>	
 			
-			<div class="form-group" id="courseList">
-				
+			<div class="form-group" id="courseList">				
 				
 			</div>			
 			

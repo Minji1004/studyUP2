@@ -25,6 +25,16 @@ $(function(){
 	});
 });
 
+
+$(function(){
+	// 사이드바
+	var idx="${subMenu}";
+	if(!idx) idx=1;
+	var subMenu=$(".list-group-item")[idx];
+	$(subMenu).addClass("active");
+});
+
+
 $(function(){
 	// 스터디 상세 페이지 보기
 	$(document).on("click",".study-content", function(){
@@ -40,6 +50,21 @@ $(function(){
 	});
 });
 
+$(function() {
+	// apply for study - 스터디 가입신청
+	$(document).on("click", "#studyApply", function() {
+		// var num=$(this).attr("data-num");
+		var studyNum=4;
+		var url = "<%=cp%>/study/applyStudy?studyNum="+studyNum;
+		
+		$('#myStudyApply .modal-content').load(url, function() {
+			// $('#myStudyModal .modal-title').html(studyTitle);
+			$('#myStudyApply').modal('show');
+		});
+				
+	});
+});
+
 
 $(function(){
 	// 스터디 만들기
@@ -51,16 +76,6 @@ $(function(){
 			$('#myStudyInput').modal('show');
 		});
 	});
-});
-
-
-
-// 사이드바
-$(function(){
-	var idx="${subMenu}";
-	if(!idx) idx=1;
-	var subMenu=$(".list-group-item")[idx];
-	$(subMenu).addClass("active");
 });
 
 
@@ -344,6 +359,12 @@ $(function() {
 
 <div class="smodal modal fade bs-example-modal-lg" id="myStudyInput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="background: #FBFDF8;"></div>
+  </div>
+</div>
+
+<div class="smodal modal fade" id="myStudyApply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content" style="background: #FBFDF8;"></div>
   </div>
 </div>

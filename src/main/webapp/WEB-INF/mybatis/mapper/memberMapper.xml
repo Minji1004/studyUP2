@@ -46,8 +46,13 @@
 
 <insert id="insertMemberInfo" parameterType="com.sp.member.Member">
 	INSERT INTO memberInfo(userNum, userId, nickname, userPwd, tel, picture) 
-	VALUES (#{userNum},#{userId},#{nickname},#{userPwd},#{tel},#{picture, jdbcType=VARCHAR})
+		VALUES (#{userNum},#{userId},#{nickname},#{userPwd},#{tel},#{picture, jdbcType=VARCHAR})
 </insert>
 
+
+<insert id="insertKakaoMemberInfo" parameterType="com.sp.member.Member">
+	INSERT INTO memberInfo(userNum, userId, nickname)
+		VALUES (#{userNum}, #{userId}, #{nickname})
+</insert>
 
 </mapper>
