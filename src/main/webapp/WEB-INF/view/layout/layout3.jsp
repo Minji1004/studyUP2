@@ -25,9 +25,8 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/timer.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
-
+	
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
-
 <script type="text/javascript" src="<%=cp%>/resource/js/util-jquery.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript">
@@ -38,12 +37,10 @@ $(function(){
 			$('#myTimerModal').modal('show');
 		});
 	});
+	
 });
 
-
-
 </script>
-
 </head>
 
 <body>
@@ -67,7 +64,6 @@ $(function(){
     <div class="modal-content" style="background: #FBFDF8;"></div>
   </div>
 </div>
-
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>

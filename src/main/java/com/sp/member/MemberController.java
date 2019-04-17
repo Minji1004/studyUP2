@@ -160,6 +160,54 @@ public class MemberController {
 		return "mail/send";
 	}
 
+	@RequestMapping(value="/member/kakaoLogin")
+	public String kakaoLogin(
+			@RequestParam String userId,
+			@RequestParam String nickname,
+			HttpSession session,
+			Model model) {
+		
+		List<Member>mList =service.loginMember(userId);
+		List<Integer> list = new ArrayList<>();
+		
+		Member dto = new Member();
+		dto.setUserId(userId);
+		dto.setNickname(nickname);
+		
+		int result = service.confirmUserId(userId);
+		
+		if(result==0) {
+			service.insertMember(dto);	
+		}
+			
+		SessionInfo info=new SessionInfo();
+		info.setUserId(userId);
+		info.setUserName(nickname);
+		session.setMaxInactiveInterval(30*60); // 세션유지시간 30분, 기본:30분
+		session.setAttribute("member", info);
 	
+		if(mList.get(0).getIsAdmin().equals("0")) list.add(0);	//사용자
+		if(mList.get(0).getIsAdmin().equals("1")) list.add(1);	//관리자		
+		
+		List<Integer> bLicenseNumList = new ArrayList<>();
+		
+		for(Member member : mList) {
+			//스터디룸 사장님
+			if(member.getBlicenseKindNum()==1) { 	
+				list.add(2); 
+				bLicenseNumList.add(dto.getBlicenseNum());
+			}	
+			//강사
+			if(member.getBlicenseKindNum()==2) {
+				list.add(3);	
+				bLicenseNumList.add(dto.getBlicenseNum());
+			}
+		}
+		
+		info.setBlicenseNum(bLicenseNumList);
+		info.setUserType(list);	
+		
+		return "redirect:/";	
+	}
 	
 }

@@ -45,9 +45,14 @@ public class MemberServiceImpl implements MemberService{
 		
 		try {
 			dao.insertData("member.insertMember");
-			int userId = dao.selectOne("member.selectMemberNum");
-			dto.setUserNum(userId);
-			result = dao.insertData("member.insertMemberInfo", dto);
+			int userNum = dao.selectOne("member.selectMemberNum");
+			dto.setUserNum(userNum);
+			if(dto.getUserId().startsWith("kakao_")) {
+				result = dao.insertData("member.insertKakaoMemberInfo", dto);
+			}else {
+				result = dao.insertData("member.insertMemberInfo", dto);
+			}
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
