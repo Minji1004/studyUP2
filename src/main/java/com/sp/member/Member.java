@@ -1,10 +1,13 @@
 package com.sp.member;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Member {
 	private int userNum;
 	private String userId, nickname, userPwd, created, updated, lastLogin;
 	private String tel;
 	private String birth;
+	private MultipartFile pictureM;
 	private String picture;
 	private int enabled;
 	private int blicenseNum;
@@ -71,6 +74,12 @@ public class Member {
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
+	public MultipartFile getPictureM() {
+		return pictureM;
+	}
+	public void setPictureM(MultipartFile pictureM) {
+		this.pictureM = pictureM;
+	}
 	public String getPicture() {
 		return picture;
 	}
@@ -95,7 +104,4 @@ public class Member {
 	public void setBlicenseKindNum(int blicenseKindNum) {
 		this.blicenseKindNum = blicenseKindNum;
 	}
-	
-	
-	
 }

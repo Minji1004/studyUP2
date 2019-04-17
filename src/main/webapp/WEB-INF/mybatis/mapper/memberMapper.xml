@@ -20,4 +20,34 @@
 	    WHERE userId = #{userId}
 </select>
 
+<select id="checkUserId" parameterType="String" resultType="Integer">
+	SELECT IFNULL(COUNT(*),0) FROM memberInfo WHERE userId = #{userId}
+</select>
+
+<select id="isExistSigninMail" parameterType="String" resultType="Integer">
+	SELECT IFNULL(COUNT(*), 0) FROM signinNum WHERE userEmail = #{userEmail}
+</select>
+
+<insert id="insertSigninMailNum" parameterType="com.sp.mail.MailConfirmDTO">
+	INSERT INTO signinNum (userEmail, confirmNum) VALUES (#{userEmail},#{numRan})
+</insert>
+
+<update id="updateSigninMailNum" parameterType="com.sp.mail.MailConfirmDTO">
+	UPDATE signinNum SET confirmNum = #{numRan} WHERE userEmail = #{userEmail} 
+</update>
+
+<insert id="insertMember" parameterType="com.sp.member.Member">
+	INSERT INTO member(usership) VALUES ('0');
+</insert>
+
+<select id="selectMemberNum" resultType="Integer">
+	SELECT MAX(userNum) userNum FROM member
+</select>
+
+<insert id="insertMemberInfo" parameterType="com.sp.member.Member">
+	INSERT INTO memberInfo(userNum, userId, nickname, userPwd, tel, picture) 
+	VALUES (#{userNum},#{userId},#{nickname},#{userPwd},#{tel},#{picture, jdbcType=VARCHAR})
+</insert>
+
+
 </mapper>

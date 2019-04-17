@@ -1,7 +1,10 @@
 package com.sp.member;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,11 +14,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sp.common.FileManager;
 
 @Controller("member.memberController")
 public class MemberController {
 	@Autowired
 	private MemberService service;
+	@Autowired
+	private FileManager fileManager;
 
 	@RequestMapping(value = "/member/login", method=RequestMethod.GET)
 	public String loginForm() {		 
@@ -92,25 +100,32 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/member", method=RequestMethod.POST)
-	public String memberSubmit(Member dto,
-			Model model) {
+	public String memberSubmit(
+			Member dto,
+			HttpSession session,
+			Model model) throws Exception {
 
-		int result=service.insertMember(dto);
-		if(result==1) {
-			StringBuffer sb=new StringBuffer();
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "member_profile";
+		
+		String saveFilename = fileManager.doFileUpload(dto.getPictureM(), pathname);
+		if(saveFilename!=null) {
+			dto.setPicture(saveFilename);
+		}
+	
+		int result = service.insertMember(dto);
+		
+		StringBuffer sb=new StringBuffer();
+		if(result == 0) {
+			sb.append("회원 가입이 실패했습니다.<br> 다시 회원 가입 해주십시오");
+		}else {
 			sb.append(dto.getNickname() + "님의 회원 가입이 정상적으로 처리되었습니다.<br>");
 			sb.append("메인화면으로 이동하여 로그인 하시기 바랍니다.<br>");
-			
-			model.addAttribute("message", sb.toString());
-			model.addAttribute("title", "회원 가입");
-			
-			return ".member.complete";
-		} 
+		}
+
+		model.addAttribute("message", sb.toString());
 		
-		model.addAttribute("mode", "created");
-		model.addAttribute("message", "아이디 중복으로 회원가입이 실패했습니다.");
-			
-		return ".member.member";
+		return "redirect:/member/login";
 	}
 	
 	
@@ -122,6 +137,27 @@ public class MemberController {
 		session.invalidate();
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/member/userIdCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> userIdCheck(@RequestParam String userId){
+		
+		Map<String, Object> model = new HashMap<>();
+		String state = "true";
+		int result = service.confirmUserId(userId);
+		if(result > 0) {
+			state = "false";
+		}
+		
+		model.put("state", state);
+		
+		return model;
+	}
+
+	@RequestMapping(value="/member/certifyEmail", method = RequestMethod.GET)
+	public String certifyEmail() {
+		return "mail/send";
 	}
 
 	

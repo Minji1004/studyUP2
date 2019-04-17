@@ -2,11 +2,44 @@
 	#선생님 사이트
 ========================================================================== */
 
- #tBox{
-	border: none;
+ #tBox{	
 	width: 650px;
 	resize:none;
-	text-align:center;
+	text-align:center;	
+	margin-bottom: 10px;	
+}
+
+.read{
+	border: none;
+	outline: none;
 	overflow: hidden;
 }
- 
+
+.score{
+	color: #f39c12;
+	font-weight: 700;
+}
+
+.star_rating{
+	text-align: center;
+	margin: 10px;
+	font-size: 40px;
+	letter-spacing: -10px
+}
+
+.star_rating a{
+    letter-spacing:0;
+    display:inline-block;
+    margin-left:5px;
+    color:#ccc;
+    text-decoration:none;    
+}
+.star_rating a:first-child {margin-left:0;}
+.star_rating .on {color: #F39C12;}
+
+#output{
+	letter-spacing: 2px;
+	font-size: 25px;
+	margin-left: 20px;
+	
+}
