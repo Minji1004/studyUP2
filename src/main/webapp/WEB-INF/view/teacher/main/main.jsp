@@ -11,22 +11,43 @@
 	$(document).ready(function(){
 		var e = document.getElementById('tBox');
 		e.style.height = (e.scrollHeight) + 'px';
-	});    
+	});   
 	
-	$(document).ready(function(){
-		var $star = $(".star_rating");
-		var $result = $star.find("#output>b");
+	function changeTextarea(){
+		$("#tBox").removeClass("read");
+		$("#tBox").attr("readonly",false);
+		var $btn = $("#tBox").next();		
 		
-		 $(document)
-		 .on("focusin", ".star_rating>a", function(){
-			 $(this).parent().children("a").removeClass("on");
-			 $(this).addClass("on").prevAll("a").addClass("on");
-			 var index = $(".star_rating>a").index(this)+1;
-			$result.text(index);
-		 })
+		if('${introduceMode}'=='register')
+			$btn.html("등록완료");
+		else
+			$btn.html("수정완료");
+		
+		$btn.on("click", function(){
+				var url = "<%=cp%>/teacher/updateIntroduce"
+				var content = $("#tBox").text();
+				
+				$.ajax({
+					type:"post",
+					url: url,
+					dataType: "JSON",
+					data: {
+						content:content
+					}
+					success: function(data){
+						alert(data.state);
+						$("#tBox").removeClass("add");
+						$("#tBox").attr("readonly",true);						
+						$btn.html("수정하기");
+					},
+					error: function(e){
+						console.log(e.responseText);
+					}
+				});				
+				
+		});		
 
-		 
-	});
+	}
 	
 </script>
 
@@ -42,22 +63,30 @@
 		<div
 			style="display: inline-block; vertical-align: top; padding: 0 20px; width: 450px;">
 			<h1 class="profile-username" style="float: left;">
-				홍길동 <small>선생님</small>
+				${teacher.nickname}&nbsp;<small>선생님</small>
 			</h1>
 			<br>
 			<form name="private" method="post">
 				<table class="table">
 					<tr>
 						<th>분야</th>
-						<td>영어회화</td>
+						<td>
+						영어회화
+<%-- 						<c:if test="${empty teacher.subject}">
+							가르치는 분야를 등록해주세요.
+						</c:if>
+						<c:forEach var="item" items="${teacher.subject}">
+						${item}&nbsp;
+						</c:forEach> --%>
+						</td>
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td>010-0000-0000</td>
+						<td>${teacher.tel}</td>
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td>aaa@google.com</td>
+						<td>${teacher.userId}</td>
 					</tr>
 					<tr>
 						<c:if test="${mode eq 'teacher'}">
@@ -77,11 +106,12 @@
 			<h3 class="box-title">선생님 소개</h3>
 		</div>
 		<div class="box-body no-padding">
-			<form name="introduce" method="post">
-				<textarea id="tBox" class="read" readonly="readonly">여러분의 영어를 담당할 홍길동 선생님입니다!잘 부탁드립니다.&#10;영어 회화, 토익 스피킹, OPIC 준시하시는 모든 분들 연락주세요.</textarea>
+			<form name="introduce" method="post">			
+				<textarea id="tBox" class="read" readonly="readonly">${teacher.content}</textarea>
 				<c:if test="${mode eq 'teacher'}">
-					<button class="btn" type="button" style="float: right; margin: 0 20px 10px;">수정하기</button>
+					<button class="btn" type="button" style="float: right; margin: 0 30px 10px;" onclick="changeTextarea()">${introduceMode == 'register'? '등록하기':'수정하기'}</button>
 				</c:if>
+		
 			</form>
 		</div>
 		<hr class="no-margin">
@@ -100,7 +130,7 @@
 				</table>
 				<c:if test="${mode eq 'teacher'}">
 					<button class="btn" type="button"
-						style="float: right; margin-right: 20px;">수정하기</button>
+						style="float: right; margin-right: 30px;">수정하기</button>
 				</c:if>
 			</form>
 		</div>
@@ -119,13 +149,22 @@
 					<span style="font-weight: bold;">코멘트 쓰기</span><span> - 타인을
 						비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
 				</div>
-				<div class="star_rating">
-					<a href="#">★</a>
-				    <a href="#">★</a>
-				    <a href="#">★</a>
-				    <a href="#">★</a>
-				    <a href="#">★</a>
-				    <span id="output"><b>0</b>점</span>
+				<div class="star-box" style="text-align: center; margin: 10px;">
+					<span class="star-input">
+						<span class="input">
+					    	<input type="radio" name="star-input" value="1" id="p1">
+					    	<label for="p1">1</label>
+					    	<input type="radio" name="star-input" value="2" id="p2">
+					    	<label for="p2">2</label>
+					    	<input type="radio" name="star-input" value="3" id="p3">
+					    	<label for="p3">3</label>
+					    	<input type="radio" name="star-input" value="4" id="p4">
+					    	<label for="p4">4</label>
+					    	<input type="radio" name="star-input" value="5" id="p5">
+					    	<label for="p5">5</label>
+					  	</span>
+					  	<output for="star-input" ><b>0</b>점</output>						
+					</span>		
 				</div>
 				<div style="clear: both; padding-top: 10px;">
 					<textarea name="content" id="content" class="form-control"

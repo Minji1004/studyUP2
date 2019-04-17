@@ -27,6 +27,13 @@
 
 <!-- star-->
 <script src="<%=cp%>/resource/js/star.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".sidebar-menu li").eq(${left}).addClass("active");
+	});   	
+</script>
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">

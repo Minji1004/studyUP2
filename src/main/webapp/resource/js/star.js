@@ -1,6 +1,5 @@
-
-var starRating = function(){
-var $star = $(".star-input"),
+$(function(){
+	var $star = $(".star-input"),
     $result = $star.find("output>b");
 	
   	$(document)
@@ -25,19 +24,12 @@ var $star = $(".star-input"),
     	$result.text($(this).text());
     })
     .on("mouseleave", ".star-input>.input", function(){
-    	//var $a = $star.find(".input");
-    	//var $a = $(this).children("input");
-    	var $a = $star.focus().attr("id");
-    	console.log($a);
-    	
-    	/*
-    	console.log($checked);
+    	var $checked = $star.find(":checked");
+
     		if($checked.length === 0){
      	 		$result.text("0");
    		 	} else {
      	 		$result.text($checked.next().text());
-    		}*/
-  	});
-};
-
-starRating();
+    		}
+  	});	
+});
