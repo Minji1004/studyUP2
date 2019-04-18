@@ -27,3 +27,12 @@
     cursor: pointer;
     color: #FFD119;
     text-decoration: none; }
+
+.workIcon{
+	font-size:15px;
+}
+
+.workInactive{
+	pointer-events: none;
+	display: none;
+}

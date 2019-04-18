@@ -41,15 +41,36 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public void updateIntroduce(Teacher dto) throws Exception{
 		try {
-			dao.insertData("teacher.updateIntroduce", dto);
+			dao.updateData("teacher.updateIntroduce", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			
 			throw e;
 		}
 	}
+
+	@Override
+	public void insertIntroduce(Teacher dto) throws Exception {
+		try {
+			dao.insertData("teacher.insertIntroduce", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw e;
+		}
+		
+	}
 	
-	
+	@Override
+	public List<String> readWork(String userId) throws Exception{
+		List<String> list=null;
+		try {
+			list=dao.selectList("teacher.readWork", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 
 

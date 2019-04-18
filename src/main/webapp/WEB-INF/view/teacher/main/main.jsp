@@ -8,47 +8,98 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		var e = document.getElementById('tBox');
-		e.style.height = (e.scrollHeight) + 'px';
-	});   
+
+var introduceMode = '${introduceMode}';
+var workMode = '${workMode}';
+
+function resizeTextarea(){
+	var e = document.getElementById('tBox');
+	e.style.height = (e.scrollHeight) + 'px';
+}
+
+$(function(){
+	resizeTextarea();	
+	if(introduceMode=="createIntroduce")
+		$("#tBox").next().html("등록하기");
+	else if(introduceMode=="updateIntroduce")
+		$("#tBox").next().html("수정하기");
+	
+	if(workMode=="createWork")
+		$("form[name='work']").find("button").last().html("등록하기");
+	else if(workMode=="updateWork")
+		$("form[name='work']").find("button").last().html("수정하기");
+});
+
 	
 	function changeTextarea(){
 		$("#tBox").removeClass("read");
 		$("#tBox").attr("readonly",false);
-		var $btn = $("#tBox").next();		
+		var $btn = $("#tBox").next();
 		
-		if('${introduceMode}'=='register')
+		if(introduceMode=='createIntroduce')
 			$btn.html("등록완료");
-		else
+		else if(introduceMode=='updateIntroduce')
 			$btn.html("수정완료");
 		
-		$btn.on("click", function(){
-				var url = "<%=cp%>/teacher/updateIntroduce"
-				var content = $("#tBox").text();
-				
-				$.ajax({
-					type:"post",
-					url: url,
-					dataType: "JSON",
-					data: {
-						content:content
-					}
-					success: function(data){
-						alert(data.state);
-						$("#tBox").removeClass("add");
-						$("#tBox").attr("readonly",true);						
-						$btn.html("수정하기");
-					},
-					error: function(e){
-						console.log(e.responseText);
-					}
-				});				
-				
-		});		
+		$btn.removeAttr("onclick");
+		$btn.attr("onclick", "sendIntroduce();");
 
 	}
 	
+	function sendIntroduce(){
+		var url = "<%=cp%>/teacher/"+introduceMode;
+		var content = $("#tBox").val();
+		var $btn = $("#tBox").next();
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			dataType: "JSON",
+			data: {
+				content:content
+			},
+			success: function(data){
+				$("#tBox").addClass("read");
+				$("#tBox").attr("readonly",true);						
+				$btn.html("수정하기");	
+				introduceMode='updateIntroduce';
+				$btn.removeAttr("onclick");
+				$btn.attr("onclick", "changeTextarea();");
+				resizeTextarea();
+			},
+			error: function(e){
+				console.log(e.responseText);
+			}
+		});			
+	}		
+	
+	function changeWork(){
+		var $btn = $("form[name='work']").find("button");
+		if(workMode=='createWork'){
+			$btn.html("등록완료");
+			$("form[name='work']").find("p").remove();
+		}
+		else if(workMode=='updateWork'){
+			$btn.find("button").html("수정완료");
+			$(".workIcon").removeClass("workInactive");
+		}
+		
+		$("form[name='work']").find("table")
+		.append("<tr><td><input type='text' id='work' style='width: 500px;'><a href='#' class='pull-right btn-box-tool' style='font-size:15px;'><i class='fa fa-plus'></i></a></td></tr>");		
+		
+		$btn.removeAttr("onclick");
+		$btn.attr("onclick", "completeWork();");
+	}
+	
+	function listWork(){
+		
+	}
+	
+	function completeWork(){
+		alert("완료했다.");
+	}
+
+			
 </script>
 
 
@@ -58,7 +109,7 @@
 
 	<div class="box box-primary"
 		style="width: 700px; margin: 30px; float: left; padding: 10px;">
-		<img src="<%=cp%>/resource/images/team-1.jpg"
+		<img src="<%=cp%>/uploads/member_profile/${teacher.picture}"
 			class="profile-user-img img-circle">
 		<div
 			style="display: inline-block; vertical-align: top; padding: 0 20px; width: 450px;">
@@ -109,7 +160,7 @@
 			<form name="introduce" method="post">			
 				<textarea id="tBox" class="read" readonly="readonly">${teacher.content}</textarea>
 				<c:if test="${mode eq 'teacher'}">
-					<button class="btn" type="button" style="float: right; margin: 0 30px 10px;" onclick="changeTextarea()">${introduceMode == 'register'? '등록하기':'수정하기'}</button>
+					<button class="btn" type="button" style="float: right; margin: 0 30px 10px;" onclick="changeTextarea()"></button>
 				</c:if>
 		
 			</form>
@@ -120,17 +171,25 @@
 		</div>
 		<div class="box-body no-padding">
 			<form name="work" method="post">
+				<c:if test="${empty teacher.work}"> 
+					<p style="text-align: center;">등록된 자료가 없습니다.</p>
+				</c:if>
 				<table class="table table-striped">
+				<c:forEach var="dto" items="${teacher.work}">
 					<tr>
-						<td>나나고등학교 졸업</td>
+						<td>${dto}
+						<a href="#" class="pull-right btn-box-tool workIcon workInactive"><i class="fa fa-trash"></i></a>
+						<a href="#" class="pull-right btn-box-tool workIcon workInactive"><i class="fa fa-edit"></i></a>
+						</td>
 					</tr>
-					<tr>
-						<td>라라고등학교 졸업</td>
-					</tr>
+				</c:forEach>
+<!-- 				<tr>
+				<td><input type="text" id="work" style="width: 500px;"><a href="#" class="pull-right btn-box-tool" style="font-size:15px;"><i class="fa fa-plus"></i></a></td>
+				</tr> -->
 				</table>
 				<c:if test="${mode eq 'teacher'}">
 					<button class="btn" type="button"
-						style="float: right; margin-right: 30px;">수정하기</button>
+						style="float: right; margin-right: 30px;" onclick="changeWork()"></button>
 				</c:if>
 			</form>
 		</div>

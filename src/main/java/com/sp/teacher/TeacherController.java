@@ -1,6 +1,8 @@
 package com.sp.teacher;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -28,16 +30,17 @@ public class TeacherController {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		if(info==null)
-			return "redirect:/study/main";
+			return "redirect:/main";
 		
 		Teacher teacher = teacherService.readTeacher(info.getUserId());
 		teacher.setTel(makePhoneNumber(info.getTel()));
-		
+	
+		//자기소개
 		String msg = teacher.getContent();
 		if(msg == null) {
 			if(mode.equals("teacher")) {
 				msg = "자기소개를 등록해주세요.";
-				model.addAttribute("introduceMode", "register");
+				model.addAttribute("introduceMode", "createIntroduce");
 			}
 			else
 				msg = teacher.getNickname()+" 선생님입니다.";
@@ -45,7 +48,16 @@ public class TeacherController {
 			teacher.setContent(msg);
 		}
 		else
-			model.addAttribute("introduceMode", "update");
+			model.addAttribute("introduceMode", "updateIntroduce");
+		
+		
+		//경력
+		List<String> work = teacherService.readWork(teacher.getUserId());
+		teacher.setWork(work);
+		String workMode = "updateWork";
+		if(work.size()==0)
+			workMode = "createWork";		
+		model.addAttribute("workMode", workMode);
 		
 		//List<Map<String, String>> subject = teacherService.readSubject(info.getUserId());
 		
@@ -54,14 +66,39 @@ public class TeacherController {
 			teacher.setSubject(null);
 		else
 			teacher.setSubject(subject);	*/
-				
+		
 		model.addAttribute("mode", mode);
 		model.addAttribute("left", 0);
 		model.addAttribute("teacher", teacher);
+		
 			
 		return ".teacherLayout";
 	}
 
+	@RequestMapping(value ="/teacher/createIntroduce", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> createIntroduce(HttpSession session, @RequestParam String content) throws Exception{
+	
+		Map<String, Object> model = new HashMap<>();
+	
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+	
+		Teacher teacher = new Teacher();
+		teacher.setUserId(info.getUserId());
+		
+		URLDecoder.decode(content, "utf-8");		
+		teacher.setContent(content);
+		
+		try {
+			teacherService.insertIntroduce(teacher);
+			model.put("state", "true");
+		}catch(Exception e){
+			model.put("state", "false");
+		}	
+
+		return model;
+	}
+	
 	
 	@RequestMapping(value ="/teacher/updateIntroduce", method=RequestMethod.POST)
 	@ResponseBody
@@ -73,13 +110,15 @@ public class TeacherController {
 	
 		Teacher teacher = new Teacher();
 		teacher.setUserId(info.getUserId());
+		
+		URLDecoder.decode(content, "utf-8");	
 		teacher.setContent(content);
 		try {
 			teacherService.updateIntroduce(teacher);
 			model.put("state", "true");
 		}catch(Exception e){
 			model.put("state", "false");
-		}
+		}	
 
 		return model;
 	}

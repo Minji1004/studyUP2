@@ -15,7 +15,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<%=cp%>/resource/images/team-1.jpg" class="img-circle" alt="User Image">
+          <img src="<%=cp%>/uploads/member_profile/${teacher.picture}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>${teacher.nickname} 선생님</p>

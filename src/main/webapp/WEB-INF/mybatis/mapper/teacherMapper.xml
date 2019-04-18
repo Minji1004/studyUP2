@@ -20,9 +20,16 @@
 			WHERE tId = #{userId}
 	</select>
 	
+	<insert id="insertIntroduce" parameterType="com.sp.teacher.Teacher">
+		INSERT INTO introduce(tId, content) VALUES (#{userId}, #{content})
+	</insert>
+	
 	<update id="updateIntroduce" parameterType="com.sp.teacher.Teacher">
-		
+		UPDATE introduce SET content = #{content} WHERE tId=#{userId}
 	</update>
 
+	<select id="readWork" parameterType="String" resultType="String">
+		SELECT content FROM work WHERE tId = #{userId}
+	</select>
 	    
 </mapper>
