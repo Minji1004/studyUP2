@@ -13,7 +13,9 @@ var introduceMode = '${introduceMode}';
 var workMode = '${workMode}';
 
 function resizeTextarea(){
+	
 	var e = document.getElementById('tBox');
+	e.style.height = '1px';
 	e.style.height = (e.scrollHeight) + 'px';
 }
 
@@ -28,6 +30,8 @@ $(function(){
 		$("form[name='work']").find("button").last().html("등록하기");
 	else if(workMode=="updateWork")
 		$("form[name='work']").find("button").last().html("수정하기");
+	
+	listWork();
 });
 
 	
@@ -73,6 +77,54 @@ $(function(){
 		});			
 	}		
 	
+	//경력 관련된 부분
+	
+function listWork(){
+		
+		var url = "<%=cp%>/teacher/listWork";
+			
+			$.ajax({
+				type:"get",
+				url: url,
+				data: {
+					tnum:'${tnum}'
+				},
+				dataType: "json",
+				success: function(data){	
+					printWork(data);
+				},  
+				error: function(jqXHR){ 
+					console.log(jqXHR.responseText);
+				}		
+			});			
+	}
+	
+function printWork(data){		
+	
+	$("form[name='work']").find("table").empty();
+	
+		if(data.list.length==0){
+			$("form[name='work']").prepend("<p style='text-align: center;'>등록된 자료가 없습니다.</p>");			
+		}else{
+			var out="";
+			var tnum = '${tnum}';
+			for(var idx=0; idx<data.list.length; idx++){
+				var num = data.list[idx].num;
+				var content = data.list[idx].content;
+				
+				out+="<tr>"
+				out+=	"<td>"+content;
+				out+=	"<a href='#' onclick='deleteWork("+tnum+","+num+");' class='pull-right btn-box-tool workIcon workInactive'>"
+				out+=		"<i class='fa fa-trash'></i></a>"
+				out+=	"<a href='#' onclick='updateWork("+tnum+","+num+");' class='pull-right btn-box-tool workIcon workInactive'>" 
+				out+=		"<i class='fa fa-edit'></i></a>"
+				out+=	"</td></tr>"			
+			}
+			$("form[name='work']").find("table").append(out);
+		}
+	}
+
+			
 	function changeWork(){
 		var $btn = $("form[name='work']").find("button");
 		if(workMode=='createWork'){
@@ -80,24 +132,59 @@ $(function(){
 			$("form[name='work']").find("p").remove();
 		}
 		else if(workMode=='updateWork'){
-			$btn.find("button").html("수정완료");
+			$btn.html("수정완료");
 			$(".workIcon").removeClass("workInactive");
 		}
 		
-		$("form[name='work']").find("table")
-		.append("<tr><td><input type='text' id='work' style='width: 500px;'><a href='#' class='pull-right btn-box-tool' style='font-size:15px;'><i class='fa fa-plus'></i></a></td></tr>");		
+		var out="";
+		out += "<tr><td>";
+		out += 		"<input type='text' id='work' style='width: 500px;'>"
+		out += 		"<a href='#' onclick='insertWork("+"${tnum}"+");' class='pull-right btn-box-tool' style='font-size:15px;'>"
+		out += 			"<i class='fa fa-plus'></i>"
+		out += 		"</a>"
+		out += "</td></tr>"
+		
+		$("form[name='work']").find("table").append(out);		
 		
 		$btn.removeAttr("onclick");
 		$btn.attr("onclick", "completeWork();");
 	}
 	
-	function listWork(){
+
+	function insertWork(tnum){
+		var $input = $("form[name='work']").find("input");
+		var content = $input.val();
+		
+		var url="<%=cp%>/teacher/insertWork";
+		var query="tnum="+tnum+"&content="+content;
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){	
+				listWork();						
+				$input.val("");	
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			},
+			complete: function(){
+				$(".workIcon").removeClass("workInactive");
+			} 
+			
+		});
 		
 	}
+	
+
 	
 	function completeWork(){
 		alert("완료했다.");
 	}
+	
+	
 
 			
 </script>
@@ -171,21 +258,7 @@ $(function(){
 		</div>
 		<div class="box-body no-padding">
 			<form name="work" method="post">
-				<c:if test="${empty teacher.work}"> 
-					<p style="text-align: center;">등록된 자료가 없습니다.</p>
-				</c:if>
 				<table class="table table-striped">
-				<c:forEach var="dto" items="${teacher.work}">
-					<tr>
-						<td>${dto}
-						<a href="#" class="pull-right btn-box-tool workIcon workInactive"><i class="fa fa-trash"></i></a>
-						<a href="#" class="pull-right btn-box-tool workIcon workInactive"><i class="fa fa-edit"></i></a>
-						</td>
-					</tr>
-				</c:forEach>
-<!-- 				<tr>
-				<td><input type="text" id="work" style="width: 500px;"><a href="#" class="pull-right btn-box-tool" style="font-size:15px;"><i class="fa fa-plus"></i></a></td>
-				</tr> -->
 				</table>
 				<c:if test="${mode eq 'teacher'}">
 					<button class="btn" type="button"

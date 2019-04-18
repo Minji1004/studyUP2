@@ -25,15 +25,21 @@ public class TeacherController {
 	private TeacherService teacherService;
 	
 	@RequestMapping(value ="/teacher/main", method=RequestMethod.GET)
-	public String manage(@RequestParam String mode, HttpSession session, Model model) throws Exception{
+	public String manage(@RequestParam int tnum, HttpSession session, Model model) throws Exception{
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		if(info==null)
-			return "redirect:/main";
+		List<Integer> userType = info.getUserType();		
+		String mode = "student";	
 		
-		Teacher teacher = teacherService.readTeacher(info.getUserId());
-		teacher.setTel(makePhoneNumber(info.getTel()));
+		if(info.getUserNum()==tnum) {
+			for(int type: userType)	
+				if(type==3) 
+					mode = "teacher";
+		}		
+		
+		Teacher teacher = teacherService.readTeacher(tnum);
+		teacher.setTel(makePhoneNumber(teacher.getTel()));
 	
 		//자기소개
 		String msg = teacher.getContent();
@@ -50,14 +56,13 @@ public class TeacherController {
 		else
 			model.addAttribute("introduceMode", "updateIntroduce");
 		
-		
 		//경력
-		List<String> work = teacherService.readWork(teacher.getUserId());
-		teacher.setWork(work);
+		List<Work> work = teacherService.readWork(tnum);
 		String workMode = "updateWork";
 		if(work.size()==0)
 			workMode = "createWork";		
 		model.addAttribute("workMode", workMode);
+		
 		
 		//List<Map<String, String>> subject = teacherService.readSubject(info.getUserId());
 		
@@ -70,6 +75,7 @@ public class TeacherController {
 		model.addAttribute("mode", mode);
 		model.addAttribute("left", 0);
 		model.addAttribute("teacher", teacher);
+		model.addAttribute("tnum", tnum);
 		
 			
 		return ".teacherLayout";
@@ -120,6 +126,39 @@ public class TeacherController {
 			model.put("state", "false");
 		}	
 
+		return model;
+	}
+	
+	@RequestMapping(value ="/teacher/listWork")
+	@ResponseBody
+	public Map<String, Object> listWork(@RequestParam int tnum) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		List<Work> list = teacherService.readWork(tnum);
+		
+		model.put("list", list);
+				
+		return model;
+	}
+	
+	@RequestMapping(value ="/teacher/insertWork")
+	@ResponseBody
+	public Map<String, Object> insertWork(@RequestParam int tnum, @RequestParam String content) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		Work dto = new Work();
+		dto.setTnum(tnum);
+		content = URLDecoder.decode(content, "utf-8");		
+		dto.setContent(content);
+		
+		try {
+			teacherService.insertWork(dto);
+			model.put("state", "true");
+		}catch(Exception e){
+			model.put("state", "false");
+		}	
+				
 		return model;
 	}
 	

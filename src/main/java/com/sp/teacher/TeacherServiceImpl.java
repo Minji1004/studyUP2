@@ -15,11 +15,11 @@ public class TeacherServiceImpl implements TeacherService{
 	private CommonDAO  dao;
 	
 	@Override
-	public Teacher readTeacher(String userId) throws Exception{
+	public Teacher readTeacher(int tnum) throws Exception{
 		Teacher teacher = null;
 		
 		try {
-			teacher = dao.selectOne("teacher.readTeacher",userId);
+			teacher = dao.selectOne("teacher.readTeacher",tnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,14 +62,26 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 	
 	@Override
-	public List<String> readWork(String userId) throws Exception{
-		List<String> list=null;
+	public List<Work> readWork(int tnum) throws Exception{
+		List<Work> list=null;
 		try {
-			list=dao.selectList("teacher.readWork", userId);
+			list=dao.selectList("teacher.readWork", tnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public void insertWork(Work dto) throws Exception {
+		try {
+			dao.insertData("teacher.insertWork", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw e;
+		}		
+		
 	}
 
 

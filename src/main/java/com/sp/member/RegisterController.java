@@ -28,7 +28,7 @@ public class RegisterController {
 		
 		for(int type: userType)	{
 			if(type==3&&mode.equals("teacher")) 
-				return "redirect:/teacher/main?mode=teacher";
+				return "redirect:/teacher/main?tnum="+info.getUserNum();
 			if(type==2&&mode.equals("studyroom"))
 				return mode+"/manage"; //재민오빠! 스터디룸 관리자 페이지로 가는 주소 넣어야함.
 		}		
@@ -67,7 +67,7 @@ public class RegisterController {
 		
 
 		if(mode.equals("teacher"))
-			return "redirect:/teacher/main?mode=teacher";
+			return "redirect:/teacher/main?tnum="+info.getUserNum();
 		else
 			return ".teacherLayout"; //재민오빠! 스터디룸 관리자 페이지로 보내야함.
 		
