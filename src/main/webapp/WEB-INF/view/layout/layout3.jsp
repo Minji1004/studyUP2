@@ -25,10 +25,14 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/timer.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
+	<link rel="stylesheet" href="<%=cp%>/resource/css/timer.css" type="text/css">
 	
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util-jquery.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
+<script type="text/javascript" src="<%=cp %>/resource/js/jquery.pietimer.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/TimeCircles.js"></script>
+
 <script type="text/javascript">
 $(function(){
 	$(document).on("click",".timer", function(){
@@ -38,8 +42,42 @@ $(function(){
 		});
 	});
 	
+
+	$("#DateCountdown").TimeCircles({
+	    "animation": "smooth",
+	    "bg_width": 1.2,
+	    "fg_width": 0.1,
+	    "circle_bg_color": "#60686F",
+	    "time": {
+	        "Days": {
+	            "text": "Days",
+	            "color": "#FFCC66",
+	            "show": false
+	        },
+	        "Hours": {
+	            "text": "Hours",
+	            "color": "#99CCFF",
+	            "show": true
+	        },
+	        "Minutes": {
+	            "text": "Minutes",
+	            "color": "#BBFFBB",
+	            "show": true
+	        },
+	        "Seconds": {
+	            "text": "Seconds",
+	            "color": "#FF9999",
+	            "show": true
+	        }
+	    }
+	});
+	
 });
 
+$(function(){
+	var widthC = document
+	$("canvas").css("width", "300px");
+});
 
 </script>
 

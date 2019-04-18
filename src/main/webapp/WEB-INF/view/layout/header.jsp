@@ -21,8 +21,10 @@
                     </ul>
                 </nav>
                 <a href="#" class="nav-toggle">Menu<span></span></a>
-                <div class="header-right">
+        <div class="header-right">
 
+		
+	
 		<div id="login">
 			<c:if test="${empty sessionScope.member}">
 				<a href="<%=cp%>/member/login" style="color: white;">로그인</a>

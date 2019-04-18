@@ -46,7 +46,7 @@ $(document).ready(function() {
 	  	var $el = $(this)
 	    	id = $el.attr('href');
 		$('html, body').animate({
-			scrollTop: $(id).offset().top - 75
+			scrollTop: $(id).offset().top-75
 		}, 500);
 	  return false;
 	});

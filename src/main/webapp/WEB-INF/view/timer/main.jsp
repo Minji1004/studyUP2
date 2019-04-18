@@ -5,6 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
+
 <script type="text/javascript">
 $(function(){
 	$(document).on("change", "input[name=goalTime]", function(){
@@ -29,13 +30,21 @@ $(function(){
 		});
 		
 	});
+	
+
 });
+
+function timerOn(){
+	$(function(){
+	
+	});
+} 
 
 
 </script>
 
 
-<div class="modal-header" style="width: 300;">
+<div class="modal-header" style="width: 900;">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
  	<h4 class="modal-title" id="myModalLabel" align="center">타이머</h4>
 </div>
@@ -43,9 +52,20 @@ $(function(){
  	<div class="dialog-content-location"><input type="checkbox" name="goalTime">&nbsp;<b>목표시간</b></div>
  		
  	<div id="goaltimeSelector"class="dialog-content dialog-content-location"></div>
+ 	
+ 		
+
+		
 
 </div>
 <div class="modal-footer">
-   <button type="button" class="btn btn-primary">적용</button>
+   <button type="button" class="btn btn-primary" onclick = "timerOn()">적용</button>
    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 </div>
+
+
+
+	
+	
+	
+		
