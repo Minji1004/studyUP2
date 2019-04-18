@@ -6,6 +6,36 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+function deleteNotice(){
+<c:if test="${sessionScope.member.userId==dto.userId}">
+	var q="noticeNum=${dto.noticeNum}&${query}";
+	var url="<%=cp%>/customer/notice/delete?"+q;
+	
+	if(confirm("게시물을 삭제하시겠습니까?")){
+		location.href=url;
+	}
+</c:if>
+<c:if test="${sessionScope.member.userId!=dto.userId}">
+	alert("게시물 작성자만 게시물을 삭제할 수 있습니다.")
+</c:if>
+}
+
+function updateNotice(){
+<c:if test="${sessionScope.member.userId==dto.userId}">
+	var q="noticeNum=${dto.noticeNum}&page=${page}";
+	var url="<%=cp%>/notice/update?"+q;
+	
+	location.href=url;
+</c:if>
+
+<c:if test="${sessionScope.member.userId!=dto.userId}">
+	alert("게시물 작성자만 게시물을 수정할 수 있습니다.");
+</c:if>
+}
+</script>
+
+
 <style type="text/css">
 .bodyFrame2{
 	padding-top: 10px;
@@ -145,7 +175,7 @@
 		                	<tr>
 		                		<td>
 		                		    <button type="button" class="btn btn-default btn-sm wbtn">수정</button>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn">삭제</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteNotice()">삭제</button>
 		                		</td>
 		                		<td align="right">
 		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/notice/list?${query}';"> 목록으로 </button>

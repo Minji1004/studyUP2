@@ -123,8 +123,15 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int deleteNotice(int noticeNum, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.deleteData("notice.deleteNotice", noticeNum);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override

@@ -77,7 +77,7 @@ public class NoticeController {
 		long gap;
 		int listNum, n=0;
 		for(Notice dto:list) {
-			listNum=dataCount-(start+n-1);
+			listNum=dataCount-(start+n);
 			dto.setListNum(listNum);
 			
 			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -182,12 +182,12 @@ public class NoticeController {
 		Notice preReadDto=service.preReadNotice(map);
 		Notice nextReadDto=service.nextReadNotice(map);
 		
-		List<Notice> listFile=service.listFile(noticeNum);
+		// List<Notice> listFile=service.listFile(noticeNum);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
-		model.addAttribute("listFile",listFile);
+		// model.addAttribute("listFile",listFile);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
@@ -246,15 +246,25 @@ public class NoticeController {
 
 	@RequestMapping(value="/customer/notice/delete")
 	public String delete(
-			@RequestParam int num,
-			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam int noticeNum,
+			@RequestParam(value="page") String page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpSession session) throws Exception {
-
 		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"notice";
 		
-		return "redirect:/customer/notice/list";
+		String query="page="+page;
+		keyword=URLDecoder.decode(keyword, "utf-8");
+		if(keyword.length()!=0) {
+			query+="&condition"+condition+"&keyword="+
+					URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		service.deleteNotice(noticeNum, pathname);
+		
+		return "redirect:/customer/notice/list?"+query;
 	}
 
 }

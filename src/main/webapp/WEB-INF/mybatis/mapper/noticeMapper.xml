@@ -89,7 +89,6 @@
 		SELECT noticeNum, subject
         FROM notice n
         JOIN memberInfo m ON n.userId=m.userId
-
 		<where>
 			<if test="keyword !=null and keyword !='' ">
 				<include refid="where-list"/>
@@ -103,6 +102,10 @@
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE notice SET views=views+1 WHERE noticeNum=#{noticeNum}
 	</update>
+	
+	<delete id="deleteNotice" parameterType="Integer">
+		DELETE FROM notice WHERE noticeNum=#{noticeNum}
+	</delete>
 	
 </mapper>
 
