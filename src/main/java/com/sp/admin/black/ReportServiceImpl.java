@@ -18,7 +18,7 @@ public class ReportServiceImpl implements ReportService{
 	public void insertReport(Report dto) throws Exception {
 		//신고하기
 		try {
-			dao.insertData("black.insertReport", dto);
+			dao.insertData("admin.insertReport", dto);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -29,7 +29,7 @@ public class ReportServiceImpl implements ReportService{
 		int result=0;
 		
 		try {
-			result=dao.selectOne("black.dataReportCount", map);
+			result=dao.selectOne("admin.dataReportCount", map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,18 +41,26 @@ public class ReportServiceImpl implements ReportService{
 		List<Report> list = null;
 		
 		try {
-			list=dao.selectList("black.listReport", map);
+			list=dao.selectList("admin.listReport", map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return list;
 	}
 
 	@Override
-	public void deleteReport(String userId) throws Exception {
-		// TODO Auto-generated method stub
+	public Report readReport(int num) throws Exception {
+		Report rdto = null;
 		
+		try {
+			rdto=dao.selectOne("admin.");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return null;
 	}
+	
 
 }

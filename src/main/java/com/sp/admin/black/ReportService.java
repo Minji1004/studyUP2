@@ -7,5 +7,5 @@ public interface ReportService {
 	public void insertReport(Report dto) throws Exception;
 	public int dataReportCount(Map<String, Object> map) throws Exception;
 	public List<Report> listReport(Map<String, Object> map) throws Exception;
-	public void deleteReport(String userId) throws Exception;
+	public Report readReport(int num) throws Exception;
 }

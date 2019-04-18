@@ -7,9 +7,9 @@ public class Report {
 	private int reportBoardNum;
 	private int replNum;
 	private String reportUserId;
-	private String reportNickName;	
+	private String reportUserNickName;
 	private String reportedUserId;
-	private String reportedNickname;
+	private String reportedNickName;
 	private String reportCause;
 	private int reportType;
 	private String reportDate;
@@ -50,11 +50,11 @@ public class Report {
 	public void setReportUserId(String reportUserId) {
 		this.reportUserId = reportUserId;
 	}
-	public String getReportNickName() {
-		return reportNickName;
+	public String getreportUserNickName() {
+		return reportUserNickName;
 	}
-	public void setReportNickName(String reportNickName) {
-		this.reportNickName = reportNickName;
+	public void setreportUserNickName(String reportNickName) {
+		this.reportUserNickName = reportNickName;
 	}
 	public String getReportedUserId() {
 		return reportedUserId;
@@ -62,11 +62,11 @@ public class Report {
 	public void setReportedUserId(String reportedUserId) {
 		this.reportedUserId = reportedUserId;
 	}
-	public String getReportedNickname() {
-		return reportedNickname;
+	public String getReportedNickName() {
+		return reportedNickName;
 	}
-	public void setReportedNickname(String reportedNickname) {
-		this.reportedNickname = reportedNickname;
+	public void setReportedNickName(String reportedNickName) {
+		this.reportedNickName = reportedNickName;
 	}
 	public String getReportCause() {
 		return reportCause;

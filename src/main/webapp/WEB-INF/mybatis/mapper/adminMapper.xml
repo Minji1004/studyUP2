@@ -7,16 +7,28 @@
 		VALUES(#{reportBoard}, #{reportBoardNum}, #{reportBoardNum}, #{replNum}, #{reportUser}, #{reportedUser}, #{reportCause}, #{reportType})	
 	</insert>
 	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			(INSTR(reportBoard, #{keyword}) &gt; 0
+				OR INSTR(reportCause, #{keyword}) &gt; 0
+				OR INSTR(reportUserId, #{keyword}) &gt; 0
+				OR INSTR(reportUserNickName, #{keyword}) &gt; 0
+				OR INSTR(reportedUserId, #{keyword}) &gt; 0
+				OR INSTR(reportedNickName, #{keyword}) &gt; 0
+				OR DATE_FORMAT(created, '%Y-%m-%d') = #{keyword})				
+		</if>		
+	</sql>
+	
 	<select id="dataReportCount" parameterType="map" resultType="Integer">
 		SELECT IFNULL(COUNT(*),0) FROM report
 	</select>
 	
 	<select id="listReport" parameterType="map" resultType="com.sp.admin.black.Report">
-	select A.reportNum, A.reportBoard, A.reportBoardNum, A.replNum, A.reportUser, A.reportCause, A.reportType, A.reportUserId, A.reportUserNickName,
+	select A.reportNum, A.reportBoard, A.reportBoardNum, A.replNum, A.reportUser, A.reportCause, A.reportType, A.reportDate, A.reportUserId, A.reportUserNickName, A.tel
        B.reportedUser, B.reportedUserId, B.reportedNickName
 	from 
 	(       
-      SELECT R1.reportNum, R1.reportBoard, R1.reportBoardNum, R1.replNum, R1.reportUser, R1.reportCause, R1.reportType ,M1.userId reportUserId, M1.nickName reportUserNickName
+      SELECT R1.reportNum, R1.reportBoard, R1.reportBoardNum, R1.replNum, R1.reportUser, R1.reportCause, R1.reportType, R1.reportDate, M1.userId reportUserId, M1.nickName reportUserNickName, M1.tel
        FROM report AS R1
        JOIN memberInfo AS M1
        ON R1.reportUser = M1.userNum
@@ -28,7 +40,14 @@
        JOIN memberInfo AS M1
        ON R1.reportedUser = M1.userNum   
 	) AS B
-	ON A.reportNum = B.reportNum;
+	ON A.reportNum = B.reportNum
+	<where>
+		<if test="searchKey!=null and searchKey!=''">
+			<include refid="where-list"/>
+		</if>
+	</where>
+	ORDER BY A.reportNum DESC
+	LIMIT #{start}, #{rows}
 	</select>
 
 </mapper>

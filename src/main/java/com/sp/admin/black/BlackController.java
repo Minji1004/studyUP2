@@ -24,13 +24,9 @@ public class BlackController {
 		
 	@Autowired
 	private MyUtil util;
+
 	
 	@RequestMapping(value="/admin/blacklist/list")
-	public String blacklist() {
-		return ".admin.blacklist.list";
-	}
-	
-	@RequestMapping(value="/admin/blacklist/report")
 	public String reportlist(
 		@RequestParam(value="page", defaultValue="1") int current_page,
 		@RequestParam(defaultValue="") String keyword,
@@ -73,30 +69,54 @@ public class BlackController {
 			rdto.setRlistNum(rlistNum);
 			n++;
 		}
+
 		
 		String query="";
-		String listUrl;		
+		String listUrl, articleUrl;		
 		
 		if(keyword.length() != 0) {
 			query="keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
 		listUrl= cp+"/admin/black/list";
+		articleUrl = cp+"/admin/black/article?page="+current_page;
+		
 		if(query.length() !=0) {
 			listUrl = listUrl+"?"+query;
+			articleUrl = articleUrl+"&"+query;
 		}
 		
 		String paging = util.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("rlist", rlist);
+		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
 		
-		model.addAttribute("keyword", keyword);
-		
+		model.addAttribute("keyword", keyword);		
 		
 		return ".admin.blacklist.list";
+	}
+	
+	@RequestMapping(value="/admin/blacklist/article")
+	public String reportArticle(
+		@RequestParam(defaultValue="") String keyword,
+		@RequestParam int num,
+		@RequestParam String page,
+		HttpServletRequest req,
+		Model model
+		) throws Exception {
+		
+		String query="page="+page;
+		keyword=URLDecoder.decode(keyword, "utf-8");
+		if(keyword.length()!=0) {
+			query+="&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		
+		
+		return ".admin.blacklist.article";
 	}
 }
