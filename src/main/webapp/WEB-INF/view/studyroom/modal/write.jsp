@@ -5,6 +5,45 @@
 <%
 	String cp=request.getContextPath();
 %>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+	function srPostcode() {
+		new daum.Postcode({
+			oncomplete:function(data){
+				var addr='';
+				var extraAddr='';
+				
+				if(data.userSelectedType==='R'){
+					addr=data.roadAddress;
+				} else {
+					addr=data.jibunAddress;
+				}
+				
+				if(data.userSelectedType === 'R'){
+	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                    extraAddr += data.bname;
+	                }
+	                if(data.buildingName !== '' && data.apartment === 'Y'){
+	                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                if(extraAddr !== ''){
+	                    extraAddr = ' (' + extraAddr + ')';
+	                }
+	                document.getElementById("srExtraAddress").value = extraAddr;
+	            
+	            } else {
+	                document.getElementById("srExtraAddress").value = '';
+	            }
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+	            document.getElementById('sample6_postcode').value = data.zonecode;
+	            document.getElementById("sample6_address").value = addr;
+	            // 커서를 상세주소 필드로 이동한다.
+	            document.getElementById("sample6_detailAddress").focus();
+			}
+		}).open();
+	}
+</script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		
@@ -23,6 +62,9 @@
 		    });
 		});
 	});
+	
+	
+	
 </script>
 		<!-- Modal body -->
 		<div class="srModal-body">
@@ -98,7 +140,14 @@
 								</tr>
 								<tr class="srTableLine">
 									<td class="tableName">위치</td>
-									<td><input type="text" id="" class="srInsertText" placeholder="주소를 검색합니다." style="padding-left:5px;"></td>
+									<td>
+										<input type="text" id="srAddress" class="srInsertText" placeholder="검색 버튼을 눌러주세요" readonly="readonly" style="padding-left:5px; width:80%;">
+										<input type="button" onclick="srPostcode()" value="2">
+									</td>
+								</tr>
+								<tr class="srTableLine">
+									<td class="tableName">상세위치</td>
+									<td><input type="text" id="srExtraAddress" class="srInsertText" placeholder="상세주소를 입력합니다." style="padding-left:5px;"></td>
 								</tr>
 							</table>
 						</div>
