@@ -54,6 +54,17 @@ public class CommentServiceImpl implements CommentService{
 		
 		return list;
 	}
+
+	@Override
+	public void deleteComment(int num) throws Exception {
+		try {
+			dao.deleteData("comment.deleteComment", num);
+		} catch (Exception e) {
+			e.printStackTrace();			
+			throw e;
+		}
+		
+	}
 	
 
 }

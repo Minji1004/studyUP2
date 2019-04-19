@@ -17,6 +17,11 @@
 			JOIN memberinfo 
 			ON treview.snum = memberinfo.userNum 
 			WHERE tnum=#{tnum}
+			ORDER BY num DESC
+			LIMIT #{start}, #{rows}
 	</select>
 	
+	<delete id="deleteComment" parameterType="Integer">
+		DELETE FROM treview WHERE num=#{num}
+	</delete>
 </mapper>

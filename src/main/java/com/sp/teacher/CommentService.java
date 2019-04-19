@@ -7,4 +7,5 @@ public interface CommentService {
 	public void insertComment(Comment dto) throws Exception;
 	public int dataCount(Map<String, Object> map) throws Exception;
 	public List<Comment> listComment(Map<String, Object> map) throws Exception;
+	public void deleteComment(int num) throws Exception;
 }

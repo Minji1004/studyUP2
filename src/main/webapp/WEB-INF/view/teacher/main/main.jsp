@@ -11,7 +11,7 @@
 
 var introduceMode = '${introduceMode}';
 var workMode = '${workMode}';
-var page=1;
+var page = 1;
 
 function resizeTextarea(){
 	
@@ -33,7 +33,7 @@ $(function(){
 		$("form[name='work']").find("button").html("수정하기");
 	
 	listWork();
-	listPage(page);
+	listPage(1);
 });
 
 	
@@ -213,7 +213,8 @@ function printWork(data){
 	
 	
 	//코멘트와 관련된 javascript
-	function listPage(page){
+	function listPage(current_page){
+		page = current_page;
 		var url="<%=cp%>/teacher/listComment"
 		var query="page="+page+"&tnum="+'${tnum}';
 		
@@ -258,7 +259,7 @@ function printWork(data){
 				out +=				"<span class='score'><i class='fa fa-star'></i>"+score+"</span>";
 				
 				if('${sessionScope.member.userNum}'==snum){
-					out += 			"<a href='#' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>";
+					out += 			"<a href='#' id='comment"+num+"'; onclick='deleteComment("+num+");' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>";
 				}
 				
 				out += 				"</span> <span class='description'>"+created+"</span>";
@@ -298,10 +299,9 @@ function printWork(data){
 			data: query,
 			dataType: "json",
 			success: function(data){	
-					alert(data.state);
 					$(".star-input").find("input:checked").removeAttr('checked');
 					$("#commentContent").val("");
-					listPage(page);
+					listPage(1);
 			},  
 			error: function(jqXHR){ 
 				console.log(jqXHR.responseText);
@@ -310,6 +310,24 @@ function printWork(data){
 		
 	}
 
+	function deleteComment(num){
+		
+		var url="<%=cp%>/teacher/deleteComment";
+		var query="num="+num+"&page="+page;
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){			
+					listPage(page);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); 	
+	}
 			
 </script>
 

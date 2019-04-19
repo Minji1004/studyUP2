@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,7 +28,7 @@ public class CommentController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/teacher/listComment")
+	@RequestMapping(value="/teacher/listComment" , method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> listComment(
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -68,7 +69,7 @@ public class CommentController {
 	}
 	
 	
-	@RequestMapping(value ="/teacher/insertComment")
+	@RequestMapping(value ="/teacher/insertComment", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertComment(
 			@RequestParam int tnum, 
@@ -89,6 +90,21 @@ public class CommentController {
 				
 		try {
 			commentService.insertComment(dto);
+			model.put("state", "true");
+		}catch(Exception e){
+			model.put("state", "false");
+		}	
+				
+		return model;
+	}
+	
+	@RequestMapping(value ="/teacher/deleteComment", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertComment(@RequestParam int num) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();				
+		try {
+			commentService.deleteComment(num);
 			model.put("state", "true");
 		}catch(Exception e){
 			model.put("state", "false");
