@@ -3,12 +3,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="teacher">
 
-	<select id="readTeacher" parameterType="String" resultType="com.sp.teacher.Teacher">
-	SELECT userNum, userId, nickname, userPwd, enabled, picture, content
+	<select id="readTeacher" parameterType="Integer" resultType="com.sp.teacher.Teacher">
+	SELECT userNum, userId, nickname, userPwd, enabled, picture, content, tel
 			FROM memberInfo 
 			LEFT JOIN introduce 
 			ON userId = tId
-		    WHERE userId = #{userId}
+		    WHERE userNum = #{tnum}
 	</select>
 	
 	<select id="readSubject" parameterType="String" resultType="map">
@@ -20,9 +20,28 @@
 			WHERE tId = #{userId}
 	</select>
 	
+	<insert id="insertIntroduce" parameterType="com.sp.teacher.Teacher">
+		INSERT INTO introduce(tId, content) VALUES (#{userId}, #{content})
+	</insert>
+	
 	<update id="updateIntroduce" parameterType="com.sp.teacher.Teacher">
-		
+		UPDATE introduce SET content = #{content} WHERE tId=#{userId}
 	</update>
 
-	    
+
+	<select id="readWork" parameterType="Integer" resultType="com.sp.teacher.Work">
+		SELECT num, content FROM work WHERE tnum = #{tnum}
+	</select>
+	
+	<insert id="insertWork" parameterType="com.sp.teacher.Work">
+		INSERT INTO work(tnum, content) VALUES (#{tnum}, #{content})
+	</insert>
+	
+	<select id="readLastWorkNum" parameterType="Integer" resultType="Integer">
+		select num from work where tnum=#{tnum} order by num desc LIMIT 1
+	</select>
+	
+	<delete id="deleteWork" parameterType="Integer">
+		DELETE FROM work WHERE num = #{num}
+	</delete>
 </mapper>

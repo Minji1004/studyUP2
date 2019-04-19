@@ -69,7 +69,6 @@ public class BlackController {
 			rdto.setRlistNum(rlistNum);
 			n++;
 		}
-
 		
 		String query="";
 		String listUrl, articleUrl;		
@@ -78,8 +77,8 @@ public class BlackController {
 			query="keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
-		listUrl= cp+"/admin/black/list";
-		articleUrl = cp+"/admin/black/article?page="+current_page;
+		listUrl= cp+"/admin/blacklist/list";
+		articleUrl = cp+"/admin/blacklist/article?page="+current_page;
 		
 		if(query.length() !=0) {
 			listUrl = listUrl+"?"+query;
@@ -103,7 +102,7 @@ public class BlackController {
 	@RequestMapping(value="/admin/blacklist/article")
 	public String reportArticle(
 		@RequestParam(defaultValue="") String keyword,
-		@RequestParam int num,
+		@RequestParam int reportNum,
 		@RequestParam String page,
 		HttpServletRequest req,
 		Model model
@@ -115,8 +114,22 @@ public class BlackController {
 			query+="&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
+		Report rdto=rservice.readReport(reportNum);
 		
+		if(rdto==null) {
+			return "redirect:/admin/blacklist/list";
+		}
 		
+		rdto.setReportCause(rdto.getReportCause().replaceAll("\n", "<br>"));
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("reportNum", reportNum);
+		
+		model.addAttribute("rdto",rdto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+				
 		return ".admin.blacklist.article";
 	}
 }

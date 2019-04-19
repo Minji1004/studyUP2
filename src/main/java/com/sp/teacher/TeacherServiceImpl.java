@@ -15,11 +15,11 @@ public class TeacherServiceImpl implements TeacherService{
 	private CommonDAO  dao;
 	
 	@Override
-	public Teacher readTeacher(String userId) throws Exception{
+	public Teacher readTeacher(int tnum) throws Exception{
 		Teacher teacher = null;
 		
 		try {
-			teacher = dao.selectOne("teacher.readTeacher",userId);
+			teacher = dao.selectOne("teacher.readTeacher",tnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,12 +41,72 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public void updateIntroduce(Teacher dto) throws Exception{
 		try {
-			dao.insertData("teacher.updateIntroduce", dto);
+			dao.updateData("teacher.updateIntroduce", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			
 			throw e;
 		}
+	}
+
+	@Override
+	public void insertIntroduce(Teacher dto) throws Exception {
+		try {
+			dao.insertData("teacher.insertIntroduce", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw e;
+		}
+		
+	}
+	
+	@Override
+	public List<Work> readWork(int tnum) throws Exception{
+		List<Work> list=null;
+		try {
+			list=dao.selectList("teacher.readWork", tnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public void insertWork(Work dto) throws Exception {
+		
+		try {
+			dao.insertData("teacher.insertWork", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw e;
+		}		
+		
+	}
+
+	@Override
+	public int readLastWorkNum(int tnum) throws Exception {
+		
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("teacher.readLastWorkNum", tnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+
+	@Override
+	public void deleteWork(int num) throws Exception {
+		try {
+			dao.deleteData("teacher.deleteWork", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	

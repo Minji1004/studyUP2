@@ -105,7 +105,7 @@ public class MemberController {
 			HttpSession session,
 			Model model) throws Exception {
 
-		String root = session.getServletContext().getRealPath("/");
+		String root =  session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "member_profile";
 		
 		String saveFilename = fileManager.doFileUpload(dto.getPictureM(), pathname);

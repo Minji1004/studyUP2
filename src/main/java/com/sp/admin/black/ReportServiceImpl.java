@@ -50,16 +50,16 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public Report readReport(int num) throws Exception {
+	public Report readReport(int reportNum) throws Exception {
 		Report rdto = null;
 		
 		try {
-			rdto=dao.selectOne("admin.");
+			rdto=dao.selectOne("admin.readReport", reportNum);
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
-		return null;
+		return rdto;
 	}
 	
 

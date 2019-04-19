@@ -18,11 +18,15 @@
 </ul>
 <ul>
 	<li>닉네임</li>
-	<li>${rdto.reportrdUserNickName}</li>	
+	<li>${rdto.reportedNickName}</li>	
 </ul>
 <ul>
 	<li>신고자</li>
 	<li>${rdto.reportUserId }</li>		
+</ul>
+<ul>
+	<li>신고자 닉네임</li>
+	<li>${rdto.reportUserNickName }</li>
 </ul>
 <ul>
 	<li>신고사유</li>
