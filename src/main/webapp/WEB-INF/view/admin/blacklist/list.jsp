@@ -12,7 +12,7 @@ th{
 </style>
 
 <section class="features section">
-	<div class="container" style="height:450px; width: 90%;">
+	<div class="container" style="height:600px; width: 90%; padding-top:80px;">
 		<form method="post">
 			<div class="input-group">
 				<input type="text" name="keyword" class="form-control input-sm keyword" placeholder="통합검색">
@@ -46,7 +46,7 @@ th{
 		<c:forEach var="rdto" items="${rlist}">
 		  <tr align="center" height="28" style="border-bottom: 1px solid #cccccc;">
 		      <th width="100">${rdto.rlistNum }</th>
-		      <th><a href="${articleUrl}&num">${rdto.reportedUserId }</a></th>		      
+		      <th><a href="${articleUrl}&reportNum=${rdto.reportNum}">${rdto.reportedUserId }</a></th>		      
 		      <th width="150">${rdto.reportedNickName }</th>
 		      <th width="150">${rdto.reportType }</th>
 		      <th width="150">${rdto.reportUserNickName }</th>
@@ -66,9 +66,9 @@ th{
 		
 
 	</div>
-</section>
-<section style="">
-	<div class="container" style="height:400px; width: 90%;">
+
+	<div class="container" style="height:400px; width: 90%;">	
+<c:if test="keyword==null || keyword==''">
 		<h5>블랙리스트</h5>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">
@@ -84,23 +84,20 @@ th{
 		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 		      <th width="100" style="color: #787878;">번호</th>
 		      <th style="color: #787878;">아이디</th>
-		      <th width="150" style="color: #787878;">닉네임</th>
-		      <th width="150" style="color: #787878;">전화번호</th>
-		      <th width="120" style="color: #787878;">신고횟수</th>
-		      <th width="120" style="color: #787878;">등록일</th>
-		      <th width="120" style="color: #787878;">해제예정일</th>
+		      <th width="200" style="color: #787878;">닉네임</th>		      
+		      <th width="160" style="color: #787878;">등록일</th>
+		      <th width="160" style="color: #787878;">해제예정일</th>
 		  </tr>
 		  
 		  <tr align="center" height="28" style="border-bottom: 1px solid #cccccc;"> 
 		      <th width="100">번호</th>
 		      <th>아이디</th>
-		      <th width="150">닉네임</th>
-		      <th width="150">전화번호</th>
-		      <th width="120">신고횟수</th>
-		      <th width="120">등록일</th>
-		      <th width="120">해제예정일</th>
+		      <th width="200">닉네임</th>	      
+		      <th width="160">등록일</th>
+		      <th width="160">해제예정일</th>
 		  </tr>
 		  
 		</table>
+</c:if>
 	</div>
 </section>

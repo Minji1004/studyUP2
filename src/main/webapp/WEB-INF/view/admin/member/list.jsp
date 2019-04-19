@@ -2,8 +2,9 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <section class="features section">
-	<div class="container" style="height:800px;">
+	<div class="container" style="height:800px; width:90%; padding-top: 80px;">
         <form method="post">
 			<div class="input-group">
 				<input type="text" name="keyword" class="form-control input-sm keyword" placeholder="통합검색">

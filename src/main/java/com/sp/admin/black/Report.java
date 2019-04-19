@@ -6,8 +6,10 @@ public class Report {
 	private String reportBoard;
 	private int reportBoardNum;
 	private int replNum;
+	private int reportUser;	
 	private String reportUserId;
 	private String reportUserNickName;
+	private int reportedUser;
 	private String reportedUserId;
 	private String reportedNickName;
 	private String reportCause;
@@ -85,6 +87,18 @@ public class Report {
 	}
 	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
+	}
+	public int getReportUser() {
+		return reportUser;
+	}
+	public void setReportUser(int reportUser) {
+		this.reportUser = reportUser;
+	}
+	public int getReportedUser() {
+		return reportedUser;
+	}
+	public void setReportedUser(int reportedUser) {
+		this.reportedUser = reportedUser;
 	}
 	
 }
