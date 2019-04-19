@@ -30,9 +30,10 @@ public class NoticeController {
 	private NoticeService service;
 	@Autowired
 	private MyUtil myUtil;
+
 	@Autowired
 	private FileManager fileManager;
-	
+
 	@RequestMapping(value= {"/customer/notice/list", "/servicecenter/main"})
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -198,22 +199,17 @@ public class NoticeController {
 
 	@RequestMapping(value="/customer/notice/update", method=RequestMethod.GET)
 	public String updateForm(
-			@RequestParam int num,
+			@RequestParam int noticeNum,
 			@RequestParam String page,
 			HttpSession session,			
 			Model model	) throws Exception {
-		SessionInfo info=(SessionInfo)session.getAttribute("memberInfo");
 		
-		if(! info.getUserId().equals("admin")) {
-			return "redirect:/customer/notice/list?page="+page;
-		}
-		
-		Notice dto=service.readNotice(num);
+		Notice dto=service.readNotice(noticeNum);
 		if(dto==null) {
 			return "redirect:/customer/notice/list?page="+page;
 		}
 		
-		List<Notice> listFile=service.listFile(num);
+		List<Notice> listFile=service.listFile(noticeNum);
 		
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
@@ -230,18 +226,8 @@ public class NoticeController {
 			Notice dto,
 			@RequestParam String page,
 			HttpSession session) throws Exception {
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		if(info.getUserId().equals("admin")) {
-			String root=session.getServletContext().getRealPath("/");
-			String pathname=root+"uploads"+File.separator+"notice";
-			
-			dto.setUserId(info.getUserId());
-			service.updateNotice(dto, pathname);
-		}
-		
-		return "redirect:/customer/notice/list?page="+page;
-		
+		return "redirect:/customer/notice/list?page="+page;	
 	}
 
 	@RequestMapping(value="/customer/notice/delete")
