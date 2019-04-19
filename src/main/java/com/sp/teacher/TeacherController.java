@@ -4,7 +4,6 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,6 +23,9 @@ public class TeacherController {
 	@Autowired
 	private TeacherService teacherService;
 	
+	@Autowired
+	private TeacherUtil teacherUtil;
+	
 	@RequestMapping(value ="/teacher/main", method=RequestMethod.GET)
 	public String manage(@RequestParam int tnum, HttpSession session, Model model) throws Exception{
 		
@@ -39,7 +41,7 @@ public class TeacherController {
 		}		
 		
 		Teacher teacher = teacherService.readTeacher(tnum);
-		teacher.setTel(makePhoneNumber(teacher.getTel()));
+		teacher.setTel(teacherUtil.makePhoneNumber(teacher.getTel()));
 	
 		//자기소개
 		String msg = teacher.getContent();
@@ -154,6 +156,9 @@ public class TeacherController {
 		
 		try {
 			teacherService.insertWork(dto);
+			int num = teacherService.readLastWorkNum(tnum);
+			
+			model.put("num", num);
 			model.put("state", "true");
 		}catch(Exception e){
 			model.put("state", "false");
@@ -162,16 +167,21 @@ public class TeacherController {
 		return model;
 	}
 	
-	
-	public static String makePhoneNumber(String phoneNumber) {
+	@RequestMapping(value ="/teacher/deleteWork")
+	@ResponseBody
+	public Map<String, Object> deleteWork(@RequestParam int num) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
 
-		   String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+		try {
 
-		   if(!Pattern.matches(regEx, phoneNumber)) return null;	   
-
-		   return phoneNumber.replaceAll(regEx, "$1-$2-$3");  
-
-	   }
-
+			teacherService.deleteWork(num);
+			model.put("state", "true");
+		}catch(Exception e){
+			model.put("state", "false");
+		}	
+				
+		return model;
+	}
 }
 

@@ -36,5 +36,12 @@
 	<insert id="insertWork" parameterType="com.sp.teacher.Work">
 		INSERT INTO work(tnum, content) VALUES (#{tnum}, #{content})
 	</insert>
-	    
+	
+	<select id="readLastWorkNum" parameterType="Integer" resultType="Integer">
+		select num from work where tnum=#{tnum} order by num desc LIMIT 1
+	</select>
+	
+	<delete id="deleteWork" parameterType="Integer">
+		DELETE FROM work WHERE num = #{num}
+	</delete>
 </mapper>

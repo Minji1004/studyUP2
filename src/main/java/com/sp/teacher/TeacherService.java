@@ -11,4 +11,6 @@ public interface TeacherService {
 	
 	public List<Work> readWork(int tnum) throws Exception;
 	public void insertWork(Work dto) throws Exception;
+	public int readLastWorkNum(int tnum) throws Exception;
+	public void deleteWork(int num) throws Exception;
 }

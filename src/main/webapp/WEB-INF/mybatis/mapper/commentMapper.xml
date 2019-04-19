@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+
+	<insert id="insertComment" parameterType="com.sp.teacher.Comment">
+		INSERT INTO treview(tnum, snum, content, score) VALUES (#{tnum},#{snum},#{content},#{score})
+	</insert>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0) FROM treview WHERE tnum = #{tnum}
+	</select>
+	
+	<select id="listComment" parameterType="map" resultType="com.sp.teacher.Comment">
+		SELECT num, snum, content, score, treview.created, nickname, picture
+			FROM treview 
+			JOIN memberinfo 
+			ON treview.snum = memberinfo.userNum 
+			WHERE tnum=#{tnum}
+	</select>
+	
+</mapper>

@@ -74,6 +74,7 @@ public class TeacherServiceImpl implements TeacherService{
 
 	@Override
 	public void insertWork(Work dto) throws Exception {
+		
 		try {
 			dao.insertData("teacher.insertWork", dto);
 		} catch (Exception e) {
@@ -83,6 +84,32 @@ public class TeacherServiceImpl implements TeacherService{
 		}		
 		
 	}
+
+	@Override
+	public int readLastWorkNum(int tnum) throws Exception {
+		
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("teacher.readLastWorkNum", tnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+
+	@Override
+	public void deleteWork(int num) throws Exception {
+		try {
+			dao.deleteData("teacher.deleteWork", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 
 

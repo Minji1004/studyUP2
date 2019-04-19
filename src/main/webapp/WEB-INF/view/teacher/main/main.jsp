@@ -11,6 +11,7 @@
 
 var introduceMode = '${introduceMode}';
 var workMode = '${workMode}';
+var page=1;
 
 function resizeTextarea(){
 	
@@ -27,11 +28,12 @@ $(function(){
 		$("#tBox").next().html("수정하기");
 	
 	if(workMode=="createWork")
-		$("form[name='work']").find("button").last().html("등록하기");
+		$("form[name='work']").find("button").html("등록하기");
 	else if(workMode=="updateWork")
-		$("form[name='work']").find("button").last().html("수정하기");
+		$("form[name='work']").find("button").html("수정하기");
 	
 	listWork();
+	listPage(page);
 });
 
 	
@@ -114,10 +116,8 @@ function printWork(data){
 				
 				out+="<tr>"
 				out+=	"<td>"+content;
-				out+=	"<a href='#' onclick='deleteWork("+tnum+","+num+");' class='pull-right btn-box-tool workIcon workInactive'>"
+				out+=	"<a href='#' id='workNum"+num+"' onclick='deleteWork("+num+");' class='pull-right btn-box-tool workIcon workInactive'>";
 				out+=		"<i class='fa fa-trash'></i></a>"
-				out+=	"<a href='#' onclick='updateWork("+tnum+","+num+");' class='pull-right btn-box-tool workIcon workInactive'>" 
-				out+=		"<i class='fa fa-edit'></i></a>"
 				out+=	"</td></tr>"			
 			}
 			$("form[name='work']").find("table").append(out);
@@ -138,11 +138,11 @@ function printWork(data){
 		
 		var out="";
 		out += "<tr><td>";
-		out += 		"<input type='text' id='work' style='width: 500px;'>"
-		out += 		"<a href='#' onclick='insertWork("+"${tnum}"+");' class='pull-right btn-box-tool' style='font-size:15px;'>"
-		out += 			"<i class='fa fa-plus'></i>"
-		out += 		"</a>"
-		out += "</td></tr>"
+		out += 		"<input type='text' id='work' style='width: 500px;'>";
+		out += 		"<a href='#' onclick='insertWork("+"${tnum}"+");' class='pull-right btn-box-tool' style='font-size:15px;'>";
+		out += 			"<i class='fa fa-plus'></i>";
+		out += 		"</a>";
+		out += "</td></tr>";
 		
 		$("form[name='work']").find("table").append(out);		
 		
@@ -164,27 +164,151 @@ function printWork(data){
 			data: query,
 			dataType: "json",
 			success: function(data){	
-				listWork();						
-				$input.val("");	
+				var out ="<tr>";
+					out+=	"<td>"+content;
+					out+=	"<a href='#' id='workNum"+data.num+"' onclick='deleteWork("+data.num+");' class='pull-right btn-box-tool workIcon'>";
+					out+=		"<i class='fa fa-trash'></i></a>";
+					out+=	"</td></tr>"	;
+				
+					$input.closest("tr").before(out);
+					$input.val("");	
 			},  
 			error: function(jqXHR){ 
 				console.log(jqXHR.responseText);
-			},
-			complete: function(){
-				$(".workIcon").removeClass("workInactive");
-			} 
-			
+			}			
 		});
 		
 	}
 	
+	function deleteWork(num){
+		var url="<%=cp%>/teacher/deleteWork";
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: {
+				num:num
+			},
+			dataType: "json",
+			success: function(data){	
+					alert(data.state);
+					$("#workNum"+num).closest("tr").remove();
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		});
+	}
 
 	
 	function completeWork(){
-		alert("완료했다.");
+		var $btn = $("form[name='work']").find("button");
+		$btn.html("수정하기");
+		$btn.removeAttr("onclick");
+		$btn.attr("onclick", "changeWork();");
+		
+		$("form[name='work']").find("input").closest("tr").remove();
+		$(".workIcon").addClass("workInactive");		
 	}
 	
 	
+	//코멘트와 관련된 javascript
+	function listPage(page){
+		var url="<%=cp%>/teacher/listComment"
+		var query="page="+page+"&tnum="+'${tnum}';
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){	
+					printComment(data);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		});
+	}
+	
+	function printComment(data){		
+		
+		var $tbody = $("#commentTable").find("tbody");
+		$tbody.empty();
+		
+		if(data.list.length==0){
+			$tbody.append("<tr><td style='text-align: center;'>등록된 코멘트가 없습니다.</td></tr>")			
+		}else{
+			var out="";
+			var tnum = '${tnum}';
+			for(var idx=0; idx<data.list.length; idx++){
+				var num = data.list[idx].num;	
+				var snum = data.list[idx].snum;
+				var nickname = data.list[idx].nickname;
+				var picture = data.list[idx].picture;
+				var content = data.list[idx].content;
+				var score = data.list[idx].score;
+				var created = data.list[idx].created;
+				
+				out += "<tr><td>";
+				out += 		"<div class='post'>";
+				out += 			"<div class='user-block'>";
+				out += 				"<img class='img-circle img-bordered-sm' src='<%=cp%>/uploads/member_profile/"+picture+"'>";
+				out +=				"<span class='username'>"+nickname;
+				out +=				"<span class='score'><i class='fa fa-star'></i>"+score+"</span>";
+				
+				if('${sessionScope.member.userNum}'==snum){
+					out += 			"<a href='#' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>";
+				}
+				
+				out += 				"</span> <span class='description'>"+created+"</span>";
+				out +=			"</div>";
+				out += 			"<p>"+content+"</p>";
+				out +=		"</div>";
+				out +=	"</td></tr>";
+			}
+			
+			out +=	"<tr><td>"+data.paging+"</td></tr>";				
+			
+			$tbody.append(out);
+		}		
+	}
+
+	
+	function sendComment(){
+		//값 있는 지 체크
+		var content = $("#commentContent").val();
+		
+		if(content == ""){
+			alert("코멘트 내용을 입력해주세요.")
+			return;	
+		}
+		
+		var tnum = '${tnum}';
+		var score = $("output >b").html();
+	 	
+
+		
+		var url="<%=cp%>/teacher/insertComment";
+		var query="tnum="+tnum+"&score="+score+"&content="+content;
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){	
+					alert(data.state);
+					$(".star-input").find("input:checked").removeAttr('checked');
+					$("#commentContent").val("");
+					listPage(page);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); 
+		
+	}
 
 			
 </script>
@@ -276,7 +400,7 @@ function printWork(data){
 			</h3>
 		</div>
 		<div class="box-body" style="margin: 0 auto;">
-			<form name="guestForm" method="post" action="">
+			<form name="commentForm" method="post" action="">
 				<div style="clear: both; padding-top: 10px;">
 					<span style="font-weight: bold;">코멘트 쓰기</span><span> - 타인을
 						비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
@@ -299,51 +423,21 @@ function printWork(data){
 					</span>		
 				</div>
 				<div style="clear: both; padding-top: 10px;">
-					<textarea name="content" id="content" class="form-control"
+					<textarea id="commentContent" class="form-control"
 						style="width: 100%; min-height: 80px; box-sizing: border-box;"
 						required="required"></textarea>
 				</div>
 				<div style="text-align: right; padding-top: 10px;">
-					<button type="button" class="btn" onclick="sendGuest();"
-						style="padding: 8px 25px;">등록하기</button>
+					<button type="button" class="btn" onclick="sendComment();" style="padding: 8px 25px;">등록하기</button>
 				</div>
 			</form>
-			<table class="table">
+			<table id="commentTable" class="table">
 				<thead>
 					<tr>
 						<td><span style='font-weight: 700;'>코멘트 1개</span></td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>
-							<div class="post">
-								<div class="user-block">
-									<img class="img-circle img-bordered-sm"	src="<%=cp%>/resource/images/team-2.jpg">
-									<span class="username">이몽룡
-									<span class="score"><i class="fa fa-star"></i>4.5</span>
-								<c:if test="${mode eq 'teacher'}">
-									 <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-								</c:if>
-									</span> <span class="description">Shared publicly - 7:30 PM today</span>
-								</div>
-								<p>Lorem ipsum represents a long-held tradition for								
-									designers, typographers and the like. Some people hate it and
-									argue for its demise, but others ignore the hate as they create
-									awesome tools to help create filler text for everyone from
-									bacon lovers to Charlie Sheen fans.</p>
-							</div>
-						</td>
-					</tr>
-				<tr><td>
-	              <ul class="pagination pagination-sm no-margin pull-right">
-	                <li><a href="#">&laquo;</a></li>
-	                <li><a href="#">1</a></li>
-	                <li><a href="#">2</a></li>
-	                <li><a href="#">3</a></li>
-	                <li><a href="#">&raquo;</a></li>
-	              </ul>
-           		 </td></tr>
 				</tbody>
 
 			</table>
