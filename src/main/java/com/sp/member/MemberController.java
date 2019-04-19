@@ -167,9 +167,6 @@ public class MemberController {
 			HttpSession session,
 			Model model) {
 		
-		List<Member>mList =service.loginMember(userId);
-		List<Integer> list = new ArrayList<>();
-		
 		Member dto = new Member();
 		dto.setUserId(userId);
 		dto.setNickname(nickname);
@@ -179,6 +176,13 @@ public class MemberController {
 		if(result==0) {
 			service.insertMember(dto);	
 		}
+		
+		List<Member>mList =service.loginMember(userId);
+		List<Integer> list = new ArrayList<>();
+		
+
+		
+		
 			
 		SessionInfo info=new SessionInfo();
 		info.setUserId(userId);

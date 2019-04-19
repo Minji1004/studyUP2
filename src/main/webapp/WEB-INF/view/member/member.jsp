@@ -128,6 +128,7 @@ $(function(){
 					$("#checkUserId").html("<mark style='color:red;'>중복되는 아이디가 존재합니다.</mark>");
 				}else {
 					$("#checkUserId").html("<mark style='color:blue;'>사용 가능한 아이디 입니다.</mark>");
+					sendMail();
 				}
 			},
 			beforeSend:function(jqXHR){
@@ -299,7 +300,7 @@ $(function(){
 			<tr>
 				<td width="100">이메일 :</td>
 				<td width="300"><input class="inputEmail" style="width: 298;" type="text" name="userEmail"></td>
-				<td width="150"><button class="certifyBtn" type="button" onclick="sendMail()">이메일 인증</button></td>
+				<td width="150"><button class="certifyBtn" type="button">이메일 인증</button></td>
 				<td id = "checkUserId" width="350"></td>
 			</tr>
 			<tr>		

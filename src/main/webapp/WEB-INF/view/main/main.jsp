@@ -5,12 +5,9 @@
    String cp = request.getContextPath();
 %>
 
-<style type="text/css">
 
 
-</style>
 
-<div id="DateCountdown"  data-timer="70" style="width: 100%;"></div>
 <section id="features" class="features section">
         <div class="container">
             <div class="row">

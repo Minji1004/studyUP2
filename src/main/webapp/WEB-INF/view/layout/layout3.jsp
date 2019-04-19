@@ -32,6 +32,31 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp %>/resource/js/jquery.pietimer.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/TimeCircles.js"></script>
+<style type="text/css">
+.timer_main_loc{
+    position: fixed;
+    top: 140px;
+    right: 17px;
+}
+.timer_loc_fix{
+    position: fixed;
+}
+.success_timer_btn{
+  position: fixed;
+    top: 290px;
+    right: 135px;
+}
+.stop_timer_btn{
+	position: fixed;
+    top: 290px;
+    right: 83px;
+}
+.restart_timer_btn{
+	position: fixed;
+    top: 290px;
+    right: 18px;
+}
+</style>
 
 <script type="text/javascript">
 $(function(){
@@ -42,42 +67,15 @@ $(function(){
 		});
 	});
 	
-
-	$("#DateCountdown").TimeCircles({
-	    "animation": "smooth",
-	    "bg_width": 1.2,
-	    "fg_width": 0.1,
-	    "circle_bg_color": "#60686F",
-	    "time": {
-	        "Days": {
-	            "text": "Days",
-	            "color": "#FFCC66",
-	            "show": false
-	        },
-	        "Hours": {
-	            "text": "Hours",
-	            "color": "#99CCFF",
-	            "show": true
-	        },
-	        "Minutes": {
-	            "text": "Minutes",
-	            "color": "#BBFFBB",
-	            "show": true
-	        },
-	        "Seconds": {
-	            "text": "Seconds",
-	            "color": "#FF9999",
-	            "show": true
-	        }
-	    }
-	});
+	
+	$(".btn-success").hide();
+	$(".btn-danger").hide();
+	$(".btn-info").hide();
 	
 });
 
-$(function(){
-	var widthC = document
-	$("canvas").css("width", "300px");
-});
+
+
 
 </script>
 
@@ -89,10 +87,14 @@ $(function(){
     <tiles:insertAttribute name="header"/>
 </div>
 	
+
 <div class="container">
     <tiles:insertAttribute name="body"/>
 </div>
-
+<div id="DateCountdown"  data-timer="70" style="width: 100%;"></div>
+<button class="btn btn-success start">시작</button>
+<button class="btn btn-danger stop">정지</button>
+<button class="btn btn-info restart">재시작</button>
 <div class="footer">
     <tiles:insertAttribute name="footer"/>
 </div>
