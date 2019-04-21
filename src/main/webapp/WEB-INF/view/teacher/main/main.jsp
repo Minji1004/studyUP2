@@ -34,6 +34,7 @@ $(function(){
 	
 	listWork();
 	listPage(1);
+	readSubject();
 });
 
 	
@@ -155,6 +156,12 @@ function printWork(data){
 		var $input = $("form[name='work']").find("input");
 		var content = $input.val();
 		
+		if(!content){
+			alert("경력을 입력해주세요!");
+			return;
+		}
+			
+		
 		var url="<%=cp%>/teacher/insertWork";
 		var query="tnum="+tnum+"&content="+content;
 		
@@ -258,7 +265,7 @@ function printWork(data){
 				out += 			"<div class='user-block'>";
 				out += 				"<img class='img-circle img-bordered-sm' src='<%=cp%>/uploads/member_profile/"+picture+"'>";
 				out +=				"<span class='username'>"+nickname;
-				out +=				"<span class='score'><i class='fa fa-star'></i>"+score+"</span>";
+				out +=				"<span class='score'>&nbsp;<i class='fa fa-star'></i>"+score+"</span>";
 				
 				if('${sessionScope.member.userNum}'==snum){
 					out += 			"<a href='#' id='comment"+num+"'; onclick='deleteComment("+num+");' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>";
@@ -330,6 +337,105 @@ function printWork(data){
 			}			
 		}); 	
 	}
+	
+	//분야 등록 수정하기
+	function readSubject(){
+		
+		var url="<%=cp%>/teacher/readSubject"
+		
+		$.ajax({
+			type:"get",
+			url: url,
+			data: {
+				tnum:'${tnum}'
+			},
+			dataType: "json",
+			success: function(data){			
+					printSubject(data);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); 
+		
+	}
+	
+	function printSubject(data){
+		
+		$("#subjectInput").empty();
+		$("#subjectTd").empty();
+		
+		if('${sessionScope.member.userNum}'=='${tnum}'){
+			if(data.subject == null){
+				$("#subjectInput").html("가르칠 과목을 등록해주세요.");
+				$("#subjectTd").html("<button class='btn' type='button' onclick='changeSubject(\"insert\")' style='float: right;'>등록하기</button>");
+			}else{
+				$("#subjectInput").html(data.subject);	
+				$("#subjectTd").html("<button class='btn' type='button' onclick='changeSubject(\"update\")' style='float: right;'>수정하기</button>");
+			}			
+		}else{
+			if(data.subject == null)
+				$("#subjectInput").html(" ");
+			else
+				$("#subjectInput").html(data.subject);			
+		}
+	}
+	
+	function changeSubject(mode){
+		var content = $("#subjectInput").html();
+		$("#subjectInput").empty();
+		$("#subjectTd").empty();
+		if(mode=='insert'){
+			$("#subjectInput").html("<input type='text' style='width: 300px;'>");
+			$("#subjectTd").html("<button class='btn' type='button' onclick='insertSubject()' style='float: right;'>등록완료</button>");
+		}
+		else if(mode=='update'){
+			$("#subjectInput").html("<input type='text' style='width: 300px;' value='"+content+"'>");
+			$("#subjectTd").html("<button class='btn' type='button' onclick='updateSubject()' style='float: right;'>수정완료</button>");
+		}		
+	}
+	
+	function insertSubject(){
+		
+		var url="<%=cp%>/teacher/insertSubject"
+		var content = $("#subjectInput>input").val();
+		var query = "tnum="+'${tnum}'+"&content="+content;
+		
+			$.ajax({
+				type:"post",
+				url: url,
+				data: query,
+				dataType: "json",
+				success: function(data){			
+						readSubject();
+				},  
+				error: function(jqXHR){ 
+					console.log(jqXHR.responseText);
+				}			
+			});  	
+	}
+	
+	function updateSubject(){
+		
+		var url="<%=cp%>/teacher/updateSubject"
+			var content = $("#subjectInput>input").val();
+			var query = "tnum="+'${tnum}'+"&content="+content;
+			
+				$.ajax({
+					type:"post",
+					url: url,
+					data: query,
+					dataType: "json",
+					success: function(data){			
+							readSubject();
+					},  
+					error: function(jqXHR){ 
+						console.log(jqXHR.responseText);
+					}			
+				}); 
+		
+	}
+	
 </script>
 
 
@@ -351,14 +457,7 @@ function printWork(data){
 				<table class="table">
 					<tr>
 						<th>분야</th>
-						<td>
-						영어회화
-<%-- 						<c:if test="${empty teacher.subject}">
-							가르치는 분야를 등록해주세요.
-						</c:if>
-						<c:forEach var="item" items="${teacher.subject}">
-						${item}&nbsp;
-						</c:forEach> --%>
+						<td id="subjectInput">
 						</td>
 					</tr>
 					<tr>
@@ -370,13 +469,7 @@ function printWork(data){
 						<td>${teacher.userId}</td>
 					</tr>
 					<tr>
-						<c:if test="${mode eq 'teacher'}">
-							<td colspan="2"><button class="btn" type="button"
-									style="float: right;">수정하기</button></td>
-						</c:if>
-						<c:if test="${empty mode}">
-							<td colspan="2">&nbsp;</td>
-						</c:if>
+						<td colspan="2" id="subjectTd"></td>
 					</tr>
 
 				</table>

@@ -177,13 +177,64 @@ public class TeacherController {
 		Map<String, Object> model = new HashMap<>();
 
 		try {
-
 			teacherService.deleteWork(num);
 			model.put("state", "true");
 		}catch(Exception e){
 			model.put("state", "false");
 		}	
 				
+		return model;
+	}
+	
+	@RequestMapping(value ="/teacher/readSubject", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> readSubject(@RequestParam int tnum) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		String subject = null;
+		try {
+			subject = teacherService.readSubject(tnum);
+			model.put("state", "true");
+		}catch(Exception e){
+			model.put("state", "false");
+		}	
+		
+		model.put("subject", subject);
+		return model;
+	}
+	
+	
+	@RequestMapping(value ="/teacher/insertSubject", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertSubject(@RequestParam Map<String, Object> map) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		model.put("state", "true");
+		try {
+			teacherService.insertSubject(map);
+			model.put("state", "true");
+		}catch(Exception e){
+			model.put("state", "false");
+		}	
+		
+		return model;
+	}
+	
+	@RequestMapping(value ="/teacher/updateSubject", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateSubject(@RequestParam Map<String, Object> map) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		model.put("state", "true");
+		try {
+			teacherService.updateSubject(map);
+			model.put("state", "true");
+		}catch(Exception e){
+			model.put("state", "false");
+		}	
+		
 		return model;
 	}
 }

@@ -11,15 +11,6 @@
 		    WHERE userNum = #{tnum}
 	</select>
 	
-	<select id="readSubject" parameterType="String" resultType="map">
-		SELECT categoryName, courseName 
-			FROM subject s JOIN course c 
-			ON s.courseNum = c.courseNum 
-			JOIN category a
-			ON c.categoryNum = a.categoryNum
-			WHERE tId = #{userId}
-	</select>
-	
 	<insert id="insertIntroduce" parameterType="com.sp.teacher.Teacher">
 		INSERT INTO introduce(tId, content) VALUES (#{userId}, #{content})
 	</insert>
@@ -44,4 +35,16 @@
 	<delete id="deleteWork" parameterType="Integer">
 		DELETE FROM work WHERE num = #{num}
 	</delete>
+	
+	<select id="readSubject" parameterType="Integer" resultType="String">
+		SELECT content FROM subject WHERE tnum = #{tnum}
+	</select>
+	
+	<insert id="insertSubject" parameterType="map">
+		INSERT subject(tnum, content) VALUES(#{tnum}, #{content})
+	</insert>
+	
+	<insert id="updateSubject" parameterType="map">
+		UPDATE subject SET content = #{content} WHERE tnum = #{tnum}
+	</insert>
 </mapper>
