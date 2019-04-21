@@ -40,7 +40,7 @@ public class CommentController {
 		int rows = 3;
 		int total_page;
 		int dataCount;
-		double avgScore;
+		String avgScore;
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("tnum", tnum);	
@@ -60,7 +60,7 @@ public class CommentController {
 		
 		String paging = teacherUtil.paging(current_page, total_page);
 		
-		avgScore = commentService.readAvgScore(tnum);
+		avgScore = String.format("%.1f",commentService.readAvgScore(tnum));
 		
 		model.put("avgScore", avgScore);
 		model.put("list", list);

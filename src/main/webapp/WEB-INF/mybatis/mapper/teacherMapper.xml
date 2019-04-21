@@ -44,8 +44,4 @@
 	<delete id="deleteWork" parameterType="Integer">
 		DELETE FROM work WHERE num = #{num}
 	</delete>
-	
-	<select id="readAvgScore" parameterType="Integer" resultType="java.lang.Double">
-		SELECT ifnull(avg(score),0) from treview where tnum= #{tnum}
-	</select>
 </mapper>
