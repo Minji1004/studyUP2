@@ -65,6 +65,18 @@ public class CommentServiceImpl implements CommentService{
 		}
 		
 	}
+
+	@Override
+	public double readAvgScore(int tnum) throws Exception {
+		double result = 0;
+		try {
+			dao.selectOne("comment.readAvgScore", tnum);
+		} catch (Exception e) {
+			e.printStackTrace();			
+			throw e;
+		}		
+		return result;
+	}
 	
 
 }

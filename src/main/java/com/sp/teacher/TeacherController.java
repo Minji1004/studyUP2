@@ -31,6 +31,9 @@ public class TeacherController {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
+		if(info==null)
+			return "redirect:/main";
+		
 		List<Integer> userType = info.getUserType();		
 		String mode = "student";	
 		

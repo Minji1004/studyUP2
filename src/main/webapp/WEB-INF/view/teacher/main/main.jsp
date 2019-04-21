@@ -215,11 +215,11 @@ function printWork(data){
 	//코멘트와 관련된 javascript
 	function listPage(current_page){
 		page = current_page;
-		var url="<%=cp%>/teacher/listComment"
+		var url="<%=cp%>/teacher/listComment";
 		var query="page="+page+"&tnum="+'${tnum}';
 		
 		$.ajax({
-			type:"post",
+			type:"get",
 			url: url,
 			data: query,
 			dataType: "json",
@@ -237,6 +237,8 @@ function printWork(data){
 		var $tbody = $("#commentTable").find("tbody");
 		$tbody.empty();
 		
+		$("#commentTable >thead").find("span").html("코멘트 "+data.dataCount+"개");
+		$("#avgScore").html(data.avgScore);
 		if(data.list.length==0){
 			$tbody.append("<tr><td style='text-align: center;'>등록된 코멘트가 없습니다.</td></tr>")			
 		}else{
@@ -275,7 +277,7 @@ function printWork(data){
 		}		
 	}
 
-	
+
 	function sendComment(){
 		//값 있는 지 체크
 		var content = $("#commentContent").val();
@@ -328,7 +330,6 @@ function printWork(data){
 			}			
 		}); 	
 	}
-			
 </script>
 
 
@@ -414,7 +415,7 @@ function printWork(data){
 		style="width: 800px; margin: 30px; float: left;">
 		<div class="box-header">
 			<h3 class="box-title">
-				선생님 평가 - 평균별점 <span class="score"><i class="fa fa-star"></i>4.5</span>
+				선생님 평가 - 평균별점 <span class="score"><i class="fa fa-star"></i><span id="avgScore">4.5</span></span>
 			</h3>
 		</div>
 		<div class="box-body" style="margin: 0 auto;">
@@ -452,7 +453,7 @@ function printWork(data){
 			<table id="commentTable" class="table">
 				<thead>
 					<tr>
-						<td><span style='font-weight: 700;'>코멘트 1개</span></td>
+						<td><span style='font-weight: 700;'></span></td>
 					</tr>
 				</thead>
 				<tbody>
