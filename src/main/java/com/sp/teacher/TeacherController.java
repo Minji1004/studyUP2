@@ -66,17 +66,7 @@ public class TeacherController {
 		String workMode = "updateWork";
 		if(work.size()==0)
 			workMode = "createWork";		
-		model.addAttribute("workMode", workMode);
-		
-		
-		//List<Map<String, String>> subject = teacherService.readSubject(info.getUserId());
-		
-		
-/*		if(subject.size()==0 || subject==null)
-			teacher.setSubject(null);
-		else
-			teacher.setSubject(subject);	*/
-		
+		model.addAttribute("workMode", workMode);		
 		model.addAttribute("mode", mode);
 		model.addAttribute("left", 0);
 		model.addAttribute("teacher", teacher);
