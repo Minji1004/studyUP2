@@ -103,9 +103,42 @@
 		UPDATE notice SET views=views+1 WHERE noticeNum=#{noticeNum}
 	</update>
 	
+    <update id="updateNotice" parameterType="com.sp.customer.notice.Notice">
+          UPDATE notice SET subject=#{subject},
+               content=#{content}, noticeWhether=#{noticeWhether}
+               WHERE noticeNum=#{noticeNum}
+    </update>
+    	
 	<delete id="deleteNotice" parameterType="Integer">
 		DELETE FROM notice WHERE noticeNum=#{noticeNum}
 	</delete>
 	
+	
+	<!-- 파일 -->
+	<insert id="insertFile" parameterType="com.sp.customer.notice.Notice">
+	  INSERT INTO noticeFile(noticeNum, saveFilename, 
+	    originalFilename, fileSize) VALUES (#{noticeNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
+	</insert>
+	
+	<select id="listFile" parameterType="Integer" resultType="com.sp.customer.notice.Notice">
+	SELECT  fileNum, noticeNum, saveFilename, originalFilename, fileSize
+	    FROM noticeFile
+	    WHERE  noticeNum=#{noticeNum}    
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.sp.customer.notice.Notice">
+	SELECT  fileNum, noticeNum, saveFilename, originalFilename, fileSize
+	    FROM noticeFile
+	    WHERE fileNum=#{fileNum}      
+	</select>
+	
+	<delete id="deleteFile1" parameterType="Integer">
+	    DELETE FROM noticeFile WHERE noticeNum=#{noticeNum}
+	</delete>
+
+	<delete id="deleteFile2" parameterType="Integer">
+	    DELETE FROM noticeFile WHERE fileNum = #{fileNum}
+	</delete>
+		
 </mapper>
 
