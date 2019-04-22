@@ -1,10 +1,13 @@
 package com.sp.study;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 
 @Controller("study.studyController")
@@ -25,10 +29,76 @@ public class StudyController {
 	private CategoryService categoryService;	
 	@Autowired
 	private ApplyStudyService applyService;
+	@Autowired
+	private MyUtil myUtil;
 
 	@RequestMapping(value="/study/main", method=RequestMethod.GET)
-	public String method() {
-		return ".study.main";
+	public String main(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		String cp = req.getContextPath();
+		
+		int rows = 9;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		// 전체 페이지 수
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		dataCount = service.dataCount(map);
+		
+		if(dataCount != 0)
+			total_page = myUtil.pageCount(rows, dataCount);
+		
+		if(current_page > total_page)
+			current_page = total_page;
+		
+		int start = (current_page-1) * rows;
+		if(start < 0) start = 0;
+		map.put("start", start);
+		map.put("rows", rows);
+		
+		List<Study> list = service.listStudy(map);
+		
+		String query = "";
+		String listUrl;
+		String articleUrl;
+		if(keyword.length()!=0) {
+        	query = "condition=" +condition + 
+        	             "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+        }
+        
+    	listUrl = cp+"/study/main";
+        articleUrl = cp+"/study/studyDetail?page=" + current_page;
+        if(query.length()!=0) {
+        	listUrl = listUrl + "?" + query;
+            articleUrl = articleUrl + "&"+ query;
+        }
+        
+        String paging = myUtil.paging(current_page, total_page, listUrl);
+
+        model.addAttribute("list", list);
+        model.addAttribute("articleUrl", articleUrl);
+        model.addAttribute("page", current_page);
+        model.addAttribute("total_page", total_page);
+        model.addAttribute("dataCount", dataCount);
+        model.addAttribute("paging", paging);
+		
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		// return ".study.main";
+		return ".four.study.main";
 	}
 	
 	@RequestMapping(value="/study/studyDetail")

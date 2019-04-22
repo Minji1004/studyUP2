@@ -66,12 +66,19 @@
 <script type="text/javascript">
 $(function(){
 	$(document).on("click",".timer", function(){
+		
 		var url = "<%=cp%>/timer/main";
+		
+		
+		if(${sessionScope.member.userId == null}){
+			url = "<%=cp%>/member/login";
+			location.href = url;
+		} 
+		
 		$('#myTimerModal .modal-content').load(url, function() {
 			$('#myTimerModal').modal('show');
 		});
 	});
-	
 	
 	$(".btn-success").hide();
 	$(".btn-danger").hide();

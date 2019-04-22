@@ -11,7 +11,7 @@
 
 var introduceMode = '${introduceMode}';
 var workMode = '${workMode}';
-var page=1;
+var page = 1;
 
 function resizeTextarea(){
 	
@@ -33,7 +33,8 @@ $(function(){
 		$("form[name='work']").find("button").html("수정하기");
 	
 	listWork();
-	listPage(page);
+	listPage(1);
+	readSubject();
 });
 
 	
@@ -155,6 +156,12 @@ function printWork(data){
 		var $input = $("form[name='work']").find("input");
 		var content = $input.val();
 		
+		if(!content){
+			alert("경력을 입력해주세요!");
+			return;
+		}
+			
+		
 		var url="<%=cp%>/teacher/insertWork";
 		var query="tnum="+tnum+"&content="+content;
 		
@@ -213,12 +220,13 @@ function printWork(data){
 	
 	
 	//코멘트와 관련된 javascript
-	function listPage(page){
-		var url="<%=cp%>/teacher/listComment"
+	function listPage(current_page){
+		page = current_page;
+		var url="<%=cp%>/teacher/listComment";
 		var query="page="+page+"&tnum="+'${tnum}';
 		
 		$.ajax({
-			type:"post",
+			type:"get",
 			url: url,
 			data: query,
 			dataType: "json",
@@ -236,6 +244,8 @@ function printWork(data){
 		var $tbody = $("#commentTable").find("tbody");
 		$tbody.empty();
 		
+		$("#commentTable >thead").find("span").html("코멘트 "+data.dataCount+"개");
+		$("#avgScore").html(data.avgScore);
 		if(data.list.length==0){
 			$tbody.append("<tr><td style='text-align: center;'>등록된 코멘트가 없습니다.</td></tr>")			
 		}else{
@@ -255,10 +265,10 @@ function printWork(data){
 				out += 			"<div class='user-block'>";
 				out += 				"<img class='img-circle img-bordered-sm' src='<%=cp%>/uploads/member_profile/"+picture+"'>";
 				out +=				"<span class='username'>"+nickname;
-				out +=				"<span class='score'><i class='fa fa-star'></i>"+score+"</span>";
+				out +=				"<span class='score'>&nbsp;<i class='fa fa-star'></i>"+score+"</span>";
 				
 				if('${sessionScope.member.userNum}'==snum){
-					out += 			"<a href='#' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>";
+					out += 			"<a href='#' id='comment"+num+"'; onclick='deleteComment("+num+");' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>";
 				}
 				
 				out += 				"</span> <span class='description'>"+created+"</span>";
@@ -274,7 +284,7 @@ function printWork(data){
 		}		
 	}
 
-	
+
 	function sendComment(){
 		//값 있는 지 체크
 		var content = $("#commentContent").val();
@@ -298,10 +308,9 @@ function printWork(data){
 			data: query,
 			dataType: "json",
 			success: function(data){	
-					alert(data.state);
 					$(".star-input").find("input:checked").removeAttr('checked');
 					$("#commentContent").val("");
-					listPage(page);
+					listPage(1);
 			},  
 			error: function(jqXHR){ 
 				console.log(jqXHR.responseText);
@@ -310,7 +319,123 @@ function printWork(data){
 		
 	}
 
+	function deleteComment(num){
+		
+		var url="<%=cp%>/teacher/deleteComment";
+		var query="num="+num+"&page="+page;
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){			
+					listPage(page);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); 	
+	}
+	
+	//분야 등록 수정하기
+	function readSubject(){
+		
+		var url="<%=cp%>/teacher/readSubject"
+		
+		$.ajax({
+			type:"get",
+			url: url,
+			data: {
+				tnum:'${tnum}'
+			},
+			dataType: "json",
+			success: function(data){			
+					printSubject(data);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); 
+		
+	}
+	
+	function printSubject(data){
+		
+		$("#subjectInput").empty();
+		$("#subjectTd").empty();
+		
+		if('${sessionScope.member.userNum}'=='${tnum}'){
+			if(data.subject == null){
+				$("#subjectInput").html("가르칠 과목을 등록해주세요.");
+				$("#subjectTd").html("<button class='btn' type='button' onclick='changeSubject(\"insert\")' style='float: right;'>등록하기</button>");
+			}else{
+				$("#subjectInput").html(data.subject);	
+				$("#subjectTd").html("<button class='btn' type='button' onclick='changeSubject(\"update\")' style='float: right;'>수정하기</button>");
+			}			
+		}else{
+			if(data.subject == null)
+				$("#subjectInput").html(" ");
+			else
+				$("#subjectInput").html(data.subject);			
+		}
+	}
+	
+	function changeSubject(mode){
+		var content = $("#subjectInput").html();
+		$("#subjectInput").empty();
+		$("#subjectTd").empty();
+		if(mode=='insert'){
+			$("#subjectInput").html("<input type='text' style='width: 300px;'>");
+			$("#subjectTd").html("<button class='btn' type='button' onclick='insertSubject()' style='float: right;'>등록완료</button>");
+		}
+		else if(mode=='update'){
+			$("#subjectInput").html("<input type='text' style='width: 300px;' value='"+content+"'>");
+			$("#subjectTd").html("<button class='btn' type='button' onclick='updateSubject()' style='float: right;'>수정완료</button>");
+		}		
+	}
+	
+	function insertSubject(){
+		
+		var url="<%=cp%>/teacher/insertSubject"
+		var content = $("#subjectInput>input").val();
+		var query = "tnum="+'${tnum}'+"&content="+content;
+		
+			$.ajax({
+				type:"post",
+				url: url,
+				data: query,
+				dataType: "json",
+				success: function(data){			
+						readSubject();
+				},  
+				error: function(jqXHR){ 
+					console.log(jqXHR.responseText);
+				}			
+			});  	
+	}
+	
+	function updateSubject(){
+		
+		var url="<%=cp%>/teacher/updateSubject"
+			var content = $("#subjectInput>input").val();
+			var query = "tnum="+'${tnum}'+"&content="+content;
 			
+				$.ajax({
+					type:"post",
+					url: url,
+					data: query,
+					dataType: "json",
+					success: function(data){			
+							readSubject();
+					},  
+					error: function(jqXHR){ 
+						console.log(jqXHR.responseText);
+					}			
+				}); 
+		
+	}
+	
 </script>
 
 
@@ -332,14 +457,7 @@ function printWork(data){
 				<table class="table">
 					<tr>
 						<th>분야</th>
-						<td>
-						영어회화
-<%-- 						<c:if test="${empty teacher.subject}">
-							가르치는 분야를 등록해주세요.
-						</c:if>
-						<c:forEach var="item" items="${teacher.subject}">
-						${item}&nbsp;
-						</c:forEach> --%>
+						<td id="subjectInput">
 						</td>
 					</tr>
 					<tr>
@@ -351,13 +469,7 @@ function printWork(data){
 						<td>${teacher.userId}</td>
 					</tr>
 					<tr>
-						<c:if test="${mode eq 'teacher'}">
-							<td colspan="2"><button class="btn" type="button"
-									style="float: right;">수정하기</button></td>
-						</c:if>
-						<c:if test="${empty mode}">
-							<td colspan="2">&nbsp;</td>
-						</c:if>
+						<td colspan="2" id="subjectTd"></td>
 					</tr>
 
 				</table>
@@ -396,7 +508,7 @@ function printWork(data){
 		style="width: 800px; margin: 30px; float: left;">
 		<div class="box-header">
 			<h3 class="box-title">
-				선생님 평가 - 평균별점 <span class="score"><i class="fa fa-star"></i>4.5</span>
+				선생님 평가 - 평균별점 <span class="score"><i class="fa fa-star"></i><span id="avgScore">4.5</span></span>
 			</h3>
 		</div>
 		<div class="box-body" style="margin: 0 auto;">
@@ -434,7 +546,7 @@ function printWork(data){
 			<table id="commentTable" class="table">
 				<thead>
 					<tr>
-						<td><span style='font-weight: 700;'>코멘트 1개</span></td>
+						<td><span style='font-weight: 700;'></span></td>
 					</tr>
 				</thead>
 				<tbody>

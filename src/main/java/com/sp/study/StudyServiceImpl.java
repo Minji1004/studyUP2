@@ -57,26 +57,53 @@ public class StudyServiceImpl implements StudyService{
 
 	@Override
 	public List<Study> listStudy(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Study> list = null;
+		
+		try {
+			list = dao.selectList("study.listStudy", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("study.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public Study readStudy(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		Study dto = null;
+		
+		try {
+			dto = dao.selectOne("study.readStudy", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public int updateStudy(Study dto, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.updateData("study.updateStudy", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

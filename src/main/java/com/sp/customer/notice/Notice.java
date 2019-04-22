@@ -12,10 +12,20 @@ public class Notice {
 
 	private int fileNum;
 	private String originalFilename, saveFilename;
-
+	private long fileSize;
+	
+	
 	// 스프링에서 파일 받기
 	private List<MultipartFile> upload; // <input type="file" name="upload"\
 	private long gap;
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
 
 	public int getListNum() {
 		return listNum;

@@ -108,14 +108,40 @@ public class TeacherServiceImpl implements TeacherService{
 		}
 		
 	}
-	
-	
 
+	@Override
+	public String readSubject(int tnum) throws Exception {
+		
+		String result = null;
+		
+		try {
+			result = dao.selectOne("teacher.readSubject", tnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
+	@Override
+	public void insertSubject(Map<String, Object> map) throws Exception {
+		
+		try {
+			dao.insertData("teacher.insertSubject", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
-
-	
-	
+	@Override
+	public void updateSubject(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("teacher.updateSubject", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
 	
 
 }

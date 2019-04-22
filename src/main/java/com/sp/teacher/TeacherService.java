@@ -13,4 +13,8 @@ public interface TeacherService {
 	public void insertWork(Work dto) throws Exception;
 	public int readLastWorkNum(int tnum) throws Exception;
 	public void deleteWork(int num) throws Exception;
+	
+	public String readSubject(int tnum) throws Exception;
+	public void insertSubject(Map<String, Object> map) throws Exception;
+	public void updateSubject(Map<String, Object> map) throws Exception;
 }

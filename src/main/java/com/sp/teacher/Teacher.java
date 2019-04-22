@@ -11,7 +11,6 @@ public class Teacher {
 	private String userId, nickname, userPwd, content;
 	private String tel;
 	private List<Map<String, String>> subject;
-	private List<String> work;
 	private MultipartFile pictureM;
 	private String picture;
 	private int enabled;
@@ -59,12 +58,6 @@ public class Teacher {
 	}
 	public void setTel(String tel) {
 		this.tel = tel;
-	}
-	public List<String> getWork() {
-		return work;
-	}
-	public void setWork(List<String> work) {
-		this.work = work;
 	}
 	public MultipartFile getPictureM() {
 		return pictureM;

@@ -132,9 +132,11 @@ function sendLogin() {
 	
 		<script type='text/javascript'>
        
-          Kakao.init('65af174643593e739d37189cc96a7851');
+          
 
           function kakaoLoginForm() {
+        	  Kakao.init('65af174643593e739d37189cc96a7851');
+        	  
               Kakao.Auth.loginForm({
               	success:function(authObj){
               		getKakaoInfo();

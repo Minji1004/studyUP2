@@ -17,6 +17,8 @@ public class Study {
 	// jsp의 checkbox 이름
 	private List<Integer> courseNums;
 	
+	// jsp의 checkbox 이름
+	private List<Integer> courseNames;
 	
 	public int getStudyNum() {
 		return studyNum;
@@ -89,6 +91,11 @@ public class Study {
 	}
 	public void setCourseNums(List<Integer> courseNums) {
 		this.courseNums = courseNums;
+	}
+	public List<Integer> getCourseNames() {
+		return courseNames;
+	}
+	public void setCourseNames(List<Integer> courseNames) {
+		this.courseNames = courseNames;
 	}	
-
 }

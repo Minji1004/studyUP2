@@ -47,90 +47,111 @@ $(function(){
 			
 			var second = (selectHour-currentHour)*3600 + (selectMinute-currentMinute) * 60;
 			
+			var $span = $("#goaltimeSelector").next("div").children("span");
+			
 			if(second < 0){
-				alert("무리 입니다 자제하세요");
+				$span.html("무리 입니다. 자제하세요");
 				return;
 			}
 			
-			$("#DateCountdown").attr("data-timer" , second);
-			
-			$("#DateCountdown").TimeCircles({
-			    "animation": "smooth",
-			    "bg_width": 1.2,
-			    "fg_width": 0.1,
-			    "circle_bg_color": "#60686F",
-			    "time": {
-			        "Days": {
-			            "text": "Days",
-			            "color": "#FFCC66",
-			            "show": false
-			        },
-			        "Hours": {
-			            "text": "Hours",
-			            "color": "#99CCFF",
-			            "show": true
-			        },
-			        "Minutes": {
-			            "text": "Minutes",
-			            "color": "#BBFFBB",
-			            "show": true
-			        },
-			        "Seconds": {
-			            "text": "Seconds",
-			            "color": "#FF9999",
-			            "show": true
-			        }
-			    }
+			var url = "<%=cp%>/timer/start";
+			$.ajax({
+				type : "POST"
+				,url : url
+				,data : {"second": second}
+				,dataType : "JSON"
+				,success : function(data){
+					if(data.state == "true"){
+						$("#DateCountdown").attr("data-timer" , second);
+						
+						$("#DateCountdown").TimeCircles({
+						    "animation": "smooth",
+						    "bg_width": 1.2,
+						    "fg_width": 0.1,
+						    "circle_bg_color": "#60686F",
+						    "time": {
+						        "Days": {
+						            "text": "Days",
+						            "color": "#FFCC66",
+						            "show": false
+						        },
+						        "Hours": {
+						            "text": "Hours",
+						            "color": "#99CCFF",
+						            "show": true
+						        },
+						        "Minutes": {
+						            "text": "Minutes",
+						            "color": "#BBFFBB",
+						            "show": true
+						        },
+						        "Seconds": {
+						            "text": "Seconds",
+						            "color": "#FF9999",
+						            "show": true
+						        }
+						    }
+						});
+						$("canvas").css("width", "400px");
+						$(".time_circles").addClass("timer_main_loc");	
+
+						$(".textDiv_Hours").css("width", "0px");
+						$(".textDiv_Hours").css("top", "164px");
+						$(".textDiv_Hours").css("left", "");
+						$(".textDiv_Hours").css("right", "370px");
+						$(".textDiv_Hours").addClass("timer_loc_fix");
+						
+						$(".textDiv_Minutes").css("width", "0px");
+						$(".textDiv_Minutes").css("top", "164px");
+						$(".textDiv_Minutes").css("left", "");
+						$(".textDiv_Minutes").css("right", "235px");
+						$(".textDiv_Minutes").addClass("timer_loc_fix");
+						
+						$(".textDiv_Seconds").css("width", "0px");
+						$(".textDiv_Seconds").css("top", "164px");
+						$(".textDiv_Seconds").css("left", "");
+						$(".textDiv_Seconds").css("right", "108px");
+						$(".textDiv_Seconds").addClass("timer_loc_fix");
+						
+						$(".textDiv_Hours").children("h4").css("font-size", "20px");
+						$(".textDiv_Hours").children("span").css("font-size", "40px");
+						$(".textDiv_Hours").children("h4").css("color", "red");
+						$(".textDiv_Hours").children("span").css("color", "red");
+						$(".textDiv_Minutes").children("h4").css("font-size", "20px");
+						$(".textDiv_Minutes").children("span").css("font-size", "40px");
+						$(".textDiv_Minutes").children("h4").css("color", "red");
+						$(".textDiv_Minutes").children("span").css("color", "red");	
+						$(".textDiv_Seconds").children("h4").css("font-size", "20px");
+						$(".textDiv_Seconds").children("span").css("font-size", "40px");
+						$(".textDiv_Seconds").children("h4").css("color", "red");
+						$(".textDiv_Seconds").children("span").css("color", "red");
+						
+						$(".btn-success").show();
+						$(".btn-danger").show();
+						$(".btn-info").show();
+						$(".btn-db").show();
+						
+						$(".start").click(function(){ $("#DateCountdown").TimeCircles().start(); });
+						$(".stop").click(function(){ $("#DateCountdown").TimeCircles().stop(); });
+						$(".restart").click(function(){ $("#DateCountdown").TimeCircles().restart(); }); 
+						
+					    $(".btn-success").addClass("success_timer_btn");
+					    $(".btn-danger").addClass("stop_timer_btn");
+					    $(".btn-info").addClass("restart_timer_btn");
+						
+						$('#myTimerModal').modal('hide');
+
+					}
+				}
+				,error : function(e){
+					console.log(e);
+				}
+				
 			});
 			
-			$("canvas").css("width", "400px");
-			$(".time_circles").addClass("timer_main_loc");	
-
-			$(".textDiv_Hours").css("width", "0px");
-			$(".textDiv_Hours").css("top", "164px");
-			$(".textDiv_Hours").css("left", "");
-			$(".textDiv_Hours").css("right", "370px");
-			$(".textDiv_Hours").addClass("timer_loc_fix");
 			
-			$(".textDiv_Minutes").css("width", "0px");
-			$(".textDiv_Minutes").css("top", "164px");
-			$(".textDiv_Minutes").css("left", "");
-			$(".textDiv_Minutes").css("right", "235px");
-			$(".textDiv_Minutes").addClass("timer_loc_fix");
 			
-			$(".textDiv_Seconds").css("width", "0px");
-			$(".textDiv_Seconds").css("top", "164px");
-			$(".textDiv_Seconds").css("left", "");
-			$(".textDiv_Seconds").css("right", "108px");
-			$(".textDiv_Seconds").addClass("timer_loc_fix");
 			
-			$(".textDiv_Hours").children("h4").css("font-size", "20px");
-			$(".textDiv_Hours").children("span").css("font-size", "40px");
-			$(".textDiv_Hours").children("h4").css("color", "red");
-			$(".textDiv_Hours").children("span").css("color", "red");
-			$(".textDiv_Minutes").children("h4").css("font-size", "20px");
-			$(".textDiv_Minutes").children("span").css("font-size", "40px");
-			$(".textDiv_Minutes").children("h4").css("color", "red");
-			$(".textDiv_Minutes").children("span").css("color", "red");	
-			$(".textDiv_Seconds").children("h4").css("font-size", "20px");
-			$(".textDiv_Seconds").children("span").css("font-size", "40px");
-			$(".textDiv_Seconds").children("h4").css("color", "red");
-			$(".textDiv_Seconds").children("span").css("color", "red");
-			
-			$(".btn-success").show();
-			$(".btn-danger").show();
-			$(".btn-info").show();
-			$(".btn-db").show();
-			
-			$(".start").click(function(){ $("#DateCountdown").TimeCircles().start(); });
-			$(".stop").click(function(){ $("#DateCountdown").TimeCircles().stop(); });
-			$(".restart").click(function(){ $("#DateCountdown").TimeCircles().restart(); }); 
-			
-		    $(".btn-success").addClass("success_timer_btn");
-		    $(".btn-danger").addClass("stop_timer_btn");
-		    $(".btn-info").addClass("restart_timer_btn");
-			
-			$('#myTimerModal').modal('hide');
 
 		});
 
@@ -142,12 +163,44 @@ $(function(){
 	
 $(function(){
 	//1. 중도에 그만 멈추기(저장 까지)
-	//버튼생성
-	//시간 추출
+	
 	$("body").on("click", ".btn-db", function(){
 		var time = $("#DateCountdown").TimeCircles().getTime();
 		alert(time);
+		
+		var selectHour = $("select[name=goaltimeH]").val();
+		var selectMinute = $("select[name=goaltimeM]").val();
+		
+		
+		//여기 까지
+		//끝난 시간 저장
+		var url = "<%=cp%>/timer/etime";
+		$.ajax({
+			type : "POST"
+			,url : url
+			,dataType : "json"
+			,success : function(data){
+				if(data.state == "true"){
+					
+				}else{
+					
+				}
+			}
+			,error : function(e){
+				console.log(e);
+			}
+		});
+		
+		
+		/* 
+		var second = 0;
+		$("#DateCountdown").attr("data-timer" , second);
+		
+		$("#DateCountdown").TimeCircles().destroy(); */
+		
 	});
+	
+	
 	//시작 시간, 끝난 시간, 목표 시간 저장
 	
 	//목표 시간까지 했을 때 (완료 알림 표시)
@@ -174,6 +227,7 @@ $(function(){
  	<div class="dialog-content-location"><input type="checkbox" name="goalTime">&nbsp;<b>목표시간</b></div>
  		
  	<div id="goaltimeSelector"class="dialog-content dialog-content-location"></div>
+	<div><span style="color: red; padding-left: 20px"></span></div>
 </div>
 <div class="modal-footer">
    <button type="button" class="btn btn-primary" data-timer="apply">적용</button>

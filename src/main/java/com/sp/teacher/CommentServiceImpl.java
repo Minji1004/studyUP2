@@ -54,6 +54,29 @@ public class CommentServiceImpl implements CommentService{
 		
 		return list;
 	}
+
+	@Override
+	public void deleteComment(int num) throws Exception {
+		try {
+			dao.deleteData("comment.deleteComment", num);
+		} catch (Exception e) {
+			e.printStackTrace();			
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public double readAvgScore(int tnum) throws Exception {
+		double result = 0;
+		try {
+			result = dao.selectOne("comment.readAvgScore", tnum);
+		} catch (Exception e) {
+			e.printStackTrace();			
+			throw e;
+		}		
+		return result;
+	}
 	
 
 }

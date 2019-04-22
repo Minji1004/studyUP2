@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="timer">
+
+<insert id="insertTimer" parameterType="map">
+	INSERT INTO timer(userId, goalNum) VALUES (#{userId}, #{goalNum})
+</insert>
+
+<select id="selectRecentTimer" parameterType="String" resultType="Integer">
+	SELECT timerNum FROM timer WHERE userId = #{userId} ORDER BY sTime DESC LIMIT 1
+</select>
+
+<update id="updateETimer" parameterType="Integer">
+	UPDATE  timer SET eTime = NOW() WHERE timerNum = #{timerNum}
+</update>
+
+</mapper>

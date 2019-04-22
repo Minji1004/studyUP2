@@ -24,7 +24,7 @@ function deleteNotice(){
 function updateNotice(){
 <c:if test="${sessionScope.member.userId==dto.userId}">
 	var q="noticeNum=${dto.noticeNum}&page=${page}";
-	var url="<%=cp%>/notice/update?"+q;
+	var url="<%=cp%>/customer/notice/update?"+q;
 	
 	location.href=url;
 </c:if>
@@ -174,7 +174,7 @@ function updateNotice(){
 		                <tfoot>
 		                	<tr>
 		                		<td>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn">수정</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateNotice()">수정</button>
 		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteNotice()">삭제</button>
 		                		</td>
 		                		<td align="right">

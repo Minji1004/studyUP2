@@ -15,6 +15,6 @@ public class MyPageController {
 	@RequestMapping(value = "/mypage/main")
 	public String main(Model model) throws Exception{
 		
-		return ".fourLayout";
+		return ".four.mypage.main";
 	}
 }
