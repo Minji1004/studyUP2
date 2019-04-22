@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lecture">
+	<!-- 스터디 번호 만들기 -->
+	<select id="maxLectureNum" resultType="Integer">
+		SELECT IFNULL(max(lectureNum), 0) FROM lecture
+	</select>
+	
+	<!-- 강의 생성 -->
+	<insert id="insertLecture" parameterType="com.sp.teacher.lecture.Lecture">
+		
+	
+	</insert>
+	
+</mapper>

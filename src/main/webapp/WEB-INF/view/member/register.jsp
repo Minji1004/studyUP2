@@ -25,20 +25,36 @@ $(function(){
 
 function sendOk() {
     var f = document.registerForm;
+    var format = /^[0-9]+$/g;
 
 	var str = f.blicenseNum.value;
+	
     if(!str) {
         alert("사업자 번호를 입력하세요. ");
         f.blicenseNum.focus();
         return;
+    }	
+	
+    if(! format.test(str)) {
+    	alert("숫자만 입력하세요. ");
+        f.blicenseNum.focus();
+        return;
     }
     
-    var str = f.bankNum.value;
+    str = f.bankNum.value;
+    
+    
     if(str=='') {
         alert("은행을 선택하세요 ");
         f.bank.focus();
         return;
-    }   
+    }
+    
+    if(! format.test(str)) {
+    	alert("숫자만 입력하세요. ");
+        f.bank.focus();
+        return;
+    }
 
 	str = f.account.value;
     if(!str) {

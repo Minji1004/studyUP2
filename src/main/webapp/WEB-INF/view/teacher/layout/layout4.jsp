@@ -22,7 +22,10 @@
   <link rel="stylesheet" href="<%=cp%>/resource/css/AdminLTE.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/skin-blue.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/teacher.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/css/dataTables.bootstrap.css">
   <link rel="stylesheet" href="<%=cp%>/resource/css/star.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/study/css/study.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 
 <!-- star-->
@@ -30,6 +33,11 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		if(${left}>=5){
+			$(".sidebar-menu li").eq(4).addClass("active");
+			$(".treeview-menu li").eq(${left}-5).addClass("active");
+		}
+		
 		$(".sidebar-menu li").eq(${left}).addClass("active");
 	});   	
 </script>
@@ -135,12 +143,15 @@
 
 </div>
 
-<!-- jQuery 3 -->
-
+<!-- dataTable-->
+<script src="<%=cp%>/resource/js/jquery.dataTables.js"></script>
+<script src="<%=cp%>/resource/js/dataTables.bootstrap.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<%=cp%>/resource/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<%=cp%>/resource/js/adminlte.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 
 </body>
 </html>

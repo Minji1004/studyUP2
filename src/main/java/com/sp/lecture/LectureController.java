@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("lecture.lectureController")
 public class LectureController {
-
+	
 	@RequestMapping(value ="/lecture/main", method=RequestMethod.GET)
 	public String main() {		
 		

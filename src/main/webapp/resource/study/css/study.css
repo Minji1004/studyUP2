@@ -30,9 +30,8 @@
 	max-height: 200px;
 	min-height: 200px;
 	
-	max-width: 180px;
+	max-width: 200px;
 	min-width: 180px;
-
 }
 
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
