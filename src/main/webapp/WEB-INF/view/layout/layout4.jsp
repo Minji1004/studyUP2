@@ -17,7 +17,7 @@
 <title>spring</title>
 
 <link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css"/>
-<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap.min.css.map" type="text/css"/>
 <link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/style2.css" type="text/css"/>

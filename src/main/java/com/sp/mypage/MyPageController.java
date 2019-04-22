@@ -11,4 +11,10 @@ public class MyPageController {
 		model.addAttribute("subMenu", "1");
 		return ".four.menu5.mypage.info";
 	}
+	
+	@RequestMapping(value = "/mypage/main")
+	public String main(Model model) throws Exception{
+		
+		return ".fourLayout";
+	}
 }

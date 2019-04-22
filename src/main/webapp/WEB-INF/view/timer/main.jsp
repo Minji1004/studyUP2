@@ -120,6 +120,7 @@ $(function(){
 			$(".btn-success").show();
 			$(".btn-danger").show();
 			$(".btn-info").show();
+			$(".btn-db").show();
 			
 			$(".start").click(function(){ $("#DateCountdown").TimeCircles().start(); });
 			$(".stop").click(function(){ $("#DateCountdown").TimeCircles().stop(); });
@@ -140,7 +141,23 @@ $(function(){
 	
 	
 $(function(){
-	//크기 상대적으로 바꾸기
+	//1. 중도에 그만 멈추기(저장 까지)
+	//버튼생성
+	//시간 추출
+	$("body").on("click", ".btn-db", function(){
+		var time = $("#DateCountdown").TimeCircles().getTime();
+		alert(time);
+	});
+	//시작 시간, 끝난 시간, 목표 시간 저장
+	
+	//목표 시간까지 했을 때 (완료 알림 표시)
+	//시간 정리
+	
+	//2. 타이머 스타트 구간(타이머는 저장 안됨)
+	//그냥 시간 가도록
+	
+	//다른 페이지 이동해도 계속 될 수 있게 구현
+
 
 });
 
@@ -157,11 +174,6 @@ $(function(){
  	<div class="dialog-content-location"><input type="checkbox" name="goalTime">&nbsp;<b>목표시간</b></div>
  		
  	<div id="goaltimeSelector"class="dialog-content dialog-content-location"></div>
- 	
- 		
-
-		
-
 </div>
 <div class="modal-footer">
    <button type="button" class="btn btn-primary" data-timer="apply">적용</button>

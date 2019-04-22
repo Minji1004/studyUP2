@@ -56,6 +56,11 @@
     top: 290px;
     right: 18px;
 }
+.btn-db{
+	position: fixed;
+    top: 290px;
+    right: 187px;
+}
 </style>
 
 <script type="text/javascript">
@@ -71,6 +76,7 @@ $(function(){
 	$(".btn-success").hide();
 	$(".btn-danger").hide();
 	$(".btn-info").hide();
+	$(".btn-db").hide();
 	
 });
 
@@ -91,10 +97,13 @@ $(function(){
 <div class="container">
     <tiles:insertAttribute name="body"/>
 </div>
+
 <div id="DateCountdown"  data-timer="70" style="width: 100%;"></div>
 <button class="btn btn-success start">시작</button>
 <button class="btn btn-danger stop">정지</button>
 <button class="btn btn-info restart">재시작</button>
+<button class="btn btn-db">여기까지</button>
+
 <div class="footer">
     <tiles:insertAttribute name="footer"/>
 </div>
