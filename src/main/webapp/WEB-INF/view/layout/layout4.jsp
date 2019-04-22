@@ -16,25 +16,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>spring</title>
 
-<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css"/>
-<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap.min.css" type="text/css"/>
-<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>
+<title>spring</title>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/style2.css" type="text/css"/>
-<link rel="stylesheet" href="<%=cp%>/resource/css/layout.css" type="text/css"/>
-
+	<link rel="stylesheet" href="<%=cp%>/resource/studyroom/css/srmain.css" />
+	<link rel="stylesheet" href="<%=cp%>/resource/study/css/study.css" />
+	<link rel="stylesheet" href="<%=cp%>/resource/css/lecture.css">
+    <link rel="stylesheet" href="<%=cp%>/resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=cp%>/resource/css/jquery.fancybox.css">
+    <link rel="stylesheet" href="<%=cp%>/resource/css/main.css">
+    <link rel="stylesheet" href="<%=cp%>/resource/css/responsive.css">
+    <link rel="stylesheet" href="<%=cp%>/resource/css/animate.min.css">
+    <link rel="stylesheet" href="<%=cp%>/resource/css/timer.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
+	<link rel="stylesheet" href="<%=cp%>/resource/css/timer.css" type="text/css">
+	
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
-
 <script type="text/javascript" src="<%=cp%>/resource/js/util-jquery.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
-
+<script type="text/javascript" src="<%=cp %>/resource/js/jquery.pietimer.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/TimeCircles.js"></script>
+<style type="text/css">
+.timer_main_loc{
+    position: fixed;
+    top: 140px;
+    right: 17px;
+}
+.timer_loc_fix{
+    position: fixed;
+}
+.success_timer_btn{
+  position: fixed;
+    top: 290px;
+    right: 135px;
+}
+.stop_timer_btn{
+	position: fixed;
+    top: 290px;
+    right: 83px;
+}
+.restart_timer_btn{
+	position: fixed;
+    top: 290px;
+    right: 18px;
+}
+</style>
 </head>
 <body>
 
-<div>
+<div class="header">
     <tiles:insertAttribute name="header"/>
 </div>
 
+<section class="section" id="srcontianer" >
 <div class="container" role="main">
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;" id="sidebar">
@@ -45,6 +79,7 @@
         </div>
      </div>
 </div>
+</section>
 
 <div>
     <tiles:insertAttribute name="footer"/>

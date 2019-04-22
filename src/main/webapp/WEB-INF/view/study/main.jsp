@@ -6,14 +6,6 @@
 	String cp=request.getContextPath();
 %>
 
-<style type="text/css">
-.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-    z-index: 2;
-    color: #fff;
-    background-color: #04B486;
-    border-color: #04B486;
-}
-</style>
 
 <script type="text/javascript">
 	
@@ -23,15 +15,6 @@ $(function(){
 		  e.preventDefault();
 		  $(this).tab('show');
 	});
-});
-
-
-$(function(){
-	// 사이드바
-	var idx="${subMenu}";
-	if(!idx) idx=1;
-	var subMenu=$(".list-group-item")[idx];
-	$(subMenu).addClass("active");
 });
 
 
@@ -100,20 +83,9 @@ $(function() {
 </script>
 
 
-<section class="section" id="srcontianer" >
-	<div class="container">
-	 
-	 <div class="row row-offcanvas row-offcanvas-right">
-	 
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;" id="sidebar">
-			<div class="list-group">
-			       <div class="list-group-item lefthead"><i></i> 스터디</div>
-			       <a href="<%=cp%>/company/info" class="list-group-item">모든 스터디</a>
-			       <a href="<%=cp%>/company/history" class="list-group-item">My 스터디</a>
-			</div>        
-        </div>
-        
-        <div class="col-xs-12 col-sm-9"> 
+
+	<div class="body-frame-2">
+
 		  	<button type="button" class="btn makeStudy" style="background: #04B486; float: right;" >make 스터디</button>
                
 			<div role="tabpanel">
@@ -347,9 +319,7 @@ $(function() {
   		</div>			
 	</div>
  </div>
-</div>
-</div>
-</section>
+
 
 <div class="smodal modal fade" id="myStudyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

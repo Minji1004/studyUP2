@@ -2,12 +2,33 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="study">
+	<!-- 검색 조건 -->
+	<sql id="where-list">
+		<if test="condition=='all'">
+			(INSTR(studyName, #{studyName}) &gt; 0
+			OR INSTR(studyIntro, #{studyIntro}) &gt; 0)
+		</if>
+		<if test="condition=='studyName'">
+			INSTR(studyName, #{studyName}) &gt; 0
+		</if>
+		<if test="condition=='userId'">
+			INSTR(userId, #{userId}) &gt; 0
+		</if>
+		<if test="condition=='categoryName'">
+			INSTR(categoryName, #{categoryName}) &gt; 0
+		</if>
+		<if test="condition=='courseName'">
+			INSTR(courseName, #{courseName}) &gt; 0
+		</if>
+	</sql>
+	
+	
+
 	<!-- 스터디 번호 만들기 -->
 	<select id="maxStudyNum" resultType="Integer">
 		SELECT IFNULL(max(studyNum), 0) FROM study
 	</select>
-	
-	
+		
 	<!-- 스터디 생성 -->
 	<insert id="insertStudy" parameterType="com.sp.study.Study">
 		INSERT INTO study(studyNum, studyName, studyIntro, userId, studyLocation, 
@@ -30,6 +51,71 @@
 	
 	
 	<!-- 스터디 리스트 가져오기 -->
+	<select id="listStudy" parameterType="map" resultType="com.sp.study.Study">
+		SELECT s.studyNum, studyName, studyIntro, userId, 
+			studyLocation, studySday, studyEday, studyImg, headcount,
+	        categoryName
+		FROM study AS s 
+		LEFT OUTER JOIN studyCourseList AS l
+		ON l.studyNum = s.studyNum 
+		left outer join course AS c
+		ON l.courseNum = c.courseNum
+		left outer join category AS ca
+		ON c.categoryNum = ca.categoryNum
+		
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>		
+		</where>		
+		
+		ORDER BY studyNum DESC
+		limit #{start}, #{rows}
+	</select>
+	
+	<!-- 스터디 개수 -->
+	<select id="dataCount" parameterType="map" resultType="com.sp.study.Study">
+		SELECT IFNULL(count(*), 0) FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		left outer join category as ca
+		on c.categoryNum = ca.categoryNum
+		
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>		
+		</where>
+	
+	</select>
+	
+	<!-- 스터디 읽어오기 -->
+	<select id="readStudy" parameterType="Integer" resultType="com.sp.study.Study">
+		SELECT s.studyNum, studyName, studyIntro, userId, studyLocation, studySday, studyEday, studyImg, headcount FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		left outer join category as ca
+		on c.categoryNum = ca.categoryNum
+		where studyNum = #{studyNum}	
+	</select>
+	
+	<!-- 스터디 수정 -->
+	<update id="updateStudy" parameterType="com.sp.study.Study">
+		update study set studyName = #{studyName}, studyIntro= #{studyIntro},
+				studyLocation = #{studyLocation}, studySday= #{studySday}, studyEday = #{studyEday},
+                studyImg= #{studyImg}, headcount = #{headcount}
+		where studyNum = #{studyNum}
+	</update>
+	
+	<!-- 스터디 삭제 -->
+	<delete id="deleteStudy">
+		delete from study where studyNum = #{studyNum}
+	</delete>
+	
 	
 	
 	<!-- 분류 가져오기 -->
