@@ -12,8 +12,7 @@ $('.studyDate').datepicker({
 });
 
 
-
-function makeStudy() {
+function makeLecture() {
 	var f = document.studyForm;
 	var str = f.studyName.value;
 	
@@ -50,8 +49,27 @@ function makeStudy() {
 		return false;
 	}
 	
+	str = f.price.value;
+	var format = /^[0-9]+$/g;
+	
+    if(! format.test(str)) {
+        f.price.focus();
+        return;
+    }
+	
+	if(!str) {
+		f.price.focus();
+		return false;
+	}	
 	
 	// 데이트피커
+	str = f.registerEnd.value;
+	
+	if(!str) {
+		f.registerEnd.focus();
+		return false;
+	}	
+	
 	str = f.studySday.value;
 	
 	if(!str) {
@@ -66,7 +84,7 @@ function makeStudy() {
 		return false;
 	}
 		
-	f.action = "<%=cp%>/study/${mode}";
+	f.action = "<%=cp%>/teacher/lecture/makeLecture";
 	
 	f.submit();	
 }
@@ -111,26 +129,26 @@ function categoryList(){
 
 <div class="modal-header">
    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-   <h4 class="modal-title" id="myModalLabel" align="center">Make your study</h4>
+   <h4 class="modal-title" id="myModalLabel" align="center">강의 등록</h4>
 </div>
 
 <div class="smodal-body modal-body row">
 
-	<form class="form-horizontal studyForm" name="studyForm" method="post" enctype="multipart/form-data">
-		<div class="col-xs-8 col-sm-3" align="center">
+	<form class="form-horizontal" name="studyForm" method="post" enctype="multipart/form-data">
+		<div class="col-xs-8 col-sm-3" align="center" style="margin-top: 40px;">
 	 		<img class="img-circle img-dialog input-img" src="<%=cp%>/resource/study/images/404-error.png">
 	 		<input type="file" name="upload" class="studyImg">
 	 	</div>
  		<div class="col-xs-4 col-sm-9">
 			<div class="form-group">
-				<label class="col-sm-2 control-label">스터디<br>이름</label>
+				<label class="col-sm-2 control-label">강의 이름</label>
 				<div class="col-sm-9">
-					<input type="text" class="form-control" name="studyName" placeholder="Your study name">
+					<input type="text" class="form-control" name="studyName">
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">스터디<br>설명</label>
+				<label class="col-sm-2 control-label">강의 설명</label>
 				<div class="col-sm-9">
 					<textarea name="studyIntro" class="form-control" rows="3"></textarea>
 				</div>
@@ -139,24 +157,36 @@ function categoryList(){
 			<div class="form-group">
 				<label class="col-sm-2 control-label">최대인원</label>
 				<div class="col-sm-2">
-					<input type="text" class="form-control" name="headcount" placeholder="인원">
+					<input type="text" class="form-control" name="headcount">
 				</div>
 		
 				<label class="col-sm-2 control-label">지역</label>
 				<div class="col-sm-5">
-					<input type="text" class="form-control" name="studyLocation" placeholder="studyLocation">
+					<input type="text" class="form-control" name="studyLocation">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">가격</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="price">
+				</div>
+		
+				<label class="col-sm-2 col-md-offset-1 control-label">등록마감일</label>
+				<div class="col-sm-3">
+					<input class="studyDate date form-control" name="registerEnd">
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">시작일</label>
 				<div class="col-sm-3">
-					<input class="studyDate date form-control" name="studySday" placeholder="Start Day">
+					<input class="studyDate date form-control" name="studySday">
 				</div>
 				
 				<label class="col-sm-2 col-md-offset-1 control-label">종료일</label>
 				<div class="col-sm-3">
-					<input class="studyDate date form-control" name="studyEday" placeholder="End Day">
+					<input class="studyDate date form-control" name="studyEday">
 				</div>
 			</div>
 			
@@ -181,6 +211,6 @@ function categoryList(){
 </div>
 
 <div class="modal-footer">
-   <button type="button" onclick="makeStudy();" class="btn btn-primary">Make</button>
-   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+   <button type="button" onclick="makeLecture();" class="btn btn-primary">등록완료</button>
+   <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 </div>

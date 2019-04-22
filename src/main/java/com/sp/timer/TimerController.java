@@ -55,7 +55,7 @@ public class TimerController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/timer/start", method = RequestMethod.POST)
+	@RequestMapping(value = "/timer/etime", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateEndTime(HttpSession session){
 		

@@ -1,6 +1,7 @@
 package com.sp.customer.notice;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
@@ -183,12 +186,12 @@ public class NoticeController {
 		Notice preReadDto=service.preReadNotice(map);
 		Notice nextReadDto=service.nextReadNotice(map);
 		
-		// List<Notice> listFile=service.listFile(noticeNum);
+		List<Notice> listFile=service.listFile(noticeNum);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
-		// model.addAttribute("listFile",listFile);
+		model.addAttribute("listFile",listFile);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
@@ -202,7 +205,7 @@ public class NoticeController {
 			@RequestParam int noticeNum,
 			@RequestParam String page,
 			HttpSession session,			
-			Model model	) throws Exception {
+			Model model) throws Exception {
 		
 		Notice dto=service.readNotice(noticeNum);
 		if(dto==null) {
@@ -224,10 +227,12 @@ public class NoticeController {
 	@RequestMapping(value="/customer/notice/update", method=RequestMethod.POST)
 	public String updateSubmit(
 			Notice dto,
-			@RequestParam String page,
-			HttpSession session) throws Exception {
+			@RequestParam String page
+			) throws Exception {
 		
-		return "redirect:/customer/notice/list?page="+page;	
+		service.updateNotice(dto, page);
+		//return "redirect:/customer/notice/list?page="+page+"&noticeNum="+noticeNum;
+		return "redirect:/customer/notice/list?page="+page;
 	}
 
 	@RequestMapping(value="/customer/notice/delete")
@@ -252,5 +257,54 @@ public class NoticeController {
 		
 		return "redirect:/customer/notice/list?"+query;
 	}
+	
+	@RequestMapping(value="/customer/notice/download")
+	public void download(
+			@RequestParam int fileNum,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
 
+		boolean b = false;
+		
+		Notice dto = service.readFile(fileNum);
+		if(dto!=null) {
+			String saveFilename = dto.getSaveFilename();
+			String originalFilename = dto.getOriginalFilename();
+			
+			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
+		}
+		
+		if (!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
+	}
+	
+	@RequestMapping(value="/customer/notice/deleteFile", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteFile(
+			@RequestParam int fileNum,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+		
+		Notice dto=service.readFile(fileNum);
+		if(dto!=null) {
+			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+		}
+		
+		service.deleteFile2(fileNum);
+		
+   	    // 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>(); 
+		model.put("state", "true");
+		return model;
+	}	
 }

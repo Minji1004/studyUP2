@@ -153,6 +153,16 @@ function updateNotice(){
 		                              ${dto.content}
 		                         </td>
 		                     </tr>
+		                     
+							<c:forEach var="vo" items="${listFile}">
+								<tr>
+								    <td colspan="2" >
+								      <a href="<%=cp%>/customer/notice/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a>
+							          (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte)
+								    </td>
+								</tr>
+							</c:forEach>
+		                     
 		                     <tr>
 		                         <td colspan="2">
 		                              <span style="display: inline-block; min-width: 45px;">이전글</span> :

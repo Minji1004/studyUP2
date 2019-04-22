@@ -37,10 +37,11 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="<%=cp%>/"><i class="fa fa-link"></i> <span>강사소개</span></a></li>
+        <li><a href="<%=cp%>/teacher/main?tnum=${tnum}&left=0"><i class="fa fa-link"></i> <span>강사소개</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>강의목록</span></a></li>
 		<li><a href="#"><i class="fa fa-link"></i> <span>공지사항</span></a></li>
 		<li><a href="#"><i class="fa fa-link"></i> <span>질문답변</span></a></li>
+		<c:if test="${sessionScope.member.userNum == tnum}">
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>강의 관리</span>
             <span class="pull-right-container">
@@ -48,10 +49,11 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">강의 등록/수정</a></li>
+            <li><a href="<%=cp%>/teacher/lecture/teacherLecture?tnum=${tnum}&left=5">강의 등록/수정</a></li>
             <li><a href="#">매출 현황</a></li>
           </ul>
         </li>
+        </c:if>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

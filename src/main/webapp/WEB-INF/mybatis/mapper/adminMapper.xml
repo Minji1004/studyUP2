@@ -2,25 +2,27 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
+<!-- report Mapper -->
 	<insert id="insertReport" parameterType="com.sp.admin.black.Report">
 		INSERT INTO report(reportBoard, reportBoardNum, replNum, reportUser, reportedUser, reportCause, reportType)
 		VALUES(#{reportBoard}, #{reportBoardNum}, #{reportBoardNum}, #{replNum}, #{reportUser}, #{reportedUser}, #{reportCause}, #{reportType})	
 	</insert>
 	
-	<sql id="where-list">
-		<if test="condition=='all'">
-			(INSTR(reportBoard, #{keyword}) &gt; 0
-				OR INSTR(reportCause, #{keyword}) &gt; 0
+	<sql id="report-list">
+			(INSTR(reportBoard, #{keyword}) &gt; 0				
 				OR INSTR(reportUserId, #{keyword}) &gt; 0
 				OR INSTR(reportUserNickName, #{keyword}) &gt; 0
 				OR INSTR(reportedUserId, #{keyword}) &gt; 0
-				OR INSTR(reportedNickName, #{keyword}) &gt; 0
-				OR DATE_FORMAT(created, '%Y-%m-%d') = #{keyword})				
-		</if>		
-	</sql>
+				OR INSTR(reportedNickName, #{keyword}) &gt; 0)				
+	</sql>	
 	
 	<select id="dataReportCount" parameterType="map" resultType="Integer">
 		SELECT IFNULL(COUNT(*),0) FROM report
+		<where>
+		<if test="keyword!=null and keyword!=''">
+			<include refid="report-list"/>
+		</if>
+	</where>
 	</select>
 	
 	<select id="listReport" parameterType="map" resultType="com.sp.admin.black.Report">
@@ -40,7 +42,12 @@
        JOIN memberInfo AS M1
        ON R1.reportedUser = M1.userNum   
 	) AS B
-	ON A.reportNum = B.reportNum	
+	ON A.reportNum = B.reportNum
+	<where>
+		<if test="keyword!=null and keyword!=''">
+			<include refid="report-list"/>
+		</if>
+	</where>	
 	ORDER BY A.reportNum DESC
 	LIMIT #{start}, #{rows}
 	</select>
@@ -66,4 +73,44 @@
 	where A.reportNum=#{reportNum}
 	</select>
 
+<!-- member Mapper -->
+	
+	<select id="readMember" parameterType="Integer" resultType="com.sp.admin.member.Member">
+		SELECT userNum, userId, nickname, userPwd, enabled, tel,
+		created, lastLogin, pictureM, picture
+		FROM memberInfo
+		WHERE userNum=#{userNum}
+	</select>
+	
+	<sql id="member-list">
+			(INSTR(userNum, #{keyword}) &gt; 0
+				OR INSTR(userId, #{keyword}) &gt; 0				
+				OR INSTR(nickname, #{keyword}) &gt; 0				
+				OR INSTR(tel, #{keyword}) &gt; 0)
+	</sql>
+	
+	<select id="memberCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0) FROM memberInfo
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="member-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listMember" parameterType="map" resultType="com.sp.admin.member.Member">
+		SELECT userNum, userId, nickname, tel, created		
+		FROM memberInfo
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="member-list"/>
+			</if>
+		</where>
+		ORDER BY userNum DESC
+		LIMIT #{start}, #{rows}
+	</select>
+		
+	<delete id="deleteMember">
+		DELETE from memberInfo where userId=#{userId}
+	</delete>
 </mapper>

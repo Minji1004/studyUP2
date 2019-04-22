@@ -2,22 +2,30 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%
+	String cp = request.getContextPath();
+%>
+<script>
+function searchMember(){
+	var f=document.memberSearch;
+	f.submit();
+}
+</script>
 <section class="features section">
 	<div class="container" style="height:800px; width:90%; padding-top: 80px;">
-        <form method="post">
+        <form method="post" name="memberSearch" action="<%=cp%>/admin/member/list">
 			<div class="input-group">
-				<input type="text" name="keyword" class="form-control input-sm keyword" placeholder="통합검색">
+				<input type="text" name="keyword" value="${keyword }" class="form-control input-sm keyword" placeholder="통합검색">
 				<span class="input-group-btn" >
-					<button type="button" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i></button>
+					<button type="button" class="btn btn-primary btn-sm" onclick="searchMember()"><i class="glyphicon glyphicon-search"></i></button>
 				</span>
 			</div>
 		</form>
-		
+		<c:if test="${not empty keyword}">
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">
 		      <td align="left" width="50%">
-		          개(/페이지)
+		          ${dataCount }개(${page }/${total_page }페이지)
 		      </td>
 		      <td align="right">
 		          &nbsp;
@@ -34,23 +42,24 @@
 		      <th width="120" style="color: #787878;">회원가입일</th>
 		  </tr>
 		 
-		<c:forEach var="dto" items="">
-		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-		      <td></td>
-		      <td align="left" style="padding-left: 10px;">
-		           <a href="">아이디</a>
-		      </td>
-		      <td>닉네임</td>
-		      <td>전화번호</td>
-		      <td>
-				<c:if test="">
-					<a href=""><img src=""></a>
-				</c:if>
-			</td>
+		<c:forEach var="mdto" items="${mlist }">
+			<tr align="center"height="28" style="border-bottom: 1px solid #cccccc;"> 
+		      <th width="100">${mdto.mlistNum }</th>
+		      <th><a href="${articleUrl }&userNum=${mdto.userNum}">${mdto.userId }</a></th>
+		      <th width="150">${mdto.nickname }</th>		      
+		      <th width="120">${mdto.created }</th>
 		  </tr>
-		 </c:forEach>
+		</c:forEach>
 
 		</table>
-		
+		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+		   <tr height="35">
+			<td align="center">
+		        <c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
+		        <c:if test="${dataCount!=0 }">${paging}</c:if>
+			</td>
+		   </tr>
+		</table>
+		</c:if>
 		</div>
 </section>
