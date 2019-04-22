@@ -18,5 +18,6 @@ public interface NoticeService {
 	public int insertFile(Notice dto);
 	public List<Notice> listFile(int noticeNum);
 	public Notice readFile(int fileNum);
-	public int deleteFile(Map<String, Object> map);
+	public int deleteFile1(int noticeNum);
+	public int deleteFile2(int fileNum);
 }
