@@ -31,7 +31,7 @@ function makeStudy() {
 	
 	
 	str = f.headcount.value;
-	var format = /^[0-9]$/g;
+	var format = /^[0-9]+$/g;
 	
     if(! format.test(str)) {
         f.headcount.focus();

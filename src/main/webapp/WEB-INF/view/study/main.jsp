@@ -22,9 +22,9 @@ $(function(){
 	// 스터디 상세 페이지 보기
 	$(document).on("click",".study-content", function(){
 		var studyTitle = $(this).find(".study-title").html();
-		// var num=$(this).attr("data-num");
-		var num=1;
-		var url = "<%=cp%>/study/studyDetail?num="+num;
+		var num=$(this).attr("data-studyNum");
+		var studyNum=1;
+		var url = "<%=cp%>/study/studyDetail?studyNum="+num;
 		
 		$('#myStudyModal .modal-content').load(url, function() {
 			// $('#myStudyModal .modal-title').html(studyTitle);
@@ -36,9 +36,9 @@ $(function(){
 $(function() {
 	// apply for study - 스터디 가입신청
 	$(document).on("click", "#studyApply", function() {
-		// var num=$(this).attr("data-num");
+		var num=$(this).attr("data-studyNum");
 		var studyNum=4;
-		var url = "<%=cp%>/study/applyStudy?studyNum="+studyNum;
+		var url = "<%=cp%>/study/applyStudy?studyNum="+num;
 		
 		$('#myStudyApply .modal-content').load(url, function() {
 			// $('#myStudyModal .modal-title').html(studyTitle);
@@ -81,8 +81,6 @@ $(function() {
 
 	
 </script>
-
-
 
 	<div class="body-frame-2">
 
@@ -136,17 +134,18 @@ $(function() {
 							<div class="col-xs-12" style="height:10px"></div>
 							
 							<!-- 페이지 글 목록 -->
-							<div class="study-content col-xs-12 col-sm-6 col-md-4" data-num="${dto.num}">
-								<div class="col-xs-12 col-sm-12" style="background: #CEF6EC; margin-bottom: 2px">&nbsp;</div>
+							<c:forEach var="dto" items="${list}">
+							<div class="study-content col-xs-12 col-sm-6 col-md-4" data-studyNum="${dto.studyNum}" data-categoryName="${dto.categoryName}">
+								<div class="col-xs-12 col-sm-12" style="background: ${dto.color}; margin-bottom: 2px">&nbsp;</div>
 								<div class="thumbnail" style="text-align: center; cursor:pointer;">
 									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study1.jpg" alt="...">
+										<img class="img-rounded" src="<%=cp%>/uploads/study/${dto.studyImg}" alt="...">
 									</div>
 									<div onclick="location.href='#';">
 										<div style="">
-											<div class="study-title" style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">수능 1등급!!!</div>
-											<div class="studyIntro">의대 가고 싶은 사람 모여라</div>
-											<div>1/5</div>
+											<div class="study-title" style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">${dto.studyName}</div>
+											<div class="studyIntro">${dto.studyIntro}</div>
+											<div>1/${dto.headcount}</div>
 											<div class="row" style="margin-bottom: 10px" >
 												<div class="sPicTagContent col-xs-6 col-sm-4" align="right">#수학</div>
 												<div class="sPicTagContent col-xs-4 col-sm-4">#영어</div>
@@ -155,159 +154,14 @@ $(function() {
 										</div>
 									</div>
 								</div>
-							</div>
+							</div>	
+							</c:forEach>						
 							
-							
-							
-							
-							<div class="col-xs-12 col-sm-6 col-md-4">
-							<div class="col-xs-12 col-sm-12" style="background: #CEF6EC; margin-bottom: 2px">&nbsp;</div>
-								<div class="thumbnail" style="text-align: center; cursor:pointer;">
-									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study3.jpg" alt="...">
-									</div>
-									<div onclick="location.href='#';">
-										<div style="">
-											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">어머니</div>
-											<div class="studyIntro">저를 전적으로 믿으셔야 합니다.</div>
-											<div>3/5</div>
-											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-8 col-sm-6" align="right">#언어</div>
-												<div class="sPicTagContent col-xs-6 col-sm-6" align="left">#사탐</div>					
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-4">
-								<div class="col-xs-12 col-sm-12" style="background: #F8E0F1; margin-bottom: 2px">&nbsp;</div>
-								<div class="thumbnail" style="text-align: center; cursor:pointer;">
-									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study4.jpg" alt="...">
-									</div>
-									<div onclick="location.href='#';">
-										<div style="">
-											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">한길쌤</div>
-											<div class="studyIntro">답이 안보여요ㅠㅠ</div>
-											<div>1/10</div>
-											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-12 col-sm-12">#한국사</div>					
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							
-							
-							<div class="col-xs-12 col-sm-6 col-md-4">
-								<div class="col-xs-12 col-sm-12" style="background: #F6CECE; margin-bottom: 2px">&nbsp;</div>
-								<div class="thumbnail" style="text-align: center; cursor:pointer;">
-									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study5.jpg" alt="...">
-									</div>
-									<div onclick="location.href='#';">
-										<div style="">
-											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">토익 박살내기</div>
-											<div class="studyIntro">박살은 내가 나여....</div>
-											<div>2/5</div>
-											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-12 col-sm-12">#영어</div>			
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-4">
-								<div class="col-xs-12 col-sm-12" style="background: #CEF6EC; margin-bottom: 2px">&nbsp;</div>
-								<div class="thumbnail" style="text-align: center; cursor:pointer;">
-									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study2.jpg" alt="...">
-									</div>
-									<div onclick="location.href='#';">
-										<div style="">
-											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">수능 1등급!!!</div>
-											<div class="studyIntro"  style="font-family:'맑은고딕'; font-weight: 600; font-size: 10pt; color : #cccccc;">의대 가고 싶은 사람 모여</div>
-											<div>4/5</div>
-											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-6 col-sm-4" align="right">#수학</div>
-												<div class="sPicTagContent col-xs-4 col-sm-4">#영어</div>
-												<div class="sPicTagContent col-xs-2 col-sm-4" align="left">#과학</div>							
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-4">
-							<div class="col-xs-12 col-sm-12" style="background: #CEF6EC; margin-bottom: 2px">&nbsp;</div>
-								<div class="thumbnail" style="text-align: center; cursor:pointer;">
-									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study3.jpg" alt="...">
-									</div>
-									<div onclick="location.href='#';">
-										<div style="">
-											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">어머니</div>
-											<div class="studyIntro">저를 전적으로 믿으셔야 합니다.</div>
-											<div>3/5</div>
-											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-8 col-sm-6" align="right">#언어</div>
-												<div class="sPicTagContent col-xs-6 col-sm-6" align="left">#사탐</div>					
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-4">
-								<div class="col-xs-12 col-sm-12" style="background: #F8E0F1; margin-bottom: 2px">&nbsp;</div>
-								<div class="thumbnail" style="text-align: center; cursor:pointer;">
-									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study4.jpg" alt="...">
-									</div>
-									<div onclick="location.href='#';">
-										<div style="">
-											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">한길쌤</div>
-											<div>5/5</div>
-											<div class="studyIntro">답이 안보여요ㅠㅠ</div>
-											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-12 col-sm-12">#한국사</div>					
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-4">
-								<div class="col-xs-12 col-sm-12" style="background: #F6CECE; margin-bottom: 2px">&nbsp;</div>
-								<div class="thumbnail" style="text-align: center; cursor:pointer;">
-									<div style="padding-top: 5px">
-										<img class="img-rounded" src="<%=cp%>/resource/study/images/study5.jpg" alt="...">
-									</div>
-									<div onclick="location.href='#';">
-										<div style="">
-											<div style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">토익 박살내기</div>
-											<div>2/5</div>
-											<div class="studyIntro">박살은 내가 나여....</div>
-											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-12 col-sm-12">#영어</div>			
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						<!-- 페이징 처리 -->
-						<div class="col-xs-12 col-sm-12 col-md-12" align="center">
-							<nav>
-								<ul class="pagination">
-									<li class="disabled"><a href="#" aria-label="previous"><span aria-hidden="true">&lt;</span></a></li>
-									<li class="active"><a href="#">1<span class="sr-only">(current)</span></a></li>
-									<li class="disabled"><a href="#">2<span class="sr-only">(current)</span></a></li>
-									<li class="disabled"><a href="#">3<span class="sr-only">(current)</span></a></li>
-									<li class="disabled"><a href="#">4<span class="sr-only">(current)</span></a></li>
-									<li class="disabled"><a href="#">5<span class="sr-only">(current)</span></a></li>
-									<li class="disabled"><a href="#" aria-label="next"><span aria-hidden="true">&gt;</span></a></li>
-								</ul>
-							</nav>
-						</div>
-						
+						<!-- 페이징 처리 -->				
+						<div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
+				            <c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
+				            <c:if test="${dataCount!=0 }">${paging}</c:if>
+				        </div> 						
 					</div>
 				</div>
 			    

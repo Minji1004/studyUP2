@@ -14,7 +14,7 @@ public class StudyServiceImpl implements StudyService{
 	@Autowired
 	private CommonDAO dao;	
 	@Autowired
-	private FileManager fileManger;
+	private FileManager fileManager;
 	
 
 	@Override
@@ -23,7 +23,7 @@ public class StudyServiceImpl implements StudyService{
 		
 		try {
 			if(dto.getUpload() != null && ! dto.getUpload().isEmpty()) {
-				String studyImg = fileManger.doFileUpload(dto.getUpload(), pathname);
+				String studyImg = fileManager.doFileUpload(dto.getUpload(), pathname);
 				dto.setStudyImg(studyImg);
 			}
 			
@@ -96,20 +96,61 @@ public class StudyServiceImpl implements StudyService{
 
 	@Override
 	public int updateStudy(Study dto, String pathname) {
-		int result = 0;
-		
-		try {
-			result = dao.updateData("study.updateStudy", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
+		int result=0;
+
+		try{
+			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
+				// 이전파일 지우기
+				if(dto.getStudyImg().length()!=0)
+					fileManager.doFileDelete(dto.getStudyImg(), pathname);
+				
+				String newFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
+				if (newFilename != null) {
+					dto.setStudyImg(dto.getUpload().getOriginalFilename());
+					dto.setStudyImg(newFilename);
+				}
+			}
+			
+			dao.updateData("study.updateStudy", dto);
+			result=1;
+		} catch(Exception e) {
+			System.out.println(e.toString());
 		}
 		return result;
 	}
 
 	@Override
-	public int deleteStudy(int num, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteStudy(int num, String studyImg, String pathname) {
+		int result = 0;
+		
+		try{
+			// 댓글, 좋아요/싫어요 는 ON DELETE CASCADE 로 자동 삭제
+			if(studyImg != null ) {
+			  fileManager.doFileDelete(studyImg, pathname);
+			}
+			
+			dao.deleteData("study.deleteStudy", num);
+			result=1;
+			
+		} catch(Exception e) {
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<StudyCourse> listStudyCourse(Map<String, Object> map) {
+		
+		// 스터디의 과목 리스트
+		List<StudyCourse> list = null;
+		
+		try {
+			list = dao.selectList("study.listStudyCourse", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 
