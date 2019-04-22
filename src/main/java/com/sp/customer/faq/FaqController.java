@@ -1,4 +1,4 @@
-package com.sp.faq;
+package com.sp.customer.faq;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
