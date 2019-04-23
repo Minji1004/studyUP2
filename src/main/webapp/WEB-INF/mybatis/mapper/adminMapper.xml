@@ -10,14 +10,28 @@
 	
 	<sql id="report-list">
 			(INSTR(reportBoard, #{keyword}) &gt; 0				
-				OR INSTR(reportUserId, #{keyword}) &gt; 0
+				OR INSTR(reportUser, #{keyword}) &gt; 0
 				OR INSTR(reportUserNickName, #{keyword}) &gt; 0
-				OR INSTR(reportedUserId, #{keyword}) &gt; 0
+				OR INSTR(reportedUser, #{keyword}) &gt; 0
 				OR INSTR(reportedNickName, #{keyword}) &gt; 0)				
 	</sql>	
 	
 	<select id="dataReportCount" parameterType="map" resultType="Integer">
-		SELECT IFNULL(COUNT(*),0) FROM report
+		SELECT IFNULL(COUNT(*),0) FROM 
+		(       
+	      SELECT R1.reportNum, R1.reportBoard, R1.reportBoardNum, R1.replNum, R1.reportUser, R1.reportType, R1.reportDate, M1.userId reportUserId, M1.nickName reportUserNickName
+	       FROM report AS R1
+	       JOIN memberInfo AS M1
+	       ON R1.reportUser = M1.userNum
+		) AS A
+		JOIN 
+		(       
+	      SELECT R1.reportNum, R1.reportedUser, M1.userId reportedUserId, M1.nickName reportedNickName
+	       FROM report AS R1
+	       JOIN memberInfo AS M1
+	       ON R1.reportedUser = M1.userNum   
+		) AS B
+		ON A.reportNum = B.reportNum
 		<where>
 		<if test="keyword!=null and keyword!=''">
 			<include refid="report-list"/>
@@ -76,8 +90,8 @@
 <!-- member Mapper -->
 	
 	<select id="readMember" parameterType="Integer" resultType="com.sp.admin.member.Member">
-		SELECT userNum, userId, nickname, userPwd, enabled, tel,
-		created, lastLogin, pictureM, picture
+		SELECT userNum, userId, nickname, tel,
+		created, lastLogin, picture
 		FROM memberInfo
 		WHERE userNum=#{userNum}
 	</select>
@@ -85,8 +99,8 @@
 	<sql id="member-list">
 			(INSTR(userNum, #{keyword}) &gt; 0
 				OR INSTR(userId, #{keyword}) &gt; 0				
-				OR INSTR(nickname, #{keyword}) &gt; 0				
-				OR INSTR(tel, #{keyword}) &gt; 0)
+				OR INSTR(nickname, #{keyword}) &gt; 0)			
+				
 	</sql>
 	
 	<select id="memberCount" parameterType="map" resultType="Integer">
@@ -99,7 +113,7 @@
 	</select>
 	
 	<select id="listMember" parameterType="map" resultType="com.sp.admin.member.Member">
-		SELECT userNum, userId, nickname, tel, created		
+		SELECT userNum, userId, nickname, created		
 		FROM memberInfo
 		<where>
 			<if test="keyword!=null and keyword!=''">

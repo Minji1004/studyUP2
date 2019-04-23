@@ -9,6 +9,13 @@
 th{
 	text-align: center;
 }
+.line{
+	align:center; 
+	bgcolor:#eeeeee;
+	height:35px;
+	border-top: 1px solid #cccccc; 
+	border-bottom: 1px solid #cccccc;
+}
 </style>
 
 <script>
@@ -16,6 +23,8 @@ function searchList(){
 	var f=document.reportSearch;
 	f.submit();
 }
+
+
 </script>
 
 <section class="features section">
@@ -41,18 +50,18 @@ function searchList(){
 		   </tr>
 		</table>
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+		  <tr class="line" > 
 		      <th width="100" style="color: #787878;">번호</th>
 		      <th style="color: #787878;">아이디</th>
 		      <th width="150" style="color: #787878;">닉네임</th>
 		      <th width="150" style="color: #787878;">신고유형</th>
 		      <th width="150" style="color: #787878;">신고자</th>
-		      <th width="120" style="color: #787878;">신고일</th>
+		      <th width="200" style="color: #787878;">신고일</th>
 		  </tr>
 		  
 		<c:forEach var="rdto" items="${rlist}">
 		  <tr align="center" height="28" style="border-bottom: 1px solid #cccccc;">
-		      <th width="100">${rdto.rlistNum }</th>
+		      <th width="100">${rdto.rlistNum}</th>
 		      <th><a href="${articleUrl}&reportNum=${rdto.reportNum}">${rdto.reportedUserId }</a></th>		      
 		      <th width="150">${rdto.reportedNickName }</th>
 		      <th width="150">${rdto.reportType }</th>
@@ -88,7 +97,7 @@ function searchList(){
 		   </tr>
 		</table>
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+		  <tr class="line"> 
 		      <th width="100" style="color: #787878;">번호</th>
 		      <th style="color: #787878;">아이디</th>
 		      <th width="200" style="color: #787878;">닉네임</th>		      

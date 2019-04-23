@@ -6,8 +6,7 @@ public class Member {
 	private int mlistNum;
 	private int userNum;
 	private String userId, nickname, userPwd, created, updated, lastLogin;
-	private String tel;
-	private String birth;
+	private String tel;	
 	private MultipartFile pictureM;
 	private String picture;
 	private int enabled;
@@ -68,13 +67,7 @@ public class Member {
 	}
 	public void setTel(String tel) {
 		this.tel = tel;
-	}
-	public String getBirth() {
-		return birth;
-	}
-	public void setBirth(String birth) {
-		this.birth = birth;
-	}
+	}	
 	public MultipartFile getPictureM() {
 		return pictureM;
 	}

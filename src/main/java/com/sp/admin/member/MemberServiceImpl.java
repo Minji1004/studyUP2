@@ -14,10 +14,10 @@ public class MemberServiceImpl implements MemberService{
 	private CommonDAO  dao;
 			
 	@Override
-	public Member readMember(String userId) {
+	public Member readMember(int userNum) {
 		Member mdto=null;
 		try {
-			mdto=dao.selectOne("admin.readMember", userId);
+			mdto=dao.selectOne("admin.readMember", userNum);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
