@@ -5,7 +5,6 @@ public class Faq {
 	private String userId;
 	private String subject;
 	private String content;
-	private String created;
 
 	public int getListNum() {
 		return listNum;
@@ -45,13 +44,5 @@ public class Faq {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public String getCreated() {
-		return created;
-	}
-
-	public void setCreated(String created) {
-		this.created = created;
 	}
 }
