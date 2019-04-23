@@ -2,15 +2,9 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
-<div style="width:100%">
+<section class="features section">
+	<div class="container" style="height:600px; width: 90%; padding-top:80px;">
 <h5>신고 상세</h5>
 <ul>
 	<li>아이디</li>
@@ -37,5 +31,4 @@
 	<li>${rdto.reportType }</li>		
 </ul>
 </div>
-</body>
-</html>
+</section>

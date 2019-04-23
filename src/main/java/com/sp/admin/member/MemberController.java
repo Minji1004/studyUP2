@@ -34,7 +34,7 @@ public class MemberController {
 		
 		String cp = req.getContextPath();
 		
-		int rows=6;
+		int rows=8;
 		int total_page=0;
 		int dataCount=0;
 		
@@ -102,7 +102,7 @@ public class MemberController {
 	@RequestMapping(value="/admin/member/article")
 	public String memberArticle(
 		@RequestParam(defaultValue="") String keyword,
-		@RequestParam String userId,
+		@RequestParam int userNum,
 		@RequestParam String page,
 		HttpServletRequest req,
 		Model model
@@ -114,7 +114,7 @@ public class MemberController {
 			query+="&keyword="+URLEncoder.encode(keyword, "utf-8");			
 		}
 				
-		Member mdto = mservice.readMember(userId);
+		Member mdto = mservice.readMember(userNum);
 		
 		if(mdto==null) {
 			return "redirect:/admin/member/list";
@@ -122,7 +122,7 @@ public class MemberController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("keyword", keyword);
-		map.put("userId", userId);
+		map.put("userNum", userNum);
 		
 		model.addAttribute("mdto", mdto);
 		model.addAttribute("page", page);

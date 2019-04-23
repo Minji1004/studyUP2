@@ -5,6 +5,18 @@
 <%
 	String cp = request.getContextPath();
 %>
+<style>
+th{
+	text-align: center;
+}
+.line{
+	align:center; 
+	bgcolor:#eeeeee;
+	height:35px;
+	border-top: 1px solid #cccccc; 
+	border-bottom: 1px solid #cccccc;
+}
+</style>
 <script>
 function searchMember(){
 	var f=document.memberSearch;
@@ -15,7 +27,7 @@ function searchMember(){
 	<div class="container" style="height:800px; width:90%; padding-top: 80px;">
         <form method="post" name="memberSearch" action="<%=cp%>/admin/member/list">
 			<div class="input-group">
-				<input type="text" name="keyword" value="${keyword }" class="form-control input-sm keyword" placeholder="통합검색">
+				<input type="text" name="keyword" value="${keyword}" class="form-control input-sm keyword" placeholder="통합검색">
 				<span class="input-group-btn" >
 					<button type="button" class="btn btn-primary btn-sm" onclick="searchMember()"><i class="glyphicon glyphicon-search"></i></button>
 				</span>
@@ -34,20 +46,19 @@ function searchMember(){
 		</table>
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <th width="100" style="color: #787878;">번호</th>
+		  <tr class="line"> 
+		      <th width="100" style="color: #787878;">번호</th>		      
 		      <th style="color: #787878;">아이디</th>
-		      <th width="150" style="color: #787878;">닉네임</th>
-		      <th width="150" style="color: #787878;">전화번호</th>
-		      <th width="120" style="color: #787878;">회원가입일</th>
+		      <th style="color: #787878;">닉네임</th>		      
+		      <th width="200" style="color: #787878;">회원가입일</th>
 		  </tr>
 		 
 		<c:forEach var="mdto" items="${mlist }">
 			<tr align="center"height="28" style="border-bottom: 1px solid #cccccc;"> 
-		      <th width="100">${mdto.mlistNum }</th>
+		      <th>${mdto.mlistNum }</th>
 		      <th><a href="${articleUrl }&userNum=${mdto.userNum}">${mdto.userId }</a></th>
-		      <th width="150">${mdto.nickname }</th>		      
-		      <th width="120">${mdto.created }</th>
+		      <th>${mdto.nickname }</th>		      
+		      <th>${mdto.created }</th>
 		  </tr>
 		</c:forEach>
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface MemberService {	
 			
-	public Member readMember(String userId);	
+	public Member readMember(int userNum);	
 	public int deleteMember(String userId);	
 	public int memberCount(Map<String, Object> map);
 	public List<Member> memberList(Map<String, Object> map);

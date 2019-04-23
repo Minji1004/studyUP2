@@ -14,6 +14,7 @@ public class Report {
 	private String reportedNickName;
 	private String reportCause;
 	private int reportType;
+	private String reportTypeName;
 	private String reportDate;
 	
 	public int getRlistNum() {
@@ -99,6 +100,12 @@ public class Report {
 	}
 	public void setReportedUser(int reportedUser) {
 		this.reportedUser = reportedUser;
+	}
+	public String getReportTypeName() {
+		return reportTypeName;
+	}
+	public void setReportTypeName(String reportTypeName) {		
+		this.reportTypeName = reportTypeName;
 	}
 	
 }

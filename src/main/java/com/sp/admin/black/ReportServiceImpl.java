@@ -38,15 +38,15 @@ public class ReportServiceImpl implements ReportService{
 
 	@Override
 	public List<Report> listReport(Map<String, Object> map) throws Exception {
-		List<Report> list = null;
+		List<Report> rlist = null;
 		
 		try {
-			list=dao.selectList("admin.listReport", map);
+			rlist=dao.selectList("admin.listReport", map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return list;
+		return rlist;
 	}
 
 	@Override
