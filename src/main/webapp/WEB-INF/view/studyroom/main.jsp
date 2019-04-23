@@ -5,6 +5,8 @@
 <%
 	String cp=request.getContextPath();
 %>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3088b9ab47979dd906360da2fb19d5f8&libraries=services"></script>
 <script type="text/javascript">
 
 // 좌측 사이드바 메뉴버튼
@@ -26,7 +28,33 @@
 		// 자동으로 열리는 modal
 		$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
 		
+		
+		// 지도를 띄우는 코드 작성
+		var container = document.getElementById('srMap'); //지도를 담을 영역의 DOM 레퍼런스
+		var options = { //지도를 생성할 때 필요한 기본 옵션
+				center: new daum.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+				level: 4 											 //지도의 레벨(확대, 축소 정도)
+			};
+		
+		var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
+		
+		
 	});
+	
+	
+	function viewMapSearch(){
+
+		var places = new daum.maps.services.Places();
+
+		var callback = function(result, status) {
+		    if (status === daum.maps.services.Status.OK) {
+		        console.log(result);
+		    }
+		};
+
+		places.keywordSearch('판교 치킨', callback);
+	};
+	
 	
 	function close_pop(){
 		$('#srModal').on('hidden.bs.modal', function(e)
@@ -87,10 +115,10 @@
 	function insertRow(){
 		
 		var addRow = "<tr class='srTableLine' style='border'><td class='secondTableName' style='background-color: #76956020'>";
-			addRow += "<input type='text' id='' name='srRoomName' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 8000'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 4'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='' class='srInsertText' placeholder='예) 8'></td>";
+			addRow += "<input type='text' id='srRoomName' name='srRoomName' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='srRoomPrice' name='srRoomPrice' class='srInsertText' placeholder='예) 8000'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='srRoomMin' name='srRoomMin' class='srInsertText' placeholder='예) 4'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='srRoomMax' name='srRoomMax' class='srInsertText' placeholder='예) 8'></td>";
 			addRow += "<td><button type='button' class='srRemoveRow' onclick='deleteRow();'>X</button></td></tr>";
 		
 		$('#srRoomInfoTable').append(addRow);
@@ -122,8 +150,8 @@
 					for ( opentime ; opentime<closetime ; opentime++) {
 						var label  = "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
 							label += "<span>|"+opentime+":00|</span>";
+							label += "<input type='hidden' name='srCheckTime' value='"+opentime+"'>";
 							$(".srTimeButton").last().append(label);
-							console.log($(this));
 					}
 				}
 			}
@@ -132,6 +160,150 @@
 		
 		$(".srTimeCB").hide();
 	});
+	
+	// 주소검색 API
+	function srPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                
+            	var addr = ''; // 주소 변수
+            	var extraAddr = ''; // 참고항목 변수
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                }
+
+                document.getElementById("roadAddr").value = data.roadAddress;
+                document.getElementById("normAddr").value = data.jibunAddress;
+                document.getElementById("srAddress").value = extraAddr;
+                document.getElementById("bcode").value = data.bcode;
+                document.getElementById("sido").value = data.sido;
+                document.getElementById("sigungu").value = data.sigungu;
+                document.getElementById("bname").value = data.bname;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddr").focus();
+            }
+        }).open();
+    }
+
+	// modal sendok
+	function modalSendOk(){
+		var f = document.srModalForm;
+		
+		/*
+		// 카페이름
+		var str = f.cafeName.value;
+		if(!str) {
+			alert("제목을 입력하세요.");
+			f.cafeName.focus();
+			return;
+		}
+		
+		// 카페전화번호
+		var str = f.cafeTel.value;
+		if(!str) {
+			alert("전화번호를 입력하세요.");
+			f.cafeTel.focus();
+			return;
+		}
+		
+		// 카페대표자
+		var str = f.cafeOwner.value;
+		if(!str) {
+			alert("대표자 성함을 입력하세요.");
+			f.cafeOwner.focus();
+			return;
+		}
+		
+		// 주소입력확인
+		var str = f.normAddr.value;
+		var str1 = f.detailAddr.value;
+		if(!str || !str1) {
+			alert("주소를 입력하세요.");
+			srPostcode();
+			return;
+		}
+		*/
+		
+		// name이 같은 값들을 배열에 담는다.
+		
+		var state;
+		var srRoomNameValues = [];
+		$("input[name='srRoomName']").each(function() {
+			if(! $(this).val()) {
+				alert("값을 반드시 입력해야 합니다.");
+				$(this).focus();
+				state = 'true';
+				return false;
+			}
+			srRoomNameValues.push($(this).val());
+		});
+		if(state=='true')
+			return;
+		
+		var srRoomPriceValues = [];
+		$("input[name='srRoomPrice']").each(function() {
+			if(! $(this).val()) {
+				alert("값을 반드시 입력해야 합니다.");
+				$(this).focus();
+				state = 'true';
+				return false;
+			}
+			srRoomPriceValues.push($(this).val());
+		});
+		if(state=='true')
+			return;
+		
+		
+		var srRoomMinValues = [];
+		$("input[name='srRoomMin']").each(function() {
+			if(! $(this).val()) {
+				alert("값을 반드시 입력해야 합니다.");
+				$(this).focus();
+				state = 'true';
+				return false;
+			}
+			srRoomMinValues.push($(this).val());
+		});
+		if(state=='true')
+			return;
+		
+		var srRoomMaxValues = [];
+		$("input[name='srRoomMax']").each(function() {
+			if(! $(this).val()) {
+				alert("값을 반드시 입력해야 합니다.");
+				$(this).focus();
+				state = true;
+				return false;
+			}
+			srRoomMaxValues.push($(this).val());
+		});
+		if(state=='true')
+			return;
+		
+	}
 	
 </script>
 
@@ -501,10 +673,11 @@
 			
 		</div>
 		<!-- 지도를 넣을 장소 -->
-		<div class="col-xs-12 col-sm-12 col-md-4" style="border-radius: 5px; border: 1px solid #eeeeee;" >
-			<img class="col-xs-12 col-sm-12 col-md-12" src="<%=cp%>/resource/studyroom/images/map.png" alt="..." width="100%" style="display: flex;">
-			<div class="col-xs-12 col-sm-12 col-md-12">
+		<div class="col-xs-12 col-sm-12 col-md-4">
+			<div>
+				<div id="srMap" class="srMap"></div>
 				<button type="button" class="btn-srModalCreate">등록하기</button>
+				<button type="button" class="viewMapSearch" onclick="viewMapSearch();">??</button>
 			</div>
 		</div>
 	</div>
