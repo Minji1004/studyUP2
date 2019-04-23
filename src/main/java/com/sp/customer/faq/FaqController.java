@@ -70,8 +70,6 @@ public class FaqController {
 		for(Faq dto:list) {
 			listNum=dataCount-(start+n);
 			dto.setListNum(listNum);
-		
-			dto.setCreated(dto.getCreated().substring(0, 10));
 			
 			n++;
 		}
