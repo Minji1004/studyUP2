@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.sp.common.dao.CommonDAO;
 
@@ -56,6 +55,18 @@ public class FaqServiceImpl implements FaqService{
 		return list;
 	}
 
+	@Override
+	public List<Faq> listFaqTop() {
+		List<Faq> list=null;
+		
+		try {
+			list=dao.selectList("faq.listFaqTop");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	@Override
 	public int updateHitCount(int faqNum) {
 		int result=0;

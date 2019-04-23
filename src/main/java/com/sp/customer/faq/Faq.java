@@ -1,11 +1,19 @@
 package com.sp.customer.faq;
 
 public class Faq {
-	private int faqNum;
+	private int listNum, faqNum;
 	private String userId;
 	private String subject;
 	private String content;
 	private String created;
+
+	public int getListNum() {
+		return listNum;
+	}
+
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
 
 	public int getFaqNum() {
 		return faqNum;
