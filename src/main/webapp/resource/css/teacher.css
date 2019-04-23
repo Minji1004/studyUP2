@@ -36,3 +36,7 @@
 	pointer-events: none;
 	display: none;
 }
+
+#example2 tbody tr{
+	cursor: pointer;
+}

@@ -14,12 +14,16 @@ public class Lecture {
 	private String studyImg;
 	private MultipartFile upload;
 	
+	private int attendHeadCount;
 	private int lectureNum;
 	private String registerEnd;
 	private int price;
 	
 	// jsp의 checkbox 이름
 	private List<Integer> courseNums;
+	
+	private String categoryName;
+	private List<String> courseName;
 	
 	
 	public int getStudyNum() {
@@ -111,6 +115,25 @@ public class Lecture {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public int getAttendHeadCount() {
+		return attendHeadCount;
+	}
+	public void setAttendHeadCount(int attendHeadCount) {
+		this.attendHeadCount = attendHeadCount;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public List<String> getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(List<String> courseName) {
+		this.courseName = courseName;
 	}	
+	
 	
 }

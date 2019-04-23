@@ -41,6 +41,9 @@ public class TeacherLectureController {
 		
 		Teacher teacher = teacherService.readTeacher(tnum);
 		
+		List<Lecture> list = lectureService.readLectureList(teacher);
+		
+		model.addAttribute("list", list);
 		model.addAttribute("teacher", teacher);
 		model.addAttribute("tnum", tnum);
 		model.addAttribute("left", left);
@@ -64,15 +67,16 @@ public class TeacherLectureController {
 	public String makeLectureSubmit(Lecture dto, HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-	
+		int num = info.getUserNum();
+
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root +"uploads"+File.separator+"study";
+		String pathname = root +"uploads"+File.separator+"lecture";
 		
 		dto.setUserId(info.getUserId());
 		dto.setUserName(info.getUserName());
 		
 		lectureService.insertLecture(dto, pathname);
 		
-		return "redirect:/study/main";
+		return "redirect:/teacher/lecture/teacherLecture?tnum="+num+"&left=5";
 	}
 }

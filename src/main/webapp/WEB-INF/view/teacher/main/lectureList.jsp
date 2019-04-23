@@ -31,6 +31,8 @@ $(function () {
     'autoWidth'   : false
   })
 })
+
+
 </script>
 
 
@@ -51,38 +53,40 @@ $(function () {
                 <tr>
                   <th>강의 이름</th>
                   <th>강의 설명</th>
-                  <th class="sorting">가격</th>
+                  <th>가격</th>
                   <th>분야</th>                  
                   <th>위치</th>
-                  <th>인원</th>
-                  <th class="sorting">시작일</th>
-                  <th class="sorting">종료일</th>
-                  <th class="sorting">등록마감일</th>  
+                  <th>참가인원</th>
+                  <th>최대인원</th>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                  <th>등록마감일</th>  
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>토익스피킹</td>
-                  <td>토익스피킹 레벨7을 향하여!</td>
-                  <td>100,000</td>
-                  <td>토익스피킹</td>
-                  <td>홍대입구역</td>
-                  <td>5/20</td>
-                  <td>2019-04-26</td>
-                  <td>2019-04-26</td>
-                  <td>2019-04-22</td>
-                </tr>
-                <tr>
-                  <td>토익</td>
-                  <td>토익스피킹 레벨7을 향하여!</td>
-                  <td>5,000</td>
-                  <td>토익스피킹</td>
-                  <td>홍대입구역</td>
-                  <td>5/20</td>
-                  <td>2019-04-26</td>
-                  <td>2019-04-26</td>
-                  <td>2019-04-22</td>
-                </tr>
+                <c:if test="${empty list}">
+                <tr><td colspan="9" style="text-align: center;">등록된 강의가 존재하지 않습니다.</td></tr>
+                </c:if>
+                <c:if test="${not empty list}">
+                	<c:forEach var="dto" items="${list}">
+                		<tr>
+                 		 <td>${dto.studyName}</td>
+                 		 <td>${dto.studyIntro}</td>
+                 		 <td>${dto.price}</td>
+                 		 <td>
+                 		 <c:if test="${empty dto.categoryName}">
+                 		 ${dto.categoryName}>
+                 		 </c:if>
+                 		 </td>
+                 		 <td>${dto.studyLocation}</td>
+                 		 <td>${dto.attendHeadCount}</td>
+                 		 <td>${dto.headcount}</td>
+                 		 <td>${dto.studySday}</td>
+                 		 <td>${dto.studyEday}</td>
+                 		 <td>${dto.registerEnd}</td>
+              			</tr>
+                	</c:forEach>                
+                </c:if>                
                 </tbody>
        	</table>
        	</div>

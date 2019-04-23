@@ -11,6 +11,12 @@ $('.studyDate').datepicker({
 	 language: "kr"
 });
 
+/* $('input[name=registerEnd]').datepicker({ 
+	dateFormat: 'yy-mm-dd',
+	language: "kr",
+	 minDate: new Date()
+}); */
+
 function readURL(input) {
 
 	  if (input.files && input.files[0]) {

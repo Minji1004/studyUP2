@@ -1,10 +1,15 @@
 package com.sp.teacher.lecture;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sp.common.FileManager;
 import com.sp.common.dao.CommonDAO;
+import com.sp.study.StudyCourse;
+import com.sp.teacher.Teacher;
 
 @Service("teacher.lecture.lectureService")
 public class LectureServiceImpl implements LectureService{
@@ -30,8 +35,13 @@ public class LectureServiceImpl implements LectureService{
 
 			dao.insertData("lecture.insertLecture", dto);
 			
+			maxNum = dao.selectOne("lecture.maxStudyNum");
+			int studyNum = maxNum+1;
 			
-	/*		
+			dto.setStudyNum(studyNum);
+			
+			dao.insertData("lecture.insertStudy", dto);			
+			
 			if(dto.getCourseNums() != null) {
 				StudyCourse sdto;
 				for(int s : dto.getCourseNums()) {
@@ -42,11 +52,36 @@ public class LectureServiceImpl implements LectureService{
 					dao.insertData("study.insertStudyCourse", sdto);
 				}				
 			}
-			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public List<Lecture> readLectureList(Teacher dto) throws Exception {
+		List<Lecture> list = null;
+		
+		try {			
+			list = dao.selectList("lecture.readLectureList", dto);	
+			
+			for(Lecture lecture : list) {
+				
+				int studyNum = lecture.getStudyNum();
+				
+				String categoryName = dao.selectOne("lecture.readCategoryName", studyNum);
+				lecture.setCategoryName(categoryName);
+				
+				List<String> courseName = dao.selectList("lecture.readCourseList", studyNum);
+				lecture.setCourseName(courseName);
+				
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	
