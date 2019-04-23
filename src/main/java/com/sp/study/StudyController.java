@@ -101,11 +101,24 @@ public class StudyController {
 		return ".four.study.main";
 	}
 	
+	// 모달창 띄우기
 	@RequestMapping(value="/study/studyDetail")
-	public String studyDetail() {
+	public String studyDetail(
+			@RequestParam int studyNum,
+			Model model) throws Exception {
+		
+		Study dto = service.readStudy(studyNum);
+		if(dto==null)
+			return "redirect:/study/main";
+		
+		dto.setStudyIntro(myUtil.htmlSymbols(dto.getStudyIntro()));
+		
+		model.addAttribute("dto", dto);
+		
 		return "study/studyDetail";
 	}	
 	
+	// 모달창 띄우기
 	@RequestMapping(value="/study/makeStudy", method=RequestMethod.GET)
 	public String makeStudy(Model model) {
 		model.addAttribute("mode", "makeStudy");
@@ -170,5 +183,7 @@ public class StudyController {
 		
 		return "redirect:/study/main";
 	}
+	
+	
 
 }

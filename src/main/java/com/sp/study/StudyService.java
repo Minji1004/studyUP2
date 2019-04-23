@@ -8,7 +8,11 @@ public interface StudyService {
 	public int insertStudy(Study dto, String pathname);
 	public List<Study> listStudy(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
-	public Study readStudy(int num);
+	public Study readStudy(int studyNum);
 	public int updateStudy(Study dto, String pathname);
-	public int deleteStudy(int num, String pathname);
+	public int deleteStudy(int studyNum, String studyImg, String pathname);
+	
+	// 스터디의 과목
+	public List<StudyCourse> listStudyCourse(Map<String, Object> map);
+	
 }

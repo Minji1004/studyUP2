@@ -11,13 +11,20 @@ th{
 }
 </style>
 
+<script>
+function searchList(){
+	var f=document.reportSearch;
+	f.submit();
+}
+</script>
+
 <section class="features section">
 	<div class="container" style="height:600px; width: 90%; padding-top:80px;">
-		<form method="post">
+		<form method="post" name="reportSearch" action="<%=cp%>/admin/blacklist/list">
 			<div class="input-group">
-				<input type="text" name="keyword" class="form-control input-sm keyword" placeholder="통합검색">
+				<input type="text" name="keyword" value="${keyword}" class="form-control input-sm keyword" placeholder="통합검색">
 				<span class="input-group-btn" >
-					<button type="button" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i></button>
+					<button type="button" class="btn btn-primary btn-sm" onclick="searchList()"><i class="glyphicon glyphicon-search"></i></button>
 				</span>
 			</div>
 		</form>
@@ -68,7 +75,7 @@ th{
 	</div>
 
 	<div class="container" style="height:400px; width: 90%;">	
-<c:if test="keyword==null || keyword==''">
+<c:if test="${not empty keyword }">
 		<h5>블랙리스트</h5>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">

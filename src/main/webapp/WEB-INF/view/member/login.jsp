@@ -126,27 +126,17 @@ function sendLogin() {
 		</form>           
 	</div>
 	
-
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<div align="center">
-		<a id="kakao-login-btn"></a> <a
-			href="http://developers.kakao.com/logout"></a>
+		<button id = "kakao-login-btn" onclick = "kakaoLoginForm()"></button>
+	
 		<script type='text/javascript'>
        
-          Kakao.init('65af174643593e739d37189cc96a7851');
-
-          Kakao.Auth.createLoginButton({
-                  container: '#kakao-login-btn',
-                  success: function(authObj) {
-                	  kakaoLoginForm();
-                	  console.log("createLoginButton");
-                  },
-                  fail: function(err) {
-                     alert(JSON.stringify(err));
-                  }
-           });
+          
 
           function kakaoLoginForm() {
+        	  Kakao.init('65af174643593e739d37189cc96a7851');
+        	  
               Kakao.Auth.loginForm({
               	success:function(authObj){
               		getKakaoInfo();

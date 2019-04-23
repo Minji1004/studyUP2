@@ -49,9 +49,11 @@ public class BlackController {
 		map.put("keyword", keyword);
 		
 		dataCount = rservice.dataReportCount(map);
+				
+		total_page=util.pageCount(rows, dataCount);
 		
-		if(dataCount != 0) {
-			total_page=util.pageCount(rows, dataCount);
+		if(total_page<current_page) {
+			current_page=total_page;
 		}
 		
 		int start=(current_page-1)*rows;

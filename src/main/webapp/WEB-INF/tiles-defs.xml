@@ -28,7 +28,7 @@
    <definition name=".fourLayout" template="/WEB-INF/view/layout/layout4.jsp">
        <put-attribute name="title" value="spring" />
         <put-attribute name="header" value="/WEB-INF/view/layout/header2.jsp" />
-        <put-attribute name="left" value="/WEB-INF/view/left.jsp" />
+        <put-attribute name="left" value="/WEB-INF/view/layout/left.jsp" />
       <put-attribute name="body" value="/WEB-INF/view/main/main.jsp" />
       <put-attribute name="footer" value="/WEB-INF/view/layout/footer.jsp" />
    </definition>

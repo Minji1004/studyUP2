@@ -8,17 +8,17 @@
       
 <div class="modal-header">
    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-   <h4 class="modal-title" id="myModalLabel" align="center">수능 1등급 (1/5)</h4>
+   <h4 class="modal-title" id="myModalLabel" align="center">${dto.studyName} (1/${dto.headcount})</h4>
 </div>
 <div class="smodal-body modal-body row">
  	<div class="col-xs-8 col-sm-5" align="center">
- 		<img class="img-circle img-dialog" src="<%=cp%>/resource/study/images/study1.jpg" alt="...">
+ 		<img class="img-circle img-dialog" src="<%=cp%>/uploads/study/${dto.studyImg}">
  	</div>
  	<div class="col-xs-4 col-sm-7">
- 		<div class="dialog-content-title">의대 가고 싶은 사람 모여</div>
- 		<div class="dialog-content"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 나야나</div>
- 		<div class="dialog-content"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> 서울시 마포구</div>
- 		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 2018-10-12 ~ 2019-04-12</div>
+ 		<div class="dialog-content-title">${dto.studyIntro}</div>
+ 		<div class="dialog-content"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.nickname}</div>
+ 		<div class="dialog-content"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> ${dto.studyLocation}</div>
+ 		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> ${dto.studySday} ~ ${dto.studyEday}</div>
  	</div>
 </div>
 <div class="modal-footer">

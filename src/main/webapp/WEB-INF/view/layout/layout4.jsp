@@ -16,7 +16,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>spring</title>
 
-<title>spring</title>
+<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css"/>
+<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap.min.css.map" type="text/css"/>
+<link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>
+
 
 	<link rel="stylesheet" href="<%=cp%>/resource/studyroom/css/srmain.css" />
 	<link rel="stylesheet" href="<%=cp%>/resource/study/css/study.css" />

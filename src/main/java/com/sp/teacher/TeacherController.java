@@ -27,7 +27,7 @@ public class TeacherController {
 	private TeacherUtil teacherUtil;
 	
 	@RequestMapping(value ="/teacher/main", method=RequestMethod.GET)
-	public String manage(@RequestParam int tnum, HttpSession session, Model model) throws Exception{
+	public String manage(@RequestParam int tnum, @RequestParam int left, HttpSession session, Model model) throws Exception{
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
@@ -68,7 +68,7 @@ public class TeacherController {
 			workMode = "createWork";		
 		model.addAttribute("workMode", workMode);		
 		model.addAttribute("mode", mode);
-		model.addAttribute("left", 0);
+		model.addAttribute("left", left);
 		model.addAttribute("teacher", teacher);
 		model.addAttribute("tnum", tnum);
 		

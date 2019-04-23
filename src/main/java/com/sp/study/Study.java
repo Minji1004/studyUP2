@@ -9,16 +9,19 @@ public class Study {
 	private String studyName, studyIntro;
 	private String userId;
 	private String userName;
+	private String nickname;
 	private String studyLocation;
 	private String studySday, studyEday;
 	private String studyImg;
+	private String categoryName;
+	private String color;
 	private MultipartFile upload;
 	
 	// jsp의 checkbox 이름
 	private List<Integer> courseNums;
 	
 	// jsp의 checkbox 이름
-	private List<Integer> courseNames;
+	// private List<Integer> courseNames;
 	
 	public int getStudyNum() {
 		return studyNum;
@@ -92,10 +95,22 @@ public class Study {
 	public void setCourseNums(List<Integer> courseNums) {
 		this.courseNums = courseNums;
 	}
-	public List<Integer> getCourseNames() {
-		return courseNames;
+	public String getCategoryName() {
+		return categoryName;
 	}
-	public void setCourseNames(List<Integer> courseNames) {
-		this.courseNames = courseNames;
-	}	
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 }

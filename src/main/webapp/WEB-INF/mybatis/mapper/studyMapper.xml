@@ -54,7 +54,7 @@
 	<select id="listStudy" parameterType="map" resultType="com.sp.study.Study">
 		SELECT s.studyNum, studyName, studyIntro, userId, 
 			studyLocation, studySday, studyEday, studyImg, headcount,
-	        categoryName
+	        categoryName, color
 		FROM study AS s 
 		LEFT OUTER JOIN studyCourseList AS l
 		ON l.studyNum = s.studyNum 
@@ -74,7 +74,7 @@
 	</select>
 	
 	<!-- 스터디 개수 -->
-	<select id="dataCount" parameterType="map" resultType="com.sp.study.Study">
+	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT IFNULL(count(*), 0) FROM study as s 
 		left outer join studyCourseList as l
 		on l.studyNum = s.studyNum 
@@ -92,15 +92,31 @@
 	</select>
 	
 	<!-- 스터디 읽어오기 -->
-	<select id="readStudy" parameterType="Integer" resultType="com.sp.study.Study">
-		SELECT s.studyNum, studyName, studyIntro, userId, studyLocation, studySday, studyEday, studyImg, headcount FROM study as s 
+	<select id="readStudy" parameterType="map" resultType="com.sp.study.Study">
+		SELECT s.studyNum, studyName, studyIntro, s.userId, nickname,
+				studyLocation, 
+				DATE_FORMAT(studySday, '%Y-%m-%d') AS studySday, DATE_FORMAT(studyEday, '%Y-%m-%d') AS studyEday, 
+				studyImg, headcount 
+		FROM study as s 
 		left outer join studyCourseList as l
 		on l.studyNum = s.studyNum 
 		left outer join course as c
 		on l.courseNum = c.courseNum
 		left outer join category as ca
 		on c.categoryNum = ca.categoryNum
-		where studyNum = #{studyNum}	
+		left outer join memberInfo as m
+		on s.userId = m.userId
+		where s.studyNum = #{studyNum}	
+	</select>
+	
+	<!-- 스터디의 과목 읽어오기-->
+	<select id="listStudyCourse" parameterType="com.sp.study.StudyCourse">
+		SELECT s.studyNum, c.courseName  FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		WHERE s.studyNum = #{studyNum};
 	</select>
 	
 	<!-- 스터디 수정 -->
