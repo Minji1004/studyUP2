@@ -21,9 +21,9 @@
 <link rel="stylesheet" href="<%=cp%>/resource/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>
 
 
-	<link rel="stylesheet" href="<%=cp%>/resource/studyroom/css/srmain.css" />
-	<link rel="stylesheet" href="<%=cp%>/resource/study/css/study.css" />
-	<link rel="stylesheet" href="<%=cp%>/resource/css/lecture.css">
+   <link rel="stylesheet" href="<%=cp%>/resource/studyroom/css/srmain.css" />
+   <link rel="stylesheet" href="<%=cp%>/resource/study/css/study.css" />
+   <link rel="stylesheet" href="<%=cp%>/resource/css/lecture.css">
     <link rel="stylesheet" href="<%=cp%>/resource/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=cp%>/resource/css/jquery.fancybox.css">
     <link rel="stylesheet" href="<%=cp%>/resource/css/main.css">
@@ -31,9 +31,16 @@
     <link rel="stylesheet" href="<%=cp%>/resource/css/animate.min.css">
     <link rel="stylesheet" href="<%=cp%>/resource/css/timer.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
-	<link rel="stylesheet" href="<%=cp%>/resource/css/timer.css" type="text/css">
-	
+   <link rel="stylesheet" href="<%=cp%>/resource/css/timer.css" type="text/css">
+   
+   <!-- 추가 -->
+   <link rel="stylesheet" href="<%=cp%>/resource/css/font-awesome.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/css/ionicons.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/css/AdminLTE.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/css/skin-blue.css">
+  <link rel="stylesheet" href="<%=cp%>/resource/css/dataTables.bootstrap.css">
+   <!-- 추가 마무리 -->
+   
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util-jquery.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
@@ -54,12 +61,12 @@
     right: 135px;
 }
 .stop_timer_btn{
-	position: fixed;
+   position: fixed;
     top: 290px;
     right: 83px;
 }
 .restart_timer_btn{
-	position: fixed;
+   position: fixed;
     top: 290px;
     right: 18px;
 }
@@ -69,12 +76,15 @@
 
 <div class="header">
     <tiles:insertAttribute name="header"/>
+               	 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+				      <span class="sr-only">Toggle navigation</span>
+				 </a>
 </div>
 
-<section class="section" id="srcontianer" >
+<section class="section" style = "padding: 74px 0;" id="srcontianer" >
 <div class="container" role="main">
     <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;" id="sidebar">
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;left: 0px;position: absolute;" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>
         <div class="col-xs-12 col-sm-9 body-frame-2">
@@ -87,9 +97,14 @@
 <div>
     <tiles:insertAttribute name="footer"/>
 </div>
-
+<script src="<%=cp%>/resource/js/jquery.dataTables.js"></script>
+<script src="<%=cp%>/resource/js/dataTables.bootstrap.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=cp%>/resource/js/adminlte.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
+<script src="<%=cp%>/resource/js/jquery.fancybox.pack.js"></script>
+<script src="<%=cp%>/resource/js/jquery.waypoints.min.js"></script>
+<script src="<%=cp%>/resource/js/main.js"></script>
 </body>
 </html>
