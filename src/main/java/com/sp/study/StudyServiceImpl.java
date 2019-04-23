@@ -60,7 +60,12 @@ public class StudyServiceImpl implements StudyService{
 		List<Study> list = null;
 		
 		try {
-			list = dao.selectList("study.listStudy", map);
+			list = dao.selectList("study.listStudy", map);	
+			
+			for(Study s : list) {
+				s.setCourseLists(listStudyCourse(s.getStudyNum()));
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -139,13 +144,13 @@ public class StudyServiceImpl implements StudyService{
 	}
 
 	@Override
-	public List<StudyCourse> listStudyCourse(Map<String, Object> map) {
+	public List<StudyCourse> listStudyCourse(int studyNum) {
 		
 		// 스터디의 과목 리스트
 		List<StudyCourse> list = null;
 		
 		try {
-			list = dao.selectList("study.listStudyCourse", map);
+			list = dao.selectList("study.listStudyCourse", studyNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

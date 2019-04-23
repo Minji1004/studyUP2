@@ -85,7 +85,8 @@ public class StudyController {
             articleUrl = articleUrl + "&"+ query;
         }
         
-        String paging = myUtil.paging(current_page, total_page, listUrl);
+        String paging = myUtil.pagingBoot(current_page, total_page, listUrl);       
+        
 
         model.addAttribute("list", list);
         model.addAttribute("articleUrl", articleUrl);

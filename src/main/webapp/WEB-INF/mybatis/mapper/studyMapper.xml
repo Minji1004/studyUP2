@@ -52,7 +52,7 @@
 	
 	<!-- 스터디 리스트 가져오기 -->
 	<select id="listStudy" parameterType="map" resultType="com.sp.study.Study">
-		SELECT s.studyNum, studyName, studyIntro, userId, 
+		SELECT DISTINCT s.studyNum, studyName, studyIntro, userId, 
 			studyLocation, studySday, studyEday, studyImg, headcount,
 	        categoryName, color
 		FROM study AS s 
@@ -64,6 +64,7 @@
 		ON c.categoryNum = ca.categoryNum
 		
 		<where>
+			lectureNum IS null
 			<if test="keyword != null and keyword != ''">
 				<include refid="where-list"/>
 			</if>		
@@ -84,6 +85,7 @@
 		on c.categoryNum = ca.categoryNum
 		
 		<where>
+			lectureNum IS null
 			<if test="keyword != null and keyword != ''">
 				<include refid="where-list"/>
 			</if>		
@@ -93,7 +95,7 @@
 	
 	<!-- 스터디 읽어오기 -->
 	<select id="readStudy" parameterType="map" resultType="com.sp.study.Study">
-		SELECT s.studyNum, studyName, studyIntro, s.userId, nickname,
+		SELECT DISTINCT s.studyNum, studyName, studyIntro, s.userId, nickname,
 				studyLocation, 
 				DATE_FORMAT(studySday, '%Y-%m-%d') AS studySday, DATE_FORMAT(studyEday, '%Y-%m-%d') AS studyEday, 
 				studyImg, headcount 
@@ -110,13 +112,13 @@
 	</select>
 	
 	<!-- 스터디의 과목 읽어오기-->
-	<select id="listStudyCourse" parameterType="com.sp.study.StudyCourse">
+	<select id="listStudyCourse" parameterType="Integer" resultType="com.sp.study.StudyCourse">
 		SELECT s.studyNum, c.courseName  FROM study as s 
 		left outer join studyCourseList as l
 		on l.studyNum = s.studyNum 
 		left outer join course as c
 		on l.courseNum = c.courseNum
-		WHERE s.studyNum = #{studyNum};
+		WHERE s.studyNum = #{studyNum}
 	</select>
 	
 	<!-- 스터디 수정 -->

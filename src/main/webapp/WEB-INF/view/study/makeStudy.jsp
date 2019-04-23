@@ -12,7 +12,6 @@ $('.studyDate').datepicker({
 });
 
 
-
 function makeStudy() {
 	var f = document.studyForm;
 	var str = f.studyName.value;

@@ -13,6 +13,6 @@ public interface StudyService {
 	public int deleteStudy(int studyNum, String studyImg, String pathname);
 	
 	// 스터디의 과목
-	public List<StudyCourse> listStudyCourse(Map<String, Object> map);
+	public List<StudyCourse> listStudyCourse(int studyNum);
 	
 }

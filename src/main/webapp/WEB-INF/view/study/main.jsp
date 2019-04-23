@@ -84,7 +84,7 @@ $(function() {
 
 	<div class="body-frame-2">
 
-		  	<button type="button" class="btn makeStudy" style="background: #04B486; float: right;" >make 스터디</button>
+		  	<button type="button" class="btn makeStudy" style="background: #04B486; float: right;">make 스터디</button>
                
 			<div role="tabpanel">
 		
@@ -112,7 +112,7 @@ $(function() {
 						<div class="col-xs-12 col-md-10 col-md-offset-1">
 							
 							<!-- select -->
-							<div style="padding:5px 0px 5px 0px; height: 45px ;background-color: #dddddd; border-radius: 5px;" >
+							<div class= "searchStudy">
 								<div class="col-xs-4">
 									<select class="form-control">
 										<option>전체검색</option>
@@ -126,7 +126,7 @@ $(function() {
 	  									<input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" style="width: 100%">
 	  								</div>	
 	  								<div class="col-xs-2" style="padding:2px 0px 0px 0px;">
-	  									<button class="btn btn-unique btn-rounded btn-sm my-0" type="submit">Search</button>
+	  									<button class="btn btn-unique btn-rounded btn-sm my-0" type="submit" style="background: #04B486;">Search</button>
 									</div>
 								</form>						
 								
@@ -143,13 +143,25 @@ $(function() {
 									</div>
 									<div onclick="location.href='#';">
 										<div style="">
-											<div class="study-title" style="padding: 20px 10px 0px 20px; font-family:'맑은고딕'; font-weight: 600; font-size: 14pt;">${dto.studyName}</div>
+											<div class="study-title">${dto.studyName}</div>
 											<div class="studyIntro">${dto.studyIntro}</div>
 											<div>1/${dto.headcount}</div>
 											<div class="row" style="margin-bottom: 10px" >
-												<div class="sPicTagContent col-xs-6 col-sm-4" align="right">#수학</div>
-												<div class="sPicTagContent col-xs-4 col-sm-4">#영어</div>
-												<div class="sPicTagContent col-xs-2 col-sm-4" align="left">#과학</div>							
+											
+												<c:forEach var="courses" items="${dto.courseLists}" varStatus="status">	
+												    <c:if test="${status.count%3 == 0}">
+												    	<div class="sPicTagContent col-sm-4" align="center">#${courses.courseName}</div>
+												    </c:if>
+												    
+												     <c:if test="${status.count%3 == 2}">
+												    	<div class="sPicTagContent col-sm-6" align="center">#${courses.courseName}</div>
+												    </c:if>
+												    
+												     <c:if test="${status.count%3 == 1}">
+												    	<div class="sPicTagContent col-xs-12 col-sm-12" align="center">#${courses.courseName}</div>
+												    </c:if>
+												  
+												</c:forEach>
 											</div>
 										</div>
 									</div>
@@ -157,11 +169,11 @@ $(function() {
 							</div>	
 							</c:forEach>						
 							
-						<!-- 페이징 처리 -->				
-						<div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
+						<!-- 페이징 처리 -->
+						<div class="col-xs-12 col-sm-12 col-md-12 studyPaging" align="center">
 				            <c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
-				            <c:if test="${dataCount!=0 }">${paging}</c:if>
-				        </div> 						
+				            <c:if test="${dataCount!=0 }">${paging}</c:if>							
+						</div>									
 					</div>
 				</div>
 			    
