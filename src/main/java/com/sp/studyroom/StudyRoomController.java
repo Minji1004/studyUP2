@@ -1,5 +1,7 @@
 package com.sp.studyroom;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
+import com.sp.member.SessionInfo;
 
 @Controller("studyroom.StudyRoomController")
 public class StudyRoomController {
 	
+	@Autowired
+	private StudyRoomService service;
 	@Autowired
 	private MyUtil myUtil;
 	@Autowired
@@ -39,12 +44,16 @@ public class StudyRoomController {
 	
 	@RequestMapping(value = "/studyroom/modal/created", method=RequestMethod.POST)
 	public String modalWriteSubmit(
-			Model model
-			
+			StudyRoom dto,
+			HttpSession session
 			) throws Exception {		 
 		
-		model.addAttribute("mode", "created");
-		return "studyroom/modal/write";
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		dto.setUserNum(info.getUserNum());
+		service.insertStudyRoom(dto);
+		
+		return ".studyroom.main";
 	}
 	
 }

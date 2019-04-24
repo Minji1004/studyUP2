@@ -26,6 +26,58 @@
 	});
 	
     
+	// modal sendok
+	function modalSendOk(){
+		var f = document.srModalForm;
+		
+		// 카페이름
+		var str = f.cafeName.value;
+		if(!str) {
+			alert("제목을 입력하세요.");
+			f.cafeName.focus();
+			return;
+		}
+		
+		// 카페전화번호
+		var str = f.cafeTel.value;
+		if(!str) {
+			alert("전화번호를 입력하세요.");
+			f.cafeTel.focus();
+			return;
+		}
+		
+		// 카페대표자
+		var str = f.cafeOwner.value;
+		if(!str) {
+			alert("대표자 성함을 입력하세요.");
+			f.cafeOwner.focus();
+			return;
+		}
+		
+		// 주소입력확인
+		var str = f.roadAddr.value;
+		var str1 = f.detailAddr.value;
+		if(!str || !str1) {
+			alert("주소를 입력하세요.");
+			srPostcode();
+			return;
+		}
+		
+		$(".srTimeButton").each( function(){
+			var cnt = 0;
+			$(this).find("input").each( function(){
+				if( $(this).is(":checked") ){
+					cnt++;
+				}
+			});
+			$(this).find("input[name=checkboxCount]").val(cnt);
+		});
+		
+		f.action="<%=cp%>/studyroom/modal/${mode}";
+		
+		f.submit();
+	}
+	
 </script>	
 
 
@@ -102,17 +154,16 @@
 									<tr class="srTableLine">
 										<td class="tableName">건물명</td>
 										<td>
-											<input type="text" id="srAddress" class="srInsertText" placeholder="" style="padding-left:5px;" readonly="readonly">
+											<input type="text" id="bname" name="bname" class="srInsertText" placeholder="" style="padding-left:5px;" readonly="readonly">
 										</td>
 									</tr>
 									<tr class="srTableLine">
 										<td class="tableName">상세위치</td>
 										<td>
 											<input type="text" id="detailAddr" name="detailAddr" class="srInsertText" placeholder="상세주소를 입력합니다." style="padding-left:5px;">
-											<input type="hidden" id="bcode" name="bcode">
+											<input type="hidden" id="bCode" name="bCode">
 											<input type="hidden" id="sido" name="sido">
 											<input type="hidden" id="sigungu" name="sigungu">
-											<input type="hidden" id="bname" name="bname">
 										</td>
 									</tr>
 									<tr>
@@ -139,8 +190,8 @@
 							
 							<form style="margin: 10px 0px 0px 25px; text-align: left; text-size: 8pt;">
 							    	기준&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp; 
-							  	<input type="radio" name="srPay" value="room">룸&nbsp;&nbsp; 
-							  	<input type="radio" name="srPay" value="oneP">1인
+							  	<input type="radio" name="timeOrRoom" value="room">룸&nbsp;&nbsp; 
+							  	<input type="radio" name="timeOrRoom" value="oneP">1인
 							</form>
 	
 							<div class="scrollSecondTwoModal" style="height: 282px;"> 
@@ -154,16 +205,16 @@
 									</tr>
 									<tr class="srTableLine" style="border">
 										<td class="secondTableName" style="background-color: #76956020">
-											<input type="text" id="" name="srRoomName" class="srInsertText"  style="background-color: #76956001" placeholder="방이름">
+											<input type="text" id="" name="roomName" class="srInsertText"  style="background-color: #76956001" placeholder="방이름">
 										</td>
 										<td class="secondTableContent">
-											<input type="text" id="" name="srRoomPrice" class="srInsertText" placeholder="예) 8000">
+											<input type="text" id="" name="unitPrice" class="srInsertText" placeholder="예) 8000">
 										</td>
 										<td class="secondTableContent">
-											<input type="text" id="" name="srRoomMin" class="srInsertText" placeholder="예) 4">
+											<input type="text" id="" name="minUser" class="srInsertText" placeholder="예) 4">
 										</td>
 										<td class="secondTableContent">
-											<input type="text" id="" name="srRoomMax" class="srInsertText" placeholder="예) 8">
+											<input type="text" id="" name="maxUser" class="srInsertText" placeholder="예) 8">
 										</td>
 										<td>
 											<button class="srRemoveRow" type="button">X</button>
@@ -193,10 +244,10 @@
 									</tr>
 									<tr class="srTableLine" style="border">
 										<td class="secondTablePeople">
-											<input type="text" id="" name="srOpenTime" class="srInsertText" style="font-size: 10pt; text-align: center; border-right : 1pt dotted #cccccc; " placeholder="예) 10">
+											<input type="text" id="" name="cafeOpen" class="srInsertText" style="font-size: 10pt; text-align: center; border-right : 1pt dotted #cccccc; " placeholder="예) 10">
 										</td>
 										<td class="secondTablePeople">
-											<input type="text" id="" name="srCloseTime" class="srInsertText" style="font-size: 10pt; text-align: center;" placeholder="예) 23">
+											<input type="text" id="" name="cafeClose" class="srInsertText" style="font-size: 10pt; text-align: center;" placeholder="예) 23">
 										</td>
 									</tr>
 								</table>
@@ -218,7 +269,7 @@
 							<!-- 각 스터디 별 체크  -->
 							<div class="scrollThirdModal"> 
 								<div class="col-xs-12 col-sm-12 col-md-12" id="srModalRoomTime">
-									<div class="srRoomName">수성</div>
+									<div class="roomName">수성</div>
 									<div class="srTimeButton">
 										<label class="srTimeColor">
 											<input class="srTimeCB" type="checkbox" autocomplete="off">

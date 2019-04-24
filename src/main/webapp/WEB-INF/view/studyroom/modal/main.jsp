@@ -117,8 +117,8 @@
 						</div>
 						<div class="scrollSecondTwoModal">
 							<form style="margin: 10px 0px 0px 25px; text-align: left; text-size: 8pt;">
-							  <input type="radio" name="srPay" value="room">룸
-							  <input type="radio" name="srPay" value="oneP">1인
+							  <input type="radio" name="timeOrRoom" value="room">룸
+							  <input type="radio" name="timeOrRoom" value="oneP">1인
 							</form>
 							<table class="srSecondModalInfo">
 								<tr class="srTableLine" style="border">
