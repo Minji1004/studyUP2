@@ -69,7 +69,9 @@
 }
 
 .content-wrapper {
+  /*
   min-height: 100%;
+  */
   background-color: #FDFFF8;
 }
 </style>
@@ -90,7 +92,7 @@
 <section class="section" style = "padding: 74px 0;" id="srcontianer" >
 <div class="container" role="main">
     <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;left: 0px;position: absolute;" id="sidebar">
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px; left: 0px; position: absolute; height: 100%" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>
         <div class="col-xs-12 col-sm-9 container-fluid content-wrapper">

@@ -81,8 +81,8 @@ $(function() {
 
 	
 </script>
-
-	<div class="body-frame-2 studyBody" style="margin: 10px;">
+<div  style="width:95%; height: 100%">
+	<div class="studyBody" style="margin: 10px;">
 
 		  	<button type="button" class="btn makeStudy" style="background: #04B486; float: right;">make 스터디</button>
                
@@ -176,3 +176,4 @@ $(function() {
   		</div>			
 	</div>
  </div>
+</div>
