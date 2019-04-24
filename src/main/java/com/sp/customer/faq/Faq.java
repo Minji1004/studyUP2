@@ -5,7 +5,7 @@ public class Faq {
 	private String userId;
 	private String subject;
 	private String content;
-
+	
 	public int getListNum() {
 		return listNum;
 	}

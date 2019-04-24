@@ -149,7 +149,7 @@ function searchList() {
 		        
 		        <div style="clear: both;">
 		        		<div style="float: left; width: 20%; min-width: 85px;">
-		        		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/';">새로고침</button>
+		        		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/notice/list';">새로고침</button>
 		        		</div>
 		        		<div style="float: left; width: 60%; text-align: center;">
 		        		     <form name="searchForm" action="<%=cp%>/customer/notice/list" method="post" class="form-inline">

@@ -26,7 +26,7 @@ public class FaqController {
 	@Autowired
 	private MyUtil myUtil;
 
-	@RequestMapping(value= {"/customer/faq/list", "/servicecenter/main"})
+	@RequestMapping(value= {"/customer/faq/list"})
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
@@ -52,11 +52,6 @@ public class FaqController {
 		
 		if(total_page<current_page)
 			current_page=total_page;
-		
-		List<Faq> faqList=null;
-			if(current_page==1) {
-				faqList=service.listFaqTop();
-			};
 		
 		int start=(current_page-1)*rows;
 		if(start<0) start=0;
@@ -90,7 +85,6 @@ public class FaqController {
 		
 		String paging=myUtil.paging(current_page, total_page, listUrl);
 		
-		model.addAttribute("faqList", faqList);
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("articleUrl", articleUrl);
@@ -104,34 +98,42 @@ public class FaqController {
 		model.addAttribute("subMenu", "3");
 		return ".customer.faq.list";
 	}
-	
+
 	@RequestMapping(value="/customer/faq/created", method=RequestMethod.GET)
 	public String createdForm(
-			Model model,
-			HttpSession session
+			Model model
 			) throws Exception{
+		/*
 		SessionInfo info=(SessionInfo)session.getAttribute("memberInfo");
 		
 		if(! info.getUserId().equals("admin")) {
 			return "redirect:/customer/faq/list";
 		}
-		
+		*/
 		model.addAttribute("mode", "created");
-		return ".faq.created";
+		return ".customer.faq.created";
 	}
 	
 	@RequestMapping(value="/customer/faq/created", method=RequestMethod.POST)
 	public String createdSubmit(
-			Faq dto,
-			HttpSession session) throws Exception{
+			Faq dto
+			,HttpSession session) throws Exception{
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
+		if(dto!=null) {
+			dto.setUserId(info.getUserId());
+			service.insertFaq(dto);
+		}
+		
+		/*
 		SessionInfo info=(SessionInfo)session.getAttribute("admin");
 		
 		if(info.getUserId().equals("admin")) {
 			
 			dto.setUserId(info.getUserId());
-			service.insertFaq(dto);
+			
 		}
+		*/
 		return "redirect:/customer/faq/list";
 	}
 	
@@ -186,6 +188,7 @@ public class FaqController {
 	return ".customer.faq.update";
 	}
 	
+	/*	
 	@RequestMapping(value="/customer/faq/update", method=RequestMethod.POST)
 	public String updateSubmit(
 			Faq dto,
@@ -193,13 +196,17 @@ public class FaqController {
 			HttpSession session) throws Exception{
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		if(info.getUserId().equals("admin")) {
+
+		 if(info.getUserId().equals("admin")) {
 			dto.setUserId(info.getUserId());
 			service.updateFaq(dto);
-		}
+
+		
 		
 		return "redirect:/customer/faq/list?page="+page;
 	}
+	*/
+	
 	@RequestMapping(value="/customer/faq/delete")
 	public String delete(
 			@RequestParam int faqNum,
