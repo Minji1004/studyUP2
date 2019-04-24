@@ -100,13 +100,12 @@
 	// 외부 jsp모달 불러오기
 	$(function(){
 		$(".btn-srModal").click(function(){
-			//$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
+			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
 		});
 	});
 	
 	$(function(){
 		$(".btn-srModalCreate").click(function(){
-			alert("!!!");
 			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
 			/*
 			$('#srModal .modal-content').load("<%=cp%>/studyroom/modal/created", function(){
@@ -219,8 +218,8 @@
 </script>
 
 
-<section class="studyroomSection" style="height:75vh;">
-	<div class="container">
+<section class="studyroomSection" style="height:75vh; width:100%;">
+	<div class="srContainer" style="width:100%;">
 
 	<div>
 		<!-- 페이지 맨 윗단 소개글 -->
