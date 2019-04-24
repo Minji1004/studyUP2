@@ -7,15 +7,26 @@
 %>
 <script>
 $('.studyDate').datepicker({
+    changeMonth: true,
+    changeYear: true,
 	 format: "yyyy-mm-dd",
 	 language: "kr"
 });
 
-/* $('input[name=registerEnd]').datepicker({ 
-	dateFormat: 'yy-mm-dd',
-	language: "kr",
-	 minDate: new Date()
-}); */
+$('input[name=registerEnd]').datepicker("option", "minDate", new Date());
+$('input[name=registerEnd]').datepicker("option", "onClose", function (selectedDate){
+	$("input[name=studySday]").datepicker( "option", "minDate", selectedDate); 	
+});
+
+$('input[name=studySday]').datepicker("option", "maxDate", $("input[name=studyEday]").val());
+$('input[name=studySday]').datepicker("option", "onClose", function (selectedDate){
+	$("input[name=studyEday]").datepicker( "option", "minDate", selectedDate ); 
+});
+
+$('input[name=studyEday]').datepicker("option", "minDate", $("input[name=studySday]").val());
+$('input[name=studyEday]').datepicker("option", "onClose", function (selectedDate){
+    $("input[name=studySday]").datepicker( "option", "maxDate", selectedDate );
+   });
 
 function readURL(input) {
 

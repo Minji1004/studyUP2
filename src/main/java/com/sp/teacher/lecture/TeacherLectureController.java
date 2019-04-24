@@ -1,9 +1,7 @@
 package com.sp.teacher.lecture;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,12 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.member.SessionInfo;
 import com.sp.study.Category;
 import com.sp.study.CategoryService;
-import com.sp.study.Study;
 import com.sp.teacher.Teacher;
 import com.sp.teacher.TeacherService;
 
@@ -50,7 +46,7 @@ public class TeacherLectureController {
 		
 		return ".teacher.main.lectureList";
 	}
-		
+	
 	@RequestMapping(value="/teacher/lecture/makeLecture", method=RequestMethod.GET)
 	public String makeLecture(Model model) {
 		model.addAttribute("mode", "makeStudy");

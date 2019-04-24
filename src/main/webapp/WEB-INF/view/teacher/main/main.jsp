@@ -368,10 +368,10 @@ function printWork(data){
 		if('${sessionScope.member.userNum}'=='${tnum}'){
 			if(data.subject == null){
 				$("#subjectInput").html("가르칠 과목을 등록해주세요.");
-				$("#subjectTd").html("<button class='btn' type='button' onclick='changeSubject(\"insert\")' style='float: right;'>등록하기</button>");
+				$("#subjectTd").html("<button class='btn btn-default' type='button' onclick='changeSubject(\"insert\")' style='float: right;'>등록하기</button>");
 			}else{
 				$("#subjectInput").html(data.subject);	
-				$("#subjectTd").html("<button class='btn' type='button' onclick='changeSubject(\"update\")' style='float: right;'>수정하기</button>");
+				$("#subjectTd").html("<button class='btn btn-default' type='button' onclick='changeSubject(\"update\")' style='float: right;'>수정하기</button>");
 			}			
 		}else{
 			if(data.subject == null)
@@ -387,11 +387,11 @@ function printWork(data){
 		$("#subjectTd").empty();
 		if(mode=='insert'){
 			$("#subjectInput").html("<input type='text' style='width: 300px;'>");
-			$("#subjectTd").html("<button class='btn' type='button' onclick='insertSubject()' style='float: right;'>등록완료</button>");
+			$("#subjectTd").html("<button class='btn btn-default' type='button' onclick='insertSubject()' style='float: right;'>등록완료</button>");
 		}
 		else if(mode=='update'){
 			$("#subjectInput").html("<input type='text' style='width: 300px;' value='"+content+"'>");
-			$("#subjectTd").html("<button class='btn' type='button' onclick='updateSubject()' style='float: right;'>수정완료</button>");
+			$("#subjectTd").html("<button class='btn btn-default' type='button' onclick='updateSubject()' style='float: right;'>수정완료</button>");
 		}		
 	}
 	
@@ -483,7 +483,7 @@ function printWork(data){
 			<form name="introduce" method="post">			
 				<textarea id="tBox" class="read" readonly="readonly">${teacher.content}</textarea>
 				<c:if test="${mode eq 'teacher'}">
-					<button class="btn" type="button" style="float: right; margin: 0 30px 10px;" onclick="changeTextarea()"></button>
+					<button class="btn btn-default" type="button" style="float: right; margin: 0 30px 10px;" onclick="changeTextarea()"></button>
 				</c:if>
 		
 			</form>
@@ -497,7 +497,7 @@ function printWork(data){
 				<table class="table table-striped">
 				</table>
 				<c:if test="${mode eq 'teacher'}">
-					<button class="btn" type="button"
+					<button class="btn btn-default" type="button"
 						style="float: right; margin-right: 30px;" onclick="changeWork()"></button>
 				</c:if>
 			</form>
@@ -540,7 +540,7 @@ function printWork(data){
 						required="required"></textarea>
 				</div>
 				<div style="text-align: right; padding-top: 10px;">
-					<button type="button" class="btn" onclick="sendComment();" style="padding: 8px 25px;">등록하기</button>
+					<button type="button" class="btn btn-default" onclick="sendComment();" style="padding: 8px 25px;">등록하기</button>
 				</div>
 			</form>
 			<table id="commentTable" class="table">

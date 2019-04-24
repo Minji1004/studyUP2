@@ -21,16 +21,38 @@ $(function(){
 });
 
 
-$(function () {
-  $('#example2').DataTable({
+/* $(function () {
+  $('#example2').DataTable({ 
     'paging'      : false,
     'lengthChange': false,
     'searching'   : false,
     'ordering'    : true,
     'info'        : false,
-    'autoWidth'   : false
-  })
-})
+    'autoWidth'   : false,
+  });
+}); */
+
+$(function () {
+	  $('#example2').DataTable({ 
+		"pagingType": "simple_numbers",
+	    'lengthChange': false,
+	    'searching'   : false,
+	    "columnDefs": [ 
+	    	{"targets": 0, "orderable": true},
+	    	{"targets": 1, "orderable": false},
+	    	{"targets": 2, "orderable": true},
+	    	{"targets": 3, "orderable": false},
+	    	{"targets": 4, "orderable": false},
+	    	{"targets": 5, "orderable": true},
+	    	{"targets": 6, "orderable": true},
+	    	{"targets": 7, "orderable": true},
+	    	{"targets": 8, "orderable": true},
+	    	{"targets": 9, "orderable": true}
+	    	],
+	    'info'        : true,
+	    'autoWidth'   : false,
+	  });
+	});
 
 
 </script>
@@ -47,7 +69,7 @@ $(function () {
 			</h3>
 		</div>
 		<div class="box-body">
-		<button type="button" class="btn makeLecture" style="float:right;">등록하기</button>	
+		<button type="button" class="btn makeLecture btn-default" style="float:right;">등록하기</button>	
 		<table id="example2" class="table table-bordered table-hover dataTable">
                 <thead>
                 <tr>
@@ -74,8 +96,11 @@ $(function () {
                  		 <td>${dto.studyIntro}</td>
                  		 <td>${dto.price}</td>
                  		 <td>
-                 		 <c:if test="${empty dto.categoryName}">
-                 		 ${dto.categoryName}>
+                 		 <c:if test="${not empty dto.categoryName}">
+                 		 ${dto.categoryName}&nbsp;>
+                 		 <c:forEach var="subject" items="${dto.courseName}">
+                 		 &nbsp;${subject}
+                 		 </c:forEach>
                  		 </c:if>
                  		 </td>
                  		 <td>${dto.studyLocation}</td>
