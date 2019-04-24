@@ -24,7 +24,7 @@ public class StudyRoomController {
 	
 	@RequestMapping(value = "/studyroom/main")
 	public String pageMain() {		 
-		return ".studyroom.main";
+		return ".four.studyroom.main";
 	}
 	
 	@RequestMapping(value = "/studyroom/modal/main")

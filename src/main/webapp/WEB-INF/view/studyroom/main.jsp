@@ -26,7 +26,7 @@
 
 	$(document).ready(function(){
 		// 자동으로 열리는 modal
-		$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
+		// $('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
 		
 		
 		// 지도를 띄우는 코드 작성
@@ -100,13 +100,19 @@
 	// 외부 jsp모달 불러오기
 	$(function(){
 		$(".btn-srModal").click(function(){
-			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
+			//$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
 		});
 	});
 	
 	$(function(){
 		$(".btn-srModalCreate").click(function(){
+			alert("!!!");
 			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
+			/*
+			$('#srModal .modal-content').load("<%=cp%>/studyroom/modal/created", function(){
+				$('#srModal').modal("show");
+			});
+			*/
 		});
 	});
 	
@@ -213,64 +219,9 @@
 </script>
 
 
-<section class="srcontianer" style="height:75vh;">
+<section class="studyroomSection" style="height:75vh;">
 	<div class="container">
-	<!-- 
-		사이드 바
-		#srMain 		: 메뉴 클릭		(앞 sr부분을 각 게시판에 맞게 수정하세요.)
-		#srMySidenav 	: 사이드바 메뉴 	(앞 sr부분을 각 게시판에 맞게 수정하세요.)
-		
-		글어갈 때 필요한 것들
-		1. 스크립트의 사이드바 function2개
-		2. resource/studyroom/css/srmain.css 파일
-		3. layout3에 css 링크넣기	
-	-->
-	
-	<div id="srMain">
-		<div class="srMenuBtn" onclick="srOpenNav()">☰ </div>
-	</div>
-	
-	<aside class="main-sidebar" style = "	max-width: 140px;background: #222d32;padding-Top:15px;height: 1026px;">
-	
-	    <!-- sidebar: style can be found in sidebar.less -->
-	    <section class="sidebar">
-	
-	      <!-- Sidebar user panel (optional) -->
-	      <div class="user-panel">
-	        <div class="pull-left image">
-	          	
-	        </div>
-	        <div class="pull-left info">
-	          <p>선생님</p>
-	        </div>
-	      </div>
-	
-	      <!-- /.search form -->
-	
-	      <!-- Sidebar Menu -->
-	      <ul class="sidebar-menu" data-widget="tree">
-	        <!-- Optionally, you can add icons to the links -->
-	        <li><a href="#"><i class="fa fa-link"></i> <span>관리자룸</span></a></li>
-			<li><a href="#"><i class="fa fa-link"></i> <span>장바구니</span></a></li>
-			<li><a href="#"><i class="fa fa-link"></i> <span>예약현황</span></a></li>
-			<li><a href="#"><i class="fa fa-link"></i> <span>예약취소</span></a></li>
-	      </ul>
-	      <!-- /.sidebar-menu -->
-	    </section>
-	    <!-- /.sidebar -->
-	  </aside>
-	
-	<div id="srMySidenav" class="srMySidenav">
-		<a>&nbsp;</a>		
-		<a href="#">관리자룸</a>		
-		<a href="#">장바구니</a>		
-		<a href="#">예약현황</a>		
-		<a href="#">예약취소</a>			
-		<a href="javascript:void(0)" class="srClosebtn" onclick="srCloseNav()">X</a>
-	</div>
-	
-	
-	
+
 	<div>
 		<!-- 페이지 맨 윗단 소개글 -->
 		<div class="col-md-12" style="padding: 20px 10px 10px 20px;">
@@ -633,16 +584,8 @@
 		</nav>
 	</div>
 	
+
 	
-	
-	<!-- The Modal -->
-	<div class="modal modal-center" id="srModal">
-		<div class="modal-dialog modal-center modal-eight">
-			<div class="modal-content modal-eight">
-				
-			</div>
-		</div>	
-	</div>	
 		
 		
 	

@@ -93,7 +93,7 @@
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;left: 0px;position: absolute;" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>
-        <div class="col-xs-12 col-sm-9 body-frame-2 container-fluid content-wrapper">
+        <div class="col-xs-12 col-sm-9 container-fluid content-wrapper">
                 <tiles:insertAttribute name="body"/>
         </div>
      </div>
@@ -134,5 +134,13 @@
     <div class="modal-content" style="background: #FBFDF8;"></div>
   </div>
 </div>
+
+<div class="modal modal-center" id="srModal">
+	<div class="modal-dialog modal-center modal-eight">
+		<div class="modal-content modal-eight">
+		</div>
+	</div>	
+</div>	
+	
 
 </html>
