@@ -82,7 +82,7 @@ $(function() {
 	
 </script>
 
-	<div class="body-frame-2">
+	<div class="body-frame-2 studyBody" style="margin: 10px;">
 
 		  	<button type="button" class="btn makeStudy" style="background: #04B486; float: right;">make 스터디</button>
                
@@ -149,19 +149,10 @@ $(function() {
 											<div class="row" style="margin-bottom: 10px" >
 											
 												<c:forEach var="courses" items="${dto.courseLists}" varStatus="status">	
-												    <c:if test="${status.count%3 == 0}">
-												    	<div class="sPicTagContent col-sm-4" align="center">#${courses.courseName}</div>
-												    </c:if>
-												    
-												     <c:if test="${status.count%3 == 2}">
-												    	<div class="sPicTagContent col-sm-6" align="center">#${courses.courseName}</div>
-												    </c:if>
-												    
-												     <c:if test="${status.count%3 == 1}">
-												    	<div class="sPicTagContent col-xs-12 col-sm-12" align="center">#${courses.courseName}</div>
-												    </c:if>
-												  
+												    <span class="sPicTagContent">#${courses.courseName}</span>
+														  
 												</c:forEach>
+												
 											</div>
 										</div>
 									</div>
@@ -185,22 +176,3 @@ $(function() {
   		</div>			
 	</div>
  </div>
-
-
-<div class="smodal modal fade" id="myStudyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background: #FBFDF8;"></div>
-  </div>
-</div>
-
-<div class="smodal modal fade bs-example-modal-lg" id="myStudyInput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content" style="background: #FBFDF8;"></div>
-  </div>
-</div>
-
-<div class="smodal modal fade" id="myStudyApply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background: #FBFDF8;"></div>
-  </div>
-</div>
