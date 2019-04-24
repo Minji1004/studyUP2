@@ -42,7 +42,7 @@ public class StudyController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 9;
+		int rows = 6;
 		int total_page = 0;
 		int dataCount = 0;
 		

@@ -26,7 +26,7 @@
 
 	$(document).ready(function(){
 		// 자동으로 열리는 modal
-		$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
+		// $('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
 		
 		
 		// 지도를 띄우는 코드 작성
@@ -100,13 +100,19 @@
 	// 외부 jsp모달 불러오기
 	$(function(){
 		$(".btn-srModal").click(function(){
-			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
+			//$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
 		});
 	});
 	
 	$(function(){
 		$(".btn-srModalCreate").click(function(){
+			alert("!!!");
 			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
+			/*
+			$('#srModal .modal-content').load("<%=cp%>/studyroom/modal/created", function(){
+				$('#srModal').modal("show");
+			});
+			*/
 		});
 	});
 	
@@ -115,10 +121,10 @@
 	function insertRow(){
 		
 		var addRow = "<tr class='srTableLine' style='border'><td class='secondTableName' style='background-color: #76956020'>";
-			addRow += "<input type='text' id='srRoomName' name='srRoomName' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='srRoomPrice' name='srRoomPrice' class='srInsertText' placeholder='예) 8000'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='srRoomMin' name='srRoomMin' class='srInsertText' placeholder='예) 4'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='srRoomMax' name='srRoomMax' class='srInsertText' placeholder='예) 8'></td>";
+			addRow += "<input type='text' id='roomName' name='roomName' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='unitPrice' name='unitPrice' class='srInsertText' placeholder='예) 8000'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='minUser' name='minUser' class='srInsertText' placeholder='예) 4'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='maxUser' name='maxUser' class='srInsertText' placeholder='예) 8'></td>";
 			addRow += "<td><button type='button' class='srRemoveRow' onclick='deleteRow();'>X</button></td></tr>";
 		
 		$('#srRoomInfoTable').append(addRow);
@@ -137,25 +143,25 @@
 	$(document).on("click","#srModalFullTime", function(){
 		// 먼저 안의 리스트를 지운다.
 		$("#srModalRoomTime").children().remove();
-		var opentime = $("input[name=srOpenTime]").val();
-		var closetime = $("input[name=srCloseTime]").val();
-		var temp = opentime;
-		$("input[name=srRoomName]").each(function(){
-			if($(this).val()){
-				if( opentime && closetime ) {
-					$divName = "<div class='srRoomName'>"+$(this).val()+"</div>"
-					$divTimeButton = $("<div class='srTimeButton'>");
-					$("#srModalRoomTime").append($divName);
-					$("#srModalRoomTime").append($divTimeButton);
-					for ( opentime ; opentime<closetime ; opentime++) {
-						var label  = "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
-							label += "<span>|"+opentime+":00|</span>";
-							label += "<input type='hidden' name='srCheckTime' value='"+opentime+"'>";
-							$(".srTimeButton").last().append(label);
-					}
-				}
+		var opentime = parseInt($("input[name=cafeOpen]").val());
+		var closetime = parseInt($("input[name=cafeClose]").val());
+		if ( opentime=="" || opentime==null || closetime=="" || closetime==null ) {
+			alert("값을 입력하세요.");
+			return;
+		}
+		$("input[name=roomName]").each(function(){
+			$divName = "<div class='roomName'>"+$(this).val()+"</div>"
+			$divTimeButton = $("<div class='srTimeButton'>");
+			$("#srModalRoomTime").append($divName);
+			$("#srModalRoomTime").append($divTimeButton);
+			for ( var i = opentime ; i < closetime ; i++) {
+				var label  = "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
+					label += "<span>|"+i+":00|</span>";
+					label += "<input type='hidden' name='checkTime' value='"+i+"'>";
+					$(".srTimeButton").last().append(label);
 			}
-			opentime = temp;
+			var checkboxCount = "<input type='hidden' name='checkboxCount' style='border:none; width: 50px;' readonly='readonly'>"
+			$(".srTimeButton").last().append(checkboxCount);
 		});
 		
 		$(".srTimeCB").hide();
@@ -191,150 +197,31 @@
                     }
                     // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
+                        extraAddr = '(' + extraAddr + ')';
                     }
                 }
 
                 document.getElementById("roadAddr").value = data.roadAddress;
                 document.getElementById("normAddr").value = data.jibunAddress;
-                document.getElementById("srAddress").value = extraAddr;
-                document.getElementById("bcode").value = data.bcode;
+                document.getElementById("bname").value = extraAddr;
+                document.getElementById("bCode").value = data.bcode;
                 document.getElementById("sido").value = data.sido;
                 document.getElementById("sigungu").value = data.sigungu;
-                document.getElementById("bname").value = data.bname;
+                
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("detailAddr").focus();
             }
         }).open();
     }
 
-	// modal sendok
-	function modalSendOk(){
-		var f = document.srModalForm;
-		
-		/*
-		// 카페이름
-		var str = f.cafeName.value;
-		if(!str) {
-			alert("제목을 입력하세요.");
-			f.cafeName.focus();
-			return;
-		}
-		
-		// 카페전화번호
-		var str = f.cafeTel.value;
-		if(!str) {
-			alert("전화번호를 입력하세요.");
-			f.cafeTel.focus();
-			return;
-		}
-		
-		// 카페대표자
-		var str = f.cafeOwner.value;
-		if(!str) {
-			alert("대표자 성함을 입력하세요.");
-			f.cafeOwner.focus();
-			return;
-		}
-		
-		// 주소입력확인
-		var str = f.normAddr.value;
-		var str1 = f.detailAddr.value;
-		if(!str || !str1) {
-			alert("주소를 입력하세요.");
-			srPostcode();
-			return;
-		}
-		*/
-		
-		// name이 같은 값들을 배열에 담는다.
-		
-		var state;
-		var srRoomNameValues = [];
-		$("input[name='srRoomName']").each(function() {
-			if(! $(this).val()) {
-				alert("값을 반드시 입력해야 합니다.");
-				$(this).focus();
-				state = 'true';
-				return false;
-			}
-			srRoomNameValues.push($(this).val());
-		});
-		if(state=='true')
-			return;
-		
-		var srRoomPriceValues = [];
-		$("input[name='srRoomPrice']").each(function() {
-			if(! $(this).val()) {
-				alert("값을 반드시 입력해야 합니다.");
-				$(this).focus();
-				state = 'true';
-				return false;
-			}
-			srRoomPriceValues.push($(this).val());
-		});
-		if(state=='true')
-			return;
-		
-		
-		var srRoomMinValues = [];
-		$("input[name='srRoomMin']").each(function() {
-			if(! $(this).val()) {
-				alert("값을 반드시 입력해야 합니다.");
-				$(this).focus();
-				state = 'true';
-				return false;
-			}
-			srRoomMinValues.push($(this).val());
-		});
-		if(state=='true')
-			return;
-		
-		var srRoomMaxValues = [];
-		$("input[name='srRoomMax']").each(function() {
-			if(! $(this).val()) {
-				alert("값을 반드시 입력해야 합니다.");
-				$(this).focus();
-				state = true;
-				return false;
-			}
-			srRoomMaxValues.push($(this).val());
-		});
-		if(state=='true')
-			return;
-		
-	}
+	
 	
 </script>
 
 
-<section class="srcontianer" style="height:75vh;">
+<section class="studyroomSection" style="height:75vh;">
 	<div class="container">
-	<!-- 
-		사이드 바
-		#srMain 		: 메뉴 클릭		(앞 sr부분을 각 게시판에 맞게 수정하세요.)
-		#srMySidenav 	: 사이드바 메뉴 	(앞 sr부분을 각 게시판에 맞게 수정하세요.)
-		
-		글어갈 때 필요한 것들
-		1. 스크립트의 사이드바 function2개
-		2. resource/studyroom/css/srmain.css 파일
-		3. layout3에 css 링크넣기	
-	-->
-	
-	<div id="srMain">
-		<div class="srMenuBtn" onclick="srOpenNav()">☰ </div>
-	</div>
-	<div id="srMySidenav" class="srMySidenav">
-		<a>&nbsp;</a>		
-		<a href="#">관리자룸</a>		
-		<a href="#">장바구니</a>		
-		<a href="#">예약현황</a>		
-		<a href="#">예약취소</a>			
-		<a href="javascript:void(0)" class="srClosebtn" onclick="srCloseNav()">X</a>
-	</div>
-	
-	
-	
+
 	<div>
 		<!-- 페이지 맨 윗단 소개글 -->
 		<div class="col-md-12" style="padding: 20px 10px 10px 20px;">
@@ -697,16 +584,8 @@
 		</nav>
 	</div>
 	
+
 	
-	
-	<!-- The Modal -->
-	<div class="modal modal-center" id="srModal">
-		<div class="modal-dialog modal-center modal-eight">
-			<div class="modal-content modal-eight">
-				
-			</div>
-		</div>	
-	</div>	
 		
 		
 	

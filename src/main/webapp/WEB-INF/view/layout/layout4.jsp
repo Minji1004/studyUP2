@@ -67,7 +67,18 @@
     top: 290px;
     right: 18px;
 }
+
+.content-wrapper {
+  /*
+  min-height: 100%;
+  */
+  background-color: #FDFFF8;
+}
 </style>
+<script type="text/javascript">
+
+
+</script>
 </head>
 <body>
 
@@ -81,10 +92,10 @@
 <section class="section" style = "padding: 74px 0;" id="srcontianer" >
 <div class="container" role="main">
     <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;left: 0px;position: absolute;" id="sidebar">
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px; left: 0px; position: absolute; height: 100%" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>
-        <div class="col-xs-12 col-sm-9 body-frame-2">
+        <div class="col-xs-12 col-sm-9 container-fluid content-wrapper">
                 <tiles:insertAttribute name="body"/>
         </div>
      </div>
@@ -104,4 +115,34 @@
 <script src="<%=cp%>/resource/js/jquery.waypoints.min.js"></script>
 <script src="<%=cp%>/resource/js/main.js"></script>
 </body>
+
+
+
+
+<div class="smodal modal fade" id="myStudyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1050">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background: #FBFDF8;"></div>
+  </div>
+</div>
+
+<div class="smodal modal fade bs-example-modal-lg" id="myStudyInput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="background: #FBFDF8;"></div>
+  </div>
+</div>
+
+<div class="smodal modal fade" id="myStudyApply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background: #FBFDF8;"></div>
+  </div>
+</div>
+
+<div class="modal modal-center" id="srModal">
+	<div class="modal-dialog modal-center modal-eight">
+		<div class="modal-content modal-eight">
+		</div>
+	</div>	
+</div>	
+	
+
 </html>

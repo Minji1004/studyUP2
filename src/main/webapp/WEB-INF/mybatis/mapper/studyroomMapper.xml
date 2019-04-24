@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="studyroom">
+	<insert id="insertCafe" parameterType="com.sp.studyroom.StudyRoom">
+		INSERT INTO cafe (userNum, cafeName, cafeTel, cafeOwner, cafeIntro, sido, sigungu, bname, 
+								roadAddr, normAddr, buildName, detailAddr, bCode, cafeOpen, cafeClose)
+		VALUES(#{userNum}, #{cafeName}, #{cafeTel}, #{cafeOwner}, #{cafeIntro}, #{sido}, #{sigungu}, #{bname},
+								 #{roadAddr}, #{normAddr}, #{buildName}, #{detailAddr}, #{bCode}, #{cafeOpen}, #{cafeClose})
+	</insert>
+</mapper>

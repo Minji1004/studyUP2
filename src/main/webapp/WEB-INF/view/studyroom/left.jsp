@@ -5,14 +5,9 @@
 <%
    String cp = request.getContextPath();
 %>
-<script type="text/javascript">
-$(function(){
-	$(".modal-backdrop").css("z-index" , "auto");
-});
-</script>
 
 <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar" style = "max-width: 240px;background: #222d32; padding-Top:15px; height: 1081px;">
+  <aside class="main-sidebar" style = "	max-width: 240px;background: #222d32;padding-Top:15px;height: 1026px;">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -32,11 +27,10 @@ $(function(){
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="<%=cp%>/teacher/main?tnum=${tnum}&left=0"><i class="fa fa-link"></i> <span>강사소개</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>강의목록</span></a></li>
-		<li><a href="#"><i class="fa fa-link"></i> <span>공지사항</span></a></li>
-		<li><a href="#"><i class="fa fa-link"></i> <span>질문답변</span></a></li>
-
+        <li><a href="#"><i class="fa fa-link"></i> <span>관리자룸</span></a></li>
+		<li><a href="#"><i class="fa fa-link"></i> <span>장바구니</span></a></li>
+		<li><a href="#"><i class="fa fa-link"></i> <span>예약현황</span></a></li>
+		<li><a href="#"><i class="fa fa-link"></i> <span>예약취소</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

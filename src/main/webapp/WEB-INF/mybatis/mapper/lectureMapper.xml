@@ -40,7 +40,7 @@
 	
 	<!-- 강의 카테고리 명 가져오기 -->
 	<select id="readCategoryName" parameterType="Integer" resultType="String">
-	select categoryName from category 
+	select distinct categoryName from category 
 		join course on category.categoryNum = course.categoryNum
 		join studycourselist s on s.courseNum = course.courseNum
 		where studyNum = #{studyNum}	

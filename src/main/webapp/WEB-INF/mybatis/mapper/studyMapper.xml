@@ -76,7 +76,7 @@
 	
 	<!-- 스터디 개수 -->
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT IFNULL(count(*), 0) FROM study as s 
+		SELECT IFNULL(count(DISTINCT s.studyNum), 0) FROM study as s 
 		left outer join studyCourseList as l
 		on l.studyNum = s.studyNum 
 		left outer join course as c
