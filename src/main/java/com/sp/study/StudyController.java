@@ -2,7 +2,6 @@ package com.sp.study;
 
 import java.io.File;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,28 +31,46 @@ public class StudyController {
 	@Autowired
 	private MyUtil myUtil;
 
-	@RequestMapping(value="/study/main", method=RequestMethod.GET)
-	public String main(
-			@RequestParam(value="page", defaultValue="1") int current_page,
+	@RequestMapping(value="/study/main")
+	public String main() {
+		return ".four.study.main";
+	}
+	
+	@RequestMapping(value="/study/list")
+	public String list(
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="allStudy") String mode,
 			HttpServletRequest req,
 			Model model) throws Exception {
-		
-		String cp = req.getContextPath();
 		
 		int rows = 6;
 		int total_page = 0;
 		int dataCount = 0;
+		String categoryName = "";
 		
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "utf-8");
 		}
 		
+		if(mode == "csat") {
+			categoryName = URLDecoder.decode("수능", "utf-8");
+		} else if(mode == "toeic") {
+			categoryName = URLDecoder.decode("토익", "utf-8");
+		} else if(mode == "exam9") {
+			categoryName = URLDecoder.decode("9급공시", "utf-8");
+		} else if(mode == "exam7") {
+			categoryName = URLDecoder.decode("7급공시", "utf-8");
+		} 
+		
+		
 		// 전체 페이지 수
 		Map<String, Object> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("mode", mode);
+		map.put("categoryName", categoryName);
 		
 		dataCount = service.dataCount(map);
 		
@@ -69,28 +86,12 @@ public class StudyController {
 		map.put("rows", rows);
 		
 		List<Study> list = service.listStudy(map);
-		
-		String query = "";
-		String listUrl;
-		String articleUrl;
-		if(keyword.length()!=0) {
-        	query = "condition=" +condition + 
-        	             "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
-        }
-        
-    	listUrl = cp+"/study/main";
-        articleUrl = cp+"/study/studyDetail?page=" + current_page;
-        if(query.length()!=0) {
-        	listUrl = listUrl + "?" + query;
-            articleUrl = articleUrl + "&"+ query;
-        }
-        
-        String paging = myUtil.pagingBoot(current_page, total_page, listUrl);       
+		        
+        String paging = myUtil.pagingMethod(current_page, total_page, "listStudy");       
         
 
         model.addAttribute("list", list);
-        model.addAttribute("articleUrl", articleUrl);
-        model.addAttribute("page", current_page);
+        model.addAttribute("pageNo", current_page);
         model.addAttribute("total_page", total_page);
         model.addAttribute("dataCount", dataCount);
         model.addAttribute("paging", paging);
@@ -98,9 +99,13 @@ public class StudyController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-		// return ".study.main";
-		return ".four.study.main";
+		return "study/list";
 	}
+	
+	
+	
+	
+	
 	
 	// 모달창 띄우기
 	@RequestMapping(value="/study/studyDetail")

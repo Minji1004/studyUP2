@@ -3,22 +3,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="study">
 	<!-- 검색 조건 -->
-	<sql id="where-list">
+	<sql id="where-list">		
 		<if test="condition=='all'">
-			(INSTR(studyName, #{studyName}) &gt; 0
-			OR INSTR(studyIntro, #{studyIntro}) &gt; 0)
+			(INSTR(studyName, #{keyword}) &gt; 0
+			OR INSTR(studyIntro, #{keyword}) &gt; 0)
 		</if>
 		<if test="condition=='studyName'">
-			INSTR(studyName, #{studyName}) &gt; 0
+			INSTR(studyName, #{keyword}) &gt; 0
 		</if>
 		<if test="condition=='userId'">
-			INSTR(userId, #{userId}) &gt; 0
+			INSTR(userId, #{keyword}) &gt; 0
 		</if>
 		<if test="condition=='categoryName'">
-			INSTR(categoryName, #{categoryName}) &gt; 0
+			INSTR(categoryName, #{keyword}) &gt; 0
 		</if>
 		<if test="condition=='courseName'">
-			INSTR(courseName, #{courseName}) &gt; 0
+			INSTR(courseName, #{keyword}) &gt; 0
 		</if>
 	</sql>
 	
@@ -45,8 +45,8 @@
 	
 	<!-- 스터디 가입신청 -->
 	<insert id="applyStudy" parameterType="com.sp.study.ApplyStudy">
-		INSERT INTO applyStudy(studyNum, userId, goal, hope) 
-		VALUES(#{studyNum}, #{userId}, #{goal}, #{hope})	
+		INSERT INTO applyStudy(studyNum, userId, goal, hope, approval) 
+		VALUES(#{studyNum}, #{userId}, #{goal}, #{hope}, #{approval})	
 	</insert>
 	
 	
@@ -65,13 +65,16 @@
 		
 		<where>
 			lectureNum IS null
+			<if test="mode != 'allStudy'">
+				AND categoryName = #{categoryName}
+			</if>
 			<if test="keyword != null and keyword != ''">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>		
 		</where>		
 		
 		ORDER BY studyNum DESC
-		limit #{start}, #{rows}
+		LIMIT #{start}, #{rows}
 	</select>
 	
 	<!-- 스터디 개수 -->
@@ -86,8 +89,9 @@
 		
 		<where>
 			lectureNum IS null
+			
 			<if test="keyword != null and keyword != ''">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>		
 		</where>
 	

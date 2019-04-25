@@ -18,14 +18,14 @@ function makeStudy() {
 	
 	if(!str) {
 		f.studyName.focus();
-		return false;
+		return;
 	}
 	
 	str = f.studyIntro.value;
 	
 	if(!str) {
 		f.studyIntro.focus();
-		return false;
+		return;
 	}
 	
 	
@@ -39,14 +39,14 @@ function makeStudy() {
 	
 	if(!str) {
 		f.headcount.focus();
-		return false;
+		return;
 	}
 	
 	str = f.studyLocation.value;
 	
 	if(!str) {
 		f.studyLocation.focus();
-		return false;
+		return;
 	}
 	
 	
@@ -55,15 +55,37 @@ function makeStudy() {
 	
 	if(!str) {
 		f.studySday.focus();
-		return false;
+		return;
 	}
 	
 	str = f.studyEday.value;
 	
 	if(!str) {
 		f.studyEday.focus();
-		return false;
+		return;
 	}
+	
+	if(f.category.value == "" ){
+		f.category.focus();
+		return;
+	}
+	
+    var chk_leng = f.courseNums.length;
+    var checked = 0;
+    for (i=0; i < chk_leng; i++) {
+        if (f.courseNums[i].checked == true) { 
+            checked += 1;
+        }
+    }
+    
+    var target = document.getElementById("direction");
+    
+    if (checked < 1 ||  checked > 3) {
+        // alert("과목을 1개에서 3개까지 선택해주세요");
+        target.innerHTML = "<span style='color: red;'>과목을 1개에서 3개까지 선택해주세요.</span>";
+        return;
+    } 
+	
 		
 	f.action = "<%=cp%>/study/${mode}";
 	
@@ -162,7 +184,7 @@ function categoryList(){
 			<div class="form-group">
 				<label class="col-sm-2 control-label">분류</label>
 				<div class="col-sm-5">
-					<select id="category" onchange="categoryList();" class="selectField">
+					<select id="category" name="category" onchange="categoryList();" class="selectField">
 	                   <option value="">분류선택</option>
 	                   <c:forEach var="dto" items="${categorylist}">
 	                       <option value="${dto.categoryNum}" data-categoryNum="${dto.categoryNum}">${dto.categoryName}</option>
@@ -172,8 +194,10 @@ function categoryList(){
 			</div>	
 			
 			<div class="form-group" id="courseList">				
-				
-			</div>			
+			</div>
+			
+			<div class="form-group" id="direction" align="center">				
+			</div>				
 			
  		</div>
 	</form> 
