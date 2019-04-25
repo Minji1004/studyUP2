@@ -8,6 +8,7 @@
 
 
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+
 <script type="text/javascript">
   // 좌우의 공백을 제거하는 함수
   if(typeof String.prototype.trim !== 'function') {
@@ -27,13 +28,6 @@
             return false;
         }
 
-	    str = f.name.value;
-        if(!str) {
-            alert("이름을 입력하세요. ");
-            f.name.focus();
-            return false;
-        }
-
         str = f.content.value;
         if(!str || str=="<p>&nbsp;</p>") {
         	 alert("내용을 입력하세요. ");
@@ -48,10 +42,42 @@
             return false;
         }
     	
-       	f.action = "<%=cp%>/bbs/${mode}";
+       	f.action = "<%=cp%>/teacher/notice/created";
        	
        	return true;
   }
+  
+  $(function(){
+		$("body").on("change", "input[name=upload]", function(){
+			if(! $(this).val()) {
+				return;	
+			}
+			
+			var b=false;
+			$("input[name=upload]").each(function(){
+				if(! $(this).val()) {
+					b=true;
+					return;
+				}
+			});
+			if(b)
+				return;
+
+			var $tr, $td, $input;
+			
+		    $tr=$("<tr>");
+		    $td=$("<td>", {class:"td1", html:"첨부"});
+		    $tr.append($td);
+		    $td=$("<td>", {class:"td3", colspan:"3"});
+		    $input=$("<input>", {type:"file", name:"upload", class:"form-control input-sm", style:"height: 35px;"});
+		    $td.append($input);
+		    $tr.append($td);
+		    
+		    $("#tb").append($tr);
+		});
+		
+});
+  
 </script>
 
 
@@ -77,33 +103,24 @@
   </tr>
 
   <tr align="left"> 
-      <th width="80" bgcolor="#eeeeee" style="text-align: center;">작성자</th>
-      <td style="padding-left:10px;"> 
-        <input type="text" name="name" size="35" maxlength="20" class="boxTF" value="${dto.name}">
-      </td>
-  </tr>
-
-  <tr align="left"> 
       <th width="80" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
       <td valign="top" style="padding:5px 10px 5px 10px;"> 
         <textarea name="content" id="content" style="width:95%; height: 450px;">${dto.content}</textarea>
       </td>
   </tr>
 
-  <tr align="left">
-      <th width="80" bgcolor="#eeeeee" style="text-align: center;">패스워드</th>
-      <td style="padding-left:10px;"> 
-           <input type="password" name="pwd" size="35" maxlength="7" class="boxTF">&nbsp;(게시물 수정 및 삭제시 필요 !!!)
-       </td>
-  </tr>
   <tr align="left" style="border-bottom: 1px solid #cccccc;">
   	<th width="80" bgcolor="#eeeeee" style="text-align: center; vertical-align: middle;">첨부파일</th>
   	<td>
 	  	<div class="btn btn-default btn-file">
 			<i class="fa fa-paperclip"></i> 첨부파일
-			<input type="file" name="attachment">
-		</div>
-		<p style="display: inline; margin-left: 10px; color: #737373;">Max. 32MB</p>  		
+			<input type="file"  name="upload">
+		</div>		
+		<p class="filesize">최대 32MB</p>
+		<div id="tableList" style="width: 300px; padding: 10px 10px 0;">
+			<p><a href="#" onclick="" class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;파일이름1 (1.25MB)</p>
+			<p><a href="#" onclick="" class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;파일이름2 (1.24MB)</p>
+		</div>	
   	</td>
   </tr>
   </table>
@@ -114,10 +131,6 @@
         <button type="submit" class="btn btn-danger">${mode=='update'?'수정완료':'등록하기'}</button>
         <button type="reset" class="btn btn-default">다시입력</button>
         <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bbs/list';">${mode=='update'?'수정취소':'등록취소'}</button>
-         <c:if test="${mode=='update'}">
-         	 <input type="hidden" name="num" value="${dto.num}">
-        	 <input type="hidden" name="page" value="${page}">
-        </c:if>
 		</td>
     </tr>
   </table>
