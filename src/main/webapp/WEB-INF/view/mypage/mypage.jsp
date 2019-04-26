@@ -10,9 +10,8 @@
 
 			<tr height="100">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
-			    	이미지
 		           <c:if test="${not empty dto.picture }">
-		           	<img alt="" src="<%=cp%>/uploads/member_profile/${dto.picture}">
+		           	<img width="300px" height="300px"  alt="" src="<%=cp%>/uploads/member_profile/${dto.picture}">
 		           </c:if>
 			    </td>
 			</tr>
