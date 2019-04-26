@@ -48,22 +48,23 @@ public class StudyController {
 		int rows = 6;
 		int total_page = 0;
 		int dataCount = 0;
+		
 		String categoryName = "";
 		
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "utf-8");
-		}
+		}		
 		
-		if(mode == "csat") {
+		
+		if(mode.equals("csat")) {
 			categoryName = URLDecoder.decode("수능", "utf-8");
-		} else if(mode == "toeic") {
+		} else if(mode.equals("toeic")) {
 			categoryName = URLDecoder.decode("토익", "utf-8");
-		} else if(mode == "exam9") {
+		} else if(mode.equals("exam9")) {
 			categoryName = URLDecoder.decode("9급공시", "utf-8");
-		} else if(mode == "exam7") {
+		} else if(mode.equals("exam7")) {
 			categoryName = URLDecoder.decode("7급공시", "utf-8");
-		} 
-		
+		} 	
 		
 		// 전체 페이지 수
 		Map<String, Object> map = new HashMap<>();
@@ -71,6 +72,7 @@ public class StudyController {
 		map.put("keyword", keyword);
 		map.put("mode", mode);
 		map.put("categoryName", categoryName);
+		// System.out.println("여기!!!!!! "+categoryName);
 		
 		dataCount = service.dataCount(map);
 		
@@ -96,16 +98,11 @@ public class StudyController {
         model.addAttribute("dataCount", dataCount);
         model.addAttribute("paging", paging);
 		
-		model.addAttribute("condition", condition);
-		model.addAttribute("keyword", keyword);
+		// model.addAttribute("mode", mode);
+		// model.addAttribute("categoryName", categoryName);
 		
 		return "study/list";
-	}
-	
-	
-	
-	
-	
+	}	
 	
 	// 모달창 띄우기
 	@RequestMapping(value="/study/studyDetail")

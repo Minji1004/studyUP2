@@ -16,11 +16,10 @@
 		</div>						
 
 		<div class="col-xs-12 col-md-10 col-md-offset-1">
-		<form name="studySearch" action="<%=cp%>/study/main" method="post">							
 			<!-- select -->
 			<div class= "searchStudy col-xs-12 col-md-12">
 				<div class="col-xs-4">
-					<select class="form-control" name="condition">
+					<select class="form-control" id="selectCondition">
 						<option value="all">전체검색</option>
 						<option value="studyName">스터디이름검색</option>
 						<option value="userId">Master검색</option>
@@ -28,13 +27,13 @@
 					</select>
 				</div>
 				<div class="col-xs-6">
-							<input name="keyword" value="${keyword}" class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" style="width: 100%">
+							<input class="form-control" type="text" placeholder="Search" aria-label="Search" id="inputKeyword" style="width: 100%">
 						</div>	
 						<div class="col-xs-2" style="padding:2px 0px 0px 25px;" align="center">
-							<button class="btn btn-unique btn-rounded btn-sm my-0" type="button" onclick="searchList();" style="background: #04B486;">Search</button>
+							<button  class="btn btn-unique btn-rounded btn-sm my-0" type="button" onclick="searchList();" style="background: #04B486;">Search</button>
 				</div>								
 			</div>
-		</form>						
+					
 		<div class="col-xs-12" style="height:10px"></div>
 			
 			<!-- 페이지 글 목록 -->
