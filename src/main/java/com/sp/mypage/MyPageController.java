@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sp.common.FileManager;
 import com.sp.member.Member;
 import com.sp.member.MemberService;
+import com.sp.member.SessionInfo;
 
 @Controller("mypage.myPageController")
 public class MyPageController {
@@ -115,8 +116,6 @@ public class MyPageController {
 			) throws Exception{
 		
 		Map<String, Object> model = new HashMap<>();
-		String url = null;
-		String cp = req.getContextPath();
 		if(dto.getPictureM() != null) {
 			String root =  session.getServletContext().getRealPath("/");
 			String pathname = root + "uploads" + File.separator + "member_profile";
@@ -143,15 +142,24 @@ public class MyPageController {
 		
 		model.addAttribute("mode", "created");
 		
-		return "/mypage/wanote/create";
+		return "mypage/wanote/create";
 	}
 	
 	@RequestMapping(value = "/mypage/wanote/create", method = RequestMethod.POST)
-	public String wanoteCreatedSubmit(
+	@ResponseBody
+	public Map<String, Object> wanoteCreatedSubmit(
 			WanoteDTO dto
-			,Model model) {
-		
+			,Model model
+			,HttpSession session) throws Exception {
 
-		return "/mypage/wanote/create";
+		Map<String, Object> map = new HashMap<>();
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";		
+		System.out.println(dto.getContent());
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		dto.setUserId(info.getUserId());
+		
+		
+		return map;
 	}
 }

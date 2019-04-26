@@ -5,73 +5,8 @@
 <%
    String cp = request.getContextPath();
 %>
-<script type="text/javascript">
 
-function reloadWanote(){
-	//새로고침
-	condition = "all";
-	keyword = "";
-	
-	listPage(1);
-}
-//오답노트 올리기 폼
-function insertWanote(){
-	var url = "<%=cp%>/mypage/wanote/create";
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-		
-			$("#myPageMain").html(data);
-		}
-		,error : function(e){
-			console.log(e);
-		}
-	});
-}
-function sendwanote(mode){
-	var f = document.wanoteCreateForm;
-	
-	if(!f.subject.value){
-		alert("제목을 입력하세요.");
-		return;
-	}
-	if(!f.content.value){
-		alert("내용을 입력하세요");
-		return;
-	}
-	
-	var url = "<%=cp%>/mypage/wanote/create";
-	var query = new FormData(f);
-	
-	$.ajax({
-		type : "POST"
-		,url : url
-		,processData : false		
-		,contentType : false		
-		,data : query
-		,dataType : "JSON"
-		,success:function(data){			
-			//create 성공 후 
-			//오류 리스트로 가야한다.
-			//오류 리스트로 
-			mypageWanote();
-		},
-		beforeSend:function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR){
-			if(jqXHR.status == 403){
-				location.href = "<%=cp%>/member/login";
-				return;
-			}
-			console.log(jqXHR.responseText);
-		}
-	});	
-	
-}
 
-</script>	
 	<table style="width: 80%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">
 		      <td align="left" width="50%">
