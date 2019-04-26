@@ -82,25 +82,14 @@ public class StudyRoomController {
 				service.insertRooms(dto);
 				
 				// cafeRoomDetail에 들어갈 값 넣기
-				System.out.println(dto.getCheckboxCounts().get(0));
 				int round = Integer.parseInt(dto.getCheckboxCounts().get(i));
-				if( i==1 ) {
-					for (int j=0 ; j<round ; j++ ) {
-						dto.setCheckTime(Integer.parseInt(dto.getCheckTimes().get(i)));
-						service.insertRoomDetails(dto);
-					}
-				} else {
-					for (int j=sum ; j<(sum+round) ; j++ ) {
-						dto.setCheckTime(Integer.parseInt(dto.getCheckTimes().get(i)));
-						service.insertRoomDetails(dto);
-					}
+				for (int j=sum ; j<(sum+round) ; j++ ) {
+					dto.setCheckTime(Integer.parseInt(dto.getCheckTimes().get(j)));
+					service.insertRoomDetails(dto);
 				}
 				sum += round;
 			}
 		}
-		
-		
-		
 		
 		return ".four.studyroom.main";
 	}

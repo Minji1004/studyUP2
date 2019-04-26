@@ -226,7 +226,7 @@
 						
 						<div class="srSecondOneModal" style="margin-top: 20px; height: 180px;">
 							<div class="srModalTop" style="border:none;">
-								<h5 class="modalName">운영시간 입력</h5>
+								<h5 class="modalName">사용불가 시간을 선택</h5>
 							</div>
 													
 							<div class="scrollSecondOneModal" style="height: 75px;"> 
