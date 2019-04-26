@@ -151,22 +151,18 @@ public class FaqController {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
 	
-		service.updateHitCount(faqNum);
-		
 		Faq dto=service.readFaq(faqNum);
-		
 		if(dto==null) {
 			return "redirect:/customer/faq/list?"+query;
 		}
 		
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		map.put("faqNum", faqNum);
+		model.addAttribute("dto", dto);
+		model.addAttribute("query", query);
+		model.addAttribute("page", page);
 		
-	return ".customer.faq.article";
+		return ".customer.faq.article";
 	}
 	
 	@RequestMapping(value="/customer/faq/update", method=RequestMethod.GET)
@@ -175,37 +171,42 @@ public class FaqController {
 			@RequestParam String page,
 			HttpSession session,
 			Model model) throws Exception{
-		SessionInfo info=(SessionInfo)session.getAttribute("memberInfo");
+		/*	
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		if(! info.getUserId().equals("admin")) {
 			return "redirect:/customer/faq/list?page="+page;
 		}
-	
+		 */
 		Faq dto=service.readFaq(faqNum);
 		if(dto==null) {
 			return "redirect:/customer/faq/list?page="+page;
 		}
-	return ".customer.faq.update";
+		model.addAttribute("mode", "update");
+		model.addAttribute("dto", dto);
+		model.addAttribute("page",page);
+		
+		
+	return ".customer.faq.created";
 	}
 	
-	/*	
+	
 	@RequestMapping(value="/customer/faq/update", method=RequestMethod.POST)
 	public String updateSubmit(
 			Faq dto,
-			@RequestParam String page,
-			HttpSession session) throws Exception{
+			@RequestParam String page
+			) throws Exception{
+		/*
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-
 		 if(info.getUserId().equals("admin")) {
 			dto.setUserId(info.getUserId());
-			service.updateFaq(dto);
-
-		
+			
+		 }*/
+		service.updateFaq(dto);
 		
 		return "redirect:/customer/faq/list?page="+page;
 	}
-	*/
 	
 	@RequestMapping(value="/customer/faq/delete")
 	public String delete(
@@ -214,16 +215,20 @@ public class FaqController {
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpSession session)throws Exception{
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		//SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		keyword=URLDecoder.decode(keyword, "utf-8");
 		String query="page="+page;
+		keyword=URLDecoder.decode(keyword, "utf-8");
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
+/*		
 		if(! info.getUserId().equals("admin")) {
 			return "redirect:/customer/faq/list?"+query;
-		}
-		return "redirect:customer/faq/list?"+query;
+		}				
+*/		
+		service.deleteFaq(faqNum);
+		
+		return "redirect:/customer/faq/list?"+query;
 	}
 }

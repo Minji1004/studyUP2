@@ -7,6 +7,20 @@
 %>
 
 <script type="text/javascript">
+
+function updateNotice(){
+	<c:if test="${sessionScope.member.userId==dto.userId}">
+		var q="noticeNum=${dto.noticeNum}&page=${page}";
+		var url="<%=cp%>/customer/notice/update?"+q;
+		
+		location.href=url;
+	</c:if>
+
+	<c:if test="${sessionScope.member.userId!=dto.userId}">
+		alert("게시물 작성자만 게시물을 수정할 수 있습니다.");
+	</c:if>
+	}
+	
 function deleteNotice(){
 <c:if test="${sessionScope.member.userId==dto.userId}">
 	var q="noticeNum=${dto.noticeNum}&${query}";
@@ -21,18 +35,7 @@ function deleteNotice(){
 </c:if>
 }
 
-function updateNotice(){
-<c:if test="${sessionScope.member.userId==dto.userId}">
-	var q="noticeNum=${dto.noticeNum}&page=${page}";
-	var url="<%=cp%>/customer/notice/update?"+q;
-	
-	location.href=url;
-</c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
-	alert("게시물 작성자만 게시물을 수정할 수 있습니다.");
-</c:if>
-}
 </script>
 
 
@@ -141,7 +144,7 @@ function updateNotice(){
 		                 <tbody>
 		                     <tr>
 		                         <td style="text-align: left;">
-		                             이름 : ${dto.nickName}
+		                             아이디 : ${dto.nickName}
 		                         </td>
 		                         <td style="text-align: right;">
 		                          ${dto.created} <i></i>

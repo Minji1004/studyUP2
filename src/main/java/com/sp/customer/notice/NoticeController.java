@@ -230,7 +230,6 @@ public class NoticeController {
 			) throws Exception {
 		
 		service.updateNotice(dto, page);
-		//return "redirect:/customer/notice/list?page="+page+"&noticeNum="+noticeNum;
 		return "redirect:/customer/notice/list?page="+page;
 	}
 

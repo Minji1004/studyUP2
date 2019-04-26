@@ -53,47 +53,11 @@ public class FaqServiceImpl implements FaqService{
 	}
 	
 	@Override
-	public int updateHitCount(int faqNum) {
-		int result=0;
-		
-			try {
-				result=dao.updateData("faq.updateHitCount", faqNum);
-			} catch (Exception e) {
-				e.printStackTrace();
-		}
-		return result;
-	}
-
-	@Override
 	public Faq readFaq(int faqNum) {
 		Faq dto=null;
 		
 			try {
 				dto=dao.selectOne("faq.readFaq", faqNum);
-			} catch (Exception e) {
-				e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public Faq preReadFaq(Map<String, Object> map) {
-		Faq dto=null;
-		
-			try {
-				dto=dao.selectOne("faq.preReadFaq", map);
-			} catch (Exception e) {
-				e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public Faq nextReadFaq(Map<String, Object> map) {
-		Faq dto=null;
-		
-			try {
-				dto=dao.selectOne("faq.nextReadFaq", map);
 			} catch (Exception e) {
 				e.printStackTrace();
 		}
@@ -122,11 +86,4 @@ public class FaqServiceImpl implements FaqService{
 		}
 		return result;
 	}
-
-	@Override
-	public List<Faq> listFaqTop() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
