@@ -22,7 +22,6 @@
 		</if>
 	</sql>
 	
-	
 
 	<!-- 스터디 번호 만들기 -->
 	<select id="maxStudyNum" resultType="Integer">
@@ -65,9 +64,11 @@
 		
 		<where>
 			lectureNum IS null
+			
 			<if test="mode != 'allStudy'">
 				AND categoryName = #{categoryName}
-			</if>
+			</if>			
+			
 			<if test="keyword != null and keyword != ''">
 				AND <include refid="where-list"/>
 			</if>		
@@ -89,6 +90,9 @@
 		
 		<where>
 			lectureNum IS null
+			<if test="mode != 'allStudy'">
+				AND categoryName = #{categoryName}
+			</if>
 			
 			<if test="keyword != null and keyword != ''">
 				AND <include refid="where-list"/>

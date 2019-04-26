@@ -6,7 +6,6 @@
 	String cp=request.getContextPath();
 %>
 
-
 <script type="text/javascript">
 var activeTab="allStudy";
 $(function(){
@@ -19,6 +18,7 @@ function ajaxText(url, query, type, selector) {
 		,url:url
 		,data:query
 		,success:function(data) {
+			// $(selector).html("");
 			$(selector).html(data);	
 		}
 		,beforeSend : function(jqXHR) {
@@ -36,32 +36,48 @@ function ajaxText(url, query, type, selector) {
 
 function listStudy(page) {
 	var selector="#"+activeTab;
-	$(selector).html("");
 	
 	var url="<%=cp%>/study/list";
-	var query = "mode="+activeTab+"&pageNo="+page;
+	var query=$("form[name=studySearchForm]").serialize();
+	query+="&pageNo="+page;
+
+	ajaxText(url, query, "get", selector);
+}
+
+function searchList() {	
+	var selector="#"+activeTab;
+
+	var condition=$("#selectCondition").val();
+	var keyword=$("#inputKeyword").val();
+	
+	var f=document.studySearchForm;
+	f.mode.value=activeTab;
+	f.condition.value=condition;
+	f.keyword.value=keyword;	
+	
+	var url="<%=cp%>/study/list";
+	var query=$("form[name=studySearchForm]").serialize();
+	alert(query);
 	
 	ajaxText(url, query, "get", selector);
 }
 
-
-
-function searchList() {
-	var f=document.studySearch;
-	f.submit();
-}
-	
 $(function(){
 	// 탭 클릭시	
-	$('#studyTab a').click(function (e) {
-		  e.preventDefault();
-		  
-		  activeTab=$(this).attr("aria-controls");
-		  
-		  $(this).tab('show');
-	});
+	$('#studyTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		$("#"+activeTab).html("");	
+		
+		activeTab=$(this).attr("aria-controls");
+		
+		var f=document.studySearchForm;
+		f.mode.value=activeTab;
+		f.condition.value="all";
+		f.keyword.value="";
+		
+		$("#"+activeTab).html("");
+		listStudy(1);
+	});	
 });
-
 
 $(function(){
 	// 스터디 상세 페이지 보기
@@ -92,7 +108,6 @@ $(function() {
 				
 	});
 });
-
 
 $(function(){
 	// 스터디 만들기
@@ -144,7 +159,7 @@ $(function() {
 			  <!-- Tab panes -->
 			  <div class="tab-content">
 			    <div role="tabpanel" class="tab-pane active" id="allStudy"></div>
-			    <div role="tabpanel" class="tab-pane" id="csat">수능</div>
+			    <div role="tabpanel" class="tab-pane" id="csat"></div>
 			    <div role="tabpanel" class="tab-pane" id="toeic">토익</div>
 			    <div role="tabpanel" class="tab-pane" id="exam9">9급</div>
 			    <div role="tabpanel" class="tab-pane" id="exam7">7급</div>
@@ -152,3 +167,11 @@ $(function() {
 	</div>
  </div>
 </div>
+
+<form name="studySearchForm" method="post">
+	<input type="hidden" name="condition" value="all">
+	<input type="hidden" name="keyword">
+	<input type="hidden" name="mode">
+</form>
+
+
