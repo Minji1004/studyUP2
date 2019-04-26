@@ -3,14 +3,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tnotice">
 
+<sql id="where-list">
+    <if test="condition=='all' ">
+       (INSTR(subject, #{keyword}) &gt; 0
+		    OR INSTR(content, #{keyword}) &gt; 0)
+    </if>
+    <if test="condition=='subject' ">
+       INSTR(subject, #{keyword}) &gt; 0
+    </if>
+    <if test="condition=='content' ">
+       INSTR(content, #{keyword}) &gt; 0
+    </if>
+    <if test="condition=='created' ">
+       DATE_FORMAT(n.created, '%Y-%m-%d') = #{keyword}
+    </if>
+</sql>
+
 <select id="maxNoticeNum" resultType="Integer">
 	SELECT IFNULL(max(tnoticeNum), 0) FROM tnotice
 </select>
 
 
 <insert id="insertNotice" parameterType="com.sp.teacher.notice.TeacherNotice">
-	INSERT INTO tnotice(tnoticeNum, tId, subject, content, hitCount) 
-	VALUES(#{tnoticeNum}, #{tId},#{subject},#{content},#{hitCount})
+	INSERT INTO tnotice(tnoticeNum, tId, subject, content, noticeweather) 
+	VALUES(#{tnoticeNum}, #{tId},#{subject},#{content},#{noticeweather})
 </insert>
 
 <insert id="insertFile" parameterType="com.sp.teacher.notice.TeacherNotice">
@@ -18,4 +34,29 @@
 	  VALUES (#{tnoticeNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
 </insert>
 
+<select id="dataCount" parameterType="map" resultType="Integer">
+	SELECT ifnull(COUNT(*), 0) FROM tnotice
+	 <where>
+     	<if test="keyword != null and keyword !='' ">
+     	    <include refid="where-list"/>
+     	</if>
+     </where>
+</select>
+
+<select id="listTNotice" parameterType="map" resultType="com.sp.teacher.notice.TeacherNotice">
+	SELECT tnoticeNum, subject, hitCount, created
+       FROM tnotice
+       <where>
+	     	<if test="keyword != null and keyword !='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	   </where>
+       ORDER BY tnoticeNum DESC
+       LIMIT #{start}, #{rows}
+</select>
+
+<select id="listNoticeTop" resultType="com.sp.teacher.notice.TeacherNotice">
+	select tnoticeNum, subject, hitCount, created from tnotice where noticeweather = 1
+	ORDER BY tnoticeNum DESC
+</select>
 </mapper>

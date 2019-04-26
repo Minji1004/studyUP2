@@ -1,14 +1,15 @@
 package com.sp.mypage;
 
 public class WanoteFileDTO {
-	private String userId;
+	private int waNum;
 	private String originalFilename;
 	private String saveFilename;
-	protected String getUserId() {
-		return userId;
+	
+	protected int getWaNum() {
+		return waNum;
 	}
-	protected void setUserId(String userId) {
-		this.userId = userId;
+	protected void setWaNum(int waNum) {
+		this.waNum = waNum;
 	}
 	protected String getOriginalFilename() {
 		return originalFilename;

@@ -11,5 +11,14 @@
 	WHERE userId = #{userId}  
 </update>
 
+<insert id="insertWanote" parameterType="com.sp.mypage.WanoteDTO">
+	INSERT INTO wanote(userId, subject, content) VALUES (#{userId},#{subject},#{content})
+</insert>
+<select id="selectMaxWanoteNum" resultType="Integer">
+	SELECT IFNULL(MAX(waNum), 0) FROM wanote 
+</select>
+<insert id="insertWanoteFile" parameterType="com.sp.mypage.WanoteFileDTO">
+	INSERT INTO wanotefile(originalFilename, saveFilename, waNum) VALUES (#{originalFilename}, #{saveFilename}, #{waNum})
+</insert>
 
 </mapper>

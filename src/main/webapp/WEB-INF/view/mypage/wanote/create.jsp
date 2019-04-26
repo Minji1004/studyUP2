@@ -26,7 +26,7 @@ ${mode=="created"?"작성":"수정"}
 			  <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
 			      <td valign="top" style="padding:5px 0px 5px 10px;"> 
-			        <textarea name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content }</textarea>
+			        <textarea name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
 			      </td>
 			  </tr>
 			  
@@ -47,8 +47,7 @@ ${mode=="created"?"작성":"수정"}
 				          </c:if>
 				       </td>
 				  </tr>
-				   </c:if>
-			
+				  </c:if>
 			  </table>
 					
 			 
@@ -64,8 +63,6 @@ ${mode=="created"?"작성":"수정"}
 			        <button type="button" class="btn" onclick="listPage(pageNo)">${mode=='update'?'수정취소':'등록취소'}</button>
 			        <c:if test="${mode=='update'}">
 			         	 <input type="hidden" name="num" value="${dto.num}">
-			         	 <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-			         	 <input type="hidden" name="originalFilename" value="${dto.originalFilename}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			        

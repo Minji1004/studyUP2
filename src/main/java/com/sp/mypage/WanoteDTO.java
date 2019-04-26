@@ -9,6 +9,7 @@ public class WanoteDTO {
 	private String userId;
 	private String subject;
 	private String content;
+	
 	private List<MultipartFile> upload;
 	protected int getWaNum() {
 		return waNum;
@@ -40,4 +41,5 @@ public class WanoteDTO {
 	protected void setUpload(List<MultipartFile> upload) {
 		this.upload = upload;
 	}
+	
 }
