@@ -29,7 +29,8 @@
 	// modal sendok
 	function modalSendOk(){
 		var f = document.srModalForm;
-		
+		alert(f.checkboxCounts[0].value);
+		/*
 		// 카페이름
 		var str = f.cafeName.value;
 		if(!str) {
@@ -62,16 +63,7 @@
 			srPostcode();
 			return;
 		}
-		
-		$(".srTimeButton").each( function(){
-			var cnt = 0;
-			$(this).find("input").each( function(){
-				if( $(this).is(":checked") ){
-					cnt++;
-				}
-			});
-			$(this).find("input[name=checkboxCount]").val(cnt);
-		});
+		*/
 		
 		f.action="<%=cp%>/studyroom/modal/${mode}";
 		
@@ -154,7 +146,7 @@
 									<tr class="srTableLine">
 										<td class="tableName">건물명</td>
 										<td>
-											<input type="text" id="bname" name="bname" class="srInsertText" placeholder="" style="padding-left:5px;" readonly="readonly">
+											<input type="text" id="buildName" name="buildName" class="srInsertText" placeholder="" style="padding-left:5px;" readonly="readonly">
 										</td>
 									</tr>
 									<tr class="srTableLine">
@@ -164,6 +156,7 @@
 											<input type="hidden" id="bCode" name="bCode">
 											<input type="hidden" id="sido" name="sido">
 											<input type="hidden" id="sigungu" name="sigungu">
+											<input type="hidden" id="bname" name="bname">
 										</td>
 									</tr>
 									<tr>
@@ -188,11 +181,11 @@
 								<h5 class="modalName">방정보 입력</h5>
 							</div>
 							
-							<form style="margin: 10px 0px 0px 25px; text-align: left; text-size: 8pt;">
+							<div style="margin: 10px 0px 0px 25px; text-align: left; text-size: 8pt;">
 							    	기준&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp; 
 							  	<input type="radio" name="timeOrRoom" value="room">룸&nbsp;&nbsp; 
 							  	<input type="radio" name="timeOrRoom" value="oneP">1인
-							</form>
+							</div>
 	
 							<div class="scrollSecondTwoModal" style="height: 282px;"> 
 								<table class="srSecondModalInfo" id="srRoomInfoTable">
@@ -205,16 +198,16 @@
 									</tr>
 									<tr class="srTableLine" style="border">
 										<td class="secondTableName" style="background-color: #76956020">
-											<input type="text" id="" name="roomName" class="srInsertText"  style="background-color: #76956001" placeholder="방이름">
+											<input type="text" id="" name="roomNames" class="srInsertText"  style="background-color: #76956001" placeholder="방이름">
 										</td>
 										<td class="secondTableContent">
-											<input type="text" id="" name="unitPrice" class="srInsertText" placeholder="예) 8000">
+											<input type="text" id="" name="unitPrices" class="srInsertText" placeholder="예) 8000">
 										</td>
 										<td class="secondTableContent">
-											<input type="text" id="" name="minUser" class="srInsertText" placeholder="예) 4">
+											<input type="text" id="" name="minUsers" class="srInsertText" placeholder="예) 4">
 										</td>
 										<td class="secondTableContent">
-											<input type="text" id="" name="maxUser" class="srInsertText" placeholder="예) 8">
+											<input type="text" id="" name="maxUsers" class="srInsertText" placeholder="예) 8">
 										</td>
 										<td>
 											<button class="srRemoveRow" type="button">X</button>
@@ -269,7 +262,7 @@
 							<!-- 각 스터디 별 체크  -->
 							<div class="scrollThirdModal"> 
 								<div class="col-xs-12 col-sm-12 col-md-12" id="srModalRoomTime">
-									<div class="roomName">수성</div>
+									<div class="roomNames">수성</div>
 									<div class="srTimeButton">
 										<label class="srTimeColor">
 											<input class="srTimeCB" type="checkbox" autocomplete="off">
@@ -332,7 +325,6 @@
 							</div>
 						</div>
 					</div>
-					
 					<div class="col-xs-12 col-sm-12 col-md-12">
 						<div class="">
 							&nbsp;

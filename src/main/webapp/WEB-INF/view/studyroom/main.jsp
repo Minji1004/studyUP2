@@ -9,21 +9,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3088b9ab47979dd906360da2fb19d5f8&libraries=services"></script>
 <script type="text/javascript">
 
-// 좌측 사이드바 메뉴버튼
-	function srOpenNav() {
-	    document.getElementById("srMySidenav").style.width = "120px";
-	    $("#srMain").hide();
-	    // document.body.style.backgroundColor = "#438042";
-	}
-
-// 좌측 사이드바 닫기 버튼
-	function srCloseNav() {
-	    document.getElementById("srMySidenav").style.width = "0";
-	    $("#srMain").show();
-	    //document.body.style.backgroundColor = "white";
-	}
-
-
 	$(document).ready(function(){
 		// 자동으로 열리는 modal
 		// $('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
@@ -37,8 +22,7 @@
 			};
 		
 		var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
-		
-		
+
 	});
 	
 	
@@ -66,15 +50,48 @@
 // 시간 체크박스
 	// 체크박스 건드리기
 	$(document).on("change",".srTimeCB", function(){
+		var $srTimeCB = $(this);
 		var f = $(this).is(":checked");
-		
+				
 		if(f){
+			
 			$(this).parent().css("background-color", "#0aa54b");
 			$(this).parent().children("span").css("background-color","#daffd0");
-			return;
-		}		
-		$(this).parent().css("background-color", "#c0c0c0");
-		$(this).parent().children("span").css("background-color","#ffffff");
+			
+			$(".srTimeButton").each(function(){
+				var cnt=0;
+				$(this).find(".srTimeCB").each(function(){
+					if( $(this).is(":checked") && ! $(this).siblings("input[name='checkTimes']").val() ){
+						var temp = $(this).siblings("input[name='timeValues']").val();
+						var label  = "<input type='hidden' name='checkTimes' value='"+temp+"'"; 
+							label += " style='width:25px; height: 15px; border: 1px solid #cccccc; font-size:4pt;'>";
+						$(this).parent().append(label);
+					} 
+					if( $(this).is(":checked")) {
+						cnt++;						
+					}
+					$(this).parent().parent().find("input[name='checkboxCounts']").val(cnt);
+				});
+			});
+			
+			
+		} else {
+			$(this).parent().css("background-color", "#c0c0c0");
+			$(this).parent().children("span").css("background-color","#ffffff");
+			
+			$(".srTimeButton").each(function(){
+				var cnt=0;
+				$(this).find(".srTimeCB").each(function(){
+					if( $(this).is(":checked")) {
+						cnt++;						
+					} else if(! $(this).is(":checked") ) {
+						$(this).parent().find("input[name='checkTimes']").remove();
+					}
+					$(this).parent().parent().find("input[name='checkboxCounts']").val(cnt);
+				});
+			});
+			
+		}
 	});
 	
 	// 색깔을 누르면 체크박스가 변하는 자바스크립트, 쿼리
@@ -120,10 +137,10 @@
 	function insertRow(){
 		
 		var addRow = "<tr class='srTableLine' style='border'><td class='secondTableName' style='background-color: #76956020'>";
-			addRow += "<input type='text' id='roomName' name='roomName' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='unitPrice' name='unitPrice' class='srInsertText' placeholder='예) 8000'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='minUser' name='minUser' class='srInsertText' placeholder='예) 4'></td>";
-			addRow += "<td class='secondTableContent'><input type='text' id='maxUser' name='maxUser' class='srInsertText' placeholder='예) 8'></td>";
+			addRow += "<input type='text' id='roomNames' name='roomNames' class='srInsertText' style='background-color: #76956001' placeholder='방이름'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='unitPrices' name='unitPrices' class='srInsertText' placeholder='예) 8000'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='minUsers' name='minUsers' class='srInsertText' placeholder='예) 4'></td>";
+			addRow += "<td class='secondTableContent'><input type='text' id='maxUsers' name='maxUsers' class='srInsertText' placeholder='예) 8'></td>";
 			addRow += "<td><button type='button' class='srRemoveRow' onclick='deleteRow();'>X</button></td></tr>";
 		
 		$('#srRoomInfoTable').append(addRow);
@@ -137,7 +154,6 @@
 		$(this).parent().parent().remove();
 	});
 	
-	
 	// write.jsp 마지막 리스트 새로확인
 	$(document).on("click","#srModalFullTime", function(){
 		// 먼저 안의 리스트를 지운다.
@@ -148,19 +164,19 @@
 			alert("값을 입력하세요.");
 			return;
 		}
-		$("input[name=roomName]").each(function(){
-			$divName = "<div class='roomName'>"+$(this).val()+"</div>"
+		$("input[name=roomNames]").each(function(){
+			$divName = "<div class='roomNames'>"+$(this).val()+"</div>"
 			$divTimeButton = $("<div class='srTimeButton'>");
 			$("#srModalRoomTime").append($divName);
 			$("#srModalRoomTime").append($divTimeButton);
 			for ( var i = opentime ; i < closetime ; i++) {
 				var label  = "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
 					label += "<span>|"+i+":00|</span>";
-					label += "<input type='hidden' name='checkTime' value='"+i+"'>";
+					label += "<input type='hidden' name='timeValues' value='"+i+"'>";
 					$(".srTimeButton").last().append(label);
 			}
-			var checkboxCount = "<input type='hidden' name='checkboxCount' style='border:none; width: 50px;' readonly='readonly'>"
-			$(".srTimeButton").last().append(checkboxCount);
+			var checkboxCounts = "<input type='hidden' id='checkboxCounts' name='checkboxCounts' style='width:25px; height: 15px; border: 1px solid #cccccc; font-size:4pt;'>"
+			$(".srTimeButton").last().append(checkboxCounts);
 		});
 		
 		$(".srTimeCB").hide();
@@ -202,7 +218,8 @@
 
                 document.getElementById("roadAddr").value = data.roadAddress;
                 document.getElementById("normAddr").value = data.jibunAddress;
-                document.getElementById("bname").value = extraAddr;
+                document.getElementById("buildName").value = extraAddr;
+                document.getElementById("bname").value = data.bname;
                 document.getElementById("bCode").value = data.bcode;
                 document.getElementById("sido").value = data.sido;
                 document.getElementById("sigungu").value = data.sigungu;
@@ -213,7 +230,9 @@
         }).open();
     }
 
-	
+	function checkTime() {
+
+	}
 	
 </script>
 
