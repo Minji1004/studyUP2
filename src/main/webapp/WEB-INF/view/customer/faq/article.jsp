@@ -6,7 +6,38 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+function updateFaq(){
+	<c:if test="${sessionScope.member.userId==dto.userId}">
+		var q="faqNum=${dto.faqNum}&page=${page}";
+		var url="<%=cp%>/customer/faq/update?"+q;
+		
+		location.href=url;
+		</c:if>
+		
+		<c:if test="${sessionScope.member.userId!=dto.userId}">
+			alert("게시물 작성자만 게시물을 수정할 수 있습니다.")
+		</c:if>
+	}
+
+function deleteFaq(){
+	<c:if test="${sessionScope.member.userId==dto.userId}">
+		var q="faqNum=${dto.faqNum}&${query}";
+		var url="<%=cp%>/customer/faq/delete?"+q;
+		alert(url);
+		if(confirm("게시물을 삭제하시겠습니까?")){
+			location.href=url;
+		}
+</c:if>
+<c:if test="${sessionScope.member.userId!=dto.userId}">
+	alert("게시물 작성자만 게시물을 삭제할 수 있습니다.")
+</c:if>
+}
+</script>
+
 <style type="text/css">
+
+
 .bodyFrame2{
 	padding-top: 10px;
 	margin-bottom: 5px;
@@ -95,7 +126,7 @@
 		    </div>
 		    
 		    <div class="alert alert-info">
-		        <i class="glyphicon glyphicon-info-sign"></i> 자주하는 질문을 확인 할수 있는입니다.
+		        <i class="glyphicon glyphicon-info-sign"></i> 자주하는 질문을 확인할 수 있는 게시판입니다.
 		    </div>
 		    
 		    <div class="table-responsive" style="clear: both;">
@@ -104,46 +135,33 @@
 		                 <thead>
 		                     <tr>
 		                         <th colspan="2" style="text-align: center;">
-		                                 제목..
+		                         ${dto.subject}
 		                         </th>
 		                     </tr>
 		                <thead>
 		                 <tbody>
 		                     <tr>
 		                         <td style="text-align: left;">
-		                             이름 : 홍길동
+		                            	 아이디 : ${dto.userId}
 		                         </td>
 		                         <td style="text-align: right;">
-		                          2015-02-02 10:10 <i></i>
-		                              조회 : 100
 		                         </td>
 		                     </tr>
 		                     <tr>
-		                         <td colspan="2" style="height: 230px;">
-		                              내용 ...
+		                         <td colspan="2" style="height: 230px;border-bottom: #d5d5d5 solid 1px;">
+		                              ${dto.content}
 		                         </td>
 		                     </tr>
-		                     <tr>
-		                         <td colspan="2">
-		                              <span style="display: inline-block; min-width: 45px;">이전글</span> :
-		                              작업중
-		                         </td>
-		                     </tr>
-		                     <tr>
-		                         <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
-		                              <span style="display: inline-block; min-width: 45px;">다음글</span> :
-		                              작업중
-		                         </td>
-		                     </tr>                                          
+                                     
 		                </tbody>
 		                <tfoot>
 		                	<tr>
 		                		<td>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn">수정</button>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn">삭제</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateFaq()">수정</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteFaq()">삭제</button>
 		                		</td>
 		                		<td align="right">
-		                		    <button type="button" class="btn btn-default btn-sm wbtn"> 목록으로 </button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/list?${query}';"> 목록으로 </button>
 		                		</td>
 		                	</tr>
 		                </tfoot>

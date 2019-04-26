@@ -2,10 +2,29 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studyroom">
+	
+	<!-- 넘버 알아내기 -->
+	<select id="searchNum" resultType="Integer" parameterType="com.sp.studyroom.StudyRoomTable">
+		SELECT IFNULL(max(${searchName}), 0) FROM ${tableName}
+	</select>
+	
+	<!-- 카페 기본정보 넣기 -->
 	<insert id="insertCafe" parameterType="com.sp.studyroom.StudyRoom">
-		INSERT INTO cafe (userNum, cafeName, cafeTel, cafeOwner, cafeIntro, sido, sigungu, bname, 
+		INSERT INTO cafe (cafeNum, userNum, cafeName, cafeTel, cafeOwner, cafeIntro, sido, sigungu, bname, 
 								roadAddr, normAddr, buildName, detailAddr, bCode, cafeOpen, cafeClose)
-		VALUES(#{userNum}, #{cafeName}, #{cafeTel}, #{cafeOwner}, #{cafeIntro}, #{sido}, #{sigungu}, #{bname},
+		VALUES(#{cafeNum}, #{userNum}, #{cafeName}, #{cafeTel}, #{cafeOwner}, #{cafeIntro}, #{sido}, #{sigungu}, #{bname},
 								 #{roadAddr}, #{normAddr}, #{buildName}, #{detailAddr}, #{bCode}, #{cafeOpen}, #{cafeClose})
 	</insert>
+	
+	<!-- 카페별 방정보 넣기 -->
+	<insert id="insertCafeRoom" parameterType="com.sp.studyroom.StudyRoom">
+		INSERT INTO cafeRoom (roomNum, cafeNum, roomName, minUser, maxUser, timeOrRoom, unitPrice)
+		VALUES(#{roomNum},#{cafeNum}, #{roomName}, #{minUser}, #{maxUser}, #{timeOrRoom}, #{unitPrice})
+	</insert>
+	
+	<!-- 방별 시간정보 넣기 -->
+	<insert id="insertCafeRoomDetail" parameterType="com.sp.studyroom.StudyRoom">
+		INSERT INTO cafeRoomDetail (roomNum, checkTime) VALUES(#{roomNum},#{checkTime})
+	</insert>
+	
 </mapper>

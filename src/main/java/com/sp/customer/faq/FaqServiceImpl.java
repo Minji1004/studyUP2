@@ -18,9 +18,6 @@ public class FaqServiceImpl implements FaqService{
 		int result=0;
 		
 			try {
-				int maxNum=dao.selectOne("faq.maxFaqNum");
-				int faqNum=maxNum+1;
-				dto.setFaqNum(faqNum);
 				
 				dao.insertData("faq.insertFaq", dto);
 				
@@ -54,61 +51,13 @@ public class FaqServiceImpl implements FaqService{
 		}
 		return list;
 	}
-
-	@Override
-	public List<Faq> listFaqTop() {
-		List<Faq> list=null;
-		
-		try {
-			list=dao.selectList("faq.listFaqTop");
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 	
-	@Override
-	public int updateHitCount(int faqNum) {
-		int result=0;
-		
-			try {
-				result=dao.updateData("faq.updateHitCount", faqNum);
-			} catch (Exception e) {
-				e.printStackTrace();
-		}
-		return result;
-	}
-
 	@Override
 	public Faq readFaq(int faqNum) {
 		Faq dto=null;
 		
 			try {
 				dto=dao.selectOne("faq.readFaq", faqNum);
-			} catch (Exception e) {
-				e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public Faq preReadFaq(Map<String, Object> map) {
-		Faq dto=null;
-		
-			try {
-				dto=dao.selectOne("faq.preReadFaq", map);
-			} catch (Exception e) {
-				e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public Faq nextReadFaq(Map<String, Object> map) {
-		Faq dto=null;
-		
-			try {
-				dto=dao.selectOne("faq.nextReadFaq", map);
 			} catch (Exception e) {
 				e.printStackTrace();
 		}
@@ -131,11 +80,10 @@ public class FaqServiceImpl implements FaqService{
 	public int deleteFaq(int faqNum) {
 		int result=0;
 		try {
-			result=dao.deleteData("faq.deleteNotice", faqNum);
+			result=dao.deleteData("faq.deleteFaq", faqNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-
 }

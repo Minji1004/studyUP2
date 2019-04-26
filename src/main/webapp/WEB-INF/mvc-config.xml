@@ -55,6 +55,7 @@
     <mvc:interceptors>
     	<mvc:interceptor>
     		<mvc:mapping path="/**"/>
+    
     		
     		<!-- 제외 -->
     		<mvc:exclude-mapping path="/"/>
@@ -72,6 +73,7 @@
     		<mvc:exclude-mapping path="/mail/send"/>
     		<mvc:exclude-mapping path="/timer/selectGoalTime"/>
     		<mvc:exclude-mapping path="/member/**"/>
+    		
     		
     		
     		<bean class = "com.sp.member.LoginCheckInterceptor"/>

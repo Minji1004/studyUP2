@@ -119,6 +119,10 @@ function searchList(){
 }
 function mypageWanote(){
 	var url = "<%=cp%>/mypage/wanote/main";
+	if(${sessionScope.member.userId == null}){
+		var url = "<%=cp%>/member/login";
+		location.href = url;
+	}
 	$.ajax({
 		type : "GET"
 		,url : url
@@ -184,6 +188,7 @@ function mypageStudyroom(){
 		}
 	});
 }
+//나의 정보 메인
 function mypageMain(){
 	var url = "<%=cp%>/mypage/mypage";
 	if(${sessionScope.member.userId == null}){
@@ -218,7 +223,71 @@ function mypageUpdate(){
 		}
 	});
 }
+//자기 프로필 사진  수정 시 바로 로드 
+function LoadImg(value) 
+{
+	if(value.files && value.files[0]) 
+	{
+		var reader = new FileReader();
 
+		reader.onload = function (e) {
+			console.log(e);
+			$('#LoadMyprofile').attr('src', e.target.result);
+		}
+	
+		reader.readAsDataURL(value.files[0]);
+	}
+}
+function updateMyprofile(){
+	var f = document.mypageProfileUpdateForm;
+	if(f.nickname.value == null){
+		alert("닉네임을 입력해주십시오");
+		return;
+	}
+	if(f.userPwd.value == null){
+		alert("비밀번호를 입력해주십시오");
+		return;
+	}
+	if(f.userPwdConfirm.value == null){
+		alert("비밀번호 확인란을 입력해주십시오");
+		return;
+	}
+	if(f.userPwd.value != f.userPwdConfirm.value){
+		alert("비밀번호를 다시 한번 확인하십시오");
+		return;
+	}
+	if(f.tel.value == null){
+		alert("전화번호를 입력해주십시오");
+		return;
+	}
+	
+	var url = "<%=cp%>/mypage/update";
+	var query = new FormData(f);
+	
+		$.ajax({
+			type : "POST"
+			,url : url
+			,processData : false		//file 전송 시 필수!!(데이터를 쿼리 문자열로 변환 여부)
+			,contentType : false		//file 전송 시 필수!!(인코딩 형식 사용 여부)
+			,data : query
+			,dataType : "JSON"
+			,success:function(data){			
+				if(data.state == "true"){
+					mypageMain();
+				}
+			},
+			beforeSend:function(jqXHR){
+				jqXHR.setRequestHeader("AJAX", true);
+			},
+			error:function(jqXHR){
+				if(jqXHR.status == 403){
+					location.href = "<%=cp%>/member/login";
+					return;
+				}
+				console.log(jqXHR.responseText);
+			}
+		});	
+}
 
 </script>
 

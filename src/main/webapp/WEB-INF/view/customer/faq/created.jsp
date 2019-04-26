@@ -80,7 +80,7 @@
         var f = document.faqForm;
 
 
-        f.action="<%=cp%>/";
+        f.action="<%=cp%>/customer/faq/${mode}";
         f.submit();
         
         return;
@@ -138,7 +138,11 @@
 		                        <tr>
 		                            <td colspan="4" style="text-align: center; padding-top: 15px;">
 		                                  <button type="button" class="btn btn-primary" onclick="sendOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-		                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/';"> 취소 </button>
+		                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/customer/faq/list';"> 취소 </button>
+		                                  <c:if test="${mode=='update'}">
+		                                  	<input type="hidden" name="faqNum" value="${dto.faqNum}">
+		                                  	<input type="hidden" name="page" value="${page}">
+		                                  </c:if>
 		                            </td>
 		                        </tr>
 		                    </tfoot>

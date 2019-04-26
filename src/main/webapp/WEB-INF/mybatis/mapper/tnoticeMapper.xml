@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tnotice">
+
+<select id="maxNoticeNum" resultType="Integer">
+	SELECT IFNULL(max(tnoticeNum), 0) FROM tnotice
+</select>
+
+
+<insert id="insertNotice" parameterType="com.sp.teacher.notice.TeacherNotice">
+	INSERT INTO tnotice(tnoticeNum, tId, subject, content, hitCount) 
+	VALUES(#{tnoticeNum}, #{tId},#{subject},#{content},#{hitCount})
+</insert>
+
+<insert id="insertFile" parameterType="com.sp.teacher.notice.TeacherNotice">
+	  INSERT INTO tnotice_file(tnoticeNum, saveFilename, originalFilename, fileSize) 
+	  VALUES (#{tnoticeNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
+</insert>
+
+</mapper>

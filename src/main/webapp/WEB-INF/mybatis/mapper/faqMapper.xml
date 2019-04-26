@@ -4,5 +4,58 @@
 <mapper namespace="faq">
 	<insert id="insertFaq" parameterType="com.sp.customer.faq.Faq">
 		INSERT INTO faq(userId, subject, content) VALUES (#{userId}, #{subject}, #{content})
-	</insert>
-</mapper>
+	</insert> 
+	<sql id="where-list">
+		<choose>
+			<when test="condition=='all'">
+				(INSTR(subject, #{keyword}) &gt; 0 
+					OR DBMS_LOB.INSTR(subject, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition=='content'">
+				DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+			</when>
+			<otherwise>
+				INSTR(${condition},#{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*), 0)
+		FROM faq f
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select> 
+	
+	<select id="listFaq" parameterType="map" resultType="com.sp.customer.faq.Faq">
+		SELECT faqNum, f.userId, subject 
+		FROM faq f
+		JOIN memberInfo m ON f.userId=m.userId
+		<where>
+			<if test="keyword !=null and keyword !=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY faqNum DESC
+		LIMIT #{start}, #{rows}	
+	</select>
+	
+	<select id="readFaq" parameterType="Integer" resultType="com.sp.customer.faq.Faq">
+		SELECT faqNum, f.userId, subject, content
+		FROM faq f
+		JOIN memberInfo m ON f.userId=m.userId
+		WHERE faqNum=#{faqNum}
+	</select>
+	
+	<update id="updateFaq" parameterType="com.sp.customer.faq.Faq">
+		UPDATE faq SET subject=#{subject},
+				content=#{content}
+				WHERE faqNum=#{faqNum}
+	</update>
+	
+	<delete id="deleteFaq" parameterType="Integer">
+		DELETE FROM faq WHERE faqNum=#{faqNum}
+	</delete>
+</mapper> 

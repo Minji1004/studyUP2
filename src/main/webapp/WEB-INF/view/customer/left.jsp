@@ -19,5 +19,5 @@ $(function(){
        <div class="list-group-item lefthead"><i></i> 고객센터</div>
        <a href="<%=cp%>/customer/notice/list" class="list-group-item">공지사항</a>
        <a href="<%=cp%>/customer/inquiry/list" class="list-group-item">1:1 문의</a>
-       <a href="<%=cp%>/customer/faq/faq" class="list-group-item">자주하는 질문</a>
+       <a href="<%=cp%>/customer/faq/list" class="list-group-item">자주하는 질문</a>
 </div>
