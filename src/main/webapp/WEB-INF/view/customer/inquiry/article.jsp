@@ -104,46 +104,45 @@
 		                 <thead>
 		                     <tr>
 		                         <th colspan="2" style="text-align: center;">
-		                                 제목..
+		                                 제목 : {dto.subject}
 		                         </th>
 		                     </tr>
 		                <thead>
 		                 <tbody>
 		                     <tr>
 		                         <td style="text-align: left;">
-		                             이름 : 홍길동
+		                	아이디 : ${dto.userId}
 		                         </td>
 		                         <td style="text-align: right;">
-		                          2015-02-02 10:10 <i></i>
-		                              조회 : 100
+		                          ${dto.created} <i></i>
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="height: 230px;">
-		                              내용 ...
+		                              {dto.content}
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2">
 		                              <span style="display: inline-block; min-width: 45px;">이전글</span> :
-		                              작업중
+		                             ${dto.preReadDto}
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
 		                              <span style="display: inline-block; min-width: 45px;">다음글</span> :
-		                              작업중
+		                            ${dto.nextReadDto}
 		                         </td>
 		                     </tr>                                          
 		                </tbody>
 		                <tfoot>
 		                	<tr>
 		                		<td>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn">수정</button>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn">삭제</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateInquiry">수정</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteInquiry">삭제</button>
 		                		</td>
 		                		<td align="right">
-		                		    <button type="button" class="btn btn-default btn-sm wbtn"> 목록으로 </button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/list?${query}';"> 목록으로 </button>
 		                		</td>
 		                	</tr>
 		                </tfoot>

@@ -22,8 +22,8 @@
 	    <if test="condition=='content' ">
 	       INSTR(content, #{keyword}) &gt; 0
 	    </if>
-	    <if test="condition=='nickName' ">
-	       INSTR(nickName, #{keyword}) = 1
+	    <if test="condition=='userId' ">
+	       INSTR(userId, #{keyword}) = 1
 	    </if>
 	    <if test="condition=='created' ">
 	       DATE_FORMAT(n.created, '%Y-%m-%d') = #{keyword}

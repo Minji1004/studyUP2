@@ -24,7 +24,6 @@ function deleteFaq(){
 	<c:if test="${sessionScope.member.userId==dto.userId}">
 		var q="faqNum=${dto.faqNum}&${query}";
 		var url="<%=cp%>/customer/faq/delete?"+q;
-		alert(url);
 		if(confirm("게시물을 삭제하시겠습니까?")){
 			location.href=url;
 		}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inquiry">
+	<insert id="insertInquery" parameterType="com.sp.customer.inquiry.Inquiry">
+		INSERT INTO inquiry(inquiryNum, userId, subject, content)
+		VALUES (#{inquiryNum}, #{userId}, #{subject}, #{content})
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			(INSTR(subject, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0)	
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userId'">
+			INSTR(userId, #{keyword})=1
+		</if>
+		<if test="condition=='created'">
+			DATE_FORMAT(i.created, '%Y-%m-%d')=#{keyword}
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0)
+		FROM inquiry i
+		JOIN memberInfo m On i.userId=m.userId
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listInquiry" parameterType="map" resultType="com.sp.customer.inquiry.Inquiry">
+		SELECT inquiryNum, i.userId, subject, content, i.created
+		FROM inquiry i
+		JOIN memberInfo m ON i.userId=m.userId
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>	
+			ORDER BY inquiryNum DESC
+			LIMIT #{start}, #{rows}
+	</select>
+	
+</mapper>

@@ -98,7 +98,7 @@ function searchList() {
 		
 		    <div>
 		        <div style="clear: both; height: 30px; line-height: 30px;">
-		            <div style="float: left;">25개(1/2 페이지)</div>
+		            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
 		            <div style="float: right;">&nbsp;</div>
 		        </div>
 		        
@@ -110,20 +110,21 @@ function searchList() {
 		                        <th >제목</th>
 		                        <th class="text-center" style="width: 100px;">글쓴이</th>
 		                        <th class="text-center" style="width: 100px;">날짜</th>
-		                        <th class="text-center" style="width: 70px;">조회수</th> 
 		                    </tr>
 		                </thead>
 		                <tbody>
-		                
+		        <c:forEach var="dto" items="${list}">
 		                    <tr>
-		                        <td class="text-center">1</td>
-		                        <td><a href="#">테스트 입니다.</a></td>
-		                        <td class="text-center">이이이</td>
-		                        <td class="text-center">2000-10-10</td>
-		                        <td class="text-center">10</td> 
+		                        <td class="text-center">${dto.listNum}</td>
+		                        <td>
+		                        	<a href="${articleUrl}&inquiryNum=${dto.inquiryNum}">${dto.subject}</a>
+		                        </td>
+		                        <td class="text-center">${dto.userId}</td>
+		                        <td class="text-center">${dto.created}</td>		                     
 		                    </tr>
-		                    
+		       </c:forEach>             
 		                </tbody>
+		
 		            </table>
 		        </div>
 		
@@ -149,7 +150,7 @@ function searchList() {
 		        		     </form>
 		        		</div>
 		        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-		        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+		        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/inquiry/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
 		        		</div>
 		        </div>
 		        
