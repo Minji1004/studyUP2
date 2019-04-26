@@ -6,8 +6,10 @@
 	String cp = request.getContextPath();
 %>
 <style>
-th{
+li{
 	text-align: center;
+	float:left;
+	
 }
 .line{
 	align:center; 
@@ -15,6 +17,13 @@ th{
 	height:35px;
 	border-top: 1px solid #cccccc; 
 	border-bottom: 1px solid #cccccc;
+	padding-top: 7px;
+}
+
+.flist{
+	text-align:center; 
+	height:24px; 
+	border-bottom: 1px solid #cccccc;"
 }
 </style>
 <script>
@@ -34,43 +43,41 @@ function searchMember(){
 			</div>
 		</form>
 		<c:if test="${not empty keyword}">
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-		   <tr height="35">
-		      <td align="left" width="50%">
+		<div style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
+		   <ul style="height:35px;">
+		      <li style="float:left; width:10%;">
 		          ${dataCount }개(${page }/${total_page }페이지)
-		      </td>
-		      <td align="right">
-		          &nbsp;
-		      </td>
-		   </tr>
-		</table>
+		      </li>
+		      
+		   </ul>
+		</div>
 		
-		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr class="line"> 
-		      <th width="100" style="color: #787878;">번호</th>		      
-		      <th style="color: #787878;">아이디</th>
-		      <th style="color: #787878;">닉네임</th>		      
-		      <th width="200" style="color: #787878;">회원가입일</th>
-		  </tr>
+		<div style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
+		  <ul class="line"> 
+		      <li style="color: #787878; width:10%;">번호</li>		      
+		      <li style="color: #787878; width:35%;">아이디</li>
+		      <li style="color: #787878; width:35%;">닉네임</li>		      
+		      <li style="color: #787878; width:20%;">회원가입일</li>
+		  </ul>
 		 
-		<c:forEach var="mdto" items="${mlist }">
-			<tr align="center"height="28" style="border-bottom: 1px solid #cccccc;"> 
-		      <th>${mdto.mlistNum }</th>
-		      <th><a href="${articleUrl }&userNum=${mdto.userNum}">${mdto.userId }</a></th>
-		      <th>${mdto.nickname }</th>		      
-		      <th>${mdto.created }</th>
-		  </tr>
+		<c:forEach var="mdto" items="${mlist}">
+			<ul class="flist" onclick="location.href='${articleUrl }&userNum=${mdto.userNum}'"> 
+		      <li style="width:10%;">${mdto.mlistNum }</li>
+		      <li style="width:35%;">${mdto.userId }</li>
+		      <li style="width:35%;">${mdto.nickname }</li>		      
+		      <li style="width:20%;">${mdto.created }</li>
+		  </ul>
 		</c:forEach>
 
-		</table>
-		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
-		   <tr height="35">
-			<td align="center">
+		</div>
+		<div style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+		   <ul style="height:25px;">
+			<li style="width:100%;">
 		        <c:if test="${dataCount==0 }">등록된 게시물이 없습니다.</c:if>
 		        <c:if test="${dataCount!=0 }">${paging}</c:if>
-			</td>
-		   </tr>
-		</table>
+			</li>
+		   </ul>
+		</div>
 		</c:if>
 		</div>
 </section>

@@ -40,3 +40,9 @@
 #example2 tbody tr{
 	cursor: pointer;
 }
+
+.filesize{
+	display: inline; 
+	margin-left: 10px; 
+	color: #737373;
+}

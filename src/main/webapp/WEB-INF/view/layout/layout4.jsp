@@ -89,8 +89,8 @@
 				 </a>
 </div>
 
-<section class="section" style = "padding: 74px 0;" id="srcontianer" >
-<div class="container" role="main">
+<section class="section" style = "padding: 74px 0px 0px 0px;" id="srcontianer" >
+<div class="container" role="main" style = "width: 100%;">
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px; left: 0px; position: absolute; height: 100%" id="sidebar">
             <tiles:insertAttribute name="left"/>
@@ -102,7 +102,7 @@
 </div>
 </section>
 
-<div>
+<div style="position:relative; bottom:0;z-index:1020;">
     <tiles:insertAttribute name="footer"/>
 </div>
 <script src="<%=cp%>/resource/js/jquery.dataTables.js"></script>

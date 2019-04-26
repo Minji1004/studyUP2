@@ -45,6 +45,14 @@ public class StudyServiceImpl implements StudyService{
 				}				
 			}
 			
+			// 스터디 마스터는 스터디 생성시 자동으로 가입허가가 된다.
+			ApplyStudy adto = new ApplyStudy();
+			adto.setUserId(dto.getUserId());
+			adto.setStudyNum(studyNum);
+			adto.setApproval(2);
+			
+			dao.insertData("study.applyStudy", adto);
+			
 			
 			result = 1;
 			

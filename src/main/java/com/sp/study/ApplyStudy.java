@@ -6,6 +6,7 @@ public class ApplyStudy {
 	private String userId;
 	private String goal;
 	private String hope;
+	private int approval;
 	
 	public int getApplyNum() {
 		return applyNum;
@@ -36,5 +37,11 @@ public class ApplyStudy {
 	}
 	public void setHope(String hope) {
 		this.hope = hope;
+	}
+	public int getApproval() {
+		return approval;
+	}
+	public void setApproval(int approval) {
+		this.approval = approval;
 	}
 }
