@@ -62,9 +62,15 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public Inquiry readInquiry(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Inquiry readInquiry(int InquiryNum) {
+		Inquiry dto=null;
+		
+		try {
+			dto=dao.selectOne("inquiry.readInquiry", InquiryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
