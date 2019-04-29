@@ -37,8 +37,8 @@
 		  <c:forEach var="dto" items="${noticeList}">
 			  <tr> 
 			      <td><span style="display: inline-block; background: #ED4C00;color: #FFFFFF; padding: 1px 3px;">공지</span></td>
-			      <td style="text-align:left;"><a href="${articleUrl}&noticeNum=${dto.tnoticeNum}">${dto.subject}</a></td>
-			      <td>&nbsp;</td>
+			      <td style="text-align:left;"><a href="${articleUrl}&tnoticeNum=${dto.tnoticeNum}">${dto.subject}</a></td>
+			      <td><a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a></td>
 			      <td>${dto.created}</td>
 			      <td>${dto.hitCount}</td>
 			  </tr>
@@ -47,12 +47,12 @@
 			  <tr> 
 			      <td>${dto.listNum}</td>
 			      <td style="text-align:left;">
-			           <a href="${articleUrl}&noticeNum=${dto.tnoticeNum}">${dto.subject}</a>
+			           <a href="${articleUrl}&tnoticeNum=${dto.tnoticeNum}">${dto.subject}</a>
 			           <c:if test="${dto.gap < 1}">
 			               <img src='<%=cp%>/resource/images/new.gif'>
 			           </c:if>
 			      </td>
-			      <td>&nbsp;</td>
+			      <td><a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a></td>
 			      <td>${dto.created}</td>
 			      <td>${dto.hitCount}</td>
 			  </tr>
@@ -76,23 +76,25 @@
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/notice/list';">새로고침</button>
+		          <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/teacher/notice/list?tnum=${tnum}&left=${left}';">새로고침</button>
 		      </td>
 		      <td align="center">   
-		          <form name="searchForm" action="<%=cp%>/notice/list" method="post" style="width: 390px;">		
-		          	<select name="condition" class="form-control" style="width: 75px; float: left; margin-right: 10px;">
+		          <form name="searchForm" action="<%=cp%>/teacher/notice/list" method="get" style="width: 400px;">		
+		          	<select name="condition" class="form-control" style="width: 90px; float: left; margin-right: 10px;">
 					  <option value="all"       ${condition=="all"?"selected='selected'":""}>모두</option>
 					  <option value="subject"   ${condition=="subject"?"selected='selected'":""}>제목</option>
 					  <option value="content"   ${condition=="content"?"selected='selected'":""}>내용</option>
 					  <option value="created"   ${condition=="created"?"selected='selected'":""}>등록일</option>
 		            </select>           
 		      <div class="input-group" style="width: 300px;">
-		           <input type="text" name="keyword" class="form-control">
+		           <input type="text" name="keyword" class="form-control" value="${keyword}">
 	              <span class="input-group-btn">
-	                <button type="button" onclick="searchList()" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-	                </button>
+	                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+	                </button>	  
 	              </span>
 		       </div>
+		       <input type="hidden" name="tnum" value="${tnum}">
+		       <input type="hidden" name="left" value="${left}">
 		        </form>
 		      </td>
 		      <td align="right" width="100">

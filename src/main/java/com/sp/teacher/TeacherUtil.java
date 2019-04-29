@@ -83,7 +83,7 @@ public class TeacherUtil {
 		if(current_page%numPerBlock==0)
 			currentPageSetup=currentPageSetup-numPerBlock;
 
-		sb.append("<ul class='pagination pagination-sm no-margin pull-right'>");
+		sb.append("<ul class='pagination pagination-sm no-margin'>");
 		// 처음페이지, 이전(10페이지 전)
 		n=current_page-numPerBlock;
 		if(total_page > numPerBlock && currentPageSetup > 0) {

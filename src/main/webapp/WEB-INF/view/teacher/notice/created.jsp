@@ -71,7 +71,6 @@
 		}); 
 });
   
-  
 </script>
 
 
@@ -126,8 +125,8 @@
      <tr height="45"> 
       <td align="center" >
         <button type="submit" class="btn btn-danger">${mode=='update'?'수정완료':'등록하기'}</button>
-        <button type="reset" class="btn btn-default">다시입력</button>
-        <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/bbs/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+        <button type="reset" class="btn btn-default" onclick="resetEditor();">다시입력</button>
+        <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/teacher/notice/list?tnum=${tnum}&left=${left}';">${mode=='update'?'수정취소':'등록취소'}</button>
 		</td>
     </tr>
   </table>
@@ -179,6 +178,13 @@ function setDefaultFont() {
 	var sDefaultFont = '돋움';
 	var nFontSize = 24;
 	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
+}
+
+//다시입력 할 때 
+function resetEditor(){
+	var tableList = document.getElementById("tableList");
+	tableList.innerHTML = "";
+	oEditors.getById["content"].exec("SET_IR", [""]); 	
 }
 </script>    
 
