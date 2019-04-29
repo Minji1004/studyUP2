@@ -74,15 +74,75 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public int updateInquiry(Inquiry dto) {
+	public int updateInquiry(Inquiry dto,String pathname) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteInquiry(int num) {
+	public int deleteInquiry(int num, String pathname) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 	
+	//파일
+	
+	@Override
+	public List<Inquiry> listFile(int inquiryNum){
+		List<Inquiry> listFile=null;
+		
+		try {
+			listFile=dao.selectList("inquiry.listFile", inquiryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listFile;
+	}
+
+	@Override
+	public int insertFile(Inquiry dto) {
+		int result=0;
+		try {
+			result=dao.insertData("inquiry.insertFile", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public Inquiry readFile(int fileNum) {
+		Inquiry dto=null;
+		
+		try {
+			dto=dao.selectOne("inquiry.readFile", fileNum);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public int deleteFile1(int inquiryNum) {
+		int result=0;
+		
+		try {
+			result=dao.deleteData("inquiry.deleteFile1", inquiryNum);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteFile2(int fileNum) {
+		int result=0;
+		
+		try {
+			result=dao.deleteData("inquiry.deleteFile2", fileNum);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
 }

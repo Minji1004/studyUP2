@@ -6,11 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Inquiry {
 	private int listNum, inquiryNum;
-	private int type, parent, state;
-	private String userId, userName;
-	private String phone;
-	private int phoneRecv;
-	private String category, subject, content;
+	private String userId;
+	private String subject, content;
 	private String created;
 
 	private int fileNum;
@@ -24,16 +21,52 @@ public class Inquiry {
 		return upload;
 	}
 
-	public void setUpload(List<MultipartFile> upload) {
-		this.upload = upload;
+	public int getListNum() {
+		return listNum;
 	}
 
-	public long getGap() {
-		return gap;
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 
-	public void setGap(long gap) {
-		this.gap = gap;
+	public int getInquiryNum() {
+		return inquiryNum;
+	}
+
+	public void setInquiryNum(int inquiryNum) {
+		this.inquiryNum = inquiryNum;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getCreated() {
+		return created;
+	}
+
+	public void setCreated(String created) {
+		this.created = created;
 	}
 
 	public int getFileNum() {
@@ -68,107 +101,15 @@ public class Inquiry {
 		this.fileSize = fileSize;
 	}
 
-	public int getListNum() {
-		return listNum;
+	public long getGap() {
+		return gap;
 	}
 
-	public void setListNum(int listNum) {
-		this.listNum = listNum;
+	public void setGap(long gap) {
+		this.gap = gap;
 	}
 
-	public int getInquiryNum() {
-		return inquiryNum;
-	}
-
-	public void setInquiryNum(int inquiryNum) {
-		this.inquiryNum = inquiryNum;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public int getParent() {
-		return parent;
-	}
-
-	public void setParent(int parent) {
-		this.parent = parent;
-	}
-
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public int getPhoneRecv() {
-		return phoneRecv;
-	}
-
-	public void setPhoneRecv(int phoneRecv) {
-		this.phoneRecv = phoneRecv;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public String getCreated() {
-		return created;
-	}
-
-	public void setCreated(String created) {
-		this.created = created;
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
 	}
 }

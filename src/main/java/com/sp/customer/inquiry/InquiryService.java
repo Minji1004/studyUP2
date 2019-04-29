@@ -10,6 +10,12 @@ public interface InquiryService {
 	public List<Inquiry> relationInquiry(int num);
 	public Inquiry readInquiry(int num);
 	public int updateInquiryState(Map<String, Object> map);
-	public int updateInquiry(Inquiry dto);
-	public int deleteInquiry(int num);
+	public int updateInquiry(Inquiry dto, String pathname);
+	public int deleteInquiry(int num, String pathname);
+	
+	List<Inquiry> listFile(int inquiryNum);
+	public int insertFile(Inquiry dto);
+	public Inquiry readFile(int fileNum);
+	public int deleteFile1(int inquiryNum);
+	public int deleteFile2(int fileNum);
 }

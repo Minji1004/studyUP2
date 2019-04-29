@@ -79,7 +79,7 @@ function searchList() {
 </script>
 
 
-<section class="section" id="srcontianer" >
+<section class="section" id="srcontainer" >
 
 <div class="container" role="main">
     <div class="row row-offcanvas row-offcanvas-right">
@@ -113,7 +113,7 @@ function searchList() {
 		                    </tr>
 		                </thead>
 		                <tbody>
-		        <c:forEach var="dto" items="${list}">
+		        <c:forEach var="dto" items="${inquirylist}">
 		                    <tr>
 		                        <td class="text-center">${dto.listNum}</td>
 		                        <td>
@@ -129,20 +129,21 @@ function searchList() {
 		        </div>
 		
 		        <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
-		           1 2 3
+		           <c:if test="${dataCount==0}">등록된 게시물이 없습니다.</c:if>
+		           <c:if test="${dataCount!=0}">${paging}</c:if>
 		        </div>        
 		        
 		        <div style="clear: both;">
 		        		<div style="float: left; width: 20%; min-width: 85px;">
-		        		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/';">새로고침</button>
+		        		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list';">새로고침</button>
 		        		</div>
 		        		<div style="float: left; width: 60%; text-align: center;">
-		        		     <form name="searchForm" action="<%=cp%>/customer/notice/list" method="post" class="form-inline">
+		        		     <form name="searchForm" action="<%=cp%>/customer/inquiry/list" method="post" class="form-inline">
 								  <select class="form-control input-sm" name="condition" >
 									  <option value="all"     ${condition=="all"?"selected='selected'":""}>모두</option>
 									  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
 									  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-									  <option value="userName"    ${condition=="name"?"selected='selected'":""}>작성자</option>
+									  <option value="userName"${condition=="name"?"selected='selected'":""}>작성자</option>
 									  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 								  </select>
 								  <input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">
@@ -152,13 +153,9 @@ function searchList() {
 		        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
 		        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/inquiry/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
 		        		</div>
-		        </div>
-		        
+		        </div>		    
 		    </div>
-
-
         </div>
      </div>
 </div>
-    
 </section>
