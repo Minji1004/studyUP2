@@ -14,17 +14,16 @@
 }
 
 .studySidebar i, .studySidebar span {
-	color: white;
 	font-size: 20px;
+	color: #0B614B;
 }
 
-.studySidebar .studyMainLi {
+.studySidebar .on {
 	background: #454F40;
 }
 
-
-.studySidebar .myStudyMainLi span,  .studySidebar .myStudyMainLi i{
-	color: #0B614B;
+.studySidebar .on span,  .studySidebar .on i{
+	color: white;
 }
 
 
@@ -33,7 +32,10 @@
 <script type="text/javascript">
 $(function(){
 	$(".modal-backdrop").css("z-index" , "auto");
+	
 });
+
+
 </script>
 
 <!-- Left side column. contains the logo and sidebar -->
@@ -45,8 +47,8 @@ $(function(){
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
-        <li class="studyMainLi"><a href="<%=cp%>/study/main"><i class="fa fa-link"></i> <span>스터디</span></a></li>
-        <li class="myStudyMainLi"><a href="#"><i class="fa fa-link"></i> <span>My스터디</span></a></li>
+        <li class="studyMainLi ${active=='1'?'on':''}"><a href="<%=cp%>/study/main"><i class="fa fa-link"></i> <span>스터디</span></a></li>
+        <li class="myStudyMainLi ${active=='2'?'on':''}"><a href="<%=cp%>/study/myStudy"><i class="fa fa-link"></i> <span>My스터디</span></a></li>
 
       </ul>
       <!-- /.sidebar-menu -->

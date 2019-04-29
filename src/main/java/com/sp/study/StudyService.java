@@ -15,4 +15,7 @@ public interface StudyService {
 	// 스터디의 과목
 	public List<StudyCourse> listStudyCourse(int studyNum);
 	
+	// 스터디의 가입된 인원
+	public int headCount(int studyNum);
+	
 }

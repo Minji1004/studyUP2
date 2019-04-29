@@ -8,7 +8,7 @@
       
 <div class="modal-header">
    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-   <h4 class="modal-title" id="myModalLabel" align="center">${dto.studyName} (1/${dto.headcount})</h4>
+   <h4 class="modal-title" id="myModalLabel" align="center">${dto.studyName} (${dto.applyCount}/${dto.headcount})</h4>
 </div>
 <div class="smodal-body modal-body row">
  	<div class="col-xs-8 col-sm-5" align="center">

@@ -32,8 +32,15 @@ public class StudyController {
 	private MyUtil myUtil;
 
 	@RequestMapping(value="/study/main")
-	public String main() {
+	public String main(Model model) {
+		model.addAttribute("active", "1");
 		return ".four.study.main";
+	}
+	
+	@RequestMapping(value="/study/myStudy")
+	public String mymain(Model model) {
+		model.addAttribute("active", "2");
+		return ".four.study.myStudy";
 	}
 	
 	@RequestMapping(value="/study/list")
@@ -42,6 +49,7 @@ public class StudyController {
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			@RequestParam(defaultValue="allStudy") String mode,
+			@RequestParam(defaultValue="") String userId,
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
@@ -72,7 +80,8 @@ public class StudyController {
 		map.put("keyword", keyword);
 		map.put("mode", mode);
 		map.put("categoryName", categoryName);
-		// System.out.println("여기!!!!!! "+categoryName);
+		
+		map.put("userId", userId);
 		
 		dataCount = service.dataCount(map);
 		
@@ -98,9 +107,6 @@ public class StudyController {
         model.addAttribute("dataCount", dataCount);
         model.addAttribute("paging", paging);
 		
-		// model.addAttribute("mode", mode);
-		// model.addAttribute("categoryName", categoryName);
-		
 		return "study/list";
 	}	
 	
@@ -114,7 +120,8 @@ public class StudyController {
 		if(dto==null)
 			return "redirect:/study/main";
 		
-		dto.setStudyIntro(myUtil.htmlSymbols(dto.getStudyIntro()));
+		dto.setStudyIntro(myUtil.htmlSymbols(dto.getStudyIntro()));		
+		dto.setApplyCount(service.headCount(studyNum));
 		
 		model.addAttribute("dto", dto);
 		

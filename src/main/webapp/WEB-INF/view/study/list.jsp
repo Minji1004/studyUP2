@@ -48,7 +48,7 @@
 						<div style="">
 							<div class="study-title">${dto.studyName}</div>
 							<div class="studyIntro">${dto.studyIntro}</div>
-							<div>1/${dto.headcount}</div>
+							<div>${dto.applyCount}/${dto.headcount}</div>
 							<div class="row" style="margin-bottom: 10px" >
 							
 								<c:forEach var="courses" items="${dto.courseLists}" varStatus="status">	

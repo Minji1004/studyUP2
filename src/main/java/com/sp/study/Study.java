@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Study {
-	private int studyNum, headcount;
+	private int studyNum, headcount, applyCount;
 	private String studyName, studyIntro;
 	private String userId;
 	private String userName;
@@ -118,5 +118,11 @@ public class Study {
 	}
 	public void setCourseLists(List<StudyCourse> courseLists) {
 		this.courseLists = courseLists;
+	}
+	public int getApplyCount() {
+		return applyCount;
+	}
+	public void setApplyCount(int applyCount) {
+		this.applyCount = applyCount;
 	}
 }
