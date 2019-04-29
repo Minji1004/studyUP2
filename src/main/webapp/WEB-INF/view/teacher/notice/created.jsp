@@ -52,31 +52,25 @@
 			if(! $(this).val()) {
 				return;	
 			}
+			//style='display:none;'
+			var out = "";
+			for(var i=0; i< this.files.length; i++){
+				var filename = this.files[i].name;
+				var filesize = (this.files[i].size/1024000).toFixed(2); //MB로 나타내겠다.
+				
+				out += "<p><a href='#' id='deleteFile' class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>";
+				out += "&nbsp;&nbsp;"+filename+" <span class='filesize'>"+filesize+"MB</span></p>";
+			}
+			$("#tableList").empty();
+			$("#tableList").append(out);
 			
-			var b=false;
-			$("input[name=upload]").each(function(){
-				if(! $(this).val()) {
-					b=true;
-					return;
-				}
-			});
-			if(b)
-				return;
-
-			var $tr, $td, $input;
-			
-		    $tr=$("<tr>");
-		    $td=$("<td>", {class:"td1", html:"첨부"});
-		    $tr.append($td);
-		    $td=$("<td>", {class:"td3", colspan:"3"});
-		    $input=$("<input>", {type:"file", name:"upload", class:"form-control input-sm", style:"height: 35px;"});
-		    $td.append($input);
-		    $tr.append($td);
-		    
-		    $("#tb").append($tr);
-		});
+		});		
 		
+		$("body").on("click", "#deleteFile", function(){			
+			this.closest("p").remove();	
+		}); 
 });
+  
   
 </script>
 
@@ -93,7 +87,7 @@
 		</div>
 		<div class="box-body" style="width: 1200px; margin: 0 auto;">
 
-<form name="boardForm" method="post" onsubmit="return submitContents(this);">
+<form name="boardForm" method="post" onsubmit="return submitContents(this);"  enctype="multipart/form-data">
   <table class="table">
   <tr align="left" style="border-top: 2px solid #cccccc;"> 
       <th width="80" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</th>
@@ -101,7 +95,12 @@
         <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 97%;" value="${dto.subject}">
       </td>
   </tr>
-
+  <tr align="left"> 
+      <th width="80" bgcolor="#eeeeee" style="text-align: center;">공&nbsp;&nbsp;&nbsp;&nbsp;지</th>
+      <td style="padding-left:10px;"> 
+        <label><input type="checkbox" name="noticeweather" value="1">공지여부</label>
+      </td>
+  </tr>
   <tr align="left"> 
       <th width="80" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
       <td valign="top" style="padding:5px 10px 5px 10px;"> 
@@ -114,12 +113,10 @@
   	<td>
 	  	<div class="btn btn-default btn-file">
 			<i class="fa fa-paperclip"></i> 첨부파일
-			<input type="file"  name="upload">
+			<input type="file"  name="upload" multiple="multiple">
 		</div>		
 		<p class="filesize">최대 32MB</p>
-		<div id="tableList" style="width: 300px; padding: 10px 10px 0;">
-			<p><a href="#" onclick="" class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;파일이름1 (1.25MB)</p>
-			<p><a href="#" onclick="" class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>&nbsp;&nbsp;파일이름2 (1.24MB)</p>
+		<div id="tableList" style="padding: 10px 10px 0;">
 		</div>	
   	</td>
   </tr>

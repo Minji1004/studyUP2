@@ -39,7 +39,7 @@
         <!-- Optionally, you can add icons to the links -->
         <li><a href="<%=cp%>/teacher/main?tnum=${tnum}&left=0"><i class="fa fa-link"></i> <span>강사소개</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>강의목록</span></a></li>
-		<li><a href="<%=cp%>/teacher/notice?tnum=${tnum}&left=2"><i class="fa fa-link"></i> <span>공지사항</span></a></li>
+		<li><a href="<%=cp%>/teacher/notice/list?tnum=${tnum}&left=2"><i class="fa fa-link"></i> <span>공지사항</span></a></li>
 		<li><a href="#"><i class="fa fa-link"></i> <span>질문답변</span></a></li>
 		<c:if test="${sessionScope.member.userNum == tnum}">
         <li class="treeview">

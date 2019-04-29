@@ -5,20 +5,31 @@
 <%
    String cp = request.getContextPath();
 %>
+
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
+
 <script type="text/javascript">
 var pageNo = 1;
 var condition = "all";
 var keyword = "";
-
+$(function(){
+	listPage(1);
+});
+ 
+function searchList(){
+	//검색
+	condition = $("#condition").val();
+	keyword = $("#keyword").val();
+	
+	listPage(1);
+}
 function ajaxHTML(url, type, query, id){
 	$.ajax({
 		type : type,
 		url : url,
 		data : query,
 		success:function(data){
-			
 			$("#" + id).html(data);
-			
 		},
 		beforeSend:function(jqXHR){
 			jqXHR.setRequestHeader("AJAX", true);
@@ -61,6 +72,7 @@ function ajaxJSON(url, type, query, mode){
 		}
 	});	
 }
+
 function ajaxFileJSON(url, query, mode){
 	//파일 업로드를 위한 ajax() 함수 
 	$.ajax({
@@ -71,9 +83,44 @@ function ajaxFileJSON(url, query, mode){
 		,data : query
 		,dataType : "JSON"
 		,success:function(data){
-			listPage(pageNo);
+			alert(mode);
+			// listPage(1);
 		},
 		beforeSend:function(jqXHR){
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR){
+			
+			if(jqXHR.status == 403){
+				location.href = "<%=cp%>/member/login";
+				return;
+			}
+			console.log(jqXHR.responseText);
+		}
+	});	
+}
+function ajaxMypageMain(mode){
+	var uid="${sessionScope.member.userId}";
+	var url = "";
+	if(!uid){
+		var url = "<%=cp%>/member/login";
+		location.href = url;
+	}
+	
+	if(mode == "mypage"){
+		url = "<%=cp%>/mypage/mypage";
+		alert(url);
+	}else{
+		url = "<%=cp%>/mypage/" + mode + "/main";
+	}
+	
+	$.ajax({
+		type : "GET"
+		,url : url
+		,success : function(data){
+			$("#myPageMain").html(data);
+		}
+		,beforeSend:function(jqXHR){
 			jqXHR.setRequestHeader("AJAX", true);
 		},
 		error:function(jqXHR){
@@ -83,131 +130,25 @@ function ajaxFileJSON(url, query, mode){
 			}
 			console.log(jqXHR.responseText);
 		}
-	});	
+	});
 }
+//---------------------------------------------------------
 
-$(function(){
-	//listPage(1);
-});
- 
-function listPage(page){
-	//페이징
-	pageNo = page;
+//마이페이지 > 내 정보
+function mypageMain(){ajaxMypageMain("mypage");}
+//마이페이지 > 오답노트 > 리스트
+function mypageWanote(){ajaxMypageMain("wanote");}
+//마이페이지 > 일정 > 리스트	
+function mypageSchedule(){ajaxMypageMain("schedule");}
+//마이페이지 > 장바구니 > 리스트
+function mypageBasket(){ajaxMypageMain("basket");}
+//마이페이지 > 예약 > 스터디 > 리스트	
+function mypageStudy(){ajaxMypageMain("reservation/study");}
+//마이페이지 > 예약 > 스터디룸 > 리스트	
+function mypageStudyroom(){ajaxMypageMain("/reservation/studyroom");}	
 	
-	var id = "board-body";
-	var url = "<%=cp%>/abbs/list";
-	var query = "pageNo=" + page;
-	if(keyword != ""){
-		query += "&condition=" + condition  + "&keyword=" + encodeURIComponent(keyword);
-	}
-	
-	ajaxHTML(url,"get",query, id);
-}
-function reloadBoard(){
-	//새로고침
-	condition = "all";
-	keyword = "";
-	
-	listPage(1);
-}
-function searchList(){
-	//검색
-	condition = $("#condition").val();
-	keyword = $("#keyword").val();
-	
-	listPage(1);
-}
-function mypageWanote(){
-	var url = "<%=cp%>/mypage/wanote/main";
-	if(${sessionScope.member.userId == null}){
-		var url = "<%=cp%>/member/login";
-		location.href = url;
-	}
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-			$("#myPageMain").html(data);
-		}
-		,error : function(data){
-			
-		}
-	});
-}
-function mypageSchedule(){
-	var url = "<%=cp%>/mypage/schedule/main";
-	alert("asflkdjf");
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-			$("#myPageMain").html(data);
-		
-		}
-		,error : function(data){
-			
-		}
-	});
-}
-function mypageBasket(){
-	var url = "<%=cp%>/mypage/basket/main";
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-			$("#myPageMain").html(data);
-		}
-		,error : function(data){
-			
-		}
-	});
-}
-function mypageStudy(){
-	var url = "<%=cp%>/mypage/reservation/study/main";
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-			$("#myPageMain").html(data);
-		}
-		,error : function(data){
-			
-		}
-	});
-}
-function mypageStudyroom(){
-	var url = "<%=cp%>/mypage/reservation/studyroom/main";
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-			$("#myPageMain").html(data);
-		}
-		,error : function(data){
-			
-		}
-	});
-}
-//나의 정보 메인
-function mypageMain(){
-	var url = "<%=cp%>/mypage/mypage";
-	if(${sessionScope.member.userId == null}){
-		var url = "<%=cp%>/member/login";
-		location.href = url;
-	}
-	var query  = "userId=${sessionScope.member.userId}";
-	$.ajax({
-		type : "GET"
-		,url : url
-		,data : query
-		,success : function(data){
-			$("#myPageMain").html(data);
-		}
-		,error : function(data){
-			
-		}
-	});
-}
+
+
 function mypageUpdate(){
 	var url = "<%=cp%>/mypage/update";
 	var query  = "userId=${sessionScope.member.userId}";
@@ -263,7 +204,9 @@ function updateMyprofile(){
 	
 	var url = "<%=cp%>/mypage/update";
 	var query = new FormData(f);
+	ajaxFileJSON(url, query, "aaaa");
 	
+	/*
 		$.ajax({
 			type : "POST"
 			,url : url
@@ -286,9 +229,72 @@ function updateMyprofile(){
 				}
 				console.log(jqXHR.responseText);
 			}
-		});	
+		});
+   */	
 }
 
+//-------------------------------------
+function sendwanote(mode){
+	var f = document.wanoteCreateForm;
+	
+	if(!f.subject.value){
+		alert("제목을 입력하세요.");
+		return;
+	}
+	if(!f.content.value){
+		alert("내용을 입력하세요");
+		return;
+	}
+	var url = "<%=cp%>/mypage/wanote/create";
+	var query = new FormData(f);
+	
+	$.ajax({
+		type : "POST"
+		,url : url
+		,processData : false		
+		,contentType : false		
+		,data : query
+		,dataType : "JSON"
+		,success:function(data){			
+			//create 성공 후 
+			//오류 리스트로 가야한다.
+			//오류 리스트로 
+			mypageWanote();
+		},
+		beforeSend:function(jqXHR){
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR){
+			if(jqXHR.status == 403){
+				location.href = "<%=cp%>/member/login";
+				return;
+			}
+			console.log(jqXHR.responseText);
+		}
+	});	
+}
+function reloadWanote(){
+	//새로고침
+	condition = "all";
+	keyword = "";
+	
+	listPage(1);
+}
+//오답노트 올리기 폼
+function insertWanote(){
+	var url = "<%=cp%>/mypage/wanote/create";
+	$.ajax({
+		type : "GET"
+		,url : url
+		,success : function(data){
+		
+			$("#myPageMain").html(data);
+		}
+		,error : function(e){
+			console.log(e);
+		}
+	});
+}
 </script>
 
 

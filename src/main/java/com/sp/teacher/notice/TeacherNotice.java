@@ -6,9 +6,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class TeacherNotice {
 	private int tnoticeNum;
+	private int listNum;
 	private String tId;
 	private String subject, content, created;
 	private int hitCount;
+	private int noticeweather;
 	
 	private int fileNum;
 	private String originalFilename, saveFilename;
@@ -91,6 +93,20 @@ public class TeacherNotice {
 	public void setGap(long gap) {
 		this.gap = gap;
 	}
+	public int getNoticeweather() {
+		return noticeweather;
+	}
+	public void setNoticeweather(int noticeweather) {
+		this.noticeweather = noticeweather;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+
+
 	
 	
 }
