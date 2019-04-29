@@ -82,7 +82,7 @@ public class TeacherNoticeController {
 		map.put("start", start);
 		map.put("rows", rows);
 		
-		List<TeacherNotice> list = teacherNoticeService.listTNotice(map);
+		List<TeacherNotice> list = teacherNoticeService.listTNotice(map);		
 		
 		int listNum, n=0;
 		for(TeacherNotice dto:list) {

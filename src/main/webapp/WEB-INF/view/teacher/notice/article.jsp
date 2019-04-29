@@ -20,10 +20,6 @@
     };
   }  
   
-  function fileSizeFormat(var fileSize){
-	  filesize = (fileSize/1024000).toFixed(2);
-	  return filesize;
-  }
   
 </script>
 
@@ -69,7 +65,10 @@
 			                         <td colspan="2">	                         
 			                              <p><b style="font-size: 15px;">첨부파일 <span style="color: #dd4b39;">${fn:length(listFile)}</span>개</b>&nbsp;&nbsp;(2MB)&nbsp;&nbsp;<a href="#">모두 저장</a></p>
 			                         <c:forEach var="file" items="${listFile}">
-			                              <div style="border: 1px solid #ddd;padding: 3px 5px;width: 500px;"><a href="#"><i class="fa fa-download"></i></a> ${file.originalFilename} (fileSizeFormat(${file.fileSize})MB)</div>
+			                              <div style="border: 1px solid #ddd;padding: 3px 5px;width: 500px;">
+			                              <a href="#"><i class="fa fa-download"></i></a> 
+			                              ${file.originalFilename} (<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${file.fileSize/1024000}"/> MB)
+			                              </div>
 			                         </c:forEach>
 			                         </td>
 			                     </tr> 

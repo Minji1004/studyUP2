@@ -44,8 +44,9 @@
 </select>
 
 <select id="listTNotice" parameterType="map" resultType="com.sp.teacher.notice.TeacherNotice">
-	SELECT tnoticeNum, subject, hitCount, created
-       FROM tnotice
+		SELECT t.tnoticeNum, subject, hitCount, created, fileNum FROM tnotice t
+		LEFT JOIN (select min(filenum) fileNum, tnoticeNum from tnotice_file group by tnoticeNum) f
+		ON t.tnoticeNum = f.tnoticeNum
        <where>
 	     	<if test="keyword != null and keyword !='' ">
 	     	    <include refid="where-list"/>

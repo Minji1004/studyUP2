@@ -37,8 +37,12 @@
 		  <c:forEach var="dto" items="${noticeList}">
 			  <tr> 
 			      <td><span style="display: inline-block; background: #ED4C00;color: #FFFFFF; padding: 1px 3px;">공지</span></td>
-			      <td style="text-align:left;"><a href="${articleUrl}&tnoticeNum=${dto.tnoticeNum}">${dto.subject}</a></td>
-			      <td><a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a></td>
+			      <td style="text-align:left;"><a href="${articleUrl}&tnoticeNum=${dto.tnoticeNum}">${dto.subject}</a></td>			 
+			      <td>
+			      <c:if test="${dto.fileNum != 0}">
+			      	<a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
+			      </c:if>
+			      </td>
 			      <td>${dto.created}</td>
 			      <td>${dto.hitCount}</td>
 			  </tr>
@@ -52,7 +56,11 @@
 			               <img src='<%=cp%>/resource/images/new.gif'>
 			           </c:if>
 			      </td>
-			      <td><a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a></td>
+			      <td>
+			      <c:if test="${dto.fileNum != 0}">
+			     	 <a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
+			      </c:if>
+			      </td>
 			      <td>${dto.created}</td>
 			      <td>${dto.hitCount}</td>
 			  </tr>
