@@ -1,6 +1,7 @@
 package com.sp.mypage;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,44 +37,13 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value = "/mypage/main")
-	public String main(Model model) throws Exception{
+	public String main(
+			Model model, 
+			HttpSession session
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		return ".four.mypage.main";
-	}
-	
-	@RequestMapping(value = "/mypage/basket/main")
-	public String basket() throws Exception{
-		return "mypage/basket/main";
-	}
-	
-	@RequestMapping(value = "/mypage/reservation/study/main")
-	public String study() throws Exception{
-		return "mypage/reservation/study/main";
-	}
-	
-	@RequestMapping(value = "/mypage/reservation/studyroom/main")
-	public String studyroom() throws Exception{
-		return "mypage/reservation/studyroom/main";
-	}
-	
-	@RequestMapping(value = "/mypage/schedule/main")
-	public String schedule() throws Exception{
-		return "mypage/schedule/main";
-	}
-	
-	@RequestMapping(value = "/mypage/wanote/main")
-	public String wanote() throws Exception{
-		return "mypage/wanote/main";
-	}
-
-	@RequestMapping(value = "/mypage/mypage")
-	public String mypage(
-			@RequestParam String userId,
-			HttpSession session,
-			Model model) {
-
-		Member dto =  memberService.readMember(userId);
-		
+		Member dto =  memberService.readMember(info.getUserId());
 
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "member_profile";
@@ -84,7 +54,45 @@ public class MyPageController {
 		
 		model.addAttribute("dto", dto);
 
-		return "mypage/mypage";
+		return ".four.mypage.main";
+	}
+	
+	@RequestMapping(value = "/mypage/basket/main")
+	public String basket() throws Exception{
+		return ".four.mypage.basket.main";
+	}
+	
+	@RequestMapping(value = "/mypage/study/main")
+	public String study() throws Exception{
+		return ".four.mypage.study.main";
+	}
+	
+	@RequestMapping(value = "/mypage/studyroom/main")
+	public String studyroom() throws Exception{
+		return ".four.mypage.studyroom.main";
+	}
+	
+	@RequestMapping(value = "/mypage/schedule/main")
+	public String schedule() throws Exception{
+		return ".four.mypage.schedule.main";
+	}
+	
+	@RequestMapping(value = "/mypage/wanote/main")
+	public String wanote(
+			@RequestParam(value="page", defaultValue = "1") int page
+			,@RequestParam(value = "condition" , defaultValue = "all") String condition
+			,@RequestParam(value = "keyword", defaultValue = "")  String keyword
+			,HttpServletRequest req
+			,Model model) throws Exception{
+		
+		int rows = 5;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		
+		return ".four.mypage.wanote.main";
 	}
 	
 	@RequestMapping(value = "/mypage/update", method = RequestMethod.GET)
@@ -137,28 +145,31 @@ public class MyPageController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/mypage/wanote/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/mypage/wanote/created", method = RequestMethod.GET)
 	public String wanoteCreatedForm(Model model) {
 		
 		model.addAttribute("mode", "created");
 		
-		return "mypage/wanote/create";
+		return "mypage/wanote/created";
 	}
 	
-	@RequestMapping(value = "/mypage/wanote/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/mypage/wanote/created", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> wanoteCreatedSubmit(
-			WanoteDTO dto
+			Wanote dto
 			,Model model
 			,HttpSession session) throws Exception {
 
 		Map<String, Object> map = new HashMap<>();
-		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "notice";		
-		System.out.println(dto.getContent());
+		
+		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		dto.setUserId(info.getUserId());
 		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "wanote";		
+		
+		mypageService.insertWanote(dto, pathname);
 		
 		return map;
 	}

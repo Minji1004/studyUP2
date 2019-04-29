@@ -28,10 +28,10 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="javascript:mypageMain();"><i class="fa fa-link"></i> <span>마이페이지</span></a></li>
-        <li><a href="javascript:mypageWanote();"><i class="fa fa-link"></i> <span>WRONG PROBLEM NOTE</span></a></li>
-		<li><a href="javascript:mypageSchedule();"><i class="fa fa-link"></i> <span>SCHEDULE</span></a></li>
-		<li><a href="javascript:mypageBasket();"><i class="fa fa-link"></i> <span>SHOPPING BASKET</span></a></li>
+        <li><a href="javascript:location.href='<%=cp %>/mypage/main'"><i class="fa fa-link"></i> <span>마이페이지</span></a></li>
+        <li><a href="javascript:location.href='<%=cp %>/mypage/wanote/main'"><i class="fa fa-link"></i> <span>WRONG PROBLEM NOTE</span></a></li>
+		<li><a href="javascript:location.href='<%=cp %>/mypage/schedule/main'"><i class="fa fa-link"></i> <span>SCHEDULE</span></a></li>
+		<li><a href="javascript:location.href='<%=cp %>/mypage/basket/main'"><i class="fa fa-link"></i> <span>SHOPPING BASKET</span></a></li>
 
        <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>RESERVATION</span>
@@ -40,8 +40,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="javascript:mypageStudy();">STUDY</a></li>
-            <li><a href="javascript:mypageStudyroom();">STUDYROOM</a></li>
+            <li><a href="javascript:location.href='<%=cp %>/mypage/study/main'">STUDY</a></li>
+            <li><a href="javascript:location.href='<%=cp %>/mypage/studyroom/main'">STUDYROOM</a></li>
           </ul>
   		</li>
       </ul>

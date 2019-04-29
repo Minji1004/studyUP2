@@ -4,23 +4,22 @@ public class WanoteFileDTO {
 	private int waNum;
 	private String originalFilename;
 	private String saveFilename;
-	
-	protected int getWaNum() {
+	public int getWaNum() {
 		return waNum;
 	}
-	protected void setWaNum(int waNum) {
+	public void setWaNum(int waNum) {
 		this.waNum = waNum;
 	}
-	protected String getOriginalFilename() {
+	public String getOriginalFilename() {
 		return originalFilename;
 	}
-	protected void setOriginalFilename(String originalFilename) {
+	public void setOriginalFilename(String originalFilename) {
 		this.originalFilename = originalFilename;
 	}
-	protected String getSaveFilename() {
+	public String getSaveFilename() {
 		return saveFilename;
 	}
-	protected void setSaveFilename(String saveFilename) {
+	public void setSaveFilename(String saveFilename) {
 		this.saveFilename = saveFilename;
 	}
 }

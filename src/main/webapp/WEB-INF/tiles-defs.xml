@@ -86,6 +86,5 @@
 		<put-attribute name="header" value="/WEB-INF/view/layout/header2.jsp" />
     	<put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
 	</definition>
-
-
+	
 </tiles-definitions>

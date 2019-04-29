@@ -11,7 +11,7 @@
 	WHERE userId = #{userId}  
 </update>
 
-<insert id="insertWanote" parameterType="com.sp.mypage.WanoteDTO">
+<insert id="insertWanote" parameterType="com.sp.mypage.Wanote">
 	INSERT INTO wanote(userId, subject, content) VALUES (#{userId},#{subject},#{content})
 </insert>
 <select id="selectMaxWanoteNum" resultType="Integer">

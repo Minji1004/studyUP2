@@ -4,42 +4,53 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class WanoteDTO {
+public class Wanote {
 	private int waNum;
 	private String userId;
 	private String subject;
 	private String content;
 	
 	private List<MultipartFile> upload;
-	protected int getWaNum() {
+
+	public int getWaNum() {
 		return waNum;
 	}
-	protected void setWaNum(int waNum) {
+
+	public void setWaNum(int waNum) {
 		this.waNum = waNum;
 	}
-	protected String getUserId() {
+
+	public String getUserId() {
 		return userId;
 	}
-	protected void setUserId(String userId) {
+
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	protected String getSubject() {
+
+	public String getSubject() {
 		return subject;
 	}
-	protected void setSubject(String subject) {
+
+	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	protected String getContent() {
+
+	public String getContent() {
 		return content;
 	}
-	protected void setContent(String content) {
+
+	public void setContent(String content) {
 		this.content = content;
 	}
-	protected List<MultipartFile> getUpload() {
+
+	public List<MultipartFile> getUpload() {
 		return upload;
 	}
-	protected void setUpload(List<MultipartFile> upload) {
+
+	public void setUpload(List<MultipartFile> upload) {
 		this.upload = upload;
 	}
 	
+		
 }
