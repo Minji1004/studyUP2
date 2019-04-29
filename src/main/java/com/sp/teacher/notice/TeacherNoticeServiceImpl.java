@@ -143,5 +143,67 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 		
 		return listFile;
 	}
-	
+
+	@Override
+	public TeacherNotice preReadTNotice(Map<String, Object> map) throws Exception {
+		
+		TeacherNotice teacherNotice = null;
+		try {
+			teacherNotice = dao.selectOne("tnotice.preReadTNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return teacherNotice;
+	}
+
+	@Override
+	public TeacherNotice nextReadTNotice(Map<String, Object> map) throws Exception {
+		TeacherNotice teacherNotice = null;
+		try {
+			teacherNotice = dao.selectOne("tnotice.nextReadTNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return teacherNotice;
+	}
+
+	@Override
+	public int checkUserLikeNum(Map<String, Object> map) throws Exception {
+		int result = 0;
+		try {
+			result = dao.selectOne("tnotice.checkUserLikeNum", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int likeNumCount(int tnoticeNum) throws Exception {
+		int result = 0;
+		try {
+			result = dao.selectOne("tnotice.likeNumCount", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int updateLikeNum(Map<String, Object> map) throws Exception {
+		
+		try {
+			
+			try {
+				dao.deleteData("tnotice.insertUserLikeNum", map);
+			} catch (Exception e) {
+				dao.deleteData("tnotice.deleteUserLikeNum", map);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}	
 }

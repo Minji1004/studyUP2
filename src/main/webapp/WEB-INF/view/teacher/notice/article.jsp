@@ -20,6 +20,50 @@
     };
   }  
   
+  $(function(){
+  		showLikeNum();
+  });
+  
+  function showLikeNum(){
+	  var url = "<%=cp%>/teacher/notice/readLikeNum";		
+		$.ajax({
+			type:"get",
+			url: url,
+			dataType: "JSON",
+			data: {
+				tnoticeNum : ${dto.tnoticeNum}
+			},
+			success: function(data){
+				$("#likeNum").html(data.count);
+				if(data.state=="true"){
+					$("#likeNum").next().css('color','#dd4b39');
+				}else{
+					$("#likeNum").next().css('color','');
+				}
+			},			
+			error: function(e){
+				console.log(e.responseText);
+			}
+		});	
+  }
+  
+  function updateLike(){
+	  var url = "<%=cp%>/teacher/notice/updateLikeNum";
+	  $.ajax({
+			type:"post",
+			url: url,
+			dataType: "JSON",
+			data: {
+				tnoticeNum : ${dto.tnoticeNum}
+			},
+			success: function(data){
+				showLikeNum();
+			},			
+			error: function(e){
+				console.log(e.responseText);
+			}
+		});	
+  }
   
 </script>
 
@@ -54,18 +98,19 @@
 		                     </tr>
 		                     <tr>
 		                     	<td colspan="2" style="text-align: center; border: none;">
-		                     		<a class="btn btn-app" style="background: white;">
-						                <span class="badge bg-red">531</span>
-						                <i class="fa fa-heart-o" style="color: #dd4b39;"></i> Likes
+		                     		<a class="btn btn-app" style="background: white;" onclick="updateLike();">
+						                <span id="likeNum" class="badge bg-red"></span>
+						                <i class="fa fa-heart-o"></i> Likes
 					              	</a> 
 		                     	</td>
 		                     </tr>
 		                     <c:if test="${not empty listFile}">
 			                     <tr>
 			                         <td colspan="2">	                         
-			                              <p><b style="font-size: 15px;">첨부파일 <span style="color: #dd4b39;">${fn:length(listFile)}</span>개</b>&nbsp;&nbsp;(2MB)&nbsp;&nbsp;<a href="#">모두 저장</a></p>
+			                              <p><b style="font-size: 15px;">첨부파일 <span style="color: #dd4b39;">${fn:length(listFile)}</span>개</b>
+			                              &nbsp;(<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${dto.totalFileSize/1024000}"/> MB)&nbsp;&nbsp;<a href="#">모두 저장</a></p>
 			                         <c:forEach var="file" items="${listFile}">
-			                              <div style="border: 1px solid #ddd;padding: 3px 5px;width: 500px;">
+			                              <div style="border: 1px solid #ddd; padding: 3px 5px;width: 500px;">
 			                              <a href="#"><i class="fa fa-download"></i></a> 
 			                              ${file.originalFilename} (<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${file.fileSize/1024000}"/> MB)
 			                              </div>
@@ -74,10 +119,10 @@
 			                     </tr> 
 		                     </c:if>
 		                     <tr>
-		                     	<td colspan="2">이전글: </td>		               
+		                     	<td colspan="2">이전글: <a href="<%=cp%>/teacher/notice/article?tnum=${teacher.userNum}&left=${left}&tnoticeNum=${preReadDto.tnoticeNum}">${preReadDto.subject}</a></td>		               
 		                     </tr>     
 		                     <tr style="border-bottom: #d5d5d5 solid 1px;">
-		                     	<td colspan="2">다음글: </td>		               
+		                     	<td colspan="2">다음글: <a href="<%=cp%>/teacher/notice/article?tnum=${teacher.userNum}&left=${left}&tnoticeNum=${nextReadDto.tnoticeNum}">${nextReadDto.subject}</a></td>		               
 		                     </tr>                               
 		                </tbody>
 		                <tfoot>

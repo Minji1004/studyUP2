@@ -14,4 +14,13 @@ public interface TeacherNoticeService {
 	public TeacherNotice readTeacherNotice(int tnoticeNum) throws Exception;
 	public void updateHitCount(int tnoticeNum) throws Exception;
 	public List<TeacherNotice> listFile(int tnoticeNum) throws Exception;
+	
+	//이전 다음 파일 가져오기
+	public TeacherNotice preReadTNotice(Map<String, Object> map) throws Exception;
+	public TeacherNotice nextReadTNotice(Map<String, Object> map) throws Exception;
+	
+	//Like 읽기
+	public int checkUserLikeNum(Map<String, Object> map) throws Exception;
+	public int likeNumCount(int tnoticeNum) throws Exception;
+	public int updateLikeNum(Map<String, Object> map) throws Exception;
 }

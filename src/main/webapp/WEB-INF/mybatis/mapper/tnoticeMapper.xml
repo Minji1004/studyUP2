@@ -62,7 +62,10 @@
 </select>
 
 <select id="readTeacherNotice" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
-	select tnoticeNum, subject, hitCount, created, content from tnotice where tnoticeNum = #{tnoticeNum}
+	SELECT t.tnoticeNum, subject, hitCount, created, content, sum(fileSize) totalFileSize from tnotice t
+		LEFT OUTER JOIN tnotice_file f
+		ON t.tnoticeNum = f.tnoticeNum
+		where t.tnoticeNum = #{tnoticeNum}
 </select>
 
 <update id="updateHitCount" parameterType="Integer">
@@ -72,4 +75,45 @@
 <select id="selectListFile" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
 	select filenum AS fileNum, originalFilename, saveFilename, fileSize FROM tnotice_file where tnoticeNum = #{tnoticeNum}
 </select>
+
+<select id="preReadTNotice" parameterType="map" resultType="com.sp.teacher.notice.TeacherNotice">
+	SELECT tnoticeNum, subject FROM tnotice
+	<where>
+		<if test="keyword !=null and keyword !='' ">
+			<include refid="where-list"/>
+		</if>
+		AND (tnoticeNum &gt; #{tnoticeNum})
+	</where>
+	ORDER BY tnoticeNum ASC
+	LIMIT 1
+</select>	
+
+<select id="nextReadTNotice" parameterType="map" resultType="com.sp.teacher.notice.TeacherNotice">
+	SELECT tnoticeNum, subject FROM tnotice 
+	<where>
+		<if test="keyword !=null and keyword !='' ">
+			<include refid="where-list"/>
+		</if>
+		AND (tnoticeNum &lt; #{tnoticeNum})
+	</where>
+	ORDER BY tnoticeNum DESC
+	LIMIT 1
+</select>	
+
+<!-- 좋아요 -->
+<select id="checkUserLikeNum" parameterType="map" resultType="Integer">
+	SELECT IFNULL(COUNT(*),0) FROM tnotice_like WHERE userId = #{userId} AND tnoticeNum= #{tnoticeNum}
+</select>
+
+<select id="likeNumCount" parameterType="Integer" resultType="Integer">
+	SELECT IFNULL(COUNT(*),0) FROM tnotice_like WHERE tnoticeNum= #{tnoticeNum}
+</select>
+
+<insert id="insertUserLikeNum" parameterType="map">
+	INSERT INTO tnotice_like VALUES(#{tnoticeNum}, #{userId})
+</insert>
+
+<delete id="deleteUserLikeNum" parameterType="map">
+	DELETE FROM tnotice_like WHERE userId = #{userId} AND tnoticeNum= #{tnoticeNum}
+</delete>
 </mapper>

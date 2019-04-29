@@ -3,6 +3,8 @@ package com.sp.teacher.notice;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +18,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
+import com.sp.customer.notice.Notice;
 import com.sp.member.SessionInfo;
+import com.sp.teacher.Comment;
 import com.sp.teacher.Teacher;
 import com.sp.teacher.TeacherService;
 import com.sp.teacher.TeacherUtil;
@@ -43,7 +48,7 @@ public class TeacherNoticeController {
 	FileManager fileManager;
 	
 	@RequestMapping(value ="/teacher/notice/list", method=RequestMethod.GET)
-	public String teacherLecture(@RequestParam int tnum,
+	public String teacherNoticeList(@RequestParam int tnum,
 			@RequestParam int left, 
 			@RequestParam(defaultValue="1", value="page") int current_page,
 			@RequestParam(defaultValue="") String keyword,
@@ -84,10 +89,20 @@ public class TeacherNoticeController {
 		
 		List<TeacherNotice> list = teacherNoticeService.listTNotice(map);		
 		
+		Date endDate=new Date();
+		long gap;
 		int listNum, n=0;
 		for(TeacherNotice dto:list) {
 			listNum=dataCount-(start+n);
-			dto.setListNum(listNum);			
+			dto.setListNum(listNum);	
+			
+			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date beginDate=formatter.parse(dto.getCreated());
+			gap=(endDate.getTime()-beginDate.getTime())/(60*60*1000);
+			dto.setGap(gap);
+			
+			dto.setCreated(dto.getCreated().substring(0, 10));
+			
 			n++;
 		}
 		
@@ -187,11 +202,28 @@ public class TeacherNoticeController {
 					"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
+		//이전, 다음 공지사항 가져오기
+		keyword=URLDecoder.decode(keyword, "utf-8");
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("tnoticeNum", tnoticeNum);
+		
+		
+		TeacherNotice preReadDto = teacherNoticeService.preReadTNotice(map);
+		TeacherNotice nextReadDto = teacherNoticeService.nextReadTNotice(map);
+		
+		
 		model.addAttribute("teacher", teacher);
 		model.addAttribute("left", left);		
 		model.addAttribute("query", query);
 		model.addAttribute("dto", teacherNotice);
 		model.addAttribute("listFile", listFile);
+		model.addAttribute("tnum", tnum);
+		
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
 		
 		return ".teacher.notice.article";
 	}
@@ -229,4 +261,52 @@ public class TeacherNoticeController {
 		}
 	}
 	*/
+	
+	
+	@RequestMapping(value="/teacher/notice/readLikeNum" , method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> readLikeNum(@RequestParam int tnoticeNum, HttpSession session) throws Exception{
+
+		Map<String, Object> model = new HashMap<>();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String userId = info.getUserId();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("tnoticeNum", tnoticeNum);
+		map.put("userId", userId);
+		
+		int result = teacherNoticeService.checkUserLikeNum(map);
+		
+		if(result==1)
+			model.put("state", "true");
+		else
+			model.put("state", "false");
+		
+		int count = teacherNoticeService.likeNumCount(tnoticeNum);
+		
+		model.put("count", count);		
+		
+		return model;
+	}
+
+	@RequestMapping(value="/teacher/notice/updateLikeNum" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateLikeNum(@RequestParam int tnoticeNum, HttpSession session) throws Exception{
+
+		Map<String, Object> model = new HashMap<>();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String userId = info.getUserId();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("tnoticeNum", tnoticeNum);
+		map.put("userId", userId);
+		
+		teacherNoticeService.updateLikeNum(map);
+		
+		return model;
+	}
+	
+	
 }

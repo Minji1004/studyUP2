@@ -15,6 +15,7 @@ public class TeacherNotice {
 	private int fileNum;
 	private String originalFilename, saveFilename;
 	private long fileSize;
+	private long totalFileSize;
 	
 	//스프링에서 파일 받기
 	private List<MultipartFile> upload;
@@ -105,8 +106,13 @@ public class TeacherNotice {
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
 	}
-
-
+	public long getTotalFileSize() {
+		return totalFileSize;
+	}
+	public void setTotalFileSize(long totalFileSize) {
+		this.totalFileSize = totalFileSize;
+	}
+	
 	
 	
 }
