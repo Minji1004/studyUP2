@@ -15,7 +15,7 @@
        INSTR(content, #{keyword}) &gt; 0
     </if>
     <if test="condition=='created' ">
-       DATE_FORMAT(n.created, '%Y-%m-%d') = #{keyword}
+       DATE_FORMAT(created, '%Y-%m-%d') = #{keyword}
     </if>
 </sql>
 
@@ -58,5 +58,17 @@
 <select id="listNoticeTop" resultType="com.sp.teacher.notice.TeacherNotice">
 	select tnoticeNum, subject, hitCount, created from tnotice where noticeweather = 1
 	ORDER BY tnoticeNum DESC
+</select>
+
+<select id="readTeacherNotice" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
+	select tnoticeNum, subject, hitCount, created, content from tnotice where tnoticeNum = #{tnoticeNum}
+</select>
+
+<update id="updateHitCount" parameterType="Integer">
+	update tnotice SET hitCount = hitCount+1 WHERE tnoticeNum = #{tnoticeNum}
+</update>
+
+<select id="selectListFile" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
+	select filenum AS fileNum, originalFilename, saveFilename, fileSize FROM tnotice_file where tnoticeNum = #{tnoticeNum}
 </select>
 </mapper>

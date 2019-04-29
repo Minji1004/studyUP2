@@ -103,5 +103,45 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 		
 		return list;
 	}
+
+	@Override
+	public TeacherNotice readTeacherNotice(int tnoticeNum) throws Exception {
+		
+		TeacherNotice teacherNotice = null;
+		
+		try {
+			teacherNotice = dao.selectOne("tnotice.readTeacherNotice", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return teacherNotice;
+	}
+
+	@Override
+	public void updateHitCount(int tnoticeNum) throws Exception {
+		
+		try {
+			dao.updateData("tnotice.updateHitCount", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public List<TeacherNotice> listFile(int tnoticeNum) throws Exception {
+		
+		List<TeacherNotice> listFile = null;
+		
+		try {
+			listFile = dao.selectList("tnotice.selectListFile", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listFile;
+	}
 	
 }

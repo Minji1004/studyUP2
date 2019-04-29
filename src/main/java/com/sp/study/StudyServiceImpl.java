@@ -72,6 +72,7 @@ public class StudyServiceImpl implements StudyService{
 			
 			for(Study s : list) {
 				s.setCourseLists(listStudyCourse(s.getStudyNum()));
+				s.setApplyCount(headCount(s.getStudyNum()));
 			}
 			
 		} catch (Exception e) {
@@ -152,8 +153,7 @@ public class StudyServiceImpl implements StudyService{
 	}
 
 	@Override
-	public List<StudyCourse> listStudyCourse(int studyNum) {
-		
+	public List<StudyCourse> listStudyCourse(int studyNum) {		
 		// 스터디의 과목 리스트
 		List<StudyCourse> list = null;
 		
@@ -164,6 +164,19 @@ public class StudyServiceImpl implements StudyService{
 		}
 		
 		return list;
+	}
+
+	@Override
+	public int headCount(int studyNum) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("study.headCount", studyNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 

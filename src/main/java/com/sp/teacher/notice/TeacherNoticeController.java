@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 import com.sp.teacher.Teacher;
@@ -37,6 +38,9 @@ public class TeacherNoticeController {
 	
 	@Autowired
 	TeacherUtil teacherUtil;
+	
+	@Autowired
+	FileManager fileManager;
 	
 	@RequestMapping(value ="/teacher/notice/list", method=RequestMethod.GET)
 	public String teacherLecture(@RequestParam int tnum,
@@ -88,18 +92,17 @@ public class TeacherNoticeController {
 		}
 		
 		String cp=req.getContextPath();
-		String query="";
+		String query="tnum="+tnum+"&left="+left;
 		String listUrl=cp+"/teacher/notice/list";
-		String articleUrl=cp+"/teacher/notice/article?page="+current_page;
+		String articleUrl=cp+"/teacher/notice/article?"+"&page="+current_page;
 		if(keyword.length()!=0) {
-			query="condition="+condition+
+			query+="&condition="+condition+
 					"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
-		if(query.length()!=0) {
-			listUrl+="?"+query;
-			articleUrl+="&"+query;
-		}
+		listUrl+="?"+query;
+		articleUrl+="&"+query;
+
 		
 		String paging= teacherUtil.paging(current_page, total_page, listUrl);
 		
@@ -153,4 +156,77 @@ public class TeacherNoticeController {
 		return "redirect:/teacher/notice/list?tnum="+tnum+"&left=2";
 	}
 
+	@RequestMapping(value ="/teacher/notice/article", method=RequestMethod.GET)
+	public String readArticle(@RequestParam int tnum, 
+			@RequestParam int left, 
+			@RequestParam int tnoticeNum, 
+			@RequestParam(defaultValue="1", value="page") int current_page,
+			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="all") String condition,
+			Model model) throws Exception{
+		
+		Teacher teacher = teacherService.readTeacher(tnum);
+		
+		//조회수 증가
+		try {
+			teacherNoticeService.updateHitCount(tnoticeNum);
+		}catch(Exception e){
+			return "redirect:/teacher/notice/list?tnum="+tnum+"&left=2";
+		}
+		
+		//선생님 정보 가져오기
+		TeacherNotice teacherNotice = teacherNoticeService.readTeacherNotice(tnoticeNum);		
+		
+		//파일 리스트 가져오기
+		List<TeacherNotice> listFile= teacherNoticeService.listFile(tnoticeNum);
+		
+		String query="tnum="+tnum+"&left="+left;
+		
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+
+					"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		model.addAttribute("teacher", teacher);
+		model.addAttribute("left", left);		
+		model.addAttribute("query", query);
+		model.addAttribute("dto", teacherNotice);
+		model.addAttribute("listFile", listFile);
+		
+		return ".teacher.notice.article";
+	}
+	
+	
+	
+	
+	/*
+	@RequestMapping(value="/teacher/notice/download")
+	public void download(
+			@RequestParam int fileNum,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "tnotice";
+
+		boolean b = false;
+		
+		Notice dto = service.readFile(fileNum);
+		if(dto!=null) {
+			String saveFilename = dto.getSaveFilename();
+			String originalFilename = dto.getOriginalFilename();
+			
+			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
+		}
+		
+		if (!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
+	}
+	*/
 }

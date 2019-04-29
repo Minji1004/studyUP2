@@ -6,149 +6,8 @@
    String cp = request.getContextPath();
 %>
 
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
-
 <script type="text/javascript">
-var pageNo = 1;
-var condition = "all";
-var keyword = "";
-$(function(){
-	listPage(1);
-});
- 
-function searchList(){
-	//검색
-	condition = $("#condition").val();
-	keyword = $("#keyword").val();
-	
-	listPage(1);
-}
-function ajaxHTML(url, type, query, id){
-	$.ajax({
-		type : type,
-		url : url,
-		data : query,
-		success:function(data){
-			$("#" + id).html(data);
-		},
-		beforeSend:function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR){
-			if(jqXHR.status == 403){
-				location.href = "<%=cp%>/member/login";
-				return;
-			}
-			console.log(jqXHR.responseText);
-		}
-	});	
-}
-
-function ajaxJSON(url, type, query, mode){
-	$.ajax({
-		type : type
-		,url : url
-		,data : query
-		,dataType : "JSON"
-		,success:function(data){
-			if(mode=="delete"){
-				if(data.state == "false"){
-					alert("삭제 권한이 없습니다.");
-				}else{
-					listPage(pageNo);	
-				}
-				
-			}
-		},
-		beforeSend:function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR){
-			if(jqXHR.status == 403){
-				location.href = "<%=cp%>/member/login";
-				return;
-			}
-			console.log(jqXHR.responseText);
-		}
-	});	
-}
-
-function ajaxFileJSON(url, query, mode){
-	//파일 업로드를 위한 ajax() 함수 
-	$.ajax({
-		type : "POST"
-		,url : url
-		,processData : false		//file 전송 시 필수!!(데이터를 쿼리 문자열로 변환 여부)
-		,contentType : false		//file 전송 시 필수!!(인코딩 형식 사용 여부)
-		,data : query
-		,dataType : "JSON"
-		,success:function(data){
-			alert(mode);
-			// listPage(1);
-		},
-		beforeSend:function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR){
-			
-			if(jqXHR.status == 403){
-				location.href = "<%=cp%>/member/login";
-				return;
-			}
-			console.log(jqXHR.responseText);
-		}
-	});	
-}
-function ajaxMypageMain(mode){
-	var uid="${sessionScope.member.userId}";
-	var url = "";
-	if(!uid){
-		var url = "<%=cp%>/member/login";
-		location.href = url;
-	}
-	
-	if(mode == "mypage"){
-		url = "<%=cp%>/mypage/mypage";
-		alert(url);
-	}else{
-		url = "<%=cp%>/mypage/" + mode + "/main";
-	}
-	
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-			$("#myPageMain").html(data);
-		}
-		,beforeSend:function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR){
-			if(jqXHR.status == 403){
-				location.href = "<%=cp%>/member/login";
-				return;
-			}
-			console.log(jqXHR.responseText);
-		}
-	});
-}
-//---------------------------------------------------------
-
-//마이페이지 > 내 정보
-function mypageMain(){ajaxMypageMain("mypage");}
-//마이페이지 > 오답노트 > 리스트
-function mypageWanote(){ajaxMypageMain("wanote");}
-//마이페이지 > 일정 > 리스트	
-function mypageSchedule(){ajaxMypageMain("schedule");}
-//마이페이지 > 장바구니 > 리스트
-function mypageBasket(){ajaxMypageMain("basket");}
-//마이페이지 > 예약 > 스터디 > 리스트	
-function mypageStudy(){ajaxMypageMain("reservation/study");}
-//마이페이지 > 예약 > 스터디룸 > 리스트	
-function mypageStudyroom(){ajaxMypageMain("/reservation/studyroom");}	
-	
-
-
+//마이페이지 수정 폼으로 
 function mypageUpdate(){
 	var url = "<%=cp%>/mypage/update";
 	var query  = "userId=${sessionScope.member.userId}";
@@ -204,9 +63,7 @@ function updateMyprofile(){
 	
 	var url = "<%=cp%>/mypage/update";
 	var query = new FormData(f);
-	ajaxFileJSON(url, query, "aaaa");
-	
-	/*
+	console.log(query);
 		$.ajax({
 			type : "POST"
 			,url : url
@@ -216,7 +73,8 @@ function updateMyprofile(){
 			,dataType : "JSON"
 			,success:function(data){			
 				if(data.state == "true"){
-					mypageMain();
+					var url = "<%=cp%>/mypage/main";
+					location.href = url;
 				}
 			},
 			beforeSend:function(jqXHR){
@@ -229,74 +87,41 @@ function updateMyprofile(){
 				}
 				console.log(jqXHR.responseText);
 			}
-		});
-   */	
-}
-
-//-------------------------------------
-function sendwanote(mode){
-	var f = document.wanoteCreateForm;
-	
-	if(!f.subject.value){
-		alert("제목을 입력하세요.");
-		return;
-	}
-	if(!f.content.value){
-		alert("내용을 입력하세요");
-		return;
-	}
-	var url = "<%=cp%>/mypage/wanote/create";
-	var query = new FormData(f);
-	
-	$.ajax({
-		type : "POST"
-		,url : url
-		,processData : false		
-		,contentType : false		
-		,data : query
-		,dataType : "JSON"
-		,success:function(data){			
-			//create 성공 후 
-			//오류 리스트로 가야한다.
-			//오류 리스트로 
-			mypageWanote();
-		},
-		beforeSend:function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR){
-			if(jqXHR.status == 403){
-				location.href = "<%=cp%>/member/login";
-				return;
-			}
-			console.log(jqXHR.responseText);
-		}
-	});	
-}
-function reloadWanote(){
-	//새로고침
-	condition = "all";
-	keyword = "";
-	
-	listPage(1);
-}
-//오답노트 올리기 폼
-function insertWanote(){
-	var url = "<%=cp%>/mypage/wanote/create";
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-		
-			$("#myPageMain").html(data);
-		}
-		,error : function(e){
-			console.log(e);
-		}
 	});
 }
 </script>
 
-
-
-<div id="myPageMain"></div>
+<div id="myPageMain">
+	<table
+		style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+	
+		<tr height="100">
+			<td colspan="2" align="left" style="padding-left: 5px;"><c:if
+					test="${not empty dto.picture }">
+					<img width="300px" height="300px" alt=""
+						src="<%=cp%>/uploads/member_profile/${dto.picture}">
+				</c:if></td>
+		</tr>
+	
+		<tr height="20">
+			<td colspan="2" align="left">아이디 : ${dto.userId }</td>
+		</tr>
+	
+		<tr>
+			<td colspan="2" align="left" style="padding: 10px 5px;" valign="top"
+				height="50">닉네임 : ${dto.nickname }</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="left" style="padding: 10px 5px;" valign="top"
+				height="50">전화 번호 : ${dto.tel }</td>
+		</tr>
+	
+	</table>
+	
+	<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
+		<tr height="45">
+			<td width="300" align="left">
+				<button type="button" class="btn" onclick="mypageUpdate();">수정</button>
+		</tr>
+	</table>
+</div>

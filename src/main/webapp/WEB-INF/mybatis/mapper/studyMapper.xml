@@ -63,7 +63,11 @@
 		ON c.categoryNum = ca.categoryNum
 		
 		<where>
-			lectureNum IS null
+			lectureNum IS null		
+			
+			<if test="userId != null and userId != ''">
+				AND userId = #{userId}
+			</if>
 			
 			<if test="mode != 'allStudy'">
 				AND categoryName = #{categoryName}
@@ -90,6 +94,11 @@
 		
 		<where>
 			lectureNum IS null
+			
+			<if test="userId != null and userId != ''">
+				AND userId = #{userId}
+			</if>
+			
 			<if test="mode != 'allStudy'">
 				AND categoryName = #{categoryName}
 			</if>
@@ -138,9 +147,16 @@
 	</update>
 	
 	<!-- 스터디 삭제 -->
-	<delete id="deleteStudy">
+	<delete id="deleteStudy" parameterType="Integer">
 		delete from study where studyNum = #{studyNum}
 	</delete>
+	
+	
+	<!-- 스터디 인원 (승인 : 2) -->
+	<select id="headCount" parameterType="Integer" resultType="Integer">
+		SELECT IFNULL(count(DISTINCT userId), 0) 
+		FROM applystudy WHERE studyNum = #{studyNum} AND approval = 2;
+	</select>
 	
 	
 	

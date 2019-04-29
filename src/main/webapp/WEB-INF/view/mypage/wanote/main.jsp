@@ -6,7 +6,68 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+var page = 1;
+var keyword = "";
+var condition = "all";
 
+function sendWanote(mode){
+	var f = document.wanoteCreateForm;
+	
+	if(!f.subject.value){
+		alert("제목을 입력하세요.");
+		return;
+	}
+	if(!f.content.value){
+		alert("내용을 입력하세요");
+		return;
+	}
+	var url = "<%=cp%>/mypage/wanote/created";
+	var query = new FormData(f);
+	
+	console.log(query);
+	$.ajax({
+		type : "POST"
+		,url  : url
+		,processData : false		
+		,contentType : false		
+		,data : query
+		,dataType : "JSON"
+		,success:function(data){			
+			
+		},
+		beforeSend:function(jqXHR){
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR){
+			if(jqXHR.status == 403){
+				location.href = "<%=cp%>/member/login";
+				return;
+			}
+			console.log(jqXHR.responseText);
+		}
+	});	
+}
+
+//오답노트 올리기 폼
+function insertWanote(){
+	var url = "<%=cp%>/mypage/wanote/created";
+	
+	$.ajax({
+		type : "GET"
+		,url : url
+		,data : query
+		,success : function(data){
+			$("#wanoteMain").html(data);
+		}
+		,error : function(e){
+			console.log(e);
+		}
+	});
+}
+</script>
+
+<div id="wanoteMain">
 	<table style="width: 80%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">
 		      <td align="left" width="50%">
@@ -34,7 +95,7 @@
 		      <td>${dto.created }</td>
 		   
 		  </tr>
-		 </c:forEach>
+		</c:forEach>
 
 		</table>
 		 
@@ -69,7 +130,7 @@
 		      </td>
 		   </tr>
 		</table>
-
+</div>
 
 
    

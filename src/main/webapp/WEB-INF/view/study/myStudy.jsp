@@ -94,31 +94,6 @@ $(function(){
 	});
 });
 
-$(function() {
-	// apply for study - 스터디 가입신청
-	$(document).on("click", "#studyApply", function() {
-		var num=$(this).attr("data-studyNum");
-		var url = "<%=cp%>/study/applyStudy?studyNum="+num;
-		
-		$('#myStudyApply .modal-content').load(url, function() {
-			// $('#myStudyModal .modal-title').html(studyTitle);
-			$('#myStudyApply').modal('show');
-		});
-				
-	});
-});
-
-$(function(){
-	// 스터디 만들기
-	$(document).on("click",".makeStudy", function(){
-		
-		var url = "<%=cp%>/study/makeStudy";
-		
-		$('#myStudyInput .modal-content').load(url, function() {
-			$('#myStudyInput').modal('show');
-		});
-	});
-});
 
 
 $(function() {
@@ -142,9 +117,7 @@ $(function() {
 
 <div  style="width:66%; height: 100%; margin-left:17%;">
 	<div class="studyBody" style="margin: 10px;">
-
-		  	<button type="button" class="btn makeStudy" style="background: #04B486; float: right;">make 스터디</button>
-               
+  
 			<div role="tabpanel">
 		
 			  <!-- Nav tabs -->
@@ -172,6 +145,7 @@ $(function() {
 	<input type="hidden" name="condition" value="all">
 	<input type="hidden" name="keyword">
 	<input type="hidden" name="mode">
+	<input type="hidden" name="userId" value="${sessionScope.member.userId}">
 </form>
 
 
