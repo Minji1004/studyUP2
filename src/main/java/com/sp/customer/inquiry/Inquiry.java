@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Inquiry {
 	private int listNum, inquiryNum;
-	private String userId;
+	private String userId, nickName;
 	private String subject, content;
 	private String created;
 
@@ -16,6 +16,14 @@ public class Inquiry {
 
 	private List<MultipartFile> upload;
 	private long gap;
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 
 	public List<MultipartFile> getUpload() {
 		return upload;

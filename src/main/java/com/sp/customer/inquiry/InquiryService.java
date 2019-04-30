@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface InquiryService {
-	public int insertInquiry(Inquiry dto, String mode);
+	public int insertInquiry(Inquiry dto, String pathname);
 	public int dataCount(Map<String, Object> map);
 	public List<Inquiry> listInquiry(Map<String, Object> map);
 	public List<Inquiry> relationInquiry(int InquiryNum);

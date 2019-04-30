@@ -104,22 +104,22 @@
 		                 <thead>
 		                     <tr>
 		                         <th colspan="2" style="text-align: center;">
-		                                 제목 : {dto.subject}
+		                                 ${dto.subject}
 		                         </th>
 		                     </tr>
 		                <thead>
 		                 <tbody>
 		                     <tr>
 		                         <td style="text-align: left;">
-		                	아이디 : ${dto.userId}
+		                			아이디 : ${dto.nickName}
 		                         </td>
 		                         <td style="text-align: right;">
-		                          ${dto.created} <i></i>
+		                          ${dto.created}
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="height: 230px;">
-		                              {dto.content}
+		                              ${dto.content}
 		                         </td>
 		                     </tr>
 		                     <tr>
@@ -142,7 +142,7 @@
 		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteInquiry">삭제</button>
 		                		</td>
 		                		<td align="right">
-		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/list?${query}';"> 목록으로 </button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list?${query}';"> 목록으로 </button>
 		                		</td>
 		                	</tr>
 		                </tfoot>

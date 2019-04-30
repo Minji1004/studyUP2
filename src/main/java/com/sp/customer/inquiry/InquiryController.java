@@ -3,6 +3,8 @@ package com.sp.customer.inquiry;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 
@@ -27,8 +30,10 @@ public class InquiryController {
 	private InquiryService service;
 	@Autowired
 	private MyUtil myUtil;
+	@Autowired
+	private FileManager fileManager;
 	
-	@RequestMapping(value= {"/customer/inquiry/list"})
+	@RequestMapping(value="/customer/inquiry/list")
 	public String list(			
 		@RequestParam(value="page", defaultValue="1") int current_page,
 		@RequestParam(defaultValue="all") String condition,
@@ -40,7 +45,7 @@ public class InquiryController {
 		int total_page=0;
 		int dataCount=0;
 		
-		if(req.getMethod().equalsIgnoreCase("GET")) {
+		if(req.getMethod().equalsIgnoreCase("GET")){
 			keyword=URLDecoder.decode(keyword, "utf-8");
 		}
 		
@@ -51,6 +56,7 @@ public class InquiryController {
 		dataCount=service.dataCount(map);
 		if(dataCount!=0)
 			total_page=myUtil.pageCount(rows, dataCount);
+		
 		if(total_page<current_page)
 			current_page=total_page;
 		
@@ -61,7 +67,7 @@ public class InquiryController {
 		map.put("rows", rows);
 		
 		List<Inquiry> list=service.listInquiry(map);
-		/*			
+			
 		Date endDate=new Date();
 		long gap;
 		int listNum, n=0;
@@ -72,14 +78,14 @@ public class InquiryController {
 			
 			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date beginDate=formatter.parse(dto.getCreated());
-			gap=(endDate.getTime()-beginDate.getTime()/(60*60*1000));
+			gap=(endDate.getTime()-beginDate.getTime())/(60*60*1000);
 			dto.setGap(gap);
 			
 			dto.setCreated(dto.getCreated().substring(0, 10));
 			
 			n++;
 		}
-	*/	
+	
 		String cp=req.getContextPath();
 		String query="";
 		String listUrl=cp+"/customer/inquiry/list";
@@ -95,6 +101,7 @@ public class InquiryController {
 		
 		String paging=myUtil.paging(current_page, total_page, listUrl);
 		
+
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("articleUrl", articleUrl);
@@ -109,6 +116,7 @@ public class InquiryController {
 		
 		return ".customer.inquiry.list";
 	}
+	
 	@RequestMapping(value="/customer/inquiry/created", method=RequestMethod.GET)
 	public String createdForm(
 			Model model
@@ -174,7 +182,22 @@ public class InquiryController {
 		}
 		List<Inquiry> listFile=service.listFile(inquiryNum);
 		
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);
+		
+		model.addAttribute("subMenu", "2");
 		
 		return ".customer.inquiry.created";
 	}
+	
+	@RequestMapping(value="/customer/inquiry/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			Inquiry dto,
+			@RequestParam String page) throws Exception{
+		
+		return "redirect:/customer/inquiry/list?page="+page;
+	}
+	
 }

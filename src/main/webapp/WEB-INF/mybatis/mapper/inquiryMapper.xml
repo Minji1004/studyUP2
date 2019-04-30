@@ -6,7 +6,7 @@
 		select IFNULL(max(inquiryNum),0) from inquiry
 	</select>
 	
-	<insert id="insertInquery" parameterType="com.sp.customer.inquiry.Inquiry">
+	<insert id="insertInquiry" parameterType="com.sp.customer.inquiry.Inquiry">
 		INSERT INTO inquiry(inquiryNum, userId, subject, content)
 		VALUES (#{inquiryNum}, #{userId}, #{subject}, #{content})
 	</insert>
@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="readInquiry" parameterType="Integer" resultType="com.sp.customer.inquiry.Inquiry">
-		SELECT inquiryNum, i.userId, subject, content, i.created
+		SELECT inquiryNum, i.userId, nickName, subject, content, i.created
 		FROM inquiry i
 		JOIN memberInfo m ON i.userId=m.userId
 		WHERE inquiryNum=#{inquiryNum}
@@ -90,9 +90,8 @@
 	</select>
 	
 	<update id="updateInquiry" parameterType="com.sp.customer.inquiry.Inquiry">
-		UPDATE inquiry SET subject=#{subject}
-			content=#{content}
-			WHERE inquiryNum=#{inquiryNum}
+		UPDATE inquiry SET subject=#{subject}, content=#{content}
+		WHERE inquiryNum=#{inquiryNum}
 	</update>
 	
 	<delete id="deleteInquiry" parameterType="Integer">
@@ -102,7 +101,7 @@
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.sp.customer.inquiry.Inquiry">
 		INSERT INTO inquiryFile(inquiryNum, saveFilename, originalFilename,FileSize)
-		VALUES(#{inquiryNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
+		VALUES (#{inquiryNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
 	</insert>
 	
 	<select id="listFile" parameterType="Integer" resultType="com.sp.customer.inquiry.Inquiry">

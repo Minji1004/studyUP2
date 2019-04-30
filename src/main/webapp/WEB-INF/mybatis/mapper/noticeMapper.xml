@@ -104,9 +104,9 @@
 	</update>
 	
     <update id="updateNotice" parameterType="com.sp.customer.notice.Notice">
-          UPDATE notice SET subject=#{subject},
-               content=#{content}, noticeWhether=#{noticeWhether}
-               WHERE noticeNum=#{noticeNum}
+          UPDATE notice SET subject=#{subject}, 
+          	content=#{content}, noticeWhether=#{noticeWhether}
+          WHERE noticeNum=#{noticeNum}
     </update>
     	
 	<delete id="deleteNotice" parameterType="Integer">
