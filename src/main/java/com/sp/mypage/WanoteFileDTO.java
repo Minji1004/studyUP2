@@ -1,9 +1,17 @@
 package com.sp.mypage;
 
 public class WanoteFileDTO {
+	private int wanoteFileNum;
 	private int waNum;
 	private String originalFilename;
 	private String saveFilename;
+
+	public int getWanoteFileNum() {
+		return wanoteFileNum;
+	}
+	public void setWanoteFileNum(int wanoteFileNum) {
+		this.wanoteFileNum = wanoteFileNum;
+	}
 	public int getWaNum() {
 		return waNum;
 	}

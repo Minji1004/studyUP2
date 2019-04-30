@@ -18,8 +18,7 @@ function mypageUpdate(){
 		,success : function(data){
 			$("#myPageMain").html(data);
 		}
-		,error : function(data){
-			
+		,error : function(data){	
 		}
 	});
 }

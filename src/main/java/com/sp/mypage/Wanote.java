@@ -5,12 +5,31 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Wanote {
+	private int listNum;
 	private int waNum;
 	private String userId;
 	private String subject;
 	private String content;
+	private String created;
 	
 	private List<MultipartFile> upload;
+
+	
+	public String getCreated() {
+		return created;
+	}
+
+	public void setCreated(String created) {
+		this.created = created;
+	}
+
+	public int getListNum() {
+		return listNum;
+	}
+
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
 
 	public int getWaNum() {
 		return waNum;

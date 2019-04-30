@@ -2,6 +2,22 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mypage">
+	<sql id="where-list">
+	    <if test="condition=='all' ">
+	       (INSTR(subject, #{keyword}) &gt; 0
+			    OR INSTR(content, #{keyword}) &gt; 0)
+	    </if>
+	    <if test="condition=='subject' ">
+	       INSTR(subject, #{keyword}) &gt; 0
+	    </if>
+	    <if test="condition=='content' ">
+	       INSTR(content, #{keyword}) &gt; 0
+	    </if>
+	    <if test="condition=='created' ">
+	       DATE_FORMAT(created, '%Y-%m-%d') = #{keyword}
+	    </if>
+	</sql>
+
 
 <update id="updateProfile" parameterType="com.sp.member.Member">
 	UPDATE memberInfo SET nickname = #{nickname}, userPwd = #{userPwd}, tel = #{tel}, updated = (NOW())
@@ -20,5 +36,71 @@
 <insert id="insertWanoteFile" parameterType="com.sp.mypage.WanoteFileDTO">
 	INSERT INTO wanotefile(originalFilename, saveFilename, waNum) VALUES (#{originalFilename}, #{saveFilename}, #{waNum})
 </insert>
+
+<select id= "dataCount" parameterType="map" resultType="Integer">
+	SELECT IFNULL(COUNT(*), 0)
+	     FROM wanote
+	     <where>
+	     	<if test="keyword != null and keyword !='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     </where>
+</select>
+
+<select id="listWanote" parameterType="map" resultType="com.sp.mypage.Wanote">
+	SELECT wanum, userId, subject, content, DATE_FORMAT(created, '%Y-%m-%d') AS created
+	FROM wanote
+	<where>
+	     	<if test="keyword != null and keyword !='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	</where>
+	ORDER BY wanum DESC
+	LIMIT #{start}, #{rows}
+</select>
+
+<select id = "readWanote" parameterType="Integer" resultType="com.sp.mypage.Wanote">
+	SELECT wanum, userId, subject, content, created
+	FROM wanote
+	WHERE wanum = #{waNum}
+</select>
+
+<select id = "readWanoteFile" parameterType="Integer" resultType="com.sp.mypage.WanoteFileDTO">
+	SELECT wanoteFileNum, originalFilename, saveFilename
+	FROM wanoteFile
+	WHERE wanum = #{waNum}
+</select>
+
+<select id = "preReadWanote" parameterType="map" resultType="com.sp.mypage.Wanote">
+	SELECT waNum, subject
+        FROM wanote
+	    <where>
+	     	<if test="keyword != null and keyword !='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     	AND (waNum &gt; #{waNum})
+	    </where>
+        ORDER BY waNum ASC
+        LIMIT 1
+</select>
+
+<select id = "nextReadWanote" parameterType="map" resultType="com.sp.mypage.Wanote">
+	SELECT waNum, subject
+        FROM wanote
+	    <where>
+	     	<if test="keyword != null and keyword !='' ">
+	     	    <include refid="where-list"/>
+	     	</if>
+	     	AND (waNum &lt; #{waNum})
+	    </where>
+        ORDER BY waNum DESC
+        LIMIT 1
+</select>
+
+<select id="readWanoteFileOne" parameterType="Integer" resultType="com.sp.mypage.WanoteFileDTO">
+	SELECT originalFilename, saveFilename
+	FROM wanoteFile
+	WHERE wanoteFileNum = #{wanoteFileNum}
+</select>
 
 </mapper>
