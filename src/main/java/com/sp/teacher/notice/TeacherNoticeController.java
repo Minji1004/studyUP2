@@ -1,6 +1,7 @@
 package com.sp.teacher.notice;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.FileManager;
+import com.sp.common.MyFile;
 import com.sp.common.MyUtil;
-import com.sp.customer.notice.Notice;
 import com.sp.member.SessionInfo;
-import com.sp.teacher.Comment;
 import com.sp.teacher.Teacher;
 import com.sp.teacher.TeacherService;
 import com.sp.teacher.TeacherUtil;
@@ -76,9 +77,12 @@ public class TeacherNoticeController {
 		if(total_page<current_page)
 			current_page=total_page;
 		
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");		
 		List<TeacherNotice> noticeList=null;
 		if(current_page==1) {
 			noticeList=teacherNoticeService.listNoticeTop();
+			for(TeacherNotice dto: noticeList) 
+				dto.setCreated(dto.getCreated().substring(0, 10));
 		}
 		
 		int start=(current_page-1)*rows;
@@ -96,7 +100,6 @@ public class TeacherNoticeController {
 			listNum=dataCount-(start+n);
 			dto.setListNum(listNum);	
 			
-			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date beginDate=formatter.parse(dto.getCreated());
 			gap=(endDate.getTime()-beginDate.getTime())/(60*60*1000);
 			dto.setGap(gap);
@@ -193,7 +196,7 @@ public class TeacherNoticeController {
 		TeacherNotice teacherNotice = teacherNoticeService.readTeacherNotice(tnoticeNum);		
 		
 		//파일 리스트 가져오기
-		List<TeacherNotice> listFile= teacherNoticeService.listFile(tnoticeNum);
+		List<MyFile> listFile= teacherNoticeService.listFile(tnoticeNum);
 		
 		String query="tnum="+tnum+"&left="+left;
 		
@@ -228,11 +231,8 @@ public class TeacherNoticeController {
 		return ".teacher.notice.article";
 	}
 	
-	
-	
-	
-	/*
-	@RequestMapping(value="/teacher/notice/download")
+
+	@RequestMapping(value="/teacher/notice/downloadFile", method=RequestMethod.GET)
 	public void download(
 			@RequestParam int fileNum,
 			HttpServletResponse resp,
@@ -243,7 +243,8 @@ public class TeacherNoticeController {
 
 		boolean b = false;
 		
-		Notice dto = service.readFile(fileNum);
+		TeacherNotice dto = teacherNoticeService.readFile(fileNum);
+		
 		if(dto!=null) {
 			String saveFilename = dto.getSaveFilename();
 			String originalFilename = dto.getOriginalFilename();
@@ -258,9 +259,32 @@ public class TeacherNoticeController {
 				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
 			} catch (Exception e) {
 			}
-		}
+		}		
+		
 	}
-	*/
+	
+
+	@RequestMapping(value="/teacher/notice/downloadZip", method=RequestMethod.GET)
+	public void downloadZip( @RequestParam int tnoticeNum, HttpServletResponse resp, HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "tnotice";
+		
+		boolean b = false;
+		
+		List<MyFile> fileList = teacherNoticeService.listFile(tnoticeNum);
+		
+		b = fileManager.downloadZip(resp, pathname, fileList);
+		if (!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}	
+	}
+
 	
 	
 	@RequestMapping(value="/teacher/notice/readLikeNum" , method=RequestMethod.GET)
@@ -306,6 +330,63 @@ public class TeacherNoticeController {
 		teacherNoticeService.updateLikeNum(map);
 		
 		return model;
+	}
+	
+	@RequestMapping(value="/teacher/notice/readListReply", method=RequestMethod.GET)
+	public String readListReply (@RequestParam int tnoticeNum, Model model) throws Exception{
+
+	/*
+	int rows = 5;
+	int total_page;
+	int dataCount = 0;
+	
+	Map<String, Object> map = new HashMap<>();
+	map.put("num", num);
+	
+	dataCount = boardService.replyCount(map);
+	total_page = myUtil.pageCount(rows, dataCount);
+	if(current_page>total_page)
+		current_page=total_page;
+	
+	int start = (current_page-1)*rows+1;
+	int end = current_page*rows;
+	
+	map.put("start", start);
+	map.put("end", end);
+	
+	List<Reply> listReply = boardService.listReply(map);
+	for(Reply dto: listReply) {
+		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+	}
+	
+	
+	//AJAX용 페이징
+	String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+	
+	//포워딩할 JSP에 넘길 값
+	model.addAttribute("listReply", listReply);
+	model.addAttribute("pageNo", current_page);
+	model.addAttribute("replyCount", dataCount);
+	model.addAttribute("total_page", total_page);
+	model.addAttribute("paging", paging);*/
+	
+	
+	return "teacher/notice/listReply";
+}
+	
+	@RequestMapping(value="/teacher/notice/insertReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReply(@RequestParam int tnoticeNum, HttpSession session) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String userId = info.getUserId();
+		
+		
+		
+		
+		return model;		
 	}
 	
 	

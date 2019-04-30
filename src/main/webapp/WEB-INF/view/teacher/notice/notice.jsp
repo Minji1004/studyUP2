@@ -40,7 +40,7 @@
 			      <td style="text-align:left;"><a href="${articleUrl}&tnoticeNum=${dto.tnoticeNum}">${dto.subject}</a></td>			 
 			      <td>
 			      <c:if test="${dto.fileNum != 0}">
-			      	<a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
+			      	<a href="<%=cp%>/teacher/notice/downloadZip?tnoticeNum=${dto.tnoticeNum}" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
 			      </c:if>
 			      </td>
 			      <td>${dto.created}</td>
@@ -58,7 +58,7 @@
 			      </td>
 			      <td>
 			      <c:if test="${dto.fileNum != 0}">
-			     	 <a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
+			     	 <a href="<%=cp%>/teacher/notice/downloadZip?tnoticeNum=${dto.tnoticeNum}" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
 			      </c:if>
 			      </td>
 			      <td>${dto.created}</td>
@@ -111,6 +111,7 @@
 		   </tr>
 		</table>
 		</div>
+		
 	</div>
 </section>
 

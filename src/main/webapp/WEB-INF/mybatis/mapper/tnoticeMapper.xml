@@ -72,7 +72,7 @@
 	update tnotice SET hitCount = hitCount+1 WHERE tnoticeNum = #{tnoticeNum}
 </update>
 
-<select id="selectListFile" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
+<select id="selectListFile" parameterType="Integer" resultType="com.sp.common.MyFile">
 	select filenum AS fileNum, originalFilename, saveFilename, fileSize FROM tnotice_file where tnoticeNum = #{tnoticeNum}
 </select>
 
@@ -116,4 +116,8 @@
 <delete id="deleteUserLikeNum" parameterType="map">
 	DELETE FROM tnotice_like WHERE userId = #{userId} AND tnoticeNum= #{tnoticeNum}
 </delete>
+
+<select id="readFile" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
+	SELECT filenum AS fileNum, originalFilename, saveFilename, fileSize FROM tnotice_file where filenum = #{fileNum}
+</select>
 </mapper>

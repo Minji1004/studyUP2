@@ -22,6 +22,7 @@
   
   $(function(){
   		showLikeNum();
+  		listReply();
   });
   
   function showLikeNum(){
@@ -65,6 +66,54 @@
 		});	
   }
   
+  function listReply(){
+	  var url="<%=cp%>/teacher/notice/readListReply";
+	
+		$.ajax({
+			type:"get"
+			,url:url
+			,data:{
+				tnoticeNum : ${dto.tnoticeNum}
+			}
+			,success:function(data){
+				$("#listReply").html(data);
+			}
+			,error:function(e) {
+			    console.log(e.responseText);
+			}		 
+		});
+  }
+  
+  function sendReply(){
+		//값 있는 지 체크
+		var content = $("#commentContent").val();
+		
+		if(content == ""){
+			alert("댓글 내용을 입력해주세요.")
+			return;	
+		}
+		
+		var tnoticeNum = '${dto.tnoticeNum}';
+		
+		var url="<%=cp%>/teacher/notice/insertReply";
+		var query="tnoticeNum="+tnoticeNum+"&content="+content;
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){	
+					$("#commentContent").val("");
+					//listPage(1);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); 
+		
+	}
+
 </script>
 
 
@@ -108,10 +157,11 @@
 			                     <tr>
 			                         <td colspan="2">	                         
 			                              <p><b style="font-size: 15px;">첨부파일 <span style="color: #dd4b39;">${fn:length(listFile)}</span>개</b>
-			                              &nbsp;(<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${dto.totalFileSize/1024000}"/> MB)&nbsp;&nbsp;<a href="#">모두 저장</a></p>
+			                              &nbsp;(<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${dto.totalFileSize/1024000}"/> MB)&nbsp;&nbsp;
+			                              <a href="<%=cp%>/teacher/notice/downloadZip?tnoticeNum=${dto.tnoticeNum}">모두 저장</a></p>
 			                         <c:forEach var="file" items="${listFile}">
 			                              <div style="border: 1px solid #ddd; padding: 3px 5px;width: 500px;">
-			                              <a href="#"><i class="fa fa-download"></i></a> 
+			                              <a href="<%=cp%>/teacher/notice/downloadFile?fileNum=${file.fileNum}" ><i class="fa fa-download"></i></a> 
 			                              ${file.originalFilename} (<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${file.fileSize/1024000}"/> MB)
 			                              </div>
 			                         </c:forEach>
@@ -137,6 +187,25 @@
 		                	</tr>
 		                </tfoot>
 		            </table>
-		       </div>
+		            
+		            
+		           <!-- 댓글 -->
+		           <form name="commentForm" method="post" action="" style="margin-top: 30px;">
+						<span style="font-weight: bold;">댓글 쓰기</span><span> - 타인을
+							비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+					<div style="clear: both; padding-top: 10px;">
+						<textarea id="commentContent" class="form-control"
+							style="width: 100%; min-height: 80px; box-sizing: border-box;"
+							required="required"></textarea>
+					</div>
+					<div style="text-align: right; padding-top: 10px;">
+						<button type="button" class="btn btn-default" onclick="sendReply();">등록하기</button>
+						</div>
+				</form>
+		           
+		           <div id="listReply"></div>   
+		         
+		         
+			</div>
 		</div>
 </section>

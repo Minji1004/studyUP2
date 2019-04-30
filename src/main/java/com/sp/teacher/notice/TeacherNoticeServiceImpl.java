@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sp.common.FileManager;
+import com.sp.common.MyFile;
 import com.sp.common.dao.CommonDAO;
 
 @Service("teacher.notice.teacherNoticeService")
@@ -131,9 +132,9 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 	}
 
 	@Override
-	public List<TeacherNotice> listFile(int tnoticeNum) throws Exception {
+	public List<MyFile> listFile(int tnoticeNum) throws Exception {
 		
-		List<TeacherNotice> listFile = null;
+		List<MyFile> listFile = null;
 		
 		try {
 			listFile = dao.selectList("tnotice.selectListFile", tnoticeNum);
@@ -205,5 +206,19 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public TeacherNotice readFile(int fileNum) throws Exception {
+		
+		TeacherNotice result = null;
+		
+		try {
+			result = dao.selectOne("tnotice.readFile", fileNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}	
 }
