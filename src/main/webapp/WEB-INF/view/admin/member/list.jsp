@@ -8,8 +8,7 @@
 <style>
 li{
 	text-align: center;
-	float:left;
-	
+	float:left;	
 }
 .line{
 	align:center; 
@@ -20,7 +19,7 @@ li{
 	padding-top: 7px;
 }
 
-.flist{
+.flist, .mlist{
 	text-align:center; 
 	height:24px; 
 	border-bottom: 1px solid #cccccc;"
@@ -31,7 +30,20 @@ function searchMember(){
 	var f=document.memberSearch;
 	f.submit();
 }
+
+$(function(){
+	$(document).on("click", ".mlist", function(){
+		var num=$(this).attr("data-userNum");
+
+		var url="<%=cp%>/admin/member/article?userNum="+num+"&page=${page}";
+		
+		$('#reportModal, .modal-content').load(url, function(){
+			$('#reportModal').modal('show');
+		});
+	});
+});	
 </script>
+
 <section class="features section">
 	<div class="container" style="height:800px; width:90%; padding-top: 80px;">
         <form method="post" name="memberSearch" action="<%=cp%>/admin/member/list">
@@ -46,7 +58,7 @@ function searchMember(){
 		<div style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <ul style="height:35px;">
 		      <li style="float:left; width:10%;">
-		          ${dataCount }개(${page }/${total_page }페이지)
+		          ${dataCount }개(${page}/${total_page }페이지)
 		      </li>
 		      
 		   </ul>
@@ -59,9 +71,9 @@ function searchMember(){
 		      <li style="color: #787878; width:35%;">닉네임</li>		      
 		      <li style="color: #787878; width:20%;">회원가입일</li>
 		  </ul>
-		 
+
 		<c:forEach var="mdto" items="${mlist}">
-			<ul class="flist" onclick="location.href='${articleUrl }&userNum=${mdto.userNum}'"> 
+			<ul class="mlist" data-userNum="${mdto.userNum}"> 
 		      <li style="width:10%;">${mdto.mlistNum }</li>
 		      <li style="width:35%;">${mdto.userId }</li>
 		      <li style="width:35%;">${mdto.nickname }</li>		      
@@ -80,4 +92,5 @@ function searchMember(){
 		</div>
 		</c:if>
 		</div>
+
 </section>

@@ -50,4 +50,11 @@
 <script src="<%=cp%>/resource/js/main.js"></script>
 
 </body>
+
+<div class="smodal modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1050">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background: #FBFDF8;"></div>
+  </div>
+</div>
+
 </html>

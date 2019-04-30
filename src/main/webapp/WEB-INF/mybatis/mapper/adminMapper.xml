@@ -86,9 +86,12 @@
 	ON A.reportNum = B.reportNum
 	where A.reportNum=#{reportNum}
 	</select>
-
-<!-- member Mapper -->
 	
+	<select id="userCount">
+		SELECT IFNULL(COUNT(*),0) FROM report where reportedUser=#{reportedUser};
+	</select>
+
+<!-- member Mapper -->	
 	<select id="readMember" parameterType="Integer" resultType="com.sp.admin.member.Member">
 		SELECT userNum, userId, nickname, tel,
 		created, lastLogin, picture
@@ -127,4 +130,10 @@
 	<delete id="deleteMember">
 		DELETE from memberInfo where userId=#{userId}
 	</delete>
+	
+<!-- blacklist mapper -->
+	<insert id="insertBlack">
+		
+	</insert>
+
 </mapper>

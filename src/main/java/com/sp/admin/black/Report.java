@@ -16,7 +16,20 @@ public class Report {
 	private int reportType;
 	private String reportTypeName;
 	private String reportDate;
+	private int userCount;
 	
+	public String getReportUserNickName() {
+		return reportUserNickName;
+	}
+	public void setReportUserNickName(String reportUserNickName) {
+		this.reportUserNickName = reportUserNickName;
+	}
+	public int getUserCount() {
+		return userCount;
+	}
+	public void setUserCount(int userCount) {
+		this.userCount = userCount;
+	}
 	public int getRlistNum() {
 		return rlistNum;
 	}
