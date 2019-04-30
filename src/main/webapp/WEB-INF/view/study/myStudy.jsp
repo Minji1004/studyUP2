@@ -80,16 +80,27 @@ $(function(){
 });
 
 $(function(){
-	// 스터디 상세 페이지 보기
+	// 스터디 페이지 이동
 	$(document).on("click",".study-content", function(){
 		var studyTitle = $(this).find(".study-title").html();
 		var num=$(this).attr("data-studyNum");
 		var studyNum=1;
-		var url = "<%=cp%>/study/studyDetail?studyNum="+num;
+		var url = "<%=cp%>/study/mystudy/main";
 		
-		$('#myStudyModal .modal-content').load(url, function() {
-			// $('#myStudyModal .modal-title').html(studyTitle);
-			$('#myStudyModal').modal('show');
+		location.href = url;
+	});
+});
+
+
+
+$(function(){
+	// 스터디 만들기
+	$(document).on("click",".makeStudy", function(){
+		
+		var url = "<%=cp%>/study/makeStudy";
+		
+		$('#myStudyInput .modal-content').load(url, function() {
+			$('#myStudyInput').modal('show');
 		});
 	});
 });
@@ -117,6 +128,8 @@ $(function() {
 
 <div  style="width:66%; height: 100%; margin-left:17%;">
 	<div class="studyBody" style="margin: 10px;">
+	
+			<button type="button" class="btn makeStudy" style="background: #04B486; float: right;">make 스터디</button>
   
 			<div role="tabpanel">
 		

@@ -6,6 +6,25 @@
 
 <tiles-definitions>
 
+	<!-- study-->
+   	<definition name=".studyLayout" template="/WEB-INF/view/study/layout/layout4.jsp">
+       	<put-attribute name="title" value="Study" />
+        <put-attribute name="header" value="/WEB-INF/view/study/layout/header.jsp" />
+        <put-attribute name="left" value="/WEB-INF/view/study/layout/left.jsp" />
+      	<put-attribute name="body" value="/WEB-INF/view/study/layout/main.jsp" />
+      	<put-attribute name="footer" value="/WEB-INF/view/study/layout/footer.jsp" />
+	</definition>
+	   <definition name=".study.*.*.*" extends=".studyLayout">
+      <put-attribute name="body" value="/WEB-INF/view/study/{1}/{2}/{3}.jsp"/>
+   </definition>
+   <definition name=".study.*.*" extends=".studyLayout">
+      <put-attribute name="body" value="/WEB-INF/view/study/{1}/{2}.jsp"/>
+   </definition>
+   <definition name=".study.*" extends=".studyLayout">
+          <put-attribute name="body" value="/WEB-INF/view/study/{1}.jsp" />
+   </definition>
+
+
    <!-- teacher-->
    	<definition name=".teacherLayout" template="/WEB-INF/view/teacher/layout/layout4.jsp">
        	<put-attribute name="title" value="선생님 페이지" />

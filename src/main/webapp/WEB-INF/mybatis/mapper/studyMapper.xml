@@ -44,14 +44,14 @@
 	
 	<!-- 스터디 가입신청 -->
 	<insert id="applyStudy" parameterType="com.sp.study.ApplyStudy">
-		INSERT INTO applyStudy(studyNum, userId, goal, hope, approval) 
-		VALUES(#{studyNum}, #{userId}, #{goal}, #{hope}, #{approval})	
+		INSERT INTO applyStudy(studyNum, userId, goal, hope) 
+		VALUES(#{studyNum}, #{userId}, #{goal}, #{hope})	
 	</insert>
 	
 	
 	<!-- 스터디 리스트 가져오기 -->
 	<select id="listStudy" parameterType="map" resultType="com.sp.study.Study">
-		SELECT DISTINCT s.studyNum, studyName, studyIntro, userId, 
+		SELECT DISTINCT s.studyNum, studyName, studyIntro, aps.userId, 
 			studyLocation, studySday, studyEday, studyImg, headcount,
 	        categoryName, color
 		FROM study AS s 
@@ -61,12 +61,14 @@
 		ON l.courseNum = c.courseNum
 		left outer join category AS ca
 		ON c.categoryNum = ca.categoryNum
+		left outer join applystudy AS aps
+		on s.studyNum = aps.studyNum
 		
 		<where>
 			lectureNum IS null		
 			
 			<if test="userId != null and userId != ''">
-				AND userId = #{userId}
+				AND (aps.userId = #{userId} AND approval = 2)
 			</if>
 			
 			<if test="mode != 'allStudy'">
@@ -91,12 +93,14 @@
 		on l.courseNum = c.courseNum
 		left outer join category as ca
 		on c.categoryNum = ca.categoryNum
+		left outer join applystudy AS aps
+		on s.studyNum = aps.studyNum
 		
 		<where>
 			lectureNum IS null
 			
 			<if test="userId != null and userId != ''">
-				AND userId = #{userId}
+				AND (aps.userId = #{userId} AND approval = 2)
 			</if>
 			
 			<if test="mode != 'allStudy'">

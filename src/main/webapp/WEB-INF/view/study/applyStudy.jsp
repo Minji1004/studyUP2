@@ -24,7 +24,10 @@ function makeStudy() {
 	}
 	
 	// studyNum 고치기
-	f.action = "<%=cp%>/study/applyStudy?studyNum=4";
+	
+	var num=$(".study-content").attr("data-studyNum");
+	
+	f.action = "<%=cp%>/study/applyStudy?studyNum="+num;
 	
 	f.submit();	
 }
