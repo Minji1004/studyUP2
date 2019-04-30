@@ -19,7 +19,7 @@ public class InquiryServiceImpl implements InquiryService {
 	private FileManager fileManager;
 	
 	@Override
-	public int insertInquiry(Inquiry dto, String mode) {
+	public int insertInquiry(Inquiry dto, String pathname) {
 		int result=0;
 		
 		try {

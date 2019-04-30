@@ -125,13 +125,17 @@
 		                     <tr>
 		                         <td colspan="2">
 		                              <span style="display: inline-block; min-width: 45px;">이전글</span> :
-		                             ${dto.preReadDto}
+			                              <c:if test="${not empty preReadDto}">
+			                              	<a href="<%=cp%>/customer/inquiry/article?${query}&inquiryNum=${preReadDto.inquiryNum}">${preReadDto.subject}</a>
+			                             </c:if>
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
 		                              <span style="display: inline-block; min-width: 45px;">다음글</span> :
-		                            ${dto.nextReadDto}
+			                              <c:if test="${not empty nextReadDto}">
+			                              	<a href="<%=cp%>/customer/inquiry/article?${query}&inquiryNum=${nextReadDto.inquiryNum}">${nextReadDto.subject}</a>	                       
+			                              </c:if>
 		                         </td>
 		                     </tr>                                          
 		                </tbody>

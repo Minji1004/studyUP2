@@ -145,7 +145,7 @@ $(function(){
 		                        <tr>
 		                            <td class="td1">작성자명</td>
 		                            <td class="td2 col-md-5 col-sm-5">
-		                                ${sessionScope.member.userNum}
+		                                ${sessionScope.member.userName}
 		                            </td>
 		                            <td class="td1" align="center">&nbsp;</td>
 		                            <td class="td2 col-md-5 col-sm-5">

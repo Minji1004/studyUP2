@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="listInquiry" parameterType="map" resultType="com.sp.customer.inquiry.Inquiry">
-		SELECT inquiryNum, i.userId, subject, content, i.created
+		SELECT inquiryNum, i.userId, nickName, subject, content, i.created
 		FROM inquiry i
 		JOIN memberInfo m ON i.userId=m.userId
 		<where>

@@ -17,18 +17,6 @@ public class Inquiry {
 	private List<MultipartFile> upload;
 	private long gap;
 
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public List<MultipartFile> getUpload() {
-		return upload;
-	}
-
 	public int getListNum() {
 		return listNum;
 	}
@@ -51,6 +39,14 @@ public class Inquiry {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getSubject() {
@@ -109,15 +105,19 @@ public class Inquiry {
 		this.fileSize = fileSize;
 	}
 
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
+	}
+
 	public long getGap() {
 		return gap;
 	}
 
 	public void setGap(long gap) {
 		this.gap = gap;
-	}
-
-	public void setUpload(List<MultipartFile> upload) {
-		this.upload = upload;
 	}
 }

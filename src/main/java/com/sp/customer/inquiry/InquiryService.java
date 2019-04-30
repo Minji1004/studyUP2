@@ -13,8 +13,8 @@ public interface InquiryService {
 	public int updateInquiry(Inquiry dto, String pathname);
 	public int deleteInquiry(int num, String pathname);
 	
-	List<Inquiry> listFile(int inquiryNum);
 	public int insertFile(Inquiry dto);
+	public List<Inquiry> listFile(int inquiryNum);
 	public Inquiry readFile(int fileNum);
 	public int deleteFile1(int inquiryNum);
 	public int deleteFile2(int fileNum);
