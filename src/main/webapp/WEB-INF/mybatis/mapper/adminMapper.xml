@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
-<!-- report Mapper -->
+
 	<insert id="insertReport" parameterType="com.sp.admin.black.Report">
 		INSERT INTO report(reportBoard, reportBoardNum, replNum, reportUser, reportedUser, reportCause, reportType)
 		VALUES(#{reportBoard}, #{reportBoardNum}, #{reportBoardNum}, #{replNum}, #{reportUser}, #{reportedUser}, #{reportCause}, #{reportType})	
@@ -90,8 +90,7 @@
 	<select id="userCount">
 		SELECT IFNULL(COUNT(*),0) FROM report where reportedUser=#{reportedUser};
 	</select>
-
-<!-- member Mapper -->	
+	
 	<select id="readMember" parameterType="Integer" resultType="com.sp.admin.member.Member">
 		SELECT userNum, userId, nickname, tel,
 		created, lastLogin, picture
@@ -131,9 +130,8 @@
 		DELETE from memberInfo where userId=#{userId}
 	</delete>
 	
-<!-- blacklist mapper -->
 	<insert id="insertBlack">
 		
 	</insert>
 
-</mapper>
+</mapper> 

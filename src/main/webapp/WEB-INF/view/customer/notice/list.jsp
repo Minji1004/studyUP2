@@ -112,32 +112,31 @@ function searchList() {
 		                        <th class="text-center" style="width: 70px;">조회수</th> 
 		                    </tr>
 		                </thead>
-		                <tbody>
-		                
-    <c:forEach var="dto" items="${noticeList}">
-                    <tr>
-                        <td class="text-center"><span style="display: inline-block;width: 28px;height:18px;line-height:18px; background: #ED4C00;color: #FFFFFF">공지</span></td>
-                        <td><a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
-                        <td class="text-center">${dto.nickName}</td>
-                        <td class="text-center">${dto.created}</td>
-                        <td class="text-center">${dto.views}</td>
-                    </tr>
-     </c:forEach>                    
-    <c:forEach var="dto" items="${list}">
-                    <tr>
-                        <td class="text-center">${dto.listNum}</td>
-                        <td>
-                            <a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
-                            <c:if test="${dto.gap < 1}">
-                                <img src='<%=cp%>/resource/images/new.gif'>
-                            </c:if>
-                        </td>
-                        <td class="text-center">${dto.nickName}</td>
-                        <td class="text-center">${dto.created}</td>
-                        <td class="text-center">${dto.views}</td>
-                    </tr>
-     </c:forEach>                    
-		                    
+		                <tbody>		           
+							<c:forEach var="dto" items="${noticeList}">
+				                <tr>
+				                    <td class="text-center"><span style="display: inline-block;width: 28px;height:18px;line-height:18px; background: #ED4C00;color: #FFFFFF">공지</span></td>
+				                    <td><a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a></td>
+				                    <td class="text-center">${dto.nickName}</td>
+				                    <td class="text-center">${dto.created}</td>
+				                    <td class="text-center">${dto.views}</td>
+				                </tr>
+							</c:forEach>  
+							                  
+							<c:forEach var="dto" items="${list}">
+				                <tr>
+				                    <td class="text-center">${dto.listNum}</td>
+				                    <td>
+				                        <a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
+				                        <c:if test="${dto.gap < 1}">
+				                            <img src='<%=cp%>/resource/images/new.gif'>
+				                        </c:if>
+				                    </td>
+				                    <td class="text-center">${dto.nickName}</td>
+				                    <td class="text-center">${dto.created}</td>
+				                    <td class="text-center">${dto.views}</td>
+				                </tr>
+							 </c:forEach>                    		                 
 		                </tbody>
 		            </table>
 		        </div>
@@ -166,14 +165,10 @@ function searchList() {
 		        		</div>
 		        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
 		        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
-		        		</div>
-		        </div>
-		        
+		        	</div>
+		        </div>		        
 		    </div>
-
-
         </div>
      </div>
 </div>
-    
 </section>

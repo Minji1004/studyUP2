@@ -48,13 +48,10 @@ public class NoticeServiceImpl implements NoticeService {
 					}
 				}
 			}
-									
-			
 			result=1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
 

@@ -64,17 +64,41 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public Inquiry readInquiry(int InquiryNum) {
+	public Inquiry readInquiry(int inquiryNum) {
 		Inquiry dto=null;
 		
 		try {
-			dto=dao.selectOne("inquiry.readInquiry", InquiryNum);
+			dto=dao.selectOne("inquiry.readInquiry", inquiryNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return dto;
 	}
 
+	@Override
+	public Inquiry preReadInquiry(Map<String, Object> map) {
+		Inquiry dto=null;
+		
+		try {
+			dto=dao.selectOne("inquiry.preReadInquiry", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public Inquiry nextReadInquiry(Map<String, Object> map) {
+		Inquiry dto=null;
+		
+		try {
+			dto=dao.selectOne("inquiry.nextReadInquiry", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
 	@Override
 	public int updateInquiryState(Map<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -106,6 +130,7 @@ public class InquiryServiceImpl implements InquiryService {
 					}
 				}
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,7 +141,6 @@ public class InquiryServiceImpl implements InquiryService {
 	@Override
 	public int deleteInquiry(int inquiryNum, String pathname) {
 		int result=0;
-		
 		try {
 			List<Inquiry> listFile=listFile(inquiryNum);
 			if(listFile!=null) {
@@ -138,6 +162,17 @@ public class InquiryServiceImpl implements InquiryService {
 	//파일
 	
 	@Override
+	public int insertFile(Inquiry dto) {
+		int result=0;
+		try {
+			result=dao.insertData("inquiry.insertFile", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
 	public List<Inquiry> listFile(int inquiryNum){
 		List<Inquiry> listFile=null;
 		
@@ -149,16 +184,6 @@ public class InquiryServiceImpl implements InquiryService {
 		return listFile;
 	}
 
-	@Override
-	public int insertFile(Inquiry dto) {
-		int result=0;
-		try {
-			result=dao.insertData("inquiry.insertFile", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
 
 	@Override
 	public Inquiry readFile(int fileNum) {

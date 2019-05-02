@@ -80,7 +80,6 @@
   function sendOk() {
         var f = document.inquiryForm;
 
-
         f.action="<%=cp%>/customer/inquiry/${mode}";
         f.submit();
         
@@ -122,66 +121,71 @@ $(function(){
 
 <section class="section" id="srcontainer" >
 
-<div class="container" role="main">
-    <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;" id="sidebar">
-            <jsp:include page="/WEB-INF/view/customer/left.jsp"/>
-        </div>
-        <div class="col-xs-12 col-sm-9 body-frame-2">
-                
-		    <div class="body-title">
-		          <h3><span class="glyphicon glyphicon-book"></span> 1:1 문의 </h3>
-		    </div>
+	<div class="container" role="main">
+	    <div class="row row-offcanvas row-offcanvas-right">
+	        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" style="max-width: 240px;" id="sidebar">
+	            <jsp:include page="/WEB-INF/view/customer/left.jsp"/>
+	        </div>
+	        <div class="col-xs-12 col-sm-9 body-frame-2">
+	                
+			    <div class="body-title">
+			          <h3><span class="glyphicon glyphicon-book"></span> 1:1 문의 </h3>
+			    </div>
+			    
+			    <div class="alert alert-info">
+			        <i class="glyphicon glyphicon-info-sign"></i> 문의를 남겨 두시면 답변해 드리겠습니다.
+			    </div>
 		    
-		    <div class="alert alert-info">
-		        <i class="glyphicon glyphicon-info-sign"></i> 문의를 남겨 두시면 답변해 드리겠습니다.
-		    </div>
-		    
-		    <div>
-		        <form name="inquiryForm" method="post">
-		            <div class="bs-write">
-		                <table class="table">
-		                    <tbody>
-		                        <tr>
-		                            <td class="td1">작성자명</td>
-		                            <td class="td2 col-md-5 col-sm-5">
-		                                ${sessionScope.member.userName}
-		                            </td>
-		                            <td class="td1" align="center">&nbsp;</td>
-		                            <td class="td2 col-md-5 col-sm-5">
-		                                &nbsp;
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td class="td1">제목</td>
-		                            <td colspan="3" class="td3">
-		                                <input type="text" name="subject" class="form-control input-sm" value="${dto.subject}" required="required">
-		                            </td>
-		                        </tr>
-		                        <tr>
-		                            <td class="td1" colspan="4" style="padding-bottom: 0px;">내용</td>
-		                        </tr>
-		                        <tr>
-		                            <td colspan="4" class="td4">
-		                            	<textarea name="content" class="form-control" rows="15" required="required">${dto.content}</textarea>
-		                            </td>
-		                        </tr>
-		                    </tbody>
-		                    <tfoot>
-		                        <tr>
-		                            <td colspan="4" style="text-align: center; padding-top: 15px;">
-		                                  <button type="button" class="btn btn-primary" onclick="sendOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-		                                  <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list';"> 취소 </button>
-		                            </td>
-		                        </tr>
-		                    </tfoot>
-		                </table>
-		            </div>
-		        </form>
-		    </div>
-
-        </div>
-     </div>
-</div>
-
+			    <div>
+			        <form name="inquiryForm" method="post" enctype="multipart/form-data">
+			            <div class="bs-write">
+			                <table class="table">
+			                    <tbody id="tb">
+			                        <tr>
+			                            <td class="td1">작성자명</td>
+			                            <td class="td2 col-md-5 col-sm-5">
+			                                ${sessionScope.member.userName}
+			                            </td>
+			                            <td class="td1" align="center">&nbsp;</td>
+			                            <td class="td2 col-md-5 col-sm-5">
+			                                &nbsp;
+			                            </td>
+			                        </tr>
+			                        <tr>
+			                            <td class="td1">제목</td>
+			                            <td colspan="3" class="td3">
+			                                <input type="text" name="subject" class="form-control input-sm" value="${dto.subject}" required="required">
+			                            </td>
+			                        </tr>
+			                        <tr>
+			                            <td class="td1" colspan="4" style="padding-bottom: 0px;">내용</td>
+			                        </tr>
+			                        <tr>
+			                            <td colspan="4" class="td4">
+			                            	<textarea name="content" class="form-control" rows="15" required="required">${dto.content}</textarea>
+			                            </td>
+			                        </tr>
+			                        <tr>
+			                        	<td class="td1">첨부</td>
+			                        	<td colspan="3" class="td3">
+			                        		<input type="file" name="upload" class="form-control input-sm" style="height: 35px;">
+			                        	</td>
+			                        </tr>
+			               
+		                    	</tbody>
+		                    	<tfoot>
+			                        <tr>
+			                            <td colspan="4" style="text-align: center; padding-top: 15px;">
+			                                  <button type="button" class="btn btn-primary" onclick="sendOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
+			                                  <button type="button" class="btn btn-primary" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list';"> 취소 </button>
+			                            </td>
+			                        </tr>
+			                    </tfoot>
+			                </table>
+			            </div>
+			        </form>
+			    </div>
+	        </div>
+	     </div>
+	</div>
 </section>

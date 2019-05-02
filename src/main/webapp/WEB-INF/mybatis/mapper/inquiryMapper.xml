@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="listInquiry" parameterType="map" resultType="com.sp.customer.inquiry.Inquiry">
-		SELECT inquiryNum, i.userId, nickName, subject, content, i.created
+		SELECT inquiryNum, i.userId, nickName, subject, i.created
 		FROM inquiry i
 		JOIN memberInfo m ON i.userId=m.userId
 		<where>
@@ -69,7 +69,7 @@
 			<if test="keyword !=null and keyword !=''">
 				<include refid="where-list"/>
 			</if>
-		AND(inquiryNum &gt; #{inquiryNum})
+		AND (inquiryNum &gt; #{inquiryNum})
 		</where>
 		ORDER BY inquiryNum ASC
 		LIMIT 1

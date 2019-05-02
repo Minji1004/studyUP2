@@ -278,7 +278,7 @@ public class NoticeController {
 			try {
 				resp.setContentType("text/html; charset=utf-8");
 				PrintWriter out = resp.getWriter();
-				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+				out.println("<script>alert('파일 다운로드가 불가능 합니다!');history.back();</script>");
 			} catch (Exception e) {
 			}
 		}

@@ -1,6 +1,7 @@
 package com.sp.customer.inquiry;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
@@ -101,7 +104,6 @@ public class InquiryController {
 		
 		String paging=myUtil.paging(current_page, total_page, listUrl);
 		
-
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("articleUrl", articleUrl);
@@ -122,6 +124,7 @@ public class InquiryController {
 			Model model
 			) throws Exception{
 		model.addAttribute("mode", "created");
+		
 		model.addAttribute("subMenu", "2");
 		
 		return ".customer.inquiry.created";
@@ -131,6 +134,7 @@ public class InquiryController {
 	public String createdSubmit(
 			Inquiry dto,
 			HttpSession session) throws Exception{
+		
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+"uploads"+File.separator+"inquiry";
 		
@@ -150,22 +154,39 @@ public class InquiryController {
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
 			Model model) throws Exception{
+		
 		keyword=URLDecoder.decode(keyword, "utf-8");
 		
 		String query="page"+page;
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
+		
 		Inquiry dto=service.readInquiry(inquiryNum);
 		if(dto==null) {
 			return "redirect:/customer/inquiry/list?"+query;
 		}
+		
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		map.put("inquiryNum", inquiryNum);
+		
+		Inquiry preReadDto=service.preReadInquiry(map);
+		Inquiry nextReadDto=service.nextReadInquiry(map);
+		
+		List<Inquiry> listFile=service.listFile(inquiryNum);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("query", query);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("listFile", listFile);
+		model.addAttribute("page", page);
+		
+		model.addAttribute("subMenu", "2");
 		
 		return ".customer.inquiry.article";
 	}
@@ -195,9 +216,83 @@ public class InquiryController {
 	@RequestMapping(value="/customer/inquiry/update", method=RequestMethod.POST)
 	public String updateSubmit(
 			Inquiry dto,
-			@RequestParam String page) throws Exception{
+			@RequestParam String page
+			) throws Exception{
+		
+		service.updateInquiry(dto, page);
 		
 		return "redirect:/customer/inquiry/list?page="+page;
 	}
 	
+	@RequestMapping(value="/customer/inquiry/delete")
+	public String delete(
+			@RequestParam int inquiryNum,
+			@RequestParam(value="page") String page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			HttpSession session) throws Exception{
+			
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"inquiry";
+		
+		String query="page="+page;
+		keyword=URLDecoder.decode(keyword, "utf-8");
+		if(keyword.length()!=0) {
+			query+="&condition"+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		service.deleteInquiry(inquiryNum, pathname);
+		
+		return "redirect:/customer/inquiry/list?"+query;
+	}
+	
+	// 파일
+	
+	@RequestMapping(value="/customer/inquiry/download")
+	public void download(
+			@RequestParam int fileNum,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception{
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"inquiry";
+		
+		boolean b=false;
+		
+		Inquiry dto=service.readFile(fileNum);
+		if(dto!=null) {
+			String saveFilename=dto.getSaveFilename();
+			String originalFilename=dto.getOriginalFilename();
+			
+			b=fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
+		}
+		
+		if(!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out=resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능합니다!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
+	}
+	@RequestMapping(value="/customer/inquiry/deleteFile", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteFile(
+			@RequestParam int fileNum,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception{
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"inquiry";
+		
+		Inquiry dto=service.readFile(fileNum);
+		if(dto!=null) {
+			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+		}
+		
+		service.deleteFile2(fileNum);
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", "true");
+		return model;
+	}
 }

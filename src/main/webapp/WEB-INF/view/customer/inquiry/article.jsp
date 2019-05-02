@@ -5,6 +5,24 @@
 <%
    String cp = request.getContextPath();
 %>
+<script type="text/javascript">
+
+
+function deleteInquiry(){
+	<c:if test="${sessionScope.member.userId==dto.userId}">
+		var q="inquiryNum=${dto.inquiryNum}&${query}";
+		var url="<%=cp%>/customer/inquiry/delete?"+q;
+			
+		if(confirm("게시물을 삭제하시겠습니까?")){
+			location.href=url;
+		}
+	</c:if>
+	<c:if test="${sessionScope.member.userId!=dto.userId}">
+		alert("게시물 작성자만 게시물을 삭제할 수 있습니다.")	
+	</c:if>
+}
+
+</script>
 
 <style type="text/css">
 .bodyFrame2{

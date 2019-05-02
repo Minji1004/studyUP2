@@ -7,11 +7,13 @@ public interface InquiryService {
 	public int insertInquiry(Inquiry dto, String pathname);
 	public int dataCount(Map<String, Object> map);
 	public List<Inquiry> listInquiry(Map<String, Object> map);
-	public List<Inquiry> relationInquiry(int InquiryNum);
-	public Inquiry readInquiry(int InquiryNum);
+	public List<Inquiry> relationInquiry(int inquiryNum);
+	public Inquiry readInquiry(int inquiryNum);
 	public int updateInquiryState(Map<String, Object> map);
 	public int updateInquiry(Inquiry dto, String pathname);
-	public int deleteInquiry(int num, String pathname);
+	public int deleteInquiry(int inquiryNum, String pathname);
+	public Inquiry preReadInquiry(Map<String, Object> map);
+	public Inquiry nextReadInquiry(Map<String, Object> map);
 	
 	public int insertFile(Inquiry dto);
 	public List<Inquiry> listFile(int inquiryNum);
