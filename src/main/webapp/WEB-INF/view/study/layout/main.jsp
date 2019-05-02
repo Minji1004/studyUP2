@@ -17,7 +17,7 @@
 <section class="content container-fluid">
 
 	<div class="row">
-		<div class="col-md-5 col-md-offset-1">
+		<div class="col-md-4 col-md-offset-1">
 			<div class="box box-danger">
 			    <div class="box-header with-border">
 			      <h3 class="box-title">공지사항</h3>
@@ -33,45 +33,45 @@
 	                  <thead>
 	                  <tr>
 	                    <th class="text-center" style="width: 20%;">번호</th>
-	                    <th class="text-center" style="width: 50%;">제목</th>
+	                    <th class="text-center" style="width: 45%;">제목</th>
 	                    <th class="text-center" style="width: 20%;">작성일</th>
-	                    <th class="text-center" style="width: 10%;">조회수</th>
+	                    <th class="text-center" style="width: 15%;">조회수</th>
 	                  </tr>
 	                  </thead>
 	                  <tbody>
 	                  <tr>
 	                    <td class="text-center" style="width: 20%;"><a href="pages/examples/invoice.html">5</a></td>
-	                    <td class="text-left" style="width: 50%;">공지사항입니다.</td>
+	                    <td class="text-left" style="width: 45%;">공지사항입니다.</td>
 	                    <td class="text-center" style="width: 20%;">2019-04-30</td>
-	                    <td class="text-center" style="width: 10%;">20</td>
+	                    <td class="text-center" style="width: 15%;">20</td>
 	                  </tr>
 	                  
 	                   <tr>
 	                    <td class="text-center" style="width: 20%;"><a href="pages/examples/invoice.html">4</a></td>
-	                    <td class="text-left" style="width: 50%;">공지사항입니다.</td>
+	                    <td class="text-left" style="width: 45%;">공지사항입니다.</td>
 	                    <td class="text-center" style="width: 20%;">2019-04-30</td>
-	                    <td class="text-center" style="width: 10%;">20</td>
+	                    <td class="text-center" style="width: 15%;">20</td>
 	                  </tr>
 	                  
 	                   <tr>
 	                    <td class="text-center" style="width: 20%;"><a href="pages/examples/invoice.html">3</a></td>
-	                    <td class="text-left" style="width: 50%;">공지사항입니다.</td>
+	                    <td class="text-left" style="width: 45%;">공지사항입니다.</td>
 	                    <td class="text-center" style="width: 20%;">2019-04-30</td>
-	                    <td class="text-center" style="width: 10%;">20</td>
+	                    <td class="text-center" style="width: 15%;">20</td>
 	                  </tr>
 	                  
 	                   <tr>
 	                    <td class="text-center" style="width: 20%;"><a href="pages/examples/invoice.html">2</a></td>
-	                    <td class="text-left" style="width: 50%;">공지사항입니다.</td>
+	                    <td class="text-left" style="width: 45%;">공지사항입니다.</td>
 	                    <td class="text-center" style="width: 20%;">2019-04-30</td>
-	                    <td class="text-center" style="width: 10%;">20</td>
+	                    <td class="text-center" style="width: 15%;">20</td>
 	                  </tr>
 	                  
 	                   <tr>
 	                    <td class="text-center" style="width: 20%;"><a href="pages/examples/invoice.html">1</a></td>
-	                    <td class="text-left" style="width: 50%;">공지사항입니다.</td>
+	                    <td class="text-left" style="width: 45%;">공지사항입니다.</td>
 	                    <td class="text-center" style="width: 20%;">2019-04-30</td>
-	                    <td class="text-center" style="width: 10%;">20</td>
+	                    <td class="text-center" style="width: 15%;">20</td>
 	                  </tr>
 	                  
 	                
@@ -82,13 +82,13 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-              
+              <span class="pull-right">더보기...</span>
             </div>
             <!-- /.box-footer -->
             </div>
    		 </div>
    		 
-   		 <div class="col-md-5">
+   		 <div class="col-md-6">
 			<div class="box box-success">
 			    <div class="box-header with-border">
 			      <h3 class="box-title">자유게시판</h3>
@@ -158,8 +158,8 @@
               <!-- /.table-responsive -->
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-              
+            <div class="box-footer clearfix">              
+            	<span class="pull-right">더보기...</span>
             </div>
             <!-- /.box-footer -->
             </div>

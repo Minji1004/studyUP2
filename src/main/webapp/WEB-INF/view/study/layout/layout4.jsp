@@ -32,16 +32,16 @@
 <script src="<%=cp%>/resource/js/star.js"></script>
 
 <script type="text/javascript">
-/*
+
 	$(document).ready(function(){
-		if(${left}>=5){
-			$(".sidebar-menu li").eq(4).addClass("active");
-			$(".treeview-menu li").eq(${left}-5).addClass("active");
+		if(${left}>=7){
+			$(".sidebar-menu li").eq(6).addClass("active");
+			$(".treeview-menu li").eq(${left}-7).addClass("active");
 		}
 		
 		$(".sidebar-menu li").eq(${left}).addClass("active");
 	});  
-*/
+
 </script>
 
 </head>

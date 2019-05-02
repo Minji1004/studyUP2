@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="snotice">
+	<!-- 스터디 공지사항 번호 -->
+	<select id="maxSnoticeNum" resultType="Integer">
+		SELECT IFNULL(max(sNoticeNum), 0) FROM snotice
+	</select>
+	
+	<!-- 검색 -->
+	<sql id="where-list">
+		<if test="condition=='all' ">
+	       (INSTR(nSubject, #{keyword}) &gt; 0
+			    OR INSTR(nContent, #{keyword}) &gt; 0)
+	    </if>
+	    <if test="condition=='subject' ">
+	       INSTR(nSubject, #{keyword}) &gt; 0
+	    </if>
+	    <if test="condition=='content' ">
+	       INSTR(nContent, #{keyword}) &gt; 0
+	    </if>
+	    <if test="condition=='created' ">
+	       DATE_FORMAT(created, '%Y-%m-%d') = #{keyword}
+	    </if>
+	
+	</sql>
+	
+	<!-- 스터디 공지사항 글 작성 -->
+	<insert id="insertSnotice" parameterType="com.sp.study.mystudy.notice.Notice">
+		INSERT INTO snotice(sNoticeNum, studyNum, notice, userId, nSubject, nContent)
+		VALUES(#{sNoticeNum}, #{studyNum}, #{notice}, #{userId}, #{nSubject}, #{nContent})
+	</insert>
+	
+	<insert id="insertFile" parameterType="com.sp.study.mystudy.notice.Notice">
+		INSERT INTO snoticefile(sNoticeNum, originalFilename, saveFilename, fileSize)
+		VALUES(#{sNoticeNum}, #{originalFilename}, #{saveFilename}, #{fileSize})
+	</insert>
+	
+	
+	<!-- 공지 글 리스트 -->
+	<select id="listNoticeTop" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT sNoticeNum, notice, n.userId, nickname, nSubject,
+                  hitCount, 
+                  DATE_FORMAT(n.created, '%Y-%m-%d') AS created
+          FROM snotice n
+          JOIN memberinfo m ON n.userId=m.userId 
+          WHERE notice =  1 and studyNum = #{studyNum}
+          ORDER BY sNoticeNum DESC	
+	</select>
+	
+	<!-- 데이터 개수 -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		select IFNULL(count(*), 0) from snotice 
+		<where>
+			studyNum = #{studyNum}   
+			<if test="keyword != null and keyword != ''">
+            	AND <include refid="where-list"/>
+            </if>
+		</where>		
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="listNotice" parameterType="map" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT s.sNoticeNum, nSubject, hitCount, created, snFilenum FROM snotice s
+		LEFT JOIN (select min(snFilenum) snFilenum, sNoticeNum 
+		from snoticefile group by sNoticeNum) f
+		ON s.sNoticeNum = f.sNoticeNum
+		<where>
+			studyNum = #{studyNum}   
+			<if test="keyword != null and keyword != ''">
+            	AND <include refid="where-list"/>
+            </if>
+		</where>	
+		ORDER BY sNoticeNum DESC
+		LIMIT #{start}, #{rows}	
+	</select>
+	
+	<!-- 글보기 -->
+	<select id="readNotice" parameterType="Integer" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT s.sNoticeNum, nSubject, hitCount, created, nContent, sum(fileSize) totalFileSize 
+		from snotice s
+			LEFT OUTER JOIN snoticefile f
+			ON s.sNoticeNum = f.sNoticeNum
+			where s.sNoticeNum = #{sNoticeNum}   
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		update snotice SET hitCount = hitCount+1 WHERE sNoticeNum = #{sNoticeNum}
+	</update>
+	
+	<!-- 파일 리스트 -->
+	<select id="fileList" parameterType="Integer" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT snFilenum AS snFilenum, originalFilename, saveFilename, fileSize 
+		FROM snoticefile where sNoticeNum = #{sNoticeNum}
+	</select>
+	
+	
+
+</mapper>

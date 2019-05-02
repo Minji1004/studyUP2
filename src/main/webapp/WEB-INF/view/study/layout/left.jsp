@@ -37,7 +37,8 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
-		<li><a href="#"><i class="fa fa-link"></i> <span>공지사항</span></a></li>
+        <li><a href="<%=cp%>/study/mystudy/main?studyNum=${studyNum}&left=0"><i class="fa fa-link"></i> <span>메인페이지</span></a></li>
+		<li><a href="<%=cp%>/study/notice/list?studyNum=${studyNum}&left=1"><i class="fa fa-link"></i> <span>공지사항</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>게시판</span>
             <span class="pull-right-container">
@@ -45,14 +46,14 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">자유게시판</a></li>
-            <li><a href="#">퀴즈게시판</a></li>
+            <li><a href="<%=cp%>/study/mystudy/free/list?studyNum=${studyNum}&left=2">자유게시판</a></li>
+            <li><a href="<%=cp%>/study/mystudy/quiz/list?studyNum=${studyNum}&left=3">퀴즈게시판</a></li>
           </ul>
         </li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>일정</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>순공시간</span></a></li>
-		<li><a href="#"><i class="fa fa-link"></i> <span>채팅</span></a></li>
-		<li><a href="#"><i class="fa fa-link"></i> <span>메이트관리</span></a></li>
+        <li><a href="<%=cp%>/study/mystudy/calendar/list?studyNum=${studyNum}&left=4"><i class="fa fa-link"></i> <span>일정</span></a></li>
+        <li><a href="<%=cp%>/study/mystudy/record/list?studyNum=${studyNum}&left=5"><i class="fa fa-link"></i> <span>순공시간</span></a></li>
+		<li><a href="<%=cp%>/study/mystudy/chatting/list?studyNum=${studyNum}&left=6"><i class="fa fa-link"></i> <span>채팅</span></a></li>
+		<li><a href="<%=cp%>/study/mystudy/member/list?studyNum=${studyNum}&left=7"><i class="fa fa-link"></i> <span>메이트관리</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
