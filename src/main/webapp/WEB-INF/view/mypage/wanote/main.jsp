@@ -10,59 +10,64 @@
 var pageNo = 1;
 var keyword = "";
 var condition = "all";
-
-function sendWanote(mode){
-	var f = document.wanoteCreateForm;
+function ajaxHTML(id ,url, query){
 	
-	if(!f.subject.value){
-		alert("제목을 입력하세요.");
-		return;
-	}
-	if(!f.content.value){
-		alert("내용을 입력하세요");
-		return;
-	}
-	var url = "<%=cp%>/mypage/wanote/created";
-	var query = new FormData(f);
-	
-	console.log(query);
 	$.ajax({
-		type : "POST"
-		,url  : url
-		,processData : false		
-		,contentType : false		
+		type : "GET"
+		,url : url
 		,data : query
-		,dataType : "JSON"
-		,success:function(data){			
-			location.href = "<%=cp%>/mypage/wanote/main";
-		},
-		beforeSend:function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error:function(jqXHR){
-			if(jqXHR.status == 403){
-				location.href = "<%=cp%>/member/login";
-				return;
-			}
-			console.log(jqXHR.responseText);
+		,success : function(data){
+			$("#" + id).html(data);
 		}
-	});	
+		,errror : function(e){
+			console.log(e)
+		}
+	});
+}
+function sendWanote(mode){
+		var f = document.wanoteCreateForm;
+		
+		if(!f.subject.value){
+			alert("제목을 입력하세요.");
+			return;
+		}
+		if(!f.content.value){
+			alert("내용을 입력하세요");
+			return;
+		}
+		var url = "<%=cp%>/mypage/wanote/" + mode;
+		var query = new FormData(f);
+		console.log(query);
+		
+		$.ajax({
+			type : "POST"
+			,url  : url
+			,processData : false		
+			,contentType : false		
+			,data : query
+			,dataType : "JSON"
+			,success:function(data){		
+				alert("수정성공:");
+				location.href = "<%=cp%>/mypage/wanote/main";
+			},
+			beforeSend:function(jqXHR){
+				jqXHR.setRequestHeader("AJAX", true);
+			},
+			error:function(jqXHR){
+				if(jqXHR.status == 403){
+					location.href = "<%=cp%>/member/login";
+					return;
+				}
+				console.log(jqXHR.responseText);
+			}
+		});	
+	
 }
 
 //오답노트 올리기 폼
 function insertWanote(){
 	var url = "<%=cp%>/mypage/wanote/created";
-	
-	$.ajax({
-		type : "GET"
-		,url : url
-		,success : function(data){
-			$("#wanoteMain").html(data);
-		}
-		,error : function(e){
-			console.log(e);
-		}
-	});
+	ajaxHTML("wanoteMain" ,url, "");
 }
 
 function searchWanoteList(){
@@ -78,31 +83,88 @@ function searchWanoteList(){
 function articleWanoteBoard(waNum){
 	var url = "<%=cp%>/mypage/wanote/article";
 	var query = "page=" + pageNo + "&waNum=" + waNum;
+	keyword = $("#keyword").val();
+	condition = $("#condition").val();
 	if(keyword != ""){
 		query += "&condition=" + condition  + "&keyword=" + encodeURIComponent(keyword);
 	}
 	
+	ajaxHTML("wanoteMain" ,url, query);
+}
+function updateWanoteBoard(waNum){
+	var url = "<%=cp%>/mypage/wanote/update";
+	var query = "waNum=" + waNum;
+	
+	ajaxHTML("wanoteMain" ,url, query);
+}
+function deletewanoteBoard(waNum, query){
+	//삭제
+	if(confirm("삭제하시겠습니까?")){
+		
+	var url = "<%=cp%>/mypage/wanote/delete";
+	var query = query + "&waNum=" + waNum;
+	
 	$.ajax({
-		type : "GET"
+		type : "post"
 		,url : url
-		,data : query
+		,data : query 
+		,dataType : "json"
 		,success : function(data){
-
-			$("#wanoteMain").html(data);
-
+			if(data.state == "true"){
+				var uri = "<%=cp%>/mypage/wanote/main";
+				pageNo = data.page;
+				condition = data.condition;
+				keyword = data.keyword;
+				var query = "?page="+pageNo + "&condition=" + condition + "&keyword=" + encodeURIComponent(keyword);
+				
+				uri += query;
+				location.href = uri;
+			}
 		}
 		,error : function(e){
 			console.log(e);
 		}
 	});
-	
+	}
 }
-function updateWanoteBoard(waNum){
+
+$(function(){
+	$("body").on("click", "#deleteWanoteFile", function(){
+		var wanoteFileNum = $(this).attr("data-num");
+		var $tr = $(this).closest("tr");
 	
-}
-function deleteWanoteBoard(waNum){
-	
-}
+		var url = "<%=cp%>/mypage/wanote/update/deleteFile";
+		var query = "wanoteFileNum=" + wanoteFileNum;
+		
+		$.ajax({
+			type : "POST"
+			,url : url
+			,data : query
+			,dataType : "JSON"
+			,success:function(data){
+				if(data.state == "true"){
+					$tr.empty();
+				}else{
+					alert("파일삭제에 실패했습니다.");
+				}
+				
+			},
+			beforeSend:function(jqXHR){
+				jqXHR.setRequestHeader("AJAX", true);
+			},
+			error:function(jqXHR){
+				if(jqXHR.status == 403){
+					location.href = "<%=cp%>/member/login";
+					return;
+				}
+				console.log(jqXHR.responseText);
+			}
+		});
+				
+		
+		
+	});
+})
 </script>
 
 <div id="wanoteMain">

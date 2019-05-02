@@ -1,6 +1,5 @@
 package com.sp.mypage;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -159,6 +158,80 @@ public class MypageServiceImpl implements MypageService{
 		
 		return dto;
 	}
+
+	@Override
+	public int updateWanoteFile(WanoteFileDTO fdto) {
+		int result = 0;
+		
+		try {
+			result = dao.updateData("mypage.updateWanoteFile", fdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteWanote(int waNum) {
+		int result = 0;
+		
+		try {
+			result = dao.deleteData("mypage.deleteWanote", waNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteWanoteFile(int waNum) {
+		int result = 0;
+		
+		try {
+			result = dao.deleteData("mypage.deleteWanoteFile", waNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int insertWanoteFile(WanoteFileDTO fdto) {
+		int result = 0;
+		
+		try {
+			result = dao.insertData("mypage.insertWanoteFile", fdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateWanote(Wanote dto) {
+		int result = 0;
+		
+		try {
+			result = dao.insertData("mypage.updateWanote", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	
+	
+	
+	
+
+
+	
+	
+	
 	
 	
 

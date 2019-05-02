@@ -98,9 +98,29 @@
 </select>
 
 <select id="readWanoteFileOne" parameterType="Integer" resultType="com.sp.mypage.WanoteFileDTO">
-	SELECT originalFilename, saveFilename
+	SELECT wanoteFileNum,originalFilename, saveFilename
 	FROM wanoteFile
 	WHERE wanoteFileNum = #{wanoteFileNum}
 </select>
+
+<update id="updateWanoteFile" parameterType="com.sp.mypage.WanoteFileDTO">
+	UPDATE wanoteFile SET originalFilename = #{originalFilename}, saveFilename = #{saveFilename} 
+	WHERE wanoteFileNum = #{wanoteFileNum}
+</update>
+
+<delete id="deleteWanoteFile" parameterType="Integer">
+	DELETE FROM wanoteFile WHERE waNum = #{waNum}
+</delete>
+
+<delete id="deleteWanote" parameterType="Integer">
+	DELETE FROM wanote WHERE waNum = #{waNum}
+</delete>
+
+<update id="updateWanote" parameterType="com.sp.mypage.Wanote">
+	UPDATE wanote SET subject = #{subject}, 
+		content = #{content}, created = NOW()
+	WHERE waNum = #{waNum}
+</update>
+
 
 </mapper>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
@@ -49,15 +50,10 @@ public class MyPageController {
 			HttpSession session
 			) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		
-		Member dto =  memberService.readMember(info.getUserId());
-
-		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "member_profile";
-		
-		if(dto.getPicture() != null) {
-			//File f= new File(pathname + File.separator + dto.getPicture());
+		if(info == null) {
+			return "member/login";
 		}
+		Member dto =  memberService.readMember(info.getUserId());
 		
 		model.addAttribute("dto", dto);
 
@@ -161,13 +157,6 @@ public class MyPageController {
 		
 		Member dto =  memberService.readMember(userId);
 		
-		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "member_profile";
-		
-		if(dto.getPicture() != null) {
-			//File f= new File(pathname + File.separator + dto.getPicture());
-		}
-		
 		model.addAttribute("dto",dto);
 		
 		return "mypage/update";
@@ -229,6 +218,8 @@ public class MyPageController {
 		
 		mypageService.insertWanote(dto, pathname);
 		
+		
+		
 		return map;
 	}
 	
@@ -242,7 +233,6 @@ public class MyPageController {
 			HttpServletRequest req
 			) throws Exception {
 		keyword = URLDecoder.decode(keyword, "utf-8");
-		String cp = req.getContextPath();
 		String query="page="+page;
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
@@ -304,4 +294,144 @@ public class MyPageController {
 		out.print("<script>alert('파일 다운로드를 실패했습니다.');history.back();</script>"); 
 
 	}
+	
+	@RequestMapping(value ="/mypage/wanote/update" , method = RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int waNum,
+			Model model) {
+		
+		Wanote dto = mypageService.readWanote(waNum);
+		List<WanoteFileDTO> flist =mypageService.readWanoteFile(waNum);
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("dto", dto);
+		model.addAttribute("flist", flist);
+		
+		return "mypage/wanote/created";
+	}
+	
+	@RequestMapping(value ="/mypage/wanote/update/deleteFile", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteFile(
+			@RequestParam int wanoteFileNum	
+			,HttpSession session
+			) throws Exception{
+	
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "wanote";
+		
+		
+		String state = "true";
+		Map<String, Object> model = new HashMap<>();
+		WanoteFileDTO fdto = mypageService.readWanoteFileOne(wanoteFileNum);
+		
+		if(fdto == null) {
+			state = "false";
+			model.put("state", state);
+			return model;
+		}
+		
+		if(fdto.getSaveFilename() != null) {
+			fileManager.doFileDelete(fdto.getSaveFilename(), pathname);
+			fdto.setSaveFilename("");
+			fdto.setOriginalFilename("");
+			mypageService.updateWanoteFile(fdto);
+		}
+		
+		model.put("state", state);
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/mypage/wanote/delete", method=RequestMethod.POST)
+	@ResponseBody	
+	public Map<String, Object> deleteWanote(
+			@RequestParam int waNum,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "keyword", defaultValue = "") String keyword,
+			@RequestParam(value ="condition", defaultValue = "all") String condition,
+			HttpSession session
+			) throws Exception{
+		
+		keyword = URLEncoder.encode(keyword, "utf-8");	
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "wanote";
+		
+		
+		String state = "true";
+		Map<String, Object> model = new HashMap<>();
+		List<WanoteFileDTO> flist = mypageService.readWanoteFile(waNum);
+		if(flist != null) {
+			for(WanoteFileDTO fdto : flist) {
+				fileManager.doFileDelete(fdto.getSaveFilename(), pathname);
+				mypageService.deleteWanoteFile(waNum);
+			}
+		}
+		
+		mypageService.deleteWanote(waNum);	//삭제
+		
+		model.put("page", page);
+		model.put("keyword", keyword);
+		model.put("condition", condition);
+		model.put("state", state);
+		
+		return model;
+	}
+	
+	@SuppressWarnings("unused")
+	@RequestMapping(value = "/mypage/wanote/update", method = RequestMethod.POST)
+	@ResponseBody
+	public void updateWanoteSubmit(
+			Wanote dto,
+			@RequestParam String page, 
+			HttpSession session,
+			HttpServletRequest req) throws Exception {
+		
+		List<Integer> removeList = null;
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "wanote";		
+		
+		if(dto.getUpload() != null) {
+			List<WanoteFileDTO> flist = mypageService.readWanoteFile(dto.getWaNum());
+			for(WanoteFileDTO fdto : flist) {
+				for(int i=0; i<dto.getUpload().size(); i++) {
+					if(fdto.getOriginalFilename().equals(dto.getUpload().get(i).getOriginalFilename())){
+						//파일 있으면 getUpload 리스트에서 제거
+						removeList.add(i);
+					}
+				}
+			}		
+		}
+		
+		//삭제
+		if(removeList != null) {
+			for(int i : removeList) {
+				dto.getUpload().remove(i);
+			}
+		}
+		
+		WanoteFileDTO fdto = null;
+		String saveFilename = null;
+		
+		for(MultipartFile mfile : dto.getUpload()) {
+			if(mfile.isEmpty())
+				continue;
+			fdto = new WanoteFileDTO();
+			fdto.setWaNum(dto.getWaNum());
+			
+			saveFilename = fileManager.doFileUpload(mfile, pathname);
+			if(saveFilename!=null){
+				String originalFilename = mfile.getOriginalFilename();
+				fdto.setOriginalFilename(originalFilename);
+			}
+			
+			fdto.setSaveFilename(saveFilename);
+			mypageService.insertWanoteFile(fdto);
+		}
+
+		mypageService.updateWanote(dto);
+		
+	}
+	
 }

@@ -25,21 +25,12 @@
 			   	<c:forEach var="fdto" items="${flist }">
 			   		<br>
 			   		<img src="<%=cp%>/uploads/wanote/${fdto.saveFilename}">
+			   		<a href="<%=cp%>/wanote/article/download?wanoteFileNum=${fdto.wanoteFileNum}">${fdto.originalFilename}</a>
 			   	</c:forEach>
 			   </td>
 			  
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       첨&nbsp;&nbsp;부 :
-			     <c:forEach var="fdto" items="${flist }">
-		           	<a href="<%=cp%>/wanote/article/download?wanoteFileNum=${fdto.wanoteFileNum}">${fdto.originalFilename}</a>
-		          </c:forEach>
-		           
-	
-			    </td>
-			</tr>
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
@@ -65,7 +56,7 @@
 			<tr height="45">
 			    <td width="300" align="left">
 			    <button type="button" class="btn" onclick="updateWanoteBoard('${dto.waNum}')">수정</button>
-			    <button type="button" class="btn" onclick="deletewanoteBoard('${dto.waNum}');">삭제</button>
+			    <button type="button" class="btn" onclick="deletewanoteBoard('${dto.waNum}', '${query }');">삭제</button>
 			    </td>
 			    <td align="right">
 			        <button type="button" class="btn" onclick="location.href='<%=cp%>/mypage/wanote/main'">리스트</button>

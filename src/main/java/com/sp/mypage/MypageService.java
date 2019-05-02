@@ -16,4 +16,9 @@ public interface MypageService {
 	public Wanote preReadWanote(Map<String, Object> map);
 	public Wanote nextReadWanote(Map<String, Object> map);
 	public WanoteFileDTO readWanoteFileOne(int wanoteFileNum);
+	public int updateWanoteFile(WanoteFileDTO fdto);
+	public int deleteWanote(int waNum);
+	public int deleteWanoteFile(int waNum);
+	public int insertWanoteFile(WanoteFileDTO fdto);
+	public int updateWanote(Wanote dto);
 }

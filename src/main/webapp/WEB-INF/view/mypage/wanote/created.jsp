@@ -40,11 +40,23 @@ ${mode=="created"?"작성":"수정"}
 				<c:if test="${mode=='update' }">
 				  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨부된파일</td>
-				      <td style="padding-left:10px;"> 
-				          ${dto.originalFilename}
-				          <c:if test="${not empty dto.saveFilename}">
-				          		| <span style="cursor:pointer;" data-num="${dto.num }" id="deleteBoardFile">파일삭제</span>
-				          </c:if>
+				       <td style="padding-left:10px;"> 
+				      <c:if test="${flist != null }">
+					   		<table>
+					   		<c:forEach var="fdto" items="${flist}">	
+						      <tr style="padding-left:10px;">  	
+      							<td>
+						          <img alt="" src="<%=cp%>/uploads/wanote/${fdto.saveFilename}" width="200px">
+						          ${fdto.originalFilename }  
+						          <c:if test="${not empty fdto.saveFilename}">
+						          		| <span style="cursor:pointer;" data-num="${fdto.wanoteFileNum }" id="deleteWanoteFile">파일삭제</span>
+						          </c:if>
+						     	</td>
+						       </tr>
+						       </c:forEach>
+						      </table>
+						
+				       </c:if>
 				       </td>
 				  </tr>
 				  </c:if>
@@ -60,7 +72,7 @@ ${mode=="created"?"작성":"수정"}
 			        </button>
 			        <button type="button" class="btn" onclick="location.href='<%=cp%>/mypage/wanote/main'">${mode=='update'?'수정취소':'등록취소'}</button>
 			        <c:if test="${mode=='update'}">
-			         	 <input type="hidden" name="num" value="${dto.num}">
+			         	 <input type="hidden" name="waNum" value="${dto.waNum}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			        
