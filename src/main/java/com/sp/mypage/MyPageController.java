@@ -379,29 +379,32 @@ public class MyPageController {
 		return model;
 	}
 	
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "null" })
 	@RequestMapping(value = "/mypage/wanote/update", method = RequestMethod.POST)
 	@ResponseBody
-	public void updateWanoteSubmit(
+	public Map<String, Object> updateWanoteSubmit(
 			Wanote dto,
 			@RequestParam String page, 
 			HttpSession session,
 			HttpServletRequest req) throws Exception {
 		
+		Map<String, Object> model = new HashMap<>();
 		List<Integer> removeList = null;
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "wanote";		
-		
+/*		
 		if(dto.getUpload() != null) {
 			List<WanoteFileDTO> flist = mypageService.readWanoteFile(dto.getWaNum());
-			for(WanoteFileDTO fdto : flist) {
-				for(int i=0; i<dto.getUpload().size(); i++) {
-					if(fdto.getOriginalFilename().equals(dto.getUpload().get(i).getOriginalFilename())){
-						//파일 있으면 getUpload 리스트에서 제거
-						removeList.add(i);
+			if(flist != null) {
+				for(WanoteFileDTO fdto : flist) {
+					for(int i=0; i<dto.getUpload().size(); i++) {
+						if(fdto.getOriginalFilename().equals(dto.getUpload().get(i).getOriginalFilename())){
+							//파일 있으면 getUpload 리스트에서 제거
+							removeList.add(i);
+						}
 					}
-				}
-			}		
+				}	
+			}
 		}
 		
 		//삭제
@@ -410,7 +413,7 @@ public class MyPageController {
 				dto.getUpload().remove(i);
 			}
 		}
-		
+		*/
 		WanoteFileDTO fdto = null;
 		String saveFilename = null;
 		
@@ -431,6 +434,8 @@ public class MyPageController {
 		}
 
 		mypageService.updateWanote(dto);
+		
+		return model;
 		
 	}
 	

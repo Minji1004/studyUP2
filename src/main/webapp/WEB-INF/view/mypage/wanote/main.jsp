@@ -47,7 +47,7 @@ function sendWanote(mode){
 			,data : query
 			,dataType : "JSON"
 			,success:function(data){		
-				alert("수정성공:");
+				alert("수정성공");
 				location.href = "<%=cp%>/mypage/wanote/main";
 			},
 			beforeSend:function(jqXHR){

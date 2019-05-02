@@ -28,7 +28,7 @@ $(function(){
 </script>
 
 <form name="mypageProfileUpdateForm" method="post" enctype="multipart/form-data">
-<table>
+<table style="margin: 20px auto">
 	<tr>
 		<td><img width="300px" height="300px" id = "LoadMyprofile" alt="" src="<%=cp%>/uploads/member_profile/${dto.picture}"> </td>
 		<td><input type="file" name="pictureM" onchange="LoadImg(this)"></td>
@@ -55,17 +55,17 @@ $(function(){
 		<td>전화번호 : </td>
 		<td><input type="text" name="tel" value="${dto.tel }"></td>
 	</tr>
-	
+</table>
+<table>
+
 </table>
 <input type="hidden" name="userId" value="${dto.userId }">
 </form>
-<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
+<table style="margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
 			    <td width="300" align="left">
 			      <button type="button" class="btn" onclick="updateMyprofile();">수정완료</button>
-			    </td>
-			    <td>
-			    	<button type="button" class="btn" onclick="mypageMain();">취소</button>
+			      <button type="button" class="btn" onclick="mypageMain();">취소</button>
 			    </td>
 			</tr>
 </table>

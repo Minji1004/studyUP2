@@ -128,9 +128,8 @@ function sendLogin() {
 	
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<div align="center">
-		<button id = "kakao-login-btn" style="width: 360; height: 50; background: yellow;  font-size: 17px;
-    font-weight: 1000; color: #5C391D; border: 1px solid yellow; border-radius: 5px;">카카오톡 ID 로그인</button>
-	
+	<a id="kakao-login-btn"></a>
+	<a href="http://developers.kakao.com/logout"></a>
 		<script type='text/javascript'>
 		
 	    
@@ -141,23 +140,20 @@ function sendLogin() {
 	    	Kakao.Auth.createLoginButton({
 		        container: '#kakao-login-btn',
 		        success: function(authObj) {
-		        	kakaoLoginForm();
+		        	getKakaoInfo();
 		        },
 		        fail: function(err) {
 		           alert(JSON.stringify(err));
 		        }
 		      });
-	    	$(document).on("click", "#kakao-login-btn", function(){
-	    		
-	    	});
 	    });
           
-
+			//보류
           function kakaoLoginForm() {
         	  
               Kakao.Auth.loginForm({
               	success:function(authObj){
-              		getKakaoInfo();
+              		
               	  	console.log("loginForm");
               	},
   		     	fail:function(errorObj){
