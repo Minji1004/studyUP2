@@ -10,10 +10,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("fileManager")
@@ -279,5 +284,50 @@ public class FileManager {
 		}
 		
 	    return type;
+	}
+	
+	/**
+	 * 
+	 * @param response
+	 * @param pathname: file경로
+	 * @param fileList: 알집에 넣을 파일 목록들
+	 * @return
+	 */
+	
+	public boolean downloadZip(HttpServletResponse response, String pathname, List<MyFile> fileList) {		
+	    response.setContentType("application/octet-stream");
+	    response.setHeader("Content-Disposition", "attachment;filename=download.zip");
+	    response.setStatus(HttpServletResponse.SC_OK);
+
+	    try (ZipOutputStream zippedOut = new ZipOutputStream(response.getOutputStream())) {    	
+	    	
+	        for (MyFile file : fileList) {
+	        	
+	        	String fullpathname = pathname + File.separator + file.getSaveFilename();
+	        
+	        	try {
+	        		if(file.getOriginalFilename() == null || file.getOriginalFilename().equals(""))	        			
+	        			file.setOriginalFilename(new String(file.getSaveFilename().getBytes("euc-kr"),"8859_1"));	        		
+	        	} catch (UnsupportedEncodingException e) {
+	        	}
+
+	        	FileSystemResource resource = new FileSystemResource(fullpathname);
+
+	            ZipEntry e = new ZipEntry(file.getOriginalFilename());
+	            e.setSize(file.getFileSize());
+	            e.setTime(System.currentTimeMillis());
+
+	            zippedOut.putNextEntry(e);
+
+	            StreamUtils.copy(resource.getInputStream(), zippedOut);
+	            zippedOut.closeEntry();
+	        }	        
+	        
+	        zippedOut.finish();
+	        return true;
+	    } catch (Exception e) {	        
+	    }
+	    
+	    return false;
 	}
 }

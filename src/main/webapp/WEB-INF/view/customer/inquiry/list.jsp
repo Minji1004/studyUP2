@@ -113,18 +113,30 @@ function searchList() {
 		                    </tr>
 		                </thead>
 		                <tbody>
-		        <c:forEach var="dto" items="${inquirylist}">
+		        <c:forEach var="dto" items="${inquiryList}">
 		                    <tr>
 		                        <td class="text-center">${dto.listNum}</td>
 		                        <td>
 		                        	<a href="${articleUrl}&inquiryNum=${dto.inquiryNum}">${dto.subject}</a>
 		                        </td>
-		                        <td class="text-center">${dto.userId}</td>
+		                        <td class="text-center">${dto.nickName}</td>
 		                        <td class="text-center">${dto.created}</td>		                     
 		                    </tr>
-		       </c:forEach>             
+		       </c:forEach>      
+		       <c:forEach var="dto" items="${list}">
+		       			<tr>
+		       				<td class="text-center">${dto.listNum}</td>
+		       				<td>
+		       					<a href="${articleUrl}&inquiryNum=${dto.inquiryNum}">${dto.subject}</a>
+		       					<c:if test="${dto.gap<1}">
+		       						<img src='<%=cp%>/resource/images/new.gif'>
+		       					</c:if>
+		       				</td>
+		       				<td class="text-center">${dto.nickName}</td>
+		       				<td class="text-center">${dto.created}</td>
+		       			</tr>
+		       </c:forEach>       
 		                </tbody>
-		
 		            </table>
 		        </div>
 		
@@ -143,7 +155,7 @@ function searchList() {
 									  <option value="all"     ${condition=="all"?"selected='selected'":""}>모두</option>
 									  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
 									  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-									  <option value="userName"${condition=="name"?"selected='selected'":""}>작성자</option>
+									  <option value="userName"${condition=="nickName"?"selected='selected'":""}>작성자</option>
 									  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 								  </select>
 								  <input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">

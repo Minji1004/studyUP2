@@ -8,7 +8,7 @@
 
 
 <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar" style = "	max-width: 240px;background: #222d32;padding-Top:15px;height: 1026px;">
+  <aside class="main-sidebar" style = "	max-width: 240px;background: #222d32;padding-Top:15px;height: 1026px;position: fixed;top: 74px;">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">

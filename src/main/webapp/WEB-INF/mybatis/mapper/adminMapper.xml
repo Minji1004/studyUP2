@@ -66,7 +66,7 @@
 	LIMIT #{start}, #{rows}
 	</select>
 	
-	<select id="readReport" parameterType="Integer" resultType="com.sp.admin.black.Report">
+	<select id="readReport" parameterType="map" resultType="com.sp.admin.black.Report">
 	select A.reportNum, A.reportBoard, A.reportBoardNum, A.replNum, A.reportUser, A.reportCause, A.reportType, A.reportDate, A.reportUserId, A.reportUserNickName, A.tel,
        B.reportedUser, B.reportedUserId, B.reportedNickName
 	from 
@@ -86,9 +86,12 @@
 	ON A.reportNum = B.reportNum
 	where A.reportNum=#{reportNum}
 	</select>
-
-<!-- member Mapper -->
 	
+	<select id="userCount" parameterType="Integer" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0) FROM report where reportedUser=#{reportedUser};
+	</select>
+
+<!-- member Mapper -->	
 	<select id="readMember" parameterType="Integer" resultType="com.sp.admin.member.Member">
 		SELECT userNum, userId, nickname, tel,
 		created, lastLogin, picture
@@ -127,4 +130,7 @@
 	<delete id="deleteMember">
 		DELETE from memberInfo where userId=#{userId}
 	</delete>
+	
+<!-- blacklist mapper -->	
+
 </mapper>

@@ -16,6 +16,12 @@
 								 #{roadAddr}, #{normAddr}, #{buildName}, #{detailAddr}, #{bCode}, #{cafeOpen}, #{cafeClose})
 	</insert>
 	
+	<!-- 카페 파일정보 넣기  -->
+	<insert id="insertCafeFile" parameterType="com.sp.studyroom.StudyRoom">
+		INSERT INTO cafeFile(cafeNum, imgFilename, saveFilename) VALUES(#{cafeNum}, #{imgFilename}, #{saveFilename} )
+	</insert>
+	
+	
 	<!-- 카페별 방정보 넣기 -->
 	<insert id="insertCafeRoom" parameterType="com.sp.studyroom.StudyRoom">
 		INSERT INTO cafeRoom (roomNum, cafeNum, roomName, minUser, maxUser, timeOrRoom, unitPrice)
@@ -26,5 +32,26 @@
 	<insert id="insertCafeRoomDetail" parameterType="com.sp.studyroom.StudyRoom">
 		INSERT INTO cafeRoomDetail (roomNum, checkTime) VALUES(#{roomNum},#{checkTime})
 	</insert>
+	
+	
+	<!-- 스터디룸 리스트 가져오기 -->
+	<select id="listStudyRoom" parameterType="map" resultType="com.sp.studyroom.StudyRoom">
+		SELECT cafeNum, userNum, cafeName, cafeIntro, sido, sigungu, bname, 
+			   roadAddr, bCode
+		FROM cafe
+		<where>
+			
+		</where>
+		ORDER BY cafeNum DESC
+		LIMIT #{start}, #{rows}
+	</select>
+	
+	<!-- 스터디룸 파일 리스트 가져오기 -->
+	<select id="listStudyRoomFile" parameterType="Integer" resultType="com.sp.studyroom.StudyRoomFile">
+		SELECT fileNum, cafeNum, imgFilename
+		FROM cafeFile
+		WHERE cafeNum=#{cafeNum}
+	</select>
+	
 	
 </mapper>

@@ -1,13 +1,20 @@
 package com.sp.studyroom;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.springframework.web.multipart.MultipartFile;
-import org.aspectj.weaver.ast.Var;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
@@ -24,9 +31,63 @@ public class StudyRoomController {
 	private FileManager fileManager;
 	
 	@RequestMapping(value = "/studyroom/main")
-	public String pageMain() {		 
+	public String pageMain(
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String sido_con,
+			@RequestParam(defaultValue="all") String sigungu_con,
+			@RequestParam(defaultValue="all") String bname_con,
+			HttpServletRequest req,
+			HttpSession session,
+			Model model
+			) throws Exception {
+		
+		Map<String, Object> map = new HashMap<>();
+		int rows = 6;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		if(dataCount!=0)
+			total_page = myUtil.pageCount(rows, dataCount);
+		
+		if(current_page > total_page)
+			current_page=total_page;
+		
+		int start = (current_page-1) * rows;
+		if(start < 0) start = 0;
+		map.put("start", start);
+		map.put("rows", rows);
+		
+		List<StudyRoom> list = service.listStudyRoom(map);
+
+		for( StudyRoom dto : list ) {
+			// 리스트의 문자열 엔터 처리하기 
+			String temp = dto.getCafeIntro().replaceAll("\n", "<br>");
+			dto.setCafeIntro(temp);
+			
+			// 리스트의 파일위치 처리하기
+			List<StudyRoomFile> tempList = service.fileList(dto.getCafeNum());
+			if(tempList!=null) {
+				dto.setFileList(tempList);
+			} else {
+				dto.setFileList(null);
+			}
+		}
+		
+		map.put("sido_con", sido_con);
+		map.put("sigungu_con", sigungu_con);
+		map.put("bname_con", bname_con); 
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listStudyRoom");
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("paging", paging);
+		
 		return ".four.studyroom.main";
 	}
+	
 	
 	@RequestMapping(value = "/studyroom/modal/main")
 	public String modalMain() {		 
@@ -90,6 +151,11 @@ public class StudyRoomController {
 				sum += round;
 			}
 		}
+		
+		// cafe 그림 파일 넣기
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + File.separator + "uploads" + File.separator + "studyroom";
+		service.insertFile(dto, pathname);
 		
 		return ".four.studyroom.main";
 	}

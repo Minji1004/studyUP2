@@ -33,7 +33,26 @@ function searchList(){
 	f.submit();
 }
 
-
+$(function(){	
+		$(document).on("click", ".flist", function(){		
+			var num=$(this).attr("data-reportNum");		
+			var url="<%=cp%>/admin/blacklist/article?reportNum="+num+"&page=${page}";
+	
+			$('#reportModal .modal-content').load(url, function(){
+				$('#reportModal').modal('show');
+			});
+		});
+	
+		$(document).on("click", ".blist", function(){		
+			var num=$(this).attr("data-blackNum");		
+			var url="<%=cp%>/admin/blacklist/article?blackNum="+num+"&page=${page}";
+	
+			$('#blackModal .modal-content').load(url, function(){
+				$('#blackModal').modal('show');
+			});
+		});		
+	
+});
 </script>
 
 <section class="features section">
@@ -66,7 +85,7 @@ function searchList(){
 		  </ul>
 		</div>
 		<c:forEach var="rdto" items="${rlist}">
-		  <ul class="flist" onclick="location.href='${articleUrl}&reportNum=${rdto.reportNum}'">
+		  <ul class="flist" data-reportNum="${rdto.reportNum}">
 		      <li style="width:10%;">${rdto.rlistNum}</li>
 		      <li style="width:21%;">${rdto.reportedUserId}</li>
 		      <li style="width:21%;">${rdto.reportedNickName}</li>
@@ -104,7 +123,7 @@ function searchList(){
 		      <li style="color: #787878; width:18%;">해제예정일</li>
 		  </ul>
 		  
-		  <ul class="flist" onclick="location.href='#'"> 
+		  <ul class="blist" data-blackNum=""> 
 		      <li style="width:10%;">번호</li>
 		      <li style="width:27%;">아이디</li>
 		      <li style="width:27%;">닉네임</li>	      

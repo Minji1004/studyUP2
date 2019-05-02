@@ -35,6 +35,8 @@ public class ReportServiceImpl implements ReportService{
 		}
 		return result;
 	}
+	
+	
 
 	@Override
 	public List<Report> listReport(Map<String, Object> map) throws Exception {
@@ -60,6 +62,18 @@ public class ReportServiceImpl implements ReportService{
 		}
 		
 		return rdto;
+	}
+
+	@Override
+	public int userReportCount(int reportedUser) throws Exception {
+		int result=0;
+				
+		try {
+			result=dao.selectOne("admin.userCount", reportedUser);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 

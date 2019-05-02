@@ -197,7 +197,6 @@ public class NoticeServiceImpl implements NoticeService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
 

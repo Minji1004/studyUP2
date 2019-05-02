@@ -73,6 +73,7 @@
     vertical-align: middle;
 }
 
+
 </style>
 
 <script type="text/javascript">
@@ -85,6 +86,38 @@
         
         return;
  }
+  
+$(function(){
+	$("body").on("change", "input[name=upload]", function(){
+		if(! $(this).val()){
+			return;
+		}
+		
+		var b=false;
+		$("input[name=upload]").each(function(){
+			if(! $(this).val()){
+				b=true;
+				return;
+			}
+		});
+		if(b)
+			return;
+		var $tr, $td, $input;
+		
+		$tr=$("<tr>");
+		$td=$("<td>", {class:"td1", html:"첨부"});
+		$tr.append($td);
+		$td=$("<td>", {class:"td3", colspan:"3"});
+		$input=$("<input>", {type:"file", name:"upload", class:"form-control input-sm", style:"height : 35px;"});
+		$td.append($input);
+		$tr.append($td);
+		
+		$("#tb").append($tr);
+	});
+});
+<c:if test="${mode=='update'}">
+
+</c:if>
 </script>
 
 <section class="section" id="srcontainer" >

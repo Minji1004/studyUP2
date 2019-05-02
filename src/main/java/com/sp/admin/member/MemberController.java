@@ -128,7 +128,7 @@ public class MemberController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 				
-		return ".admin.member.article";
+		return "admin/member/article";
 	}
 	
 	@RequestMapping(value="admin/member/delete")

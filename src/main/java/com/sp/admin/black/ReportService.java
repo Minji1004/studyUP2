@@ -8,4 +8,5 @@ public interface ReportService {
 	public int dataReportCount(Map<String, Object> map) throws Exception;
 	public List<Report> listReport(Map<String, Object> map) throws Exception;
 	public Report readReport(int num) throws Exception;
+	public int userReportCount(int reportedUser) throws Exception;	
 }

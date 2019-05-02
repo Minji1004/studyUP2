@@ -104,34 +104,38 @@
 		                 <thead>
 		                     <tr>
 		                         <th colspan="2" style="text-align: center;">
-		                                 제목 : {dto.subject}
+		                                 ${dto.subject}
 		                         </th>
 		                     </tr>
 		                <thead>
 		                 <tbody>
 		                     <tr>
 		                         <td style="text-align: left;">
-		                	아이디 : ${dto.userId}
+		                			아이디 : ${dto.nickName}
 		                         </td>
 		                         <td style="text-align: right;">
-		                          ${dto.created} <i></i>
+		                          ${dto.created}
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="height: 230px;">
-		                              {dto.content}
+		                              ${dto.content}
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2">
 		                              <span style="display: inline-block; min-width: 45px;">이전글</span> :
-		                             ${dto.preReadDto}
+			                              <c:if test="${not empty preReadDto}">
+			                              	<a href="<%=cp%>/customer/inquiry/article?${query}&inquiryNum=${preReadDto.inquiryNum}">${preReadDto.subject}</a>
+			                             </c:if>
 		                         </td>
 		                     </tr>
 		                     <tr>
 		                         <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
 		                              <span style="display: inline-block; min-width: 45px;">다음글</span> :
-		                            ${dto.nextReadDto}
+			                              <c:if test="${not empty nextReadDto}">
+			                              	<a href="<%=cp%>/customer/inquiry/article?${query}&inquiryNum=${nextReadDto.inquiryNum}">${nextReadDto.subject}</a>	                       
+			                              </c:if>
 		                         </td>
 		                     </tr>                                          
 		                </tbody>
@@ -142,7 +146,7 @@
 		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteInquiry">삭제</button>
 		                		</td>
 		                		<td align="right">
-		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/list?${query}';"> 목록으로 </button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list?${query}';"> 목록으로 </button>
 		                		</td>
 		                	</tr>
 		                </tfoot>

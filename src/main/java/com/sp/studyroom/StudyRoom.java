@@ -2,6 +2,8 @@ package com.sp.studyroom;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class StudyRoom {
 	private int	userNum;
 	private int roomNum;
@@ -32,9 +34,20 @@ public class StudyRoom {
 	private int cafeClose;
 	private List<String> checkboxCounts;
 	private int checkTime;
+	private List<MultipartFile> upload;
+	private String imgFilename;
+	private String saveFilename;
+	private List<StudyRoom> studyRoomList;
+	private List<StudyRoomFile> fileList;
 	
 	
 	
+	public List<StudyRoom> getStudyRoomList() {
+		return studyRoomList;
+	}
+	public void setStudyRoomList(List<StudyRoom> studyRoomList) {
+		this.studyRoomList = studyRoomList;
+	}
 	public int getCheckTime() {
 		return checkTime;
 	}
@@ -209,7 +222,31 @@ public class StudyRoom {
 	public void setCheckboxCounts(List<String> checkboxCounts) {
 		this.checkboxCounts = checkboxCounts;
 	}
-
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
+	}
+	public String getImgFilename() {
+		return imgFilename;
+	}
+	public void setImgFilename(String imgFilename) {
+		this.imgFilename = imgFilename;
+	}
+	public List<StudyRoomFile> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<StudyRoomFile> fileList) {
+		this.fileList = fileList;
+	}
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+	
 	
 	
 	

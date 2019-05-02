@@ -40,6 +40,7 @@
      	<if test="keyword != null and keyword !='' ">
      	    <include refid="where-list"/>
      	</if>
+     	AND (tId = #{tId})
      </where>
 </select>
 
@@ -51,13 +52,14 @@
 	     	<if test="keyword != null and keyword !='' ">
 	     	    <include refid="where-list"/>
 	     	</if>
+	     	AND (tId = #{tId})
 	   </where>
        ORDER BY tnoticeNum DESC
        LIMIT #{start}, #{rows}
 </select>
 
-<select id="listNoticeTop" resultType="com.sp.teacher.notice.TeacherNotice">
-	select tnoticeNum, subject, hitCount, created from tnotice where noticeweather = 1
+<select id="listNoticeTop" parameterType="map" resultType="com.sp.teacher.notice.TeacherNotice">
+	select tnoticeNum, subject, hitCount, created from tnotice where noticeweather = 1 AND tId = #{tId}
 	ORDER BY tnoticeNum DESC
 </select>
 
@@ -72,7 +74,7 @@
 	update tnotice SET hitCount = hitCount+1 WHERE tnoticeNum = #{tnoticeNum}
 </update>
 
-<select id="selectListFile" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
+<select id="selectListFile" parameterType="Integer" resultType="com.sp.common.MyFile">
 	select filenum AS fileNum, originalFilename, saveFilename, fileSize FROM tnotice_file where tnoticeNum = #{tnoticeNum}
 </select>
 
@@ -116,4 +118,37 @@
 <delete id="deleteUserLikeNum" parameterType="map">
 	DELETE FROM tnotice_like WHERE userId = #{userId} AND tnoticeNum= #{tnoticeNum}
 </delete>
+
+<select id="readFile" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
+	SELECT filenum AS fileNum, originalFilename, saveFilename, fileSize FROM tnotice_file where filenum = #{fileNum}
+</select>
+
+
+<!-- 댓글 -->
+<insert id="insertReply" parameterType="com.sp.teacher.notice.Reply">
+	INSERT INTO tnotice_r (tnoticeNum, userId, content) VALUES (#{tnoticeNum}, #{userId}, #{content})
+ </insert>
+ 
+ <select id="replyCount" parameterType="map" resultType="Integer">
+ 	SELECT IFNULL(COUNT(*),0) FROM tnotice_r WHERE tnoticeNum = #{tnoticeNum} AND answer = 0
+ </select>
+ 
+ <select id="listReply" parameterType="map" resultType="com.sp.teacher.notice.Reply">
+ SELECT tnotice_r_num, tnoticeNum, content, tnotice_r.created, nickname, picture 
+			FROM tnotice_r
+			JOIN memberinfo 
+			ON tnotice_r.userId = memberinfo.userId
+			WHERE tnoticeNum = #{tnoticeNum} AND answer = 0
+			ORDER BY tnotice_r_num DESC
+			LIMIT #{start}, #{rows}
+ </select>
+ 
+ <select id="answerCount" parameterType="map" resultType="Integer">
+ 	SELECT ifnull(COUNT(*), 0) answerCount FROM tnotice_r WHERE tnotice_r_num = #{tnotice_r_num} and answer >0
+ </select>
+ 
+ <insert id="insertReplyAnswer" parameterType="com.sp.teacher.notice.Reply">
+	INSERT INTO tnotice_r (tnoticeNum, userId, content, answer) VALUES (#{tnoticeNum}, #{userId}, #{content}, #{tnotice_r_num})
+ </insert>
+
 </mapper>
