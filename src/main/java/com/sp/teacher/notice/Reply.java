@@ -5,6 +5,7 @@ public class Reply {
 	private int tnotice_r_num;
 	private int tnoticeNum;
 	private int answer;
+	private int answerCount;
 	private String userId;
 	private String created;
 	private String content;
@@ -58,6 +59,12 @@ public class Reply {
 	}
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+	public int getAnswerCount() {
+		return answerCount;
+	}
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
 	}
 	
 	

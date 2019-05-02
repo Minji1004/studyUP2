@@ -92,12 +92,7 @@ public class CommentController {
 		dto.setScore(score);
 		dto.setContent(content);
 				
-		try {
-			commentService.insertComment(dto);
-			model.put("state", "true");
-		}catch(Exception e){
-			model.put("state", "false");
-		}	
+		commentService.insertComment(dto);	
 				
 		return model;
 	}

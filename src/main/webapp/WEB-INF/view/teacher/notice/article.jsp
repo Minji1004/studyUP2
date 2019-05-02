@@ -22,7 +22,7 @@
   
   $(function(){
   		showLikeNum();
-  		listReply();
+  		listPage(1);
   });
   
   function showLikeNum(){
@@ -66,14 +66,15 @@
 		});	
   }
   
-  function listReply(){
+  function listPage(page){
 	  var url="<%=cp%>/teacher/notice/readListReply";
 	
 		$.ajax({
 			type:"get"
 			,url:url
 			,data:{
-				tnoticeNum : ${dto.tnoticeNum}
+				tnoticeNum : ${dto.tnoticeNum},
+				page : page
 			}
 			,success:function(data){
 				$("#listReply").html(data);
@@ -96,7 +97,7 @@
 		var tnoticeNum = '${dto.tnoticeNum}';
 		
 		var url="<%=cp%>/teacher/notice/insertReply";
-		var query="tnoticeNum="+tnoticeNum+"&content="+content;
+		var query="tnoticeNum="+tnoticeNum+"&content="+encodeURIComponent(content);
 		
 		$.ajax({
 			type:"post",
@@ -105,7 +106,7 @@
 			dataType: "json",
 			success: function(data){	
 					$("#commentContent").val("");
-					//listPage(1);
+					listPage(${page});
 			},  
 			error: function(jqXHR){ 
 				console.log(jqXHR.responseText);
@@ -113,6 +114,92 @@
 		}); 
 		
 	}
+  
+  
+  $("body").on("click", ".listAnswer", function(){
+		var noticeNum = $(this).attr("data-tnoticeNum");
+		
+		/* $("#answerList" + noticeNum).html("성공했어!"); */
+		
+		alert("answerList" + noticeNum);
+		
+		$(this).closest(".test_answer").next("#answerList" + noticeNum).html("성공");
+		
+		<%-- var url="<%=cp%>/teacher/notice/listAnswer";
+		  $.ajax({
+			type:"get",
+			url: url,
+			data: {
+				tnotice_r_num : noticeNum
+			},
+			success: function(data){
+				$answerList.empty();
+				$answerList.html(data);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); --%>
+  });
+  
+  
+ function listAnswer(tnotice_r_num){
+
+	$("#answerList"+tnotice_r_num).html("성공했어!");
+	alert("#answerList"+tnotice_r_num);
+	
+	 // $answerList.show();
+		// 리스트 보여주기
+<%-- 		var url="<%=cp%>/teacher/notice/listAnswer";
+		  $.ajax({
+				type:"get",
+				url: url,
+				data: {
+					tnotice_r_num : tnotice_r_num
+				},
+				success: function(data){
+					$answerList.empty();
+					$answerList.html(data);
+				},  
+				error: function(jqXHR){ 
+					console.log(jqXHR.responseText);
+				}			
+			});  --%>
+	  /* var isVisible = $answerList.is(":visible");
+	  
+		if(isVisible){
+			$answerList.hide();
+		}else{
+			
+		}   */
+  }
+  
+  function sendReplyAnswer(tnotice_r_num){
+	//값 있는 지 체크
+		var content = $("#answerList"+tnotice_r_num).find("textarea").val();	
+		
+		if(content == ""){
+			alert("댓글 내용을 입력해주세요.")
+			return;	
+		}
+
+		
+		var url="<%=cp%>/teacher/notice/insertReplyAnswer"
+		var query="tnoticeNum="+${dto.tnoticeNum}+"&tnotice_r_num="+tnotice_r_num+"&content="+encodeURIComponent(content);
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){	
+				$("#answerList"+tnotice_r_num).find("textarea").val("");
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		});
+  }
 
 </script>
 

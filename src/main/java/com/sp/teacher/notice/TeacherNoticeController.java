@@ -57,17 +57,20 @@ public class TeacherNoticeController {
 			HttpServletRequest req,
 			Model model) throws Exception{		
 		
+		Map<String, Object> map=new HashMap<String, Object>();
+		
 		Teacher teacher = teacherService.readTeacher(tnum);
+		map.put("tId", teacher.getUserId());
 		
 		int rows=10;
 		int total_page=0;
 		int dataCount=0;
 		
 		keyword=URLDecoder.decode(keyword, "utf-8");
-	
-		Map<String, Object> map=new HashMap<String, Object>();
+		
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		
 		
 		dataCount= teacherNoticeService.dataCount(map);
 		
@@ -80,7 +83,7 @@ public class TeacherNoticeController {
 		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");		
 		List<TeacherNotice> noticeList=null;
 		if(current_page==1) {
-			noticeList=teacherNoticeService.listNoticeTop();
+			noticeList=teacherNoticeService.listNoticeTop(map);
 			for(TeacherNotice dto: noticeList) 
 				dto.setCreated(dto.getCreated().substring(0, 10));
 		}
@@ -333,42 +336,42 @@ public class TeacherNoticeController {
 	}
 	
 	@RequestMapping(value="/teacher/notice/readListReply", method=RequestMethod.GET)
-	public String readListReply (@RequestParam int tnoticeNum, Model model) throws Exception{
-
-	/*
+	public String readListReply (@RequestParam int tnoticeNum, 
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			Model model) throws Exception{
+		
 	int rows = 5;
 	int total_page;
 	int dataCount = 0;
 	
 	Map<String, Object> map = new HashMap<>();
-	map.put("num", num);
+	map.put("tnoticeNum", tnoticeNum);
 	
-	dataCount = boardService.replyCount(map);
+	dataCount = teacherNoticeService.replyCount(map);
 	total_page = myUtil.pageCount(rows, dataCount);
 	if(current_page>total_page)
 		current_page=total_page;
 	
-	int start = (current_page-1)*rows+1;
-	int end = current_page*rows;
+	int start = (current_page-1)*rows; //0부터 시작
+	if(start<0) start=0;
 	
 	map.put("start", start);
-	map.put("end", end);
+	map.put("rows", rows);
 	
-	List<Reply> listReply = boardService.listReply(map);
-	for(Reply dto: listReply) {
-		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
-	}
-	
+	List<Reply> listReply = teacherNoticeService.listReply(map);
+	if(listReply != null && listReply.size()>0)
+		for(Reply dto: listReply)
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
 	
 	//AJAX용 페이징
-	String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+	String paging = teacherUtil.paging(current_page, total_page);
 	
 	//포워딩할 JSP에 넘길 값
 	model.addAttribute("listReply", listReply);
 	model.addAttribute("pageNo", current_page);
 	model.addAttribute("replyCount", dataCount);
 	model.addAttribute("total_page", total_page);
-	model.addAttribute("paging", paging);*/
+	model.addAttribute("paging", paging);
 	
 	
 	return "teacher/notice/listReply";
@@ -376,18 +379,61 @@ public class TeacherNoticeController {
 	
 	@RequestMapping(value="/teacher/notice/insertReply", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertReply(@RequestParam int tnoticeNum, HttpSession session) throws Exception{
+	public Map<String, Object> insertReply(@RequestParam int tnoticeNum, @RequestParam String content, HttpSession session) throws Exception{
 		
 		Map<String, Object> model = new HashMap<>();
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		String userId = info.getUserId();
 		
+		Reply dto = new Reply();
 		
+		dto.setUserId(userId);
+		dto.setTnoticeNum(tnoticeNum);
+		dto.setContent(content);
 		
-		
+		try {
+			teacherNoticeService.insertReply(dto);
+			model.put("state", "true");
+		} catch (Exception e) {
+			model.put("state", "false");
+		}
+				
 		return model;		
 	}
 	
+	@RequestMapping(value="/teacher/notice/listAnswer", method=RequestMethod.GET)
+	public String readlistAnswer (@RequestParam int tnotice_r_num, Model model) throws Exception{
+	
+		model.addAttribute("tnotice_r_num", tnotice_r_num);
+		
+		return "teacher/notice/listReplyAnswer";
+	}
+	
+	@RequestMapping(value="/teacher/notice/insertReplyAnswer", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReplyAnswer(@RequestParam int tnoticeNum, @RequestParam int tnotice_r_num, @RequestParam String content, HttpSession session) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String userId = info.getUserId();
+		
+		Reply dto = new Reply();
+		
+		dto.setUserId(userId);
+		dto.setContent(content);
+		dto.setTnotice_r_num(tnotice_r_num);
+		dto.setTnoticeNum(tnoticeNum);
+		
+		try {
+			teacherNoticeService.insertReplyAnswer(dto);
+			model.put("state", "true");
+		} catch (Exception e) {
+			model.put("state", "false");
+		}
+				
+		return model;	
+	}
 	
 }
