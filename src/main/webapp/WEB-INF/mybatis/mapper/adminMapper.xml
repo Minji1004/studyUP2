@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
-
+<!-- report Mapper -->
 	<insert id="insertReport" parameterType="com.sp.admin.black.Report">
 		INSERT INTO report(reportBoard, reportBoardNum, replNum, reportUser, reportedUser, reportCause, reportType)
 		VALUES(#{reportBoard}, #{reportBoardNum}, #{reportBoardNum}, #{replNum}, #{reportUser}, #{reportedUser}, #{reportCause}, #{reportType})	
@@ -66,7 +66,7 @@
 	LIMIT #{start}, #{rows}
 	</select>
 	
-	<select id="readReport" parameterType="Integer" resultType="com.sp.admin.black.Report">
+	<select id="readReport" parameterType="map" resultType="com.sp.admin.black.Report">
 	select A.reportNum, A.reportBoard, A.reportBoardNum, A.replNum, A.reportUser, A.reportCause, A.reportType, A.reportDate, A.reportUserId, A.reportUserNickName, A.tel,
        B.reportedUser, B.reportedUserId, B.reportedNickName
 	from 
@@ -87,10 +87,11 @@
 	where A.reportNum=#{reportNum}
 	</select>
 	
-	<select id="userCount">
+	<select id="userCount" parameterType="Integer" resultType="Integer">
 		SELECT IFNULL(COUNT(*),0) FROM report where reportedUser=#{reportedUser};
 	</select>
-	
+
+<!-- member Mapper -->	
 	<select id="readMember" parameterType="Integer" resultType="com.sp.admin.member.Member">
 		SELECT userNum, userId, nickname, tel,
 		created, lastLogin, picture
@@ -130,8 +131,6 @@
 		DELETE from memberInfo where userId=#{userId}
 	</delete>
 	
-	<insert id="insertBlack">
-		
-	</insert>
+<!-- blacklist mapper -->	
 
-</mapper> 
+</mapper>

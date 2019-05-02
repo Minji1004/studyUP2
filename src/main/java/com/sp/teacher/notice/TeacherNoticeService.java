@@ -11,7 +11,7 @@ public interface TeacherNoticeService {
 	public int insertFile(TeacherNotice dto);
 	public int dataCount(Map<String, Object> map) throws Exception;
 	public List<TeacherNotice> listTNotice(Map<String, Object> map) throws Exception;
-	public List<TeacherNotice> listNoticeTop() throws Exception;
+	public List<TeacherNotice> listNoticeTop(Map<String, Object> map) throws Exception;
 	
 	public TeacherNotice readTeacherNotice(int tnoticeNum) throws Exception;
 	public void updateHitCount(int tnoticeNum) throws Exception;
@@ -26,4 +26,11 @@ public interface TeacherNoticeService {
 	public int likeNumCount(int tnoticeNum) throws Exception;
 	public int updateLikeNum(Map<String, Object> map) throws Exception;
 	public TeacherNotice readFile(int fileNum) throws Exception;
+	
+	//댓글
+	public void insertReply(Reply dto) throws Exception;
+	public int replyCount(Map<String, Object> map) throws Exception;
+	public List<Reply> listReply(Map<String, Object> map) throws Exception;
+	public void insertReplyAnswer(Reply dto) throws Exception;
+
 }

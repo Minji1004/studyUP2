@@ -25,7 +25,6 @@ public class BlackController {
 	@Autowired
 	private MyUtil util;
 
-	
 	@RequestMapping(value="/admin/blacklist/list")
 	public String reportlist(
 		@RequestParam(value="page", defaultValue="1") int current_page,
@@ -39,8 +38,7 @@ public class BlackController {
 		int rows=6;
 		int total_page = 0;
 		int dataCount=0;
-		int userCount=0;
-		
+				
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "utf-8");
 		}
@@ -50,7 +48,7 @@ public class BlackController {
 		map.put("keyword", keyword);
 		
 		dataCount = rservice.dataReportCount(map);
-		userCount = rservice.userCount(map);
+		
 		
 		total_page=util.pageCount(rows, dataCount);
 		
@@ -96,8 +94,7 @@ public class BlackController {
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("paging", paging);
-		model.addAttribute("userCount", userCount);
+		model.addAttribute("paging", paging);		
 		
 		model.addAttribute("keyword", keyword);		
 		
@@ -120,20 +117,26 @@ public class BlackController {
 		}
 		
 		Report rdto=rservice.readReport(reportNum);
-		
 		if(rdto==null) {
 			return "redirect:/admin/blacklist/list";
-		}
+		}	
+		
+		int userNum=rdto.getReportedUser();
+		int userCount=rservice.userReportCount(userNum);
 		
 		rdto.setReportCause(rdto.getReportCause().replaceAll("\n", "<br>"));
 		
 		Map<String, Object> map = new HashMap<>();
+		
 		map.put("keyword", keyword);
 		map.put("reportNum", reportNum);
-						
+		
+		
 		model.addAttribute("rdto",rdto);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
+		model.addAttribute("userCount", userCount);
+		
 						
 		return "admin/blacklist/article";
 	}

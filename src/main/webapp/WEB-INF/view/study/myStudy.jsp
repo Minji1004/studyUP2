@@ -85,7 +85,7 @@ $(function(){
 		var studyTitle = $(this).find(".study-title").html();
 		var num=$(this).attr("data-studyNum");
 		var studyNum=1;
-		var url = "<%=cp%>/study/mystudy/main";
+		var url = "<%=cp%>/study/mystudy/main?studyNum="+num;
 		
 		location.href = url;
 	});

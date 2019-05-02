@@ -22,7 +22,6 @@
   
   $(function(){
   		showLikeNum();
-  		listPage(1);
   });
   
   function showLikeNum(){
@@ -66,141 +65,6 @@
 		});	
   }
   
-  function listPage(page){
-	  var url="<%=cp%>/teacher/notice/readListReply";
-	
-		$.ajax({
-			type:"get"
-			,url:url
-			,data:{
-				tnoticeNum : ${dto.tnoticeNum},
-				page : page
-			}
-			,success:function(data){
-				$("#listReply").html(data);
-			}
-			,error:function(e) {
-			    console.log(e.responseText);
-			}		 
-		});
-  }
-  
-  function sendReply(){
-		//값 있는 지 체크
-		var content = $("#commentContent").val();
-		
-		if(content == ""){
-			alert("댓글 내용을 입력해주세요.")
-			return;	
-		}
-		
-		var tnoticeNum = '${dto.tnoticeNum}';
-		
-		var url="<%=cp%>/teacher/notice/insertReply";
-		var query="tnoticeNum="+tnoticeNum+"&content="+encodeURIComponent(content);
-		
-		$.ajax({
-			type:"post",
-			url: url,
-			data: query,
-			dataType: "json",
-			success: function(data){	
-					$("#commentContent").val("");
-					listPage(${page});
-			},  
-			error: function(jqXHR){ 
-				console.log(jqXHR.responseText);
-			}			
-		}); 
-		
-	}
-  
-  
-  $("body").on("click", ".listAnswer", function(){
-		var noticeNum = $(this).attr("data-tnoticeNum");
-		
-		/* $("#answerList" + noticeNum).html("성공했어!"); */
-		
-		alert("answerList" + noticeNum);
-		
-		$(this).closest(".test_answer").next("#answerList" + noticeNum).html("성공");
-		
-		<%-- var url="<%=cp%>/teacher/notice/listAnswer";
-		  $.ajax({
-			type:"get",
-			url: url,
-			data: {
-				tnotice_r_num : noticeNum
-			},
-			success: function(data){
-				$answerList.empty();
-				$answerList.html(data);
-			},  
-			error: function(jqXHR){ 
-				console.log(jqXHR.responseText);
-			}			
-		}); --%>
-  });
-  
-  
- function listAnswer(tnotice_r_num){
-
-	$("#answerList"+tnotice_r_num).html("성공했어!");
-	alert("#answerList"+tnotice_r_num);
-	
-	 // $answerList.show();
-		// 리스트 보여주기
-<%-- 		var url="<%=cp%>/teacher/notice/listAnswer";
-		  $.ajax({
-				type:"get",
-				url: url,
-				data: {
-					tnotice_r_num : tnotice_r_num
-				},
-				success: function(data){
-					$answerList.empty();
-					$answerList.html(data);
-				},  
-				error: function(jqXHR){ 
-					console.log(jqXHR.responseText);
-				}			
-			});  --%>
-	  /* var isVisible = $answerList.is(":visible");
-	  
-		if(isVisible){
-			$answerList.hide();
-		}else{
-			
-		}   */
-  }
-  
-  function sendReplyAnswer(tnotice_r_num){
-	//값 있는 지 체크
-		var content = $("#answerList"+tnotice_r_num).find("textarea").val();	
-		
-		if(content == ""){
-			alert("댓글 내용을 입력해주세요.")
-			return;	
-		}
-
-		
-		var url="<%=cp%>/teacher/notice/insertReplyAnswer"
-		var query="tnoticeNum="+${dto.tnoticeNum}+"&tnotice_r_num="+tnotice_r_num+"&content="+encodeURIComponent(content);
-		
-		$.ajax({
-			type:"post",
-			url: url,
-			data: query,
-			dataType: "json",
-			success: function(data){	
-				$("#answerList"+tnotice_r_num).find("textarea").val("");
-			},  
-			error: function(jqXHR){ 
-				console.log(jqXHR.responseText);
-			}			
-		});
-  }
-
 </script>
 
 
@@ -244,11 +108,10 @@
 			                     <tr>
 			                         <td colspan="2">	                         
 			                              <p><b style="font-size: 15px;">첨부파일 <span style="color: #dd4b39;">${fn:length(listFile)}</span>개</b>
-			                              &nbsp;(<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${dto.totalFileSize/1024000}"/> MB)&nbsp;&nbsp;
-			                              <a href="<%=cp%>/teacher/notice/downloadZip?tnoticeNum=${dto.tnoticeNum}">모두 저장</a></p>
+			                              &nbsp;(<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${dto.totalFileSize/1024000}"/> MB)&nbsp;&nbsp;<a href="#">모두 저장</a></p>
 			                         <c:forEach var="file" items="${listFile}">
 			                              <div style="border: 1px solid #ddd; padding: 3px 5px;width: 500px;">
-			                              <a href="<%=cp%>/teacher/notice/downloadFile?fileNum=${file.fileNum}" ><i class="fa fa-download"></i></a> 
+			                              <a href="#"><i class="fa fa-download"></i></a> 
 			                              ${file.originalFilename} (<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${file.fileSize/1024000}"/> MB)
 			                              </div>
 			                         </c:forEach>
@@ -274,25 +137,6 @@
 		                	</tr>
 		                </tfoot>
 		            </table>
-		            
-		            
-		           <!-- 댓글 -->
-		           <form name="commentForm" method="post" action="" style="margin-top: 30px;">
-						<span style="font-weight: bold;">댓글 쓰기</span><span> - 타인을
-							비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-					<div style="clear: both; padding-top: 10px;">
-						<textarea id="commentContent" class="form-control"
-							style="width: 100%; min-height: 80px; box-sizing: border-box;"
-							required="required"></textarea>
-					</div>
-					<div style="text-align: right; padding-top: 10px;">
-						<button type="button" class="btn btn-default" onclick="sendReply();">등록하기</button>
-						</div>
-				</form>
-		           
-		           <div id="listReply"></div>   
-		         
-		         
-			</div>
+		       </div>
 		</div>
 </section>

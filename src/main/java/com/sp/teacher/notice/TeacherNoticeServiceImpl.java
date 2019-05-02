@@ -93,11 +93,11 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 	}
 
 	@Override
-	public List<TeacherNotice> listNoticeTop() throws Exception {
+	public List<TeacherNotice> listNoticeTop(Map<String, Object> map) throws Exception {
 		List<TeacherNotice> list = null;
 		
 		try {
-			list = dao.selectList("tnotice.listNoticeTop");
+			list = dao.selectList("tnotice.listNoticeTop", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -220,5 +220,68 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public void insertReply(Reply dto) throws Exception {
+		
+		try {
+			dao.insertData("tnotice.insertReply", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public int replyCount(Map<String, Object> map) throws Exception {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("tnotice.replyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) throws Exception {
+		List<Reply> listReply = null;
+		
+		try {
+			listReply = dao.selectList("tnotice.listReply", map);
+			if(listReply != null && listReply.size()>0) {
+				for(Reply dto: listReply) {
+					int count = answerCount(dto.getTnotice_r_num());
+					dto.setAnswerCount(count);
+				}				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listReply;
 	}	
+	
+	private int answerCount(int tnotice_r_num) {
+		int result = 0;
+		try {
+			result = dao.selectOne("tnotice.answerCount", tnotice_r_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public void insertReplyAnswer(Reply dto) throws Exception {
+		try {
+			dao.insertData("tnotice.insertReplyAnswer", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
 }
