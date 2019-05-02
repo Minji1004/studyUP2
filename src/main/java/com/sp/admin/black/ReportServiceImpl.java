@@ -65,11 +65,11 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public int userCount(Map<String, Object> map) throws Exception {
+	public int userReportCount(int reportedUser) throws Exception {
 		int result=0;
 				
 		try {
-			result=dao.insertData("admin.userCount", map);
+			result=dao.selectOne("admin.userCount", reportedUser);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

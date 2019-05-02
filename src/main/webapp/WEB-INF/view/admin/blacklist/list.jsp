@@ -33,8 +33,7 @@ function searchList(){
 	f.submit();
 }
 
-$(function(){
-	
+$(function(){	
 		$(document).on("click", ".flist", function(){		
 			var num=$(this).attr("data-reportNum");		
 			var url="<%=cp%>/admin/blacklist/article?reportNum="+num+"&page=${page}";
