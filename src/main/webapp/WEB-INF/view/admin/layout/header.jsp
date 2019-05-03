@@ -6,7 +6,7 @@
    String cp = request.getContextPath();
 %>
 
-<section class="banner" role="banner">
+<section class="banner" role="banner" style="background-image: url('<%=cp%>/resource/images/samgyup.gif');">
         <header id="header">
             <div class="header-content clearfix">
                 <a class="logo" href="#"><img src="<%=cp%>/resource/images/logo.png" alt=""></a>
