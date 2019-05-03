@@ -70,6 +70,17 @@
 		}); 
 });
   
+  $(function(){
+	  var $checkBox = $("input[name=noticeweather]");
+	  $checkBox.click(function{
+		  if($checkBox.is(':checked')){
+			  $checkBox.prop("checked", false);
+		  }else
+			  $checkBox.prop("checked", true);
+		  }
+	  })
+  })
+  
 </script>
 
 
