@@ -11,4 +11,5 @@ public interface StudyRoomService {
 	public List<StudyRoom> listStudyRoom(Map<String, Object> map);
 	public int insertFile(StudyRoom dto, String pathname);
 	public List<StudyRoomFile> fileList(int num);
+	public int countNum(StudyRoomTable tdto);
 }

@@ -8,6 +8,11 @@
 		SELECT IFNULL(max(${searchName}), 0) FROM ${tableName}
 	</select>
 	
+	<!-- 카운트 개수 -->
+	<select id="countNum" resultType="Integer"  parameterType="com.sp.studyroom.StudyRoomTable">
+		SELECT IFNULL(count(DISTINCT ${searchName}), 0) FROM ${tableName}
+	</select>
+	
 	<!-- 카페 기본정보 넣기 -->
 	<insert id="insertCafe" parameterType="com.sp.studyroom.StudyRoom">
 		INSERT INTO cafe (cafeNum, userNum, cafeName, cafeTel, cafeOwner, cafeIntro, sido, sigungu, bname, 
@@ -48,10 +53,12 @@
 	
 	<!-- 스터디룸 파일 리스트 가져오기 -->
 	<select id="listStudyRoomFile" parameterType="Integer" resultType="com.sp.studyroom.StudyRoomFile">
-		SELECT fileNum, cafeNum, imgFilename
+		SELECT fileNum, cafeNum, imgFilename, saveFilename
 		FROM cafeFile
 		WHERE cafeNum=#{cafeNum}
 	</select>
+	
+	
 	
 	
 </mapper>

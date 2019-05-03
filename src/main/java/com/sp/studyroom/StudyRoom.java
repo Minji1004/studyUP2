@@ -38,7 +38,7 @@ public class StudyRoom {
 	private String imgFilename;
 	private String saveFilename;
 	private List<StudyRoom> studyRoomList;
-	private List<StudyRoomFile> fileList;
+	private String fileList;
 	
 	
 	
@@ -234,20 +234,19 @@ public class StudyRoom {
 	public void setImgFilename(String imgFilename) {
 		this.imgFilename = imgFilename;
 	}
-	public List<StudyRoomFile> getFileList() {
-		return fileList;
-	}
-	public void setFileList(List<StudyRoomFile> fileList) {
-		this.fileList = fileList;
-	}
 	public String getSaveFilename() {
 		return saveFilename;
 	}
 	public void setSaveFilename(String saveFilename) {
 		this.saveFilename = saveFilename;
 	}
-	
-	
+	public String getFileList() {
+		return fileList;
+	}
+	public void setFileList(String fileList) {
+		this.fileList = fileList;
+	}
+
 	
 	
 	
