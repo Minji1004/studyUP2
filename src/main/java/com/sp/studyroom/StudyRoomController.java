@@ -1,7 +1,6 @@
 package com.sp.studyroom;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +25,15 @@ public class StudyRoomController {
 	@Autowired
 	private StudyRoomService service;
 	@Autowired
+	private StudyRoomUtil srUtil;
+	@Autowired
 	private MyUtil myUtil;
 	@Autowired
 	private FileManager fileManager;
 	
 	@RequestMapping(value = "/studyroom/main")
 	public String pageMain(
-			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String sido_con,
 			@RequestParam(defaultValue="all") String sigungu_con,
 			@RequestParam(defaultValue="all") String bname_con,
@@ -41,11 +42,18 @@ public class StudyRoomController {
 			Model model
 			) throws Exception {
 		
+		String cp = req.getContextPath();
 		Map<String, Object> map = new HashMap<>();
-		int rows = 6;
+		int rows = 4;
 		int total_page = 0;
 		int dataCount = 0;
 		
+		StudyRoomTable tdto = new StudyRoomTable();
+		
+		tdto.setSearchName("cafeNum");
+		tdto.setTableName("cafe");
+		
+		dataCount = service.countNum(tdto);
 		if(dataCount!=0)
 			total_page = myUtil.pageCount(rows, dataCount);
 		
@@ -58,7 +66,7 @@ public class StudyRoomController {
 		map.put("rows", rows);
 		
 		List<StudyRoom> list = service.listStudyRoom(map);
-
+		
 		for( StudyRoom dto : list ) {
 			// 리스트의 문자열 엔터 처리하기 
 			String temp = dto.getCafeIntro().replaceAll("\n", "<br>");
@@ -66,24 +74,35 @@ public class StudyRoomController {
 			
 			// 리스트의 파일위치 처리하기
 			List<StudyRoomFile> tempList = service.fileList(dto.getCafeNum());
-			if(tempList!=null) {
-				dto.setFileList(tempList);
-			} else {
-				dto.setFileList(null);
-			}
+			String pictures = srUtil.picture(tempList);
+			dto.setFileList(pictures);
+		}
+		
+		
+		String query = "";
+		String listUrl;
+		String modalUrl;
+		
+		listUrl = cp+"/studyroom/main";
+		modalUrl = cp+"studyroom/modal/main?page=" + current_page;
+		
+		if(query.length()!=0) {
+			listUrl = listUrl + "?" + query;
+			modalUrl = modalUrl + "&" + query;
 		}
 		
 		map.put("sido_con", sido_con);
 		map.put("sigungu_con", sigungu_con);
 		map.put("bname_con", bname_con); 
 		
-		String paging = myUtil.pagingMethod(current_page, total_page, "listStudyRoom");
+		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("pageNo", current_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("modalUrl", modalUrl);
+		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("paging", paging);
 		
 		return ".four.studyroom.main";
 	}
@@ -157,7 +176,7 @@ public class StudyRoomController {
 		String pathname = root + File.separator + "uploads" + File.separator + "studyroom";
 		service.insertFile(dto, pathname);
 		
-		return ".four.studyroom.main";
+		return "redirect:/studyroom/main";
 	}
 	
 }

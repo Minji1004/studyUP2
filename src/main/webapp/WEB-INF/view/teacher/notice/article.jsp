@@ -25,6 +25,14 @@
   		listPage(1);
   });
   
+  
+  function updateArticle(){
+	  var url = "<%=cp%>/teacher/notice/update?";
+	  var query = "tnum="+${tnum}+"&left="+${left}+"&tnoticeNum="+${dto.tnoticeNum};
+	  
+	  location.href=url+query;
+  }
+  
   function showLikeNum(){
 	  var url = "<%=cp%>/teacher/notice/readLikeNum";		
 		$.ajax({
@@ -111,26 +119,29 @@
 			error: function(jqXHR){ 
 				console.log(jqXHR.responseText);
 			}			
-		}); 
-		
+		}); 		
 	}
   
-  
-  $("body").on("click", ".listAnswer", function(){
-		var noticeNum = $(this).attr("data-tnoticeNum");
-		
-		/* $("#answerList" + noticeNum).html("성공했어!"); */
-		
-		alert("answerList" + noticeNum);
-		
-		$(this).closest(".test_answer").next("#answerList" + noticeNum).html("성공");
-		
-		<%-- var url="<%=cp%>/teacher/notice/listAnswer";
-		  $.ajax({
+ function listAnswer(tnotice_r_num){
+
+	var $answerList = $("#answerList"+tnotice_r_num);
+	var isVisible = $answerList.is(":visible"); 
+	if(isVisible){
+		$answerList.hide();
+	}else{
+		$answerList.show();	
+		readListAnswer(tnotice_r_num)
+	} 
+  }
+ 
+ function readListAnswer(tnotice_r_num){
+	 var $answerList = $("#answerList"+tnotice_r_num);
+	 var url="<%=cp%>/teacher/notice/listAnswer";
+	  $.ajax({
 			type:"get",
 			url: url,
 			data: {
-				tnotice_r_num : noticeNum
+				tnotice_r_num : tnotice_r_num
 			},
 			success: function(data){
 				$answerList.empty();
@@ -139,40 +150,8 @@
 			error: function(jqXHR){ 
 				console.log(jqXHR.responseText);
 			}			
-		}); --%>
-  });
-  
-  
- function listAnswer(tnotice_r_num){
-
-	$("#answerList"+tnotice_r_num).html("성공했어!");
-	alert("#answerList"+tnotice_r_num);
-	
-	 // $answerList.show();
-		// 리스트 보여주기
-<%-- 		var url="<%=cp%>/teacher/notice/listAnswer";
-		  $.ajax({
-				type:"get",
-				url: url,
-				data: {
-					tnotice_r_num : tnotice_r_num
-				},
-				success: function(data){
-					$answerList.empty();
-					$answerList.html(data);
-				},  
-				error: function(jqXHR){ 
-					console.log(jqXHR.responseText);
-				}			
-			});  --%>
-	  /* var isVisible = $answerList.is(":visible");
-	  
-		if(isVisible){
-			$answerList.hide();
-		}else{
-			
-		}   */
-  }
+		});
+ }
   
   function sendReplyAnswer(tnotice_r_num){
 	//값 있는 지 체크
@@ -182,7 +161,6 @@
 			alert("댓글 내용을 입력해주세요.")
 			return;	
 		}
-
 		
 		var url="<%=cp%>/teacher/notice/insertReplyAnswer"
 		var query="tnoticeNum="+${dto.tnoticeNum}+"&tnotice_r_num="+tnotice_r_num+"&content="+encodeURIComponent(content);
@@ -194,13 +172,37 @@
 			dataType: "json",
 			success: function(data){	
 				$("#answerList"+tnotice_r_num).find("textarea").val("");
+				readListAnswer(tnotice_r_num);		
+				$("#dataCount"+tnotice_r_num).html(data.answerCount);
 			},  
 			error: function(jqXHR){ 
 				console.log(jqXHR.responseText);
 			}			
 		});
   }
-
+  
+  function deleteComment(tnotice_r_num, answer){
+	  var url="<%=cp%>/teacher/notice/deleteReply"
+		  $.ajax({
+				type:"post",
+				url: url,
+				data: {
+					tnotice_r_num : tnotice_r_num,
+					answer: answer
+				},
+				dataType: "json",
+				success: function(data){
+					if(answer == 0)
+						listPage(1);
+					else
+						readListAnswer(answer);
+					$("#dataCount"+answer).html(data.answerCount);
+				},  
+				error: function(jqXHR){ 
+					console.log(jqXHR.responseText);
+				}			
+			});
+  }
 </script>
 
 
@@ -265,8 +267,10 @@
 		                <tfoot>
 		                	<tr>
 		                		<td>
-		                		    <button type="button" class="btn btn-default" onclick="updateFaq()"><i class="fa fa-edit"></i>&nbsp;수정</button>
-		                		    <button type="button" class="btn btn-default" onclick="deleteFaq()"><i class="fa fa-trash-o"></i>&nbsp;삭제</button>
+		                		<c:if test="${sessionScope.member.userId == teacher.userId}">
+		                		    <button type="button" class="btn btn-default" onclick="updateArticle()"><i class="fa fa-edit"></i>&nbsp;수정</button>
+		                		    <button type="button" class="btn btn-default" onclick="deleteArticle()"><i class="fa fa-trash-o"></i>&nbsp;삭제</button>
+		                		</c:if>
 		                		</td>
 		                		<td align="right">
 		                		    <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/teacher/notice/list?${query}';"> 목록으로 </button>

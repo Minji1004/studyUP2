@@ -110,5 +110,15 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		return list;
 	}
 	
+	@Override
+	public int countNum(StudyRoomTable tdto) {
+		int result=0;
+		try {
+			result=dao.selectOne("studyroom.countNum", tdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

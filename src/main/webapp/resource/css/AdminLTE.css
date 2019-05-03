@@ -3007,8 +3007,8 @@ table.text-center th {
 	margin-bottom: 15px;
 }
 .post {
-  /*border-bottom: 1px solid #d2d6de;*/
-  margin-bottom: 15px;
+/* border-bottom: 1px solid #d2d6de; */
+/*   margin-bottom: 15px; */
   padding-bottom: 15px;
   color: #666;
 }

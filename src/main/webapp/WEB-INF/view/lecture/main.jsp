@@ -12,7 +12,7 @@
                 <div class="banner-text text-center">
                     <h1>당신의 스터디를 도와줄 강의를 찾아보세요!</h1>
                     <p> 주변 스터디를 검색할 수 있습니다.</p>
-                    <a href="#" class="btn btn-large">Find out more</a>
+                    <a href="<%=cp%>/teacher/main?tnum=9&left=0" class="btn btn-large">Find out more</a>
                 </div><!-- banner text -->
             </div>
         </div>

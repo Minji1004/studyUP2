@@ -29,8 +29,7 @@
 	// modal sendok
 	function modalSendOk(){
 		var f = document.srModalForm;
-		alert(f.checkboxCounts[0].value);
-		/*
+		
 		// 카페이름
 		var str = f.cafeName.value;
 		if(!str) {
@@ -60,10 +59,11 @@
 		var str1 = f.detailAddr.value;
 		if(!str || !str1) {
 			alert("주소를 입력하세요.");
-			srPostcode();
+			if(!str1) {
+				srPostcode();
+			}
 			return;
 		}
-		*/
 		
 		f.action="<%=cp%>/studyroom/modal/${mode}";
 		

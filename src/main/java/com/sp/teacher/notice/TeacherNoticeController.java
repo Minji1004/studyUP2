@@ -153,9 +153,11 @@ public class TeacherNoticeController {
 		model.addAttribute("teacher", teacher);
 		model.addAttribute("tnum", tnum);
 		model.addAttribute("left", left);	
+		model.addAttribute("mode", "created");
 		
 		return ".teacher.notice.created";
 	}
+	
 	
 	@RequestMapping(value ="/teacher/notice/created", method=RequestMethod.POST)
 	public String createNotice(TeacherNotice dto, HttpSession session) throws Exception{		
@@ -177,6 +179,28 @@ public class TeacherNoticeController {
 		return "redirect:/teacher/notice/list?tnum="+tnum+"&left=2";
 	}
 
+	@RequestMapping(value ="/teacher/notice/update", method=RequestMethod.GET)
+	public String updateNotice(@RequestParam int tnum, @RequestParam int tnoticeNum, @RequestParam int left, Model model) throws Exception{		
+		
+		Teacher teacher = teacherService.readTeacher(tnum);
+		TeacherNotice teacherNotice = teacherNoticeService.readTeacherNotice(tnoticeNum);	
+		List<MyFile> listFile= teacherNoticeService.listFile(tnoticeNum);
+		
+		model.addAttribute("teacher", teacher);
+		model.addAttribute("tnum", tnum);
+		model.addAttribute("left", left);	
+		model.addAttribute("mode", "update");		
+		
+		model.addAttribute("dto", teacherNotice);
+		model.addAttribute("listFile", listFile);		
+		
+		return ".teacher.notice.created";
+	}
+	
+	
+	
+	
+	
 	@RequestMapping(value ="/teacher/notice/article", method=RequestMethod.GET)
 	public String readArticle(@RequestParam int tnum, 
 			@RequestParam int left, 
@@ -195,7 +219,6 @@ public class TeacherNoticeController {
 			return "redirect:/teacher/notice/list?tnum="+tnum+"&left=2";
 		}
 		
-		//선생님 정보 가져오기
 		TeacherNotice teacherNotice = teacherNoticeService.readTeacherNotice(tnoticeNum);		
 		
 		//파일 리스트 가져오기
@@ -407,6 +430,9 @@ public class TeacherNoticeController {
 	
 		model.addAttribute("tnotice_r_num", tnotice_r_num);
 		
+		List<Reply> listAnswerReply = teacherNoticeService.listAnswerReply(tnotice_r_num);				
+		model.addAttribute("listAnswerReply", listAnswerReply);				
+		
 		return "teacher/notice/listReplyAnswer";
 	}
 	
@@ -428,7 +454,9 @@ public class TeacherNoticeController {
 		
 		try {
 			teacherNoticeService.insertReplyAnswer(dto);
+			int answerCount = teacherNoticeService.answerCount(tnotice_r_num);
 			model.put("state", "true");
+			model.put("answerCount", answerCount);
 		} catch (Exception e) {
 			model.put("state", "false");
 		}
@@ -436,4 +464,21 @@ public class TeacherNoticeController {
 		return model;	
 	}
 	
+	@RequestMapping(value="/teacher/notice/deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(@RequestParam int tnotice_r_num,  @RequestParam int answer, HttpSession session) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();	
+		
+		try {
+			teacherNoticeService.deleteReply(tnotice_r_num);
+			int answerCount = teacherNoticeService.answerCount(answer);
+			model.put("state", "true");
+			model.put("answerCount", answerCount);
+		} catch (Exception e) {
+			model.put("state", "false");
+		}
+				
+		return model;		
+	}
 }

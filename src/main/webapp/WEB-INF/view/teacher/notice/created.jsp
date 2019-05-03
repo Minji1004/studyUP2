@@ -42,7 +42,7 @@
             return false;
         }
     	
-       	f.action = "<%=cp%>/teacher/notice/created";
+       	f.action = "<%=cp%>/teacher/notice/${mode}";
        	
        	return true;
   }
@@ -57,9 +57,8 @@
 			for(var i=0; i< this.files.length; i++){
 				var filename = this.files[i].name;
 				var filesize = (this.files[i].size/1024000).toFixed(2); //MB로 나타내겠다.
-				
-				out += "<p><a href='#' id='deleteFile' class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>";
-				out += "&nbsp;&nbsp;"+filename+" <span class='filesize'>"+filesize+"MB</span></p>";
+				//<a href='#' id='deleteFile' class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>";
+				out += "<p>&nbsp;&nbsp;"+filename+" <span class='filesize'>"+filesize+"MB</span></p>";
 			}
 			$("#tableList").empty();
 			$("#tableList").append(out);
@@ -70,6 +69,17 @@
 			this.closest("p").remove();	
 		}); 
 });
+  
+  $(function(){
+	  var $checkBox = $("input[name=noticeweather]");
+	  $checkBox.click(function{
+		  if($checkBox.is(':checked')){
+			  $checkBox.prop("checked", false);
+		  }else
+			  $checkBox.prop("checked", true);
+		  }
+	  })
+  })
   
 </script>
 
@@ -97,7 +107,7 @@
   <tr align="left"> 
       <th width="80" bgcolor="#eeeeee" style="text-align: center;">공&nbsp;&nbsp;&nbsp;&nbsp;지</th>
       <td style="padding-left:10px;"> 
-        <label><input type="checkbox" name="noticeweather" value="1">공지여부</label>
+        <label><input type="checkbox" name="noticeweather" value="1" ${dto.noticeweather==1?"checked='checked'":""}>공지여부</label>
       </td>
   </tr>
   <tr align="left"> 
@@ -115,7 +125,14 @@
 			<input type="file"  name="upload" multiple="multiple">
 		</div>		
 		<p class="filesize">최대 32MB</p>
-		<div id="tableList" style="padding: 10px 10px 0;">
+		<div style="padding: 10px 10px 0;">
+		<div id="tableList" ></div>
+		<c:if test="${not empty listFile}">
+			<c:forEach var="file" items="${listFile}">
+				<p><a href='#' id='deleteFile' class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>
+				&nbsp;&nbsp;${file.originalFilename}<span class='filesize'><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${file.fileSize/1024000}"/>MB</span></p>
+			</c:forEach>		
+		</c:if>
 		</div>	
   	</td>
   </tr>

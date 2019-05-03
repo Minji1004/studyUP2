@@ -125,9 +125,7 @@ body {
 	vertical-align: middle;
 }
 
-.srMap {
-	border-radius: 5px;
-	height : 624px;
+
 
 }
 
@@ -550,10 +548,12 @@ body {
 
 /* --------------------- ChangeScreen --------------------- */
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1244px) {
 	.srPic {
 	display: flex;
-	min-height: 90px;
+	min-height: 150px;
+	max-height: 150px;
+	
 	}
 	
 	.srPicTagContent {
@@ -595,13 +595,18 @@ body {
 		margin-left : -24px;
 	}
 	
+	.srMap {
+		border-radius: 5px;
+		height : 736px;
+	}
 }
 
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 1243px) {
 	.srPic {
 	display: flex;
 	min-height: 135px;
+	max-height: 200px;
 	}
 	
 	.srPicTagContent {
@@ -643,6 +648,10 @@ body {
 		width: 97.5%;
 	}
 	
+	.srMap {
+		border-radius: 5px;
+		height : 300px;
+	}
 }
 
 @media screen and (max-width: 768px) {
@@ -666,8 +675,13 @@ body {
 	}
 	
 	.srPicTagContent {
-		height: 70px;
-		line-height: 59px;
+		height: 120px;
+		line-height: 109px;
+	}
+	
+	.srMap {
+		border-radius: 5px;
+		height : 300px;
 	}
 }
 

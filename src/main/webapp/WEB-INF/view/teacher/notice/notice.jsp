@@ -106,7 +106,9 @@
 		        </form>
 		      </td>
 		      <td align="right" width="100">
+		      <c:if test="${sessionScope.member.userId == teacher.userId}">
 		          <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/teacher/notice/created?tnum=${tnum}&left=${left}';">글올리기</button>
+		      </c:if>
 		      </td>
 		   </tr>
 		</table>

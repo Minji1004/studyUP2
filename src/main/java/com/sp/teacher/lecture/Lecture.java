@@ -21,10 +21,9 @@ public class Lecture {
 	
 	// jsp의 checkbox 이름
 	private List<Integer> courseNums;
-	
+
 	private String categoryName;
-	private List<String> courseName;
-	
+	private List<String> courseName;	
 	
 	public int getStudyNum() {
 		return studyNum;
