@@ -131,6 +131,7 @@
 		DELETE from memberInfo where userId=#{userId}
 	</delete>
 	
-<!-- blacklist mapper -->	
+<!-- blacklist mapper -->
+	
 
 </mapper>
