@@ -342,7 +342,6 @@
 			<div>
 				<div id="srMap" class="srMap"></div>
 				<button type="button" class="btn-srModalCreate">등록하기</button>
-				<button type="button" class="viewMapSearch" onclick="viewMapSearch();">??</button>
 			</div>
 		</div>
 	</div>

@@ -421,6 +421,15 @@ body {
 	border : 1px solid #88d0a9;
 }
 
+.roomNames {
+	margin-top : 15px;
+	background-color: #ecfacd;
+	color: #555555;
+	padding : 3px;
+	border-radius: 3px;
+	border : 1px solid #88d0a9;
+}
+
 .modalName {
 	font-weight: 500;
 	color: #ffffff;
