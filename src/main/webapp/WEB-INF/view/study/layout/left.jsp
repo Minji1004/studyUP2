@@ -46,8 +46,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<%=cp%>/study/mystudy/free/list?studyNum=${studyNum}&left=2">자유게시판</a></li>
-            <li><a href="<%=cp%>/study/mystudy/quiz/list?studyNum=${studyNum}&left=3">퀴즈게시판</a></li>
+            <li><a href="<%=cp%>/study/free/list?studyNum=${studyNum}&left=2">자유게시판</a></li>
+            <li><a href="<%=cp%>/study/quiz/list?studyNum=${studyNum}&left=2">퀴즈게시판</a></li>
           </ul>
         </li>
         <li><a href="<%=cp%>/study/mystudy/calendar/list?studyNum=${studyNum}&left=4"><i class="fa fa-link"></i> <span>일정</span></a></li>
