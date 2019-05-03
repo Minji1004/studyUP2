@@ -4,25 +4,33 @@
 <%
 	String cp=request.getContextPath();
 %>
-	<div style='float: left; width: 2%;'>└</div>
-	<div style='float: left; width: 98%;'>
-	    <div class='user-block' >
-			<img class='img-circle img-bordered-sm' src='<%=cp%>/uploads/member_profile/${dto.picture}'>
-			<span class='username'>${dto.nickname}	
-				<a href='#' onclick='deleteComment("${dto.tnotice_r_num}");'  class='pull-right btn-box-tool'><i class='fa fa-trash-o'></i></a>
-				<a href='#' onclick='updateComment("${dto.tnotice_r_num}");' class='pull-right btn-box-tool'><i class='fa fa-edit'></i></a>
-				</span> <span class='description'>${dto.created}</span>
+<table class="table">
+<c:forEach var="dto" items="${listAnswerReply}">
+	<tr><td>
+		<div style='float: left; width: 2%;'>└</div>
+		<div style='float: left; width: 98%;'>
+		    <div class='user-block' >
+				<img class='img-circle img-bordered-sm' src='<%=cp%>/uploads/member_profile/${dto.picture}'>
+				<span class='username'>${dto.nickname}	
+				<c:if test="${sessionScope.member.userId == dto.userId}">
+					<a href='#' onclick="deleteComment('${dto.tnotice_r_num}', '${dto.answer}');"  class='pull-right btn-box-tool'><i class='fa fa-trash-o'></i></a>
+					<a href='#' onclick="updateComment('${dto.tnotice_r_num}', '${dto.answer}');" class='pull-right btn-box-tool'><i class='fa fa-edit'></i></a>
+				</c:if>
+					</span> <span class='description'>${dto.created}</span>
+				</div>
+				<p>${dto.content}</p>
+		</div>	
+	</td></tr>
+</c:forEach>
+	<tr><td>	
+		<div>
+			<div style="clear: both; padding-top: 10px;">
+				<textarea class="form-control"
+					style="width: 100%; min-height: 80px; box-sizing: border-box;"></textarea>
 			</div>
-			<p>${dto.content}니나노 나노니</p>
-	</div>
-	
-	
-	<div>
-		<div style="clear: both; padding-top: 10px;">
-			<textarea class="form-control"
-				style="width: 100%; min-height: 80px; box-sizing: border-box;"></textarea>
+			<div style="text-align: right; padding-top: 10px;">
+				<button type="button" class="btn btn-default" onclick="sendReplyAnswer(${tnotice_r_num});">등록하기</button>
+			</div>
 		</div>
-		<div style="text-align: right; padding-top: 10px;">
-			<button type="button" class="btn btn-default" onclick="sendReplyAnswer(${tnotice_r_num});">등록하기</button>
-		</div>
-	</div>
+	</td></tr>
+	</table>

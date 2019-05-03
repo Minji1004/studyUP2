@@ -1,24 +1,13 @@
 package com.sp.teacher;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
-
-import com.sp.common.MyFile;
 
 @Service("teacherUtil")
 public class TeacherUtil {
 
-	public static String makePhoneNumber(String phoneNumber) {
+	public String makePhoneNumber(String phoneNumber) {
 
 		   String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
 

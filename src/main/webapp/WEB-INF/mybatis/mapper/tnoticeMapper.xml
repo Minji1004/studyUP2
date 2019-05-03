@@ -64,7 +64,7 @@
 </select>
 
 <select id="readTeacherNotice" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
-	SELECT t.tnoticeNum, subject, hitCount, created, content, sum(fileSize) totalFileSize from tnotice t
+	SELECT t.tnoticeNum, subject, hitCount, created, content, sum(fileSize) totalFileSize, noticeweather from tnotice t
 		LEFT OUTER JOIN tnotice_file f
 		ON t.tnoticeNum = f.tnoticeNum
 		where t.tnoticeNum = #{tnoticeNum}
@@ -134,7 +134,7 @@
  </select>
  
  <select id="listReply" parameterType="map" resultType="com.sp.teacher.notice.Reply">
- SELECT tnotice_r_num, tnoticeNum, content, tnotice_r.created, nickname, picture 
+ SELECT tnotice_r.userId, tnotice_r_num, answer, tnoticeNum, content, tnotice_r.created, nickname, picture 
 			FROM tnotice_r
 			JOIN memberinfo 
 			ON tnotice_r.userId = memberinfo.userId
@@ -144,11 +144,23 @@
  </select>
  
  <select id="answerCount" parameterType="map" resultType="Integer">
- 	SELECT ifnull(COUNT(*), 0) answerCount FROM tnotice_r WHERE tnotice_r_num = #{tnotice_r_num} and answer >0
+ 	SELECT ifnull(COUNT(*), 0) answerCount FROM tnotice_r WHERE answer = #{tnotice_r_num}
  </select>
  
  <insert id="insertReplyAnswer" parameterType="com.sp.teacher.notice.Reply">
 	INSERT INTO tnotice_r (tnoticeNum, userId, content, answer) VALUES (#{tnoticeNum}, #{userId}, #{content}, #{tnotice_r_num})
  </insert>
-
+ 
+ <select id="listAnswerReply" parameterType="Integer" resultType="com.sp.teacher.notice.Reply">
+	SELECT tnotice_r.userId, tnotice_r_num, answer, tnoticeNum, content, tnotice_r.created, nickname, picture 
+			FROM tnotice_r
+			JOIN memberinfo 
+			ON tnotice_r.userId = memberinfo.userId
+			WHERE answer = #{tnotice_r_num}
+			ORDER BY tnotice_r_num DESC
+ </select>
+ 
+ <delete id="deleteReply" parameterType="Integer">
+ 	delete from tnotice_r where tnotice_r_num =  #{tnotice_r_num} OR answer =  #{tnotice_r_num}
+ </delete>
 </mapper>

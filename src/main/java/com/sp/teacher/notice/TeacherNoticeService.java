@@ -32,5 +32,7 @@ public interface TeacherNoticeService {
 	public int replyCount(Map<String, Object> map) throws Exception;
 	public List<Reply> listReply(Map<String, Object> map) throws Exception;
 	public void insertReplyAnswer(Reply dto) throws Exception;
-
+	public List<Reply> listAnswerReply(int tnotice_r_num) throws Exception;
+	public void deleteReply(int tnotice_r_num) throws Exception;
+	public int answerCount(int tnotice_r_num)throws Exception;
 }

@@ -265,7 +265,8 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 		return listReply;
 	}	
 	
-	private int answerCount(int tnotice_r_num) {
+	@Override
+	public int answerCount(int tnotice_r_num) throws Exception{
 		int result = 0;
 		try {
 			result = dao.selectOne("tnotice.answerCount", tnotice_r_num);
@@ -284,4 +285,25 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 			e.printStackTrace();
 		}		
 	}
+
+	@Override
+	public List<Reply> listAnswerReply(int tnotice_r_num) throws Exception {
+		List<Reply> list = null;
+		try {
+			list = dao.selectList("tnotice.listAnswerReply", tnotice_r_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;		
+	}
+	
+	@Override
+	public void deleteReply(int tnotice_r_num) throws Exception {
+		try {
+			dao.deleteData("tnotice.deleteReply", tnotice_r_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}	
 }
