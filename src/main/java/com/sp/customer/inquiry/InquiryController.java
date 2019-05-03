@@ -157,7 +157,7 @@ public class InquiryController {
 		
 		keyword=URLDecoder.decode(keyword, "utf-8");
 		
-		String query="page"+page;
+		String query="page="+page;
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}

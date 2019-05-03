@@ -61,7 +61,7 @@
 		WHERE inquiryNum=#{inquiryNum}
 	</select>
 	
-	<select id="preReadInquiry" parameterType="map" resultType="com.sp.customer.inquiry.Inquiry">
+	<select id="preReadInquiry" parameterType="Integer" resultType="com.sp.customer.inquiry.Inquiry">
 		SELECT inquiryNum, subject
 		FROM inquiry i
 		JOIN memberInfo m ON i.userId=m.userId
@@ -75,7 +75,7 @@
 		LIMIT 1
 	</select>
 	
-	<select id="nextReadInquiry" parameterType="map" resultType="com.sp.customer.inquiry.Inquiry">
+	<select id="nextReadInquiry" parameterType="Integer" resultType="com.sp.customer.inquiry.Inquiry">
 		SELECT inquiryNum, subject
 		FROM inquiry i
 		JOIN memberInfo m ON i.userId=m.userId
