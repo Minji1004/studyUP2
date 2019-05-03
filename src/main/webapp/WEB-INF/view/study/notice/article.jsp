@@ -20,50 +20,6 @@
     };
   }  
   
-  $(function(){
-  		showLikeNum();
-  });
-  
-  function showLikeNum(){
-	  var url = "<%=cp%>/teacher/notice/readLikeNum";		
-		$.ajax({
-			type:"get",
-			url: url,
-			dataType: "JSON",
-			data: {
-				tnoticeNum : ${dto.tnoticeNum}
-			},
-			success: function(data){
-				$("#likeNum").html(data.count);
-				if(data.state=="true"){
-					$("#likeNum").next().css('color','#dd4b39');
-				}else{
-					$("#likeNum").next().css('color','');
-				}
-			},			
-			error: function(e){
-				console.log(e.responseText);
-			}
-		});	
-  }
-  
-  function updateLike(){
-	  var url = "<%=cp%>/teacher/notice/updateLikeNum";
-	  $.ajax({
-			type:"post",
-			url: url,
-			dataType: "JSON",
-			data: {
-				tnoticeNum : ${dto.tnoticeNum}
-			},
-			success: function(data){
-				showLikeNum();
-			},			
-			error: function(e){
-				console.log(e.responseText);
-			}
-		});	
-  }
   
 </script>
 
@@ -83,7 +39,7 @@
 		                 <thead>
 		                     <tr>
 		                         <th colspan="2" style="text-align: center; font-size: 20px;">
-		                         ${dto.subject}
+		                         ${dto.nSubject}
 		                         </th>
 		                     </tr>
 		                <thead>
@@ -92,18 +48,11 @@
 		                         <td colspan="2" style="height: 300px;">
 			                         <p class="pull-right">작성일: ${dto.created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수: ${dto.hitCount}</p>
 			                         <p style="clear:both;">
-			                         	${dto.content}
+			                         	${dto.nContent}
 			                         </p>
 		                         </td>
 		                     </tr>
-		                     <tr>
-		                     	<td colspan="2" style="text-align: center; border: none;">
-		                     		<a class="btn btn-app" style="background: white;" onclick="updateLike();">
-						                <span id="likeNum" class="badge bg-red"></span>
-						                <i class="fa fa-heart-o"></i> Likes
-					              	</a> 
-		                     	</td>
-		                     </tr>
+		                     
 		                     <c:if test="${not empty listFile}">
 			                     <tr>
 			                         <td colspan="2">	                         
@@ -119,20 +68,20 @@
 			                     </tr> 
 		                     </c:if>
 		                     <tr>
-		                     	<td colspan="2">이전글: <a href="<%=cp%>/teacher/notice/article?tnum=${teacher.userNum}&left=${left}&tnoticeNum=${preReadDto.tnoticeNum}">${preReadDto.subject}</a></td>		               
+		                     	<td colspan="2">이전글: <a href="<%=cp%>/study/notice/article?studyNum=${studyNum}&left=${left}&sNoticeNum=${preReadDto.sNoticeNum}">${preReadDto.nSubject}</a></td>		               
 		                     </tr>     
 		                     <tr style="border-bottom: #d5d5d5 solid 1px;">
-		                     	<td colspan="2">다음글: <a href="<%=cp%>/teacher/notice/article?tnum=${teacher.userNum}&left=${left}&tnoticeNum=${nextReadDto.tnoticeNum}">${nextReadDto.subject}</a></td>		               
+		                     	<td colspan="2">다음글: <a href="<%=cp%>/study/notice/article?studyNum=${studyNum}&left=${left}&sNoticeNum=${nextReadDto.sNoticeNum}">${nextReadDto.nSubject}</a></td>		               
 		                     </tr>                               
 		                </tbody>
 		                <tfoot>
 		                	<tr>
 		                		<td>
-		                		    <button type="button" class="btn btn-default" onclick="updateFaq()"><i class="fa fa-edit"></i>&nbsp;수정</button>
-		                		    <button type="button" class="btn btn-default" onclick="deleteFaq()"><i class="fa fa-trash-o"></i>&nbsp;삭제</button>
+		                		    <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/study/notice/update?studyNum=${studyNum}&left=${left}&sNoticeNum=${dto.sNoticeNum}&page=${page}';"><i class="fa fa-edit"></i>&nbsp;수정</button>
+		                		    <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/study/notice/delete?studyNum=${studyNum}&left=${left}&sNoticeNum=${dto.sNoticeNum}&page=${page}';"><i class="fa fa-trash-o"></i>&nbsp;삭제</button>
 		                		</td>
 		                		<td align="right">
-		                		    <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/teacher/notice/list?${query}';"> 목록으로 </button>
+		                		    <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/study/notice/list?${query}';"> 목록으로 </button>
 		                		</td>
 		                	</tr>
 		                </tfoot>

@@ -82,7 +82,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-              <span class="pull-right">더보기...</span>
+              <span class="pull-right"><a href="<%=cp%>/study/notice/list?studyNum=${studyNum}&left=1">더보기...</a></span>
             </div>
             <!-- /.box-footer -->
             </div>

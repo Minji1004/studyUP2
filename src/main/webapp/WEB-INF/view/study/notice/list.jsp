@@ -40,7 +40,7 @@
 			      <td style="text-align:left;"><a href="${articleUrl}&sNoticeNum=${dto.sNoticeNum}">${dto.nSubject}</a></td>			 
 			      <td>
 			      <c:if test="${dto.snFileNum != 0}">
-			      	<a href="#" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
+			      	<a href="<%=cp%>/study/notice/downloadZip?sNoticeNum=${dto.sNoticeNum}" style="color:#444;font-size: 15px;"><i class="fa fa-save"></i></a>
 			      </c:if>
 			      </td>
 			      <td>${dto.created}</td>
@@ -84,10 +84,10 @@
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/teacher/notice/list?tnum=${tnum}&left=${left}';">새로고침</button>
+		          <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/study/notice/list?studyNum=${studyNum}&left=${left}';">새로고침</button>
 		      </td>
 		      <td align="center">   
-		          <form name="searchForm" action="<%=cp%>/teacher/notice/list" method="get" style="width: 400px;">		
+		          <form name="searchForm" action="<%=cp%>/study/notice/list" method="get" style="width: 400px;">		
 		          	<select name="condition" class="form-control" style="width: 90px; float: left; margin-right: 10px;">
 					  <option value="all"       ${condition=="all"?"selected='selected'":""}>모두</option>
 					  <option value="subject"   ${condition=="subject"?"selected='selected'":""}>제목</option>

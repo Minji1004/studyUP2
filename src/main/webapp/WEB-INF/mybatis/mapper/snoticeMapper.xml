@@ -38,12 +38,16 @@
 	
 	
 	<!-- 공지 글 리스트 -->
-	<select id="listNoticeTop" resultType="com.sp.study.mystudy.notice.Notice">
-		SELECT sNoticeNum, notice, n.userId, nickname, nSubject,
-                  hitCount, 
+	<select id="listNoticeTop" parameterType="map" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT n.sNoticeNum, notice, n.userId, nickname, nSubject,
+                  hitCount, snFileNum, 
                   DATE_FORMAT(n.created, '%Y-%m-%d') AS created
           FROM snotice n
-          JOIN memberinfo m ON n.userId=m.userId 
+          LEFT JOIN memberinfo m ON n.userId=m.userId 
+          LEFT JOIN (select min(snFileNum) snFileNum, sNoticeNum 
+									from snoticefile group by sNoticeNum) f
+				ON n.sNoticeNum = f.sNoticeNum
+				
           WHERE notice =  1 and studyNum = #{studyNum}
           ORDER BY sNoticeNum DESC	
 	</select>
@@ -61,8 +65,9 @@
 	
 	<!-- 리스트 -->
 	<select id="listNotice" parameterType="map" resultType="com.sp.study.mystudy.notice.Notice">
-		SELECT s.sNoticeNum, nSubject, hitCount, created, snFilenum FROM snotice s
-		LEFT JOIN (select min(snFilenum) snFilenum, sNoticeNum 
+		SELECT s.sNoticeNum, nSubject, hitCount, created, snFileNum 
+		FROM snotice s
+		LEFT JOIN (select min(snFileNum) snFileNum, sNoticeNum 
 		from snoticefile group by sNoticeNum) f
 		ON s.sNoticeNum = f.sNoticeNum
 		<where>
@@ -75,25 +80,86 @@
 		LIMIT #{start}, #{rows}	
 	</select>
 	
+	<!-- 파일 리스트 -->
+	<select id="fileList" parameterType="Integer" resultType="com.sp.common.MyFile">
+		SELECT snFileNum AS fileNum, originalFilename, saveFilename, fileSize 
+		FROM snoticefile where sNoticeNum = #{sNoticeNum}
+	</select>
+	
 	<!-- 글보기 -->
 	<select id="readNotice" parameterType="Integer" resultType="com.sp.study.mystudy.notice.Notice">
-		SELECT s.sNoticeNum, nSubject, hitCount, created, nContent, sum(fileSize) totalFileSize 
+		SELECT DISTINCT s.sNoticeNum, nSubject, hitCount, created, nContent, sum(fileSize) totalFileSize 
 		from snotice s
 			LEFT OUTER JOIN snoticefile f
 			ON s.sNoticeNum = f.sNoticeNum
 			where s.sNoticeNum = #{sNoticeNum}   
 	</select>
 	
+	<select id="readFile" parameterType="Integer" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT  snFileNum, sNoticeNum, saveFilename, originalFilename, fileSize
+	    FROM snoticefile
+	    WHERE snFileNum=#{snFileNum}        
+	</select>
+	
+	
 	<!-- 조회수 증가 -->
 	<update id="updateHitCount" parameterType="Integer">
 		update snotice SET hitCount = hitCount+1 WHERE sNoticeNum = #{sNoticeNum}
 	</update>
 	
-	<!-- 파일 리스트 -->
-	<select id="fileList" parameterType="Integer" resultType="com.sp.study.mystudy.notice.Notice">
-		SELECT snFilenum AS snFilenum, originalFilename, saveFilename, fileSize 
-		FROM snoticefile where sNoticeNum = #{sNoticeNum}
+	
+	<!-- 이전 글 보기 -->
+	<select id="preReadNotice" parameterType="map" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT s.sNoticeNum, nSubject
+		FROM snotice s
+		LEFT JOIN (select min(snFileNum) snFileNum, sNoticeNum 
+		from snoticefile group by sNoticeNum) f
+		ON s.sNoticeNum = f.sNoticeNum
+		<where>
+			studyNum = #{studyNum}   
+			<if test="keyword != null and keyword != ''">
+            	AND <include refid="where-list"/>
+            </if>
+            AND (s.sNoticeNum &gt; #{sNoticeNum})
+		</where>	
+		ORDER BY sNoticeNum ASC
+		LIMIT 1	
 	</select>
+	
+	<!-- 다음 글 보기 -->
+	<select id="nextReadNotice" parameterType="map" resultType="com.sp.study.mystudy.notice.Notice">
+		SELECT s.sNoticeNum, nSubject
+		FROM snotice s
+		LEFT JOIN (select min(snFileNum) snFileNum, sNoticeNum 
+		from snoticefile group by sNoticeNum) f
+		ON s.sNoticeNum = f.sNoticeNum
+		<where>
+			studyNum = #{studyNum}   
+			<if test="keyword != null and keyword != ''">
+            	AND <include refid="where-list"/>
+            </if>
+            AND (s.sNoticeNum &lt; #{sNoticeNum})
+		</where>	
+		ORDER BY sNoticeNum DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 수정 -->
+	<update id="updateNotice" parameterType="com.sp.study.mystudy.notice.Notice">
+		UPDATE snoice SET nSubject=#{nSubject},
+               nContent=#{nContent}, notice=#{notice}
+        WHERE sNoticeNum=#{sNoticeNum}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteNotice" parameterType="Integer">
+		DELETE FROM snotice WHERE sNoticeNum = #{sNoticeNum}
+	</delete>
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM snoticefile WHERE ${field} = #{sNoticeNum}
+	</delete>
+	
 	
 	
 

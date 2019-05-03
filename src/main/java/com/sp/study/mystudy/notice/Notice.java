@@ -14,7 +14,8 @@ public class Notice {
 	private int snFileNum;
 	private String originalFilename, saveFilename;
 	private long fileSize;
-	
+	private long totalFileSize;
+
 	private List<MultipartFile> upload;
 	
 	private long gap;
@@ -145,6 +146,14 @@ public class Notice {
 
 	public void setGap(long gap) {
 		this.gap = gap;
+	}
+	
+	public long getTotalFileSize() {
+		return totalFileSize;
+	}
+
+	public void setTotalFileSize(long totalFileSize) {
+		this.totalFileSize = totalFileSize;
 	}
 	
 }

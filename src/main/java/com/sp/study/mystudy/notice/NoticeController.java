@@ -1,6 +1,7 @@
 package com.sp.study.mystudy.notice;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.FileManager;
+import com.sp.common.MyFile;
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 import com.sp.study.Study;
@@ -70,7 +73,7 @@ public class NoticeController {
         // 1페이지인 경우 공지리스트 가져오기
         List<Notice> noticeList = null;
         if(current_page==1) {
-          noticeList=service.listNoticeTop();
+          noticeList=service.listNoticeTop(map);
         }
         
         // 리스트에 출력할 데이터를 가져오기
@@ -112,8 +115,8 @@ public class NoticeController {
         }
         
         if(query.length()!=0) {
-        	listUrl = cp+"/notice/list?" + query;
-        	articleUrl = cp+"/notice/article?page=" + current_page + "&"+ query;
+        	listUrl = cp+"/study/notice/list?" + query;
+        	articleUrl = cp+"/study/notice/article?page=" + current_page + "&"+ query;
         }
         
         String paging = myUtil.paging(current_page, total_page, listUrl);
@@ -191,11 +194,221 @@ public class NoticeController {
 			dto.setUserId(masterId);
 			service.insertNotice(dto, pathname);
 			
-		}	
-		
+		}			
 		
 		return "redirect:/study/notice/list?studyNum="+studyNum+"&left="+left;
 	}
 	
+	@RequestMapping(value="/study/notice/article")
+	public String readArticel(
+			@RequestParam int studyNum,
+			@RequestParam int sNoticeNum,
+			@RequestParam int left,@RequestParam(defaultValue="1", value="page") int current_page,
+			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="all") String condition,			
+			Model model) throws Exception {
+		
+		try {
+			service.updateHitCount(sNoticeNum);
+		} catch (Exception e) {
+			return "redirect:/study/notice/list?studyNum="+studyNum+"&left="+left;
+		}
+		
+		Notice notice = service.readNotice(sNoticeNum);
+		List<MyFile> listFile = service.listFile(sNoticeNum);
+		
+		String query = "studyNum="+studyNum+"&left="+left;
+        if(keyword.length()!=0) {
+        	query = "condition=" +condition + 
+        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+        }
+        
+        keyword = URLDecoder.decode(keyword, "utf-8");
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("condition", condition);
+        map.put("keyword", keyword);
+        map.put("studyNum", studyNum);
+        map.put("sNoticeNum", sNoticeNum);
+        
+        Notice preReadDto = service.preReadNotice(map);
+        Notice nextReadDto = service.nextReadNotice(map);
+        
+        model.addAttribute("left", left);
+        model.addAttribute("query", query);
+        model.addAttribute("dto", notice);
+        model.addAttribute("listFile", listFile);
+        model.addAttribute("studyNum", studyNum);
+        
+        model.addAttribute("preReadDto", preReadDto);
+        model.addAttribute("nextReadDto", nextReadDto);	
+		
+		return ".study.notice.article";
+	}
+	
+	@RequestMapping(value="/study/notice/downloadFile", method=RequestMethod.GET)
+	public void download(
+			@RequestParam int snFileNum,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "snotice";
+
+		boolean b = false;
+		
+		Notice dto = service.readFile(snFileNum);
+		
+		if(dto!=null) {
+			String saveFilename = dto.getSaveFilename();
+			String originalFilename = dto.getOriginalFilename();
+			
+			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
+		}
+		
+		if (!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}		
+		
+	}
+	
+	@RequestMapping(value="/study/notice/downloadZip", method=RequestMethod.GET)
+	public void downloadZip( 
+			@RequestParam int sNoticeNum, 
+			HttpServletResponse resp, 
+			HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root +"uploads" + File.separator + "snotice";
+		
+		boolean b = false;
+		
+		List<MyFile> fileList = service.listFile(sNoticeNum);
+		
+		b = fileManager.downloadZip(resp, pathname, fileList);
+		if (!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}	
+	}
+	
+	@RequestMapping(value="/study/notice/update", method=RequestMethod.GET)
+	public String updateForm(
+			Model model,
+			@RequestParam int studyNum,
+			@RequestParam int sNoticeNum,
+			@RequestParam int left,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		if(info==null) {
+			return "redirect:/member/login";
+		}
+		
+		Study myStudy = study.readStudy(studyNum);
+		String masterId = myStudy.getUserId();
+		
+		
+		if(! info.getUserId().equals(masterId)) {
+			
+			return "redirect:/study/notice/list";
+		}
+		
+		Notice dto = service.readNotice(sNoticeNum);
+		if(dto == null) {
+			return "redirect:/study/notice/list?studyNum="+studyNum+"&left="+left+"&page="+page;
+		}
+		
+		
+		List<MyFile> listFile = service.listFile(sNoticeNum); 
+		
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("studyNum", studyNum);
+		model.addAttribute("left", left);
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);		
+		
+		return ".study.notice.created";
+	}
+	
+	@RequestMapping(value="/study/notice/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			Notice dto,
+			@RequestParam int studyNum,
+			@RequestParam int sNoticeNum,
+			@RequestParam int left,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+		}
+		
+		Study myStudy = study.readStudy(studyNum);
+		String masterId = myStudy.getUserId();
+		
+		
+		if(info.getUserId().equals(masterId)) {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + File.separator + "uploads" + File.separator+"snotice";
+			
+			dto.setUserId(masterId);
+			service.insertNotice(dto, pathname);
+			
+		}		
+		
+		return "redirect:/study/notice/list?studyNum="+studyNum+"&left="+left+"&page="+page;
+
+	}
+	
+	@RequestMapping(value="/study/notice/delete")
+	public String delete(
+			@RequestParam int studyNum,
+			@RequestParam int sNoticeNum,
+			@RequestParam int left,
+			@RequestParam String page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			HttpSession session) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+		}
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query= "studyNum="+studyNum+"&left="+left+"&page="+page;
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		Study myStudy = study.readStudy(studyNum);
+		String masterId = myStudy.getUserId();
+		
+		
+		if(! info.getUserId().equals(masterId)) {
+			return "redirect:/study/notice/list?"+query;
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + File.separator +"uploads" + File.separator + "notice";
+		
+		service.deleteNotice(sNoticeNum, pathname);
+		
+		return "redirect:/study/notice/list?"+query;
+	}	
 
 }
