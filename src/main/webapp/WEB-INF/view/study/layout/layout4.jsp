@@ -34,9 +34,9 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		if(${left}>=7){
-			$(".sidebar-menu li").eq(6).addClass("active");
-			$(".treeview-menu li").eq(${left}-7).addClass("active");
+		if(${left}>=9){
+			$(".sidebar-menu li").eq(8).addClass("active");
+			$(".treeview-menu li").eq(${left}-9).addClass("active");
 		}
 		
 		$(".sidebar-menu li").eq(${left}).addClass("active");

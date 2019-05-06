@@ -15,6 +15,14 @@
 
 <!-- Main content -->
 <section class="content container-fluid">
+	<div>
+		<div class="box-body">
+	     <blockquote>
+	       <p>당신과 함께할 스터디 <span class="text-green">수능 1등급</span></p>
+	       <small>StudyUp은 언제나 당신을 응원합니다.</small>
+	     </blockquote>
+	   </div>
+	</div>
 
 	<div class="row">
 		<div class="col-md-4 col-md-offset-1">
@@ -72,9 +80,7 @@
 	                    <td class="text-left" style="width: 45%;">공지사항입니다.</td>
 	                    <td class="text-center" style="width: 20%;">2019-04-30</td>
 	                    <td class="text-center" style="width: 15%;">20</td>
-	                  </tr>
-	                  
-	                
+	                  </tr>	                
                   </tbody>
                 </table>
               </div>
@@ -163,7 +169,8 @@
             </div>
             <!-- /.box-footer -->
             </div>
-   		 </div>      
+   		 </div>  
   </div>
 </section>
 
+	
