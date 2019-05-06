@@ -150,8 +150,8 @@ public class BlackController {
 	}
 	
 	@RequestMapping(value="/admin/blacklist/insert", method=RequestMethod.POST)
-	public String insertReport() throws Exception {
-		
-		return "";
+	public String insertReport(Report rdto, HttpServletRequest req) throws Exception {
+		rservice.insertReport(rdto);
+		return "redirect:/main";	//리스트 띄우는 법 알아보기		
 	}
 }

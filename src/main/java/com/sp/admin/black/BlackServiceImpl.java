@@ -22,27 +22,34 @@ public class BlackServiceImpl implements BlackService{
 			e.printStackTrace();
 		}		
 	}
-
+	
 	@Override
-	public int dataBlackCount() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int dataBlackCount(Map<String, Object> map) throws Exception {
+		int result=0;
+		
+		try {
+			result=dao.selectOne("admin.dataBlackCount", map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return result;
 	}
 
 	@Override
 	public List<Black> listBlack(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<Black> blist = null;
+		
+		try {
+			blist=dao.selectList("admin.listBlack", map);			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return blist;
 	}
 
 	@Override
 	public void updateBlack(String userId) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteBlack(String userId) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
