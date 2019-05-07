@@ -220,8 +220,20 @@ public class MypageServiceImpl implements MypageService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return result;
 	}
+
+	@Override
+	public void deleteWanoteFile(WanoteFileDTO fdto) {
+		
+		try {	
+			dao.deleteData("mypage.deleteWanoteFilePart", fdto);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 	

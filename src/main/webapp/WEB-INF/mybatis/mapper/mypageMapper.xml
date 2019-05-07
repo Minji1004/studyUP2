@@ -55,6 +55,7 @@
 	     	    <include refid="where-list"/>
 	     	</if>
 	</where>
+	WHERE userId = #{userId}
 	ORDER BY wanum DESC
 	LIMIT #{start}, #{rows}
 </select>
@@ -121,6 +122,10 @@
 		content = #{content}, created = NOW()
 	WHERE waNum = #{waNum}
 </update>
+
+<delete id="deleteWanoteFilePart" parameterType="com.sp.mypage.WanoteFileDTO">
+	DELETE FROM wanoteFile WHERE wanoteFileNum = #{wanoteFileNum}
+</delete>
 
 
 </mapper>

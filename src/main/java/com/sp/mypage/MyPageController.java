@@ -86,6 +86,7 @@ public class MyPageController {
 			,@RequestParam(value = "condition" , defaultValue = "all") String condition
 			,@RequestParam(value = "keyword", defaultValue = "")  String keyword
 			,HttpServletRequest req
+			,HttpSession session
 			,Model model) throws Exception{
 		
 		int rows = 5;
@@ -109,6 +110,9 @@ public class MyPageController {
 		if(start<0) start=0;  // 주의
 		map.put("start", start);
 		map.put("rows", rows);
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		map.put("userId", info.getUserId());
 	    
 		List<Wanote> list = mypageService.listWanote(map);
 		
@@ -335,7 +339,7 @@ public class MyPageController {
 			fileManager.doFileDelete(fdto.getSaveFilename(), pathname);
 			fdto.setSaveFilename("");
 			fdto.setOriginalFilename("");
-			mypageService.updateWanoteFile(fdto);
+			mypageService.deleteWanoteFile(fdto);
 		}
 		
 		model.put("state", state);

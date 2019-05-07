@@ -13,10 +13,9 @@
 
 
 <select id="readMember" parameterType="String" resultType="com.sp.member.Member">
-	SELECT m.userNum, userId, nickname, userPwd, enabled, tel,
-		created, lastLogin, picture, isAdmin, blicenseNum, blicenseKindNum
-		FROM memberInfo m 
-	    LEFT OUTER JOIN blicense bl ON m.userNum = bl.userNum
+	SELECT userNum, userId, nickname, userPwd, enabled, tel,
+		created, lastLogin, picture, isAdmin
+		FROM memberInfo
 	    WHERE userId = #{userId}
 </select>
 
