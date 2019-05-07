@@ -209,9 +209,9 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 	}
 
 	@Override
-	public TeacherNotice readFile(int fileNum) throws Exception {
+	public MyFile readFile(int fileNum) throws Exception {
 		
-		TeacherNotice result = null;
+		MyFile result = null;
 		
 		try {
 			result = dao.selectOne("tnotice.readFile", fileNum);
@@ -305,5 +305,90 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
+	}
+
+	@Override
+	public void updateReply(Reply dto) throws Exception {
+		try {
+			dao.updateData("tnotice.updateReply", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void updateNotice(TeacherNotice dto, String pathname) throws Exception {		
+		
+		try {
+			
+			dao.updateData("tnotice.updateNotice", dto);
+			
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf:dto.getUpload()) {
+					if(mf.isEmpty())
+						continue;
+					
+					String saveFilename=fileManager.doFileUpload(mf, pathname);
+					if(saveFilename!=null) {
+						String originalFilename=mf.getOriginalFilename();
+						long fileSize=mf.getSize();
+						
+						dto.setOriginalFilename(originalFilename);
+						dto.setSaveFilename(saveFilename);
+						dto.setFileSize(fileSize);
+						
+						insertFile(dto);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void deleteFile(int fileNum) throws Exception {
+		try {
+			dao.deleteData("tnotice.deleteFile", fileNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void deleteAllFile(int tnoticeNum) throws Exception {
+		try {
+			dao.deleteData("tnotice.deleteAllFile", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}			
+	}
+
+	@Override
+	public void deleteAllReply(int tnoticeNum) throws Exception {
+		try {
+			dao.deleteData("tnotice.deleteAllReply", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void deleteLikeNum(int tnoticeNum) throws Exception {
+		try {
+			dao.deleteData("tnotice.deleteLikeNum", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}			
+	}
+
+	@Override
+	public void deleteNotice(int tnoticeNum) throws Exception {
+		try {
+			dao.deleteData("tnotice.deleteNotice", tnoticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}			
 	}	
 }

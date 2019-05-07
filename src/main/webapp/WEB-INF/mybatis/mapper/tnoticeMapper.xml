@@ -29,6 +29,11 @@
 	VALUES(#{tnoticeNum}, #{tId},#{subject},#{content},#{noticeweather})
 </insert>
 
+<insert id="updateNotice" parameterType="com.sp.teacher.notice.TeacherNotice">
+	UPDATE tnotice SET subject = #{subject}, content = #{content}, noticeweather = #{noticeweather}
+	WHERE tnoticeNum = #{tnoticeNum}
+</insert>
+
 <insert id="insertFile" parameterType="com.sp.teacher.notice.TeacherNotice">
 	  INSERT INTO tnotice_file(tnoticeNum, saveFilename, originalFilename, fileSize) 
 	  VALUES (#{tnoticeNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
@@ -119,7 +124,7 @@
 	DELETE FROM tnotice_like WHERE userId = #{userId} AND tnoticeNum= #{tnoticeNum}
 </delete>
 
-<select id="readFile" parameterType="Integer" resultType="com.sp.teacher.notice.TeacherNotice">
+<select id="readFile" parameterType="Integer" resultType="com.sp.common.MyFile">
 	SELECT filenum AS fileNum, originalFilename, saveFilename, fileSize FROM tnotice_file where filenum = #{fileNum}
 </select>
 
@@ -163,4 +168,29 @@
  <delete id="deleteReply" parameterType="Integer">
  	delete from tnotice_r where tnotice_r_num =  #{tnotice_r_num} OR answer =  #{tnotice_r_num}
  </delete>
+ 
+ <update id="updateReply" parameterType="com.sp.teacher.notice.Reply">
+ 	update tnotice_r set content = #{content} WHERE tnotice_r_num = #{tnotice_r_num} AND answer = #{answer};
+ </update>
+ 
+ <delete id="deleteFile" parameterType="Integer">
+ 	delete from tnotice_file where fileNum = #{fileNum}
+ </delete>
+ 
+ <delete id="deleteAllFile"  parameterType="Integer">
+ 	delete from tnotice_file where tnoticeNum = #{tnoticeNum}
+ </delete>
+ 
+ <delete id="deleteAllReply" parameterType="Integer">
+ 	delete from tnotice_r where tnoticeNum = #{tnoticeNum}
+ </delete>
+ 
+ <delete id="deleteLikeNum" parameterType="Integer">
+ 	delete from tnotice_like where tnoticeNum = #{tnoticeNum}
+ </delete>
+ 
+  <delete id="deleteNotice" parameterType="Integer">
+ 	delete from tnotice where tnoticeNum = #{tnoticeNum}
+ </delete>
+ 
 </mapper>

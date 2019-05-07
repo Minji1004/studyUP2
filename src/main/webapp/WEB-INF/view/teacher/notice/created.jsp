@@ -66,20 +66,38 @@
 		});		
 		
 		$("body").on("click", "#deleteFile", function(){			
-			this.closest("p").remove();	
+			var fileNum = $(this).attr("data-fileNum");
+			var $p = $(this).closest("p");
+			
+			var url = "<%=cp%>/teacher/notice/deleteFile";
+			  $.ajax({
+					type:"post",
+					url: url,
+					dataType: "JSON",
+					data: {
+						fileNum : fileNum
+					},
+					success: function(data){
+						$p.remove();	
+					},			
+					error: function(e){
+						console.log(e.responseText);
+					}
+				});			
 		}); 
 });
   
   $(function(){
 	  var $checkBox = $("input[name=noticeweather]");
-	  $checkBox.click(function{
+	  $checkBox.click(function(){
 		  if($checkBox.is(':checked')){
 			  $checkBox.prop("checked", false);
-		  }else
+		  }else{
 			  $checkBox.prop("checked", true);
 		  }
-	  })
-  })
+	  });
+  });
+  
   
 </script>
 
@@ -129,7 +147,7 @@
 		<div id="tableList" ></div>
 		<c:if test="${not empty listFile}">
 			<c:forEach var="file" items="${listFile}">
-				<p><a href='#' id='deleteFile' class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>
+				<p><a href='#' id='deleteFile' data-fileNum = "${file.fileNum}" class='btn-box-tool workIcon'><i class='fa fa-trash'></i></a>
 				&nbsp;&nbsp;${file.originalFilename}<span class='filesize'><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${file.fileSize/1024000}"/>MB</span></p>
 			</c:forEach>		
 		</c:if>
@@ -137,6 +155,8 @@
   	</td>
   </tr>
   </table>
+
+	<input type="hidden" name="tnoticeNum" value="${dto.tnoticeNum}">
 
   <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
      <tr height="45"> 

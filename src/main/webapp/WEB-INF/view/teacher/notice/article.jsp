@@ -25,6 +25,13 @@
   		listPage(1);
   });
   
+  function deleteArticle(){
+	  if(confirm("게시물을 삭제 하시겠습니까 ?")) {
+			var url="<%=cp%>/teacher/notice/delete?"
+			var query = "tnum="+${tnum}+"&left="+${left}+"&tnoticeNum="+${dto.tnoticeNum};
+			location.href=url+query;
+		}
+  }
   
   function updateArticle(){
 	  var url = "<%=cp%>/teacher/notice/update?";
@@ -203,6 +210,78 @@
 				}			
 			});
   }
+  
+  function updateComment(tnotice_r_num, answer){
+	  var $div = $("#user-block"+tnotice_r_num);	  
+	  var msg = $div.next().html();	  
+	  
+	  $div.next().hide();
+	  $div.after("<textarea class='form-control' style='width: 100%; min-height: 80px; box-sizing: border-box;'>"+msg+"</textarea>");
+	  	
+	  changeButton(tnotice_r_num, answer, 0); 
+  }
+  
+   function cancelComment(tnotice_r_num, answer){
+	  var $div = $("#user-block"+tnotice_r_num);
+	  $div.next("textarea").remove();
+	  $div.next("p").show();
+  
+	  changeButton(tnotice_r_num, answer, 1);  
+  }
+  
+   function completeComment(tnotice_r_num, answer){
+	   var $div = $("#user-block"+tnotice_r_num);
+	   var content = $div.next("textarea").val();
+	   
+	   var url="<%=cp%>/teacher/notice/updateReply";
+	   var query="tnotice_r_num="+tnotice_r_num+"&answer="+answer+"&content="+encodeURIComponent(content);
+		
+		$.ajax({
+			type:"post",
+			url: url,
+			data: query,
+			dataType: "json",
+			success: function(data){	
+				 $div.next("textarea").remove();
+				 $div.next("p").html(content);
+				 $div.next("p").show();
+				 
+				 changeButton(tnotice_r_num, answer, 1);
+			},  
+			error: function(jqXHR){ 
+				console.log(jqXHR.responseText);
+			}			
+		}); 	
+	 
+  }  
+   
+   function changeButton(tnotice_r_num, answer, mode){
+	   var $div = $("#user-block"+tnotice_r_num);
+	   
+	   if(mode==0){
+		   var $btn1 = $div.find("a[onclick^=deleteComment]");
+			var $btn2 = $div.find("a[onclick^=updateComment]");
+			
+			  $btn1.removeAttr("onclick");
+			  $btn1.attr("onclick", "cancelComment("+tnotice_r_num+","+answer+")");
+			  $btn1.html("<i class='fa fa-remove'></i>");
+			  
+			  $btn2.removeAttr("onclick");
+			  $btn2.attr("onclick", "completeComment("+tnotice_r_num+","+answer+")");
+			  $btn2.html("<i class='fa fa-check'></i>");
+	   }else if(mode==1){
+			  var $btn1 = $div.find("a[onclick^=completeComment]");
+			  var $btn2 = $div.find("a[onclick^=cancelComment]");
+			  
+			  $btn1.removeAttr("onclick");
+			  $btn1.attr("onclick", "updateComment("+tnotice_r_num+","+answer+")");
+			  $btn1.html("<i class='fa fa-edit'></i>");
+			  
+			  $btn2.removeAttr("onclick");
+			  $btn2.attr("onclick", "deleteComment("+tnotice_r_num+","+answer+")");
+			  $btn2.html("<i class='fa fa-trash-o'></i>");	
+	   }
+   }
 </script>
 
 
