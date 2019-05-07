@@ -100,7 +100,7 @@
 	
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.sp.customer.inquiry.Inquiry">
-		INSERT INTO inquiryFile(inquiryNum, saveFilename, originalFilename,FileSize)
+		INSERT INTO inquiryFile(inquiryNum, saveFilename, originalFilename,fileSize)
 		VALUES (#{inquiryNum}, #{saveFilename}, #{originalFilename}, #{fileSize})
 	</insert>
 	

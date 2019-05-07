@@ -79,7 +79,17 @@
 <script type="text/javascript">
   function sendOk() {
         var f = document.inquiryForm;
-
+		
+        if(! f.subject.value){
+        	f.subject.focus();
+        	return;
+        }
+        
+        if(! f.content.value){
+        	f.content.focus();
+        	return;
+        }
+        
         f.action="<%=cp%>/customer/inquiry/${mode}";
         f.submit();
         
@@ -115,7 +125,12 @@ $(function(){
 	});
 });
 <c:if test="${mode=='update'}">
-
+	function deleteFile(fileNum){
+		var url="<%=cp%>/customer/inquiry/deleteFile";
+		$.post(url, {fileNum:fileNum}, function(data){
+			$("#f"+fileNum).remove();
+		}, "json");
+	}
 </c:if>
 </script>
 
@@ -172,12 +187,28 @@ $(function(){
 			                        	</td>
 			                        </tr>
 			               
+			               		<c:if test="${mode=='update'}">
+			               			<c:forEach var="vo" items="${listFile}">
+			               				<tr id="f${vo.fileNum}">
+			               					<td class="td1">첨부된파일</td>
+			               					<td colspan="3" class="td3">
+			               						${vo.originalFilename}
+			               							<a href="javascript:deleteFile('${vo.fileNum}');">삭제</a>
+	               							</td>
+               							</tr>
+			               			</c:forEach>			              
+			               		</c:if>
 		                    	</tbody>
 		                    	<tfoot>
 			                        <tr>
 			                            <td colspan="4" style="text-align: center; padding-top: 15px;">
 			                                  <button type="button" class="btn btn-primary" onclick="sendOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
 			                                  <button type="button" class="btn btn-primary" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list';"> 취소 </button>
+			                            	<c:if test="${mode=='update'}">
+			                            		<input type="hidden" name="noticeNum" value="${dto.inquiryNum}">
+			                            		<input type="hidden" name="page" value="${page}">
+			                            	</c:if>
+			                            
 			                            </td>
 			                        </tr>
 			                    </tfoot>
