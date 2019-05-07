@@ -1,6 +1,7 @@
 package com.sp.studyroom;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class StudyRoomController {
 		map.put("sigungu_con", sigungu_con);
 		map.put("bname_con", bname_con); 
 		
-		String paging = myUtil.paging(current_page, total_page, listUrl);
+		String paging = srUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);
@@ -109,7 +110,34 @@ public class StudyRoomController {
 	
 	
 	@RequestMapping(value = "/studyroom/modal/main")
-	public String modalMain() {		 
+	public String modalMain(
+			@RequestParam(value="cafeNum") int cafeNum,
+			@RequestParam(value="page") int current_page,
+			Model model
+			) throws Exception {		 
+		
+		StudyRoom sr = service.studyRoom(cafeNum);
+		
+		// 카페 소개글 넘기기
+		String intro = sr.getCafeIntro().replaceAll("\n", "<br>");
+		sr.setCafeIntro(intro);
+		
+		// 카페 사진파일 넘기기
+		List<StudyRoomFile> tempList = service.fileList(sr.getCafeNum());
+		String pictures = srUtil.modalPicture(tempList);
+		sr.setFileList(pictures);
+		
+		// 카페 룸 정보 넘기기
+		List<StudyRoomDetail> studyRoomList = service.studyRoomList(sr.getCafeNum());
+		
+		
+		
+		
+		sr.setStudyRoomList(studyRoomList);
+		
+		model.addAttribute("radio_test", studyRoomList.get(0).getTimeOrRoom());
+		model.addAttribute("page", current_page);		
+		model.addAttribute("sr", sr);
 		
 		return "studyroom/modal/main";
 	}

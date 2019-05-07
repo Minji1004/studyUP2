@@ -58,7 +58,27 @@
 		WHERE cafeNum=#{cafeNum}
 	</select>
 	
+	<!-- 모달 스터디룸 가져오기 -->
+	<select id="studyRoom" parameterType="Integer" resultType="com.sp.studyroom.StudyRoom">
+		SELECT cafeNum, userNum, cafeName, cafeTel, cafeOwner, cafeIntro, sido, sigungu, bname, 
+			   roadAddr, normAddr, buildName, detailAddr, bCode, cafeOpen, cafeClose
+		FROM cafe
+		WHERE cafeNum=#{cafeNum}
+	</select>
 	
+	<!-- 방정보 리스트 가져오기 -->
+	<select id="studyRoomList" parameterType="Integer" resultType="com.sp.studyroom.StudyRoomDetail">
+		SELECT roomNum, cafeNum, roomName, minUser, maxUser, timeOrRoom, unitPrice
+		FROM cafeRoom
+		WHERE cafeNum=#{cafeNum}
+	</select>
+	
+	<!-- 방별 체크시간 확인하기 -->
+	<select id="studyRoomTimeList" parameterType="Integer" resultType="com.sp.studyroom.StudyRoomDetail">
+		SELECT checkTime
+		FROM cafeRoomDetail
+		WHERE roomNum=#{roomNum}
+	</select>
 	
 	
 </mapper>

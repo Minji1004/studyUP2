@@ -117,7 +117,14 @@
 	// 외부 jsp모달 불러오기
 	$(function(){
 		$(".btn-srModal").click(function(){
-			$('#srModal').modal({remote:'<%=cp%>/studyroom/modal/main'});
+			var url = "<%=cp%>/studyroom/modal/main";
+			var cafeNum = $(this).parent().find(".cafeNum").val();
+			var page = $(this).parent().find(".page").val();
+			
+			var query = "?cafeNum="+cafeNum+"&page="+page;
+			var url = url + query;
+			
+			$('#srModal').modal({remote:url});
 		});
 	});
 	
@@ -154,7 +161,7 @@
 		$(this).parent().parent().remove();
 	});
 	
-	// write.jsp 마지막 리스트 새로확인
+	// write.jsp 마지막 시간리스트 확인
 	$(document).on("click","#srModalFullTime", function(){
 		// 먼저 안의 리스트를 지운다.
 		$("#srModalRoomTime").children().remove();
@@ -180,6 +187,39 @@
 		});
 		
 		$(".srTimeCB").hide();
+	});
+	
+	// main.jsp 시간 리스트 체크
+	$(document).on("click","#srModalMainTime", function(){
+		// 먼저 안의 리스트를 지운다.
+		$("#scrollThirdModal").children().remove();
+		/*
+		var opentime = parseInt($("input[name=srTimeButtonOpen]").val());
+		var closetime = parseInt($("input[name=srTimeButtonClose]").val());
+		*/
+		$("input[name=modalRoomName]").each(function(){
+			alert($(this).val());
+			alert($(this).next().val());
+			$divCol = "<div class='col-xs-12 col-sm-12 col-md-12'>";
+			$divName = "<div class='srRoomName'>"+$(this).val()+"</div>";
+			$divTime = "<div class='srTimeButton'>";
+			/*
+			for ( var i = opentime ; i < closetime ; i++) {
+				if( $("input[name=roomTime]"))
+				
+				var label  = "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
+					label += "<span>|"+i+":00|</span>";
+					label += "<input type='hidden' name='timeValues' value='"+i+"'>";
+					$(".srTimeButton").last().append(label);
+			}
+			*/
+			
+			$("#scrollThirdModal").append($divCol);
+			$("#scrollThirdModal").children().last().append($divName);
+			$("#scrollThirdModal").children().last().append($divTime);
+			
+			
+		});
 	});
 	
 	// 주소검색 API
@@ -230,12 +270,7 @@
         }).open();
     }
 
-	function listStudyRoom(page) {
-		var url="<%=cp%>/study/main";
-		var query="&pageNo="+page;
-		
-		ajaxText
-	}
+	
 	
 </script>
 
@@ -296,9 +331,6 @@
 							<div class="carousel-inner" role="listbox">
 								<c:if test="${not empty dto.fileList}">
 									${dto.fileList}
-									<div class="item">
-										<img class="srPic" src="<%=cp%>/uploads/studyroom/2019050114132374460183447100.JPG" alt="..." height="100%" width="100%">
-									</div>
 								</c:if>
 								<c:if test="${empty dto.fileList}">
 									<div class="item active">
@@ -329,6 +361,8 @@
 								</div>
 								<div style="height:28px;">
 									<button type="button" class="btn-srModal">More...</button>
+									<input type="hidden" class="cafeNum" value="${dto.cafeNum}">
+									<input type="hidden" class="page" value="${page}">
 								</div>
 							</div>
 						</div>

@@ -118,7 +118,7 @@
 								
 							</div>
 							
-							<h5 class="modalName">기본 정보</h5>
+							<h5 class="modalName">기본 정보 입력</h5>
 							
 							<div class="srModalWriteTable">
 								<table class="srModalInfo">
@@ -178,7 +178,7 @@
 						<!-- 시간 선택 정보 -->
 						<div class="srSecondTwoModal" style="margin-top: 0px; height: 417px;">
 							<div class="srModalTop">
-								<h5 class="modalName">방정보 입력</h5>
+								<h5 class="modalName">방별 정보 입력</h5>
 							</div>
 							
 							<div style="margin: 10px 0px 0px 25px; text-align: left; text-size: 8pt;">
@@ -226,7 +226,7 @@
 						
 						<div class="srSecondOneModal" style="margin-top: 20px; height: 180px;">
 							<div class="srModalTop" style="border:none;">
-								<h5 class="modalName">사용불가 시간을 선택</h5>
+								<h5 class="modalName">운영시간 입력<span style="font-size:10px;">&nbsp;(24h기준)</span></h5>
 							</div>
 													
 							<div class="scrollSecondOneModal" style="height: 75px;"> 
@@ -257,70 +257,12 @@
 					<div class="col-xs-12 col-sm-12 col-md-4">
 						<div class="srThirdModal">
 							<div class="srModalTop">
-								<h5 class="modalName">운영시간 선택</h5>
+								<h5 class="modalName">방별 사용불가 시간 선택</h5>
 							</div>
 							<!-- 각 스터디 별 체크  -->
 							<div class="scrollThirdModal"> 
 								<div class="col-xs-12 col-sm-12 col-md-12" id="srModalRoomTime">
-									<div class="roomNames">수성</div>
-									<div class="srTimeButton">
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|11:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|12:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|13:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|14:00|</span>
-										</label>
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|15:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|16:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|17:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|18:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|19:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|20:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|21:00|</span>
-										</label>
-										
-										<label class="srTimeColor">
-											<input class="srTimeCB" type="checkbox" autocomplete="off">
-											<span>|22:00|</span>
-										</label>
-									</div>
-									<div class="srModalBottomSpace">&nbsp;</div>
+									<h5> 좌측에 "세부시간 선택"을 눌러주세요.</h5>
 								</div>
 							</div>
 						</div>

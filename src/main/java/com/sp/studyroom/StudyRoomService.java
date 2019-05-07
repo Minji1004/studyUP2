@@ -12,4 +12,7 @@ public interface StudyRoomService {
 	public int insertFile(StudyRoom dto, String pathname);
 	public List<StudyRoomFile> fileList(int num);
 	public int countNum(StudyRoomTable tdto);
+	public StudyRoom studyRoom(int cafeNum);
+	public List<StudyRoomDetail> studyRoomList(int num);
+	public List<StudyRoomDetail> studyRoomDetailList(int num);
 }
