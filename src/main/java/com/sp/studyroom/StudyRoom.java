@@ -37,15 +37,15 @@ public class StudyRoom {
 	private List<MultipartFile> upload;
 	private String imgFilename;
 	private String saveFilename;
-	private List<StudyRoom> studyRoomList;
 	private String fileList;
+	private List<StudyRoomDetail> studyRoomList;
 	
 	
 	
-	public List<StudyRoom> getStudyRoomList() {
+	public List<StudyRoomDetail> getStudyRoomList() {
 		return studyRoomList;
 	}
-	public void setStudyRoomList(List<StudyRoom> studyRoomList) {
+	public void setStudyRoomList(List<StudyRoomDetail> studyRoomList) {
 		this.studyRoomList = studyRoomList;
 	}
 	public int getCheckTime() {

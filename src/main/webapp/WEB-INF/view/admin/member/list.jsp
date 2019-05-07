@@ -19,7 +19,7 @@ li{
 	padding-top: 7px;
 }
 
-.flist, .mlist{
+.mlist{
 	text-align:center; 
 	height:24px; 
 	border-bottom: 1px solid #cccccc;"
