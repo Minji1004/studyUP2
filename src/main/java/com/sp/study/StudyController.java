@@ -38,7 +38,15 @@ public class StudyController {
 	}
 	
 	@RequestMapping(value="/study/myStudy")
-	public String mymain(Model model) {
+	public String mymain(Model model,
+			HttpSession session) {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		if(info==null) {
+			return "redirect:/member/login";
+		}
+		
 		model.addAttribute("active", "2");
 		return ".four.study.myStudy";
 	}

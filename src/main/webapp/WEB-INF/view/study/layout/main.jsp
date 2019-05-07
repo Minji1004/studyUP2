@@ -18,7 +18,7 @@
 	<div>
 		<div class="box-body">
 	     <blockquote>
-	       <p>당신과 함께할 스터디 <span class="text-green">수능 1등급</span></p>
+	       <p>당신과 함께할 스터디 <span class="text-green">${dto.studyName}</span></p>
 	       <small>StudyUp은 언제나 당신을 응원합니다.</small>
 	     </blockquote>
 	   </div>

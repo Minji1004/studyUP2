@@ -2373,7 +2373,7 @@ table.text-center th {
   -o-transform: translate(0, 0);
   transform: translate(0, 0);
   padding: 10px;
-  height: 250px;
+  height: 90%;
   overflow: auto;
 }
 .direct-chat-msg,
