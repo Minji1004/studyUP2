@@ -22,6 +22,9 @@ public class BlackController {
 	
 	@Autowired
 	private ReportService rservice;
+	
+	@Autowired
+	private BlackService bservice;
 		
 	@Autowired
 	private MyUtil util;
@@ -154,4 +157,77 @@ public class BlackController {
 		rservice.insertReport(rdto);
 		return "redirect:/main";	//리스트 띄우는 법 알아보기		
 	}
+	
+	@RequestMapping(value="/admin/blacklist/listblack")
+	public String listBlack(
+		@RequestParam(value="page", defaultValue="1") int page,
+		@RequestParam(value="") String keyword,
+		HttpServletRequest req,
+		Model model
+		) throws Exception {
+		
+		String cp = req.getContextPath();
+		
+		int row=6;
+		int total=0;
+		int blackCount=0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword=URLDecoder.decode(keyword, "UTF-8");
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		
+		blackCount=bservice.dataBlackCount(map);
+		
+		total=util.pageCount(row, blackCount);
+		
+		if(total<page) {
+			page=total;
+		}
+		
+		int first = (page-1)*row;
+		if(first<0) {
+			first=0;
+		}
+		
+		map.put("first", first);
+		map.put("row", row);
+		
+		List<Black> blist = bservice.listBlack(map);
+		
+		int blistNum, n=0;
+		for(Black bdto:blist) {
+			blistNum=blackCount-(first+n);
+			bdto.setBlistNum(blistNum);
+			n++;
+		}
+		
+		String bquery="";
+		String urlList;
+		
+		if(keyword.length()!=0) {
+			bquery="keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		urlList = cp+"/admin/blacklist/list";
+		
+		if(bquery.length()!=0) {
+			urlList=urlList+"?"+bquery;
+		}
+		
+		String phase=util.paging(page, total);
+		
+		model.addAttribute("blist", blist);
+		model.addAttribute("urlList", urlList);
+		model.addAttribute("phase", phase);
+		model.addAttribute("total", total);
+		model.addAttribute("page", page);
+		
+		model.addAttribute("keyword", keyword);
+		
+		return "admin.blacklist.list"; 
+	}
+	
 }

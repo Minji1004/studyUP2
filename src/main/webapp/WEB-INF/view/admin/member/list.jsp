@@ -37,7 +37,7 @@ $(function(){
 
 		var url="<%=cp%>/admin/member/article?userNum="+num+"&page=${page}";
 		
-		$('#reportModal, .modal-content').load(url, function(){
+		$('#reportModal .modal-content').load(url, function(){
 			$('#reportModal').modal('show');
 		});
 	});

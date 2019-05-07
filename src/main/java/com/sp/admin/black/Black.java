@@ -1,6 +1,7 @@
 package com.sp.admin.black;
 
 public class Black {
+	private int blistNum;
 	private int blackNum;
 	private int blackUserNum;
 	private String userId;
@@ -50,6 +51,12 @@ public class Black {
 	}
 	public void setBlackEnd(String blackEnd) {
 		this.blackEnd = blackEnd;
+	}
+	public int getBlistNum() {
+		return blistNum;
+	}
+	public void setBlistNum(int blistNum) {
+		this.blistNum = blistNum;
 	}
 	
 }

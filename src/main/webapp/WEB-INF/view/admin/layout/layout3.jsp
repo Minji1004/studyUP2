@@ -42,6 +42,12 @@
     <tiles:insertAttribute name="footer"/>
 </div>
 
+<div class="smodal modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1050">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background: #FBFDF8;"></div>
+  </div>
+</div>
+
 <script src="<%=cp%>/resource/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
@@ -50,11 +56,4 @@
 <script src="<%=cp%>/resource/js/main.js"></script>
 
 </body>
-
-<div class="smodal modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1050">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background: #FBFDF8;"></div>
-  </div>
-</div>
-
 </html>
