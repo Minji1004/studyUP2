@@ -124,7 +124,7 @@
 			</if>
 		</where>
 		ORDER BY userNum DESC
-		LIMIT #{start}, #{rows}`
+		LIMIT #{start}, #{rows}
 	</select>
 		
 	<delete id="deleteMember">
