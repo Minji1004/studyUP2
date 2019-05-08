@@ -218,7 +218,7 @@ public class InquiryController {
 			Inquiry dto,
 			@RequestParam String page
 			) throws Exception{
-		System.out.println(dto.getUpload());
+		
 		service.updateInquiry(dto, page);
 		return "redirect:/customer/inquiry/list?page="+page;
 	}

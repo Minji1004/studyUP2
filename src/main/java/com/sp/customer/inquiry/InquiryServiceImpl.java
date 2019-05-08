@@ -27,6 +27,11 @@ public class InquiryServiceImpl implements InquiryService {
 			int inquiryNum=maxNum+1;
 			dto.setInquiryNum(inquiryNum);
 			
+			for(MultipartFile mf:dto.getUpload()) {
+				fileManager.doFileUpload(mf, pathname);
+			}
+			
+			
 			dao.insertData("inquiry.insertInquiry",dto);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -113,16 +113,7 @@ function searchList() {
 			                    </tr>
 			                </thead>
 			                <tbody>
-			        <c:forEach var="dto" items="${inquiryList}">
-			                    <tr>
-			                        <td class="text-center">${dto.listNum}</td>
-			                        <td>
-			                        	<a href="${articleUrl}&inquiryNum=${dto.inquiryNum}">${dto.subject}</a>
-			                        </td>
-			                        <td class="text-center">${dto.nickName}</td>
-			                        <td class="text-center">${dto.created}</td>		                     
-			                    </tr>
-			       </c:forEach>      
+   
 			       <c:forEach var="dto" items="${list}">
 			       			<tr>
 			       				<td class="text-center">${dto.listNum}</td>
