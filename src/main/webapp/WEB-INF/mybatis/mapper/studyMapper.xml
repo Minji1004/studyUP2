@@ -162,7 +162,12 @@
 		FROM applystudy WHERE studyNum = #{studyNum} AND approval = 2;
 	</select>
 	
-	
+	<!-- 스터디 멤버 -->
+	<select id="studyMember" parameterType="Integer" resultType="com.sp.study.Study">
+		select a.userId, nickname from applystudy a
+		LEFT join memberinfo m on a.userId = m.userId
+		where studyNum = #{studyNum} AND approval = 2
+	</select>	
 	
 	<!-- 분류 가져오기 -->
 	<select id="listCategory" resultType="com.sp.study.Category">
