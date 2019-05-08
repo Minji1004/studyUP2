@@ -68,12 +68,6 @@ $(function() {
 			right: 'agendaWeek,month,list'
 		},
 		defaultView: 'agendaWeek',
-		views: {
-			timelineThreeDays: {
-				type: 'timeline',
-				duration: { days: 3 }
-			}
-		},
 		resourceGroupField: 'groupName',
 		resources: {
 			url: '<%=cp%>/mypage/schedule/resources',
@@ -637,7 +631,7 @@ function updateDrag(calEvent) {
 }
 </script>
 
-<div class="body-container" style="width: 900px;">
+<div class="body-container" style="width: 900px;margin: 100px">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> 스케쥴러 </h3>
     </div>
