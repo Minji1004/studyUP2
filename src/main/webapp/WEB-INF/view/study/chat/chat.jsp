@@ -25,7 +25,7 @@
 
 </style>
 
-<script src="http://localhost:3001/socket.io/socket.io.js"></script>
+<script src="http://211.238.142.201:3001/socket.io/socket.io.js"></script>
 <script type="text/javascript">
 function convertStringToDate(str) {
 	// yyyy-mm-dd hh:mi:ss
@@ -110,7 +110,7 @@ $(function(){
 	var room = null;
 	
 	// 채팅 서버에 접속
-	var sock = io('http://localhost:3001/chat');
+	var sock = io('http://211.238.142.201:3001/chat');
 	
 	// 채팅방 입장
 	$(".chatting-room-btn").on("click", function(){
