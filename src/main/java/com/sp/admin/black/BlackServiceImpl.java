@@ -53,5 +53,17 @@ public class BlackServiceImpl implements BlackService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Black readBlack(int blackNum) throws Exception {
+		Black bdto=null;
+		try {
+			bdto=dao.selectOne("admin.readBlack", blackNum);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return bdto;
+	}
 	
 }
