@@ -15,10 +15,12 @@
  		<img class="img-circle img-dialog" src="<%=cp%>/uploads/lecture/${dto.studyImg}">
  	</div>
  	<div class="col-xs-4 col-sm-7">
- 		<div class="dialog-content-title">${dto.studyIntro}</div>
- 		<div class="dialog-content"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.nickname}</div>
- 		<div class="dialog-content"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> ${dto.studyLocation}</div>
- 		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> ${dto.studySday} ~ ${dto.studyEday}</div>
+ 		<div class="dialog-content-title" style="padding-top: 10px;">${dto.studyIntro}</div>
+ 		<div class="dialog-content">선생님: ${dto.nickname}</div>
+ 		<div class="dialog-content">위치: ${dto.studyLocation}</div>
+ 		<div class="dialog-content">등록마감일: </div> 		
+ 		<div class="dialog-content">기간: ${dto.studySday} ~ ${dto.studyEday}</div>
+ 		<div class="dialog-content">가격: </div>
  	</div>
 </div>
 <div class="modal-footer">
