@@ -73,7 +73,8 @@
     		<mvc:exclude-mapping path="/mail/send"/>
     		<mvc:exclude-mapping path="/timer/selectGoalTime"/>
     		<mvc:exclude-mapping path="/member/**"/>
-    		<mvc:exclude-mapping path="/uploads/**"/>    		
+    		<mvc:exclude-mapping path="/uploads/**"/>    	
+    		<mvc:exclude-mapping path="/teacher/**"/>	
     		
     		
     		<bean class = "com.sp.member.LoginCheckInterceptor"/>
