@@ -9,7 +9,7 @@
 	<tr><td>
 		<div style='float: left; width: 2%;'>└</div>
 		<div style='float: left; width: 98%;'>
-		    <div class='user-block' >
+		    <div class='user-block' id="user-block${dto.tnotice_r_num}" style="margin-bottom: 15px;">
 				<img class='img-circle img-bordered-sm' src='<%=cp%>/uploads/member_profile/${dto.picture}'>
 				<span class='username'>${dto.nickname}	
 				<c:if test="${sessionScope.member.userId == dto.userId}">

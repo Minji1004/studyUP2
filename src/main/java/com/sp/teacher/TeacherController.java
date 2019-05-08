@@ -30,18 +30,17 @@ public class TeacherController {
 	public String manage(@RequestParam int tnum, @RequestParam int left, HttpSession session, Model model) throws Exception{
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String mode = "student";
 		
-		if(info==null)
-			return "redirect:/main";
-		
-		List<Integer> userType = info.getUserType();		
-		String mode = "student";	
-		
-		if(info.getUserNum()==tnum) {
-			for(int type: userType)	
-				if(type==3) 
-					mode = "teacher";
-		}		
+		if(info != null) {
+			List<Integer> userType = info.getUserType();					
+			
+			if(info.getUserNum()==tnum) {
+				for(int type: userType)	
+					if(type==3) 
+						mode = "teacher";
+			}		
+		}
 		
 		Teacher teacher = teacherService.readTeacher(tnum);
 		teacher.setTel(teacherUtil.makePhoneNumber(teacher.getTel()));

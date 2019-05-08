@@ -159,7 +159,7 @@
 	<!-- 스터디 인원 (승인 : 2) -->
 	<select id="headCount" parameterType="Integer" resultType="Integer">
 		SELECT IFNULL(count(DISTINCT userId), 0) 
-		FROM applystudy WHERE studyNum = #{studyNum} AND approval = 2;
+		FROM applystudy WHERE studyNum = #{studyNum} AND approval = 2
 	</select>
 	
 	<!-- 스터디 멤버 -->

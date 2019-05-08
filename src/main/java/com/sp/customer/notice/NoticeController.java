@@ -202,8 +202,7 @@ public class NoticeController {
 	@RequestMapping(value="/customer/notice/update", method=RequestMethod.GET)
 	public String updateForm(
 			@RequestParam int noticeNum,
-			@RequestParam String page,
-			HttpSession session,			
+			@RequestParam String page,			
 			Model model) throws Exception {
 		
 		Notice dto=service.readNotice(noticeNum);

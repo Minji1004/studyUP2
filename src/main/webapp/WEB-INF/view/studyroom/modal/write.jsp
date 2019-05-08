@@ -262,7 +262,7 @@
 							<!-- 각 스터디 별 체크  -->
 							<div class="scrollThirdModal"> 
 								<div class="col-xs-12 col-sm-12 col-md-12" id="srModalRoomTime">
-									<h5> 좌측에 "세부시간 선택"을 눌러주세요.</h5>
+									<h5> 가운데 하단에 <a style="font-weight:700; color:red;">"세부시간 선택"</a>을 눌러주세요.</h5>
 								</div>
 							</div>
 						</div>

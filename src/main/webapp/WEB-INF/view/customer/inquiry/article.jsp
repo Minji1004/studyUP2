@@ -7,6 +7,18 @@
 %>
 <script type="text/javascript">
 
+function updateInquiry(){
+	<c:if test="${sessionScope.member.userId==dto.userId}">
+		var q="inquiryNum=${dto.inquiryNum}&page=${page}";
+		var url="<%=cp%>/customer/inquiry/update?"+q;
+		
+		location.href=url;
+	</c:if>
+	
+	<c:if test="${sessionScope.member.userId!=dto.userId}">
+		alert("게시물 작성자만 게시물을 수정할 수 있습니다.");
+	</c:if>
+}
 
 function deleteInquiry(){
 	<c:if test="${sessionScope.member.userId==dto.userId}">
@@ -18,7 +30,7 @@ function deleteInquiry(){
 		}
 	</c:if>
 	<c:if test="${sessionScope.member.userId!=dto.userId}">
-		alert("게시물 작성자만 게시물을 삭제할 수 있습니다.")	
+		alert("게시물 작성자만 게시물을 삭제할 수 있습니다.");	
 	</c:if>
 }
 
@@ -99,7 +111,7 @@ function deleteInquiry(){
 }
 </style>
 
-<section class="section" id="srcontianer">
+<section class="section" id="srcontainer">
 
 <div class="container" role="main">
     <div class="row row-offcanvas row-offcanvas-right">
@@ -136,10 +148,19 @@ function deleteInquiry(){
 		                         </td>
 		                     </tr>
 		                     <tr>
-		                         <td colspan="2" style="height: 230px;">
+		                         	<td colspan="2" style="height: 230px;">
 		                              ${dto.content}
 		                         </td>
 		                     </tr>
+		                     
+			                     <c:forEach var="vo" items="${listFile}">
+			                   		<tr>
+			                   			<td colspan="2">
+			                   			<a href="<%=cp%>/customer/inquiry/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a>
+			                   			(<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte)
+			                     		</td>
+		                     		</tr>
+		                     	</c:forEach>
 		                     <tr>
 		                         <td colspan="2">
 		                              <span style="display: inline-block; min-width: 45px;">이전글</span> :
@@ -160,8 +181,8 @@ function deleteInquiry(){
 		                <tfoot>
 		                	<tr>
 		                		<td>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateInquiry">수정</button>
-		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteInquiry">삭제</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="updateInquiry()">수정</button>
+		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="deleteInquiry()">삭제</button>
 		                		</td>
 		                		<td align="right">
 		                		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list?${query}';"> 목록으로 </button>
@@ -169,10 +190,8 @@ function deleteInquiry(){
 		                	</tr>
 		                </tfoot>
 		            </table>
-		       </div>
-		      
+		       </div>		 
 		   </div>
-
         </div>
      </div>
 </div>

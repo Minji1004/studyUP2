@@ -31,7 +31,7 @@ function deleteNotice(){
 	}
 </c:if>
 <c:if test="${sessionScope.member.userId!=dto.userId}">
-	alert("게시물 작성자만 게시물을 삭제할 수 있습니다.")
+	alert("게시물 작성자만 게시물을 삭제할 수 있습니다.");
 </c:if>
 }
 
@@ -114,7 +114,7 @@ function deleteNotice(){
 }
 </style>
 
-<section class="section" id="srcontianer">
+<section class="section" id="srcontainer">
 
 <div class="container" role="main">
     <div class="row row-offcanvas row-offcanvas-right">
@@ -180,7 +180,6 @@ function deleteNotice(){
 			                             <c:if test="${not empty nextReadDto }">
 			                                  <a href="<%=cp%>/customer/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}">${nextReadDto.subject}</a>
 			                              </c:if>					
-
 		                         </td>
 		                     </tr>                                          
 		                </tbody>

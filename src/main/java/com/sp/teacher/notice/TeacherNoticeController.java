@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -197,9 +198,51 @@ public class TeacherNoticeController {
 		return ".teacher.notice.created";
 	}
 	
+	@RequestMapping(value ="/teacher/notice/update", method=RequestMethod.POST)
+	public String updateNotice(TeacherNotice dto, HttpSession session) throws Exception{		
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		int tnum = info.getUserNum();
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"tnotice";		
+		
+		try {			
+			teacherNoticeService.updateNotice(dto, pathname);				
+		}catch(Exception e) {
+			e.printStackTrace();
+			}
+
+		return "redirect:/teacher/notice/list?tnum="+tnum+"&left=2";
+	}
 	
+	@RequestMapping(value ="/teacher/notice/delete", method=RequestMethod.GET)
+	public String deleteNotice(@RequestParam int tnum, 
+			@RequestParam int tnoticeNum, 
+			@RequestParam int left, 
+			HttpSession session,
+			Model model) throws Exception{		
 	
-	
+		try {
+			List<MyFile> listFile= teacherNoticeService.listFile(tnoticeNum);
+			
+			String root = session.getServletContext().getRealPath("/");
+			String pathname=root+"uploads"+File.separator+"tnotice";
+			
+			for(MyFile file : listFile) {
+				fileManager.doFileDelete(file.getSaveFilename(), pathname); //파일지우기
+				teacherNoticeService.deleteAllFile(tnoticeNum);
+			}
+			
+			teacherNoticeService.deleteAllReply(tnoticeNum);
+			teacherNoticeService.deleteLikeNum(tnoticeNum);  
+			teacherNoticeService.deleteNotice(tnoticeNum);
+		
+		}catch (Exception e) {
+		}		
+			
+		return "redirect:/teacher/notice/list?tnum="+tnum+"&left=2";		
+	}
 	
 	@RequestMapping(value ="/teacher/notice/article", method=RequestMethod.GET)
 	public String readArticle(@RequestParam int tnum, 
@@ -269,7 +312,7 @@ public class TeacherNoticeController {
 
 		boolean b = false;
 		
-		TeacherNotice dto = teacherNoticeService.readFile(fileNum);
+		MyFile dto = teacherNoticeService.readFile(fileNum);
 		
 		if(dto!=null) {
 			String saveFilename = dto.getSaveFilename();
@@ -475,6 +518,47 @@ public class TeacherNoticeController {
 			int answerCount = teacherNoticeService.answerCount(answer);
 			model.put("state", "true");
 			model.put("answerCount", answerCount);
+		} catch (Exception e) {
+			model.put("state", "false");
+		}
+				
+		return model;		
+	}
+	
+	@RequestMapping(value="/teacher/notice/updateReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateReply(@ModelAttribute Reply dto) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();	
+		
+		try {
+			teacherNoticeService.updateReply(dto);
+			model.put("state", "true");
+		} catch (Exception e) {
+			model.put("state", "false");
+		}
+				
+		return model;		
+	}
+	
+	@RequestMapping(value="/teacher/notice/deleteFile", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteFile(@RequestParam int fileNum, HttpSession session) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();	
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"tnotice";
+		
+		MyFile dto = teacherNoticeService.readFile(fileNum);
+		
+		if(dto.getSaveFilename()!=null) {
+			fileManager.doFileDelete(dto.getSaveFilename(), pathname); //파일 지우기
+		}
+		
+		try {
+			teacherNoticeService.deleteFile(fileNum);
+			model.put("state", "true");
 		} catch (Exception e) {
 			model.put("state", "false");
 		}

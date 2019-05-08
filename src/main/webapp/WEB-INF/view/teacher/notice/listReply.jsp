@@ -17,7 +17,7 @@
 		<tr>
 			<td>
 				<div class='post'>
-					<div class='user-block'>
+					<div class='user-block' id="user-block${dto.tnotice_r_num}">
 						<img class='img-circle img-bordered-sm' src='<%=cp%>/uploads/member_profile/${dto.picture}'>
 						<span class='username'>${dto.nickname}	
 						<c:if test="${sessionScope.member.userId == dto.userId}">

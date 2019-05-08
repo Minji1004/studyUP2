@@ -190,19 +190,19 @@ public class InquiryController {
 		
 		return ".customer.inquiry.article";
 	}
+	
 	@RequestMapping(value="/customer/inquiry/update", method=RequestMethod.GET)
 	public String updateForm(
 			@RequestParam int inquiryNum,
 			@RequestParam String page,
-			HttpSession session,
 			Model model) throws Exception{
 		
 		Inquiry dto=service.readInquiry(inquiryNum);
 		if(dto==null) {
 			return "redirect:/customer/inquiry/list?page="+page;
 		}
-		List<Inquiry> listFile=service.listFile(inquiryNum);
 		
+		List<Inquiry> listFile=service.listFile(inquiryNum);
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		model.addAttribute("dto", dto);
@@ -218,9 +218,8 @@ public class InquiryController {
 			Inquiry dto,
 			@RequestParam String page
 			) throws Exception{
-		
+		System.out.println(dto.getUpload());
 		service.updateInquiry(dto, page);
-		
 		return "redirect:/customer/inquiry/list?page="+page;
 	}
 	

@@ -38,7 +38,7 @@ public class InquiryServiceImpl implements InquiryService {
 	public int dataCount(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.selectOne("inquiry.dataCount",map);
+			result=dao.selectOne("inquiry.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -106,7 +106,7 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public int updateInquiry(Inquiry dto,String pathname) {
+	public int updateInquiry(Inquiry dto, String pathname) {
 		int result=0;
 		
 		try {

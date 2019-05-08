@@ -29,7 +29,7 @@ li{
 
 <script>
 function searchList(){
-	var f=document.reportSearch;
+	var f=document.search;
 	f.submit();
 }
 
@@ -57,7 +57,7 @@ $(function(){
 
 <section class="features section">
 	<div class="container" style="height:550px; width: 90%; padding-top:80px;">
-		<form method="post" name="reportSearch" action="<%=cp%>/admin/blacklist/list">
+		<form method="post" name="search" action="<%=cp%>/admin/blacklist/list">
 			<div class="input-group">
 				<input type="text" name="keyword" value="${keyword}" class="form-control input-sm keyword" placeholder="통합검색">
 				<span class="input-group-btn" >
@@ -110,7 +110,7 @@ $(function(){
 		<div style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <ul style="height:20px;">
 		      <li style="width:10%; float:left;">
-		          개(/페이지)
+		          ${blackCount }개(${page }/${total }페이지)
 		      </li>		      
 		   </ul>
 		</div>
@@ -119,17 +119,16 @@ $(function(){
 		      <li style="color: #787878; width:10%;">번호</li>
 		      <li style="color: #787878; width:27%;">아이디</li>
 		      <li style="color: #787878; width:27%;">닉네임</li>		      
-		      <li style="color: #787878; width:18%;">등록일</li>
-		      <li style="color: #787878; width:18%;">해제예정일</li>
+		      <li style="color: #787878; width:18%;">등록일</li>		      
 		  </ul>
-		  
-		  <ul class="blist" data-blackNum=""> 
-		      <li style="width:10%;">번호</li>
-		      <li style="width:27%;">아이디</li>
-		      <li style="width:27%;">닉네임</li>	      
-		      <li style="width:18%;">등록일</li>
-		      <li style="width:18%;">해제예정일</li>
-		  </ul>		  
+		  <c:forEach var="bdto" items="${blist}" >
+		  <ul class="blist" data-blackNum="${bdto.blackNum}"> 
+		      <li style="width:10%;">${bdto.blistNum }</li>
+		      <li style="width:27%;">${bdto.blackUserId }</li>
+		      <li style="width:27%;">${bdto.blackNickName }</li>	      
+		      <li style="width:18%;">${bdto.blackStart}</li>		      
+		  </ul>		 
+		  </c:forEach> 
 		</div>
 </c:if>
 	</div>

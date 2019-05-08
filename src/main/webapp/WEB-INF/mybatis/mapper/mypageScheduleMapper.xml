@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scheduler">
+
+	
+<select id="listResourceList" resultType="com.sp.mypage.ResourceJSON">
+		SELECT resourceNum id, rl.groupNum, groupName, resourceName title,
+		           color eventColor, occupancy
+        FROM resourceList rl
+        JOIN resourceGroup rg ON rl.groupNum = rg.groupNum
+        ORDER BY rl.groupNum, resourceNum
+</select>
+
+<select id="listResourceScheduler" resultType="com.sp.mypage.ResourceJSON"
+	            parameterType="map">
+		SELECT num id, groupName, rs.resourceNum resourceId, title, 
+		    NVL2(startTime, startDay||'T'||startTime, startDay) "start",
+		    NVL2(endTime, endDay||'T'||endTime, endDay) "end",
+		    startDay, startTime, endDay, endTime, 
+		    rs.userId, userName, occupancy, resourceName, rl.groupNum, inwon
+        FROM resourceScheduler rs
+        JOIN resourceList rl ON rs.resourceNum = rl.resourceNum
+        JOIN resourceGroup rg ON rl.groupNum = rg.groupNum
+        JOIN member1 m ON rs.userId = m.userId
+        WHERE TO_DATE(startDay, 'YYYY-MM-DD') &gt;= #{start}
+           AND TO_DATE(endDay, 'YYYY-MM-DD') &lt;= #{end}
+        ORDER BY groupNum, resourceId, num
+</select>
+	
+	
+		
+<select id="readResourceList" parameterType="Integer"
+	           resultType="com.sp.mypage.Resource">
+	     SELECT resourceNum, groupNum, resourceName,
+		           color, occupancy
+		      FROM resourceList
+	          WHERE resourceNum = #{resourceNum}
+</select>	
+    
+<select id="listResourceGroup" resultType="com.sp.mypage.Resource">
+		SELECT groupNum, groupName FROM resourceGroup
+</select>
+
+<select id="listResourceList2" resultType="com.sp.mypage.Resource">
+		SELECT resourceNum, resourceName, occupancy
+        FROM resourceList
+        WHERE groupNum=#{groupNum}
+        ORDER BY resourceNum
+</select>
+
+</mapper>

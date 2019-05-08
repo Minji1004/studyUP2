@@ -21,4 +21,5 @@ public interface MypageService {
 	public int deleteWanoteFile(int waNum);
 	public int insertWanoteFile(WanoteFileDTO fdto);
 	public int updateWanote(Wanote dto);
+	public void deleteWanoteFile(WanoteFileDTO fdto);
 }

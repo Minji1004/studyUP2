@@ -165,7 +165,7 @@
 		</if>
 		</where>
 		ORDER BY b1.blackUserNum DESC
-		LIMIT #{start}, #{rows}
+		LIMIT #{first}, #{row}
 	</select>
 
 </mapper>

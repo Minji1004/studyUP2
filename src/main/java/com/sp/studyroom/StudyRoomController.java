@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 
@@ -29,8 +28,6 @@ public class StudyRoomController {
 	private StudyRoomUtil srUtil;
 	@Autowired
 	private MyUtil myUtil;
-	@Autowired
-	private FileManager fileManager;
 	
 	@RequestMapping(value = "/studyroom/main")
 	public String pageMain(
@@ -130,8 +127,16 @@ public class StudyRoomController {
 		// 카페 룸 정보 넘기기
 		List<StudyRoomDetail> studyRoomList = service.studyRoomList(sr.getCafeNum());
 		
-		
-		
+		for( StudyRoomDetail dto : studyRoomList ) {
+			
+			List<StudyRoomDetail> checkTime = service.studyRoomDetailList(dto.getRoomNum());
+			System.out.println(checkTime);
+			List<Integer> checkTimes = new ArrayList<>();
+			for( StudyRoomDetail ctdto : checkTime  ) {
+				checkTimes.add(ctdto.getCheckTime());
+			}
+			dto.setCheckTimes(checkTimes);
+		}
 		
 		sr.setStudyRoomList(studyRoomList);
 		

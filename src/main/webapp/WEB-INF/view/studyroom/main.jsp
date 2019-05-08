@@ -8,37 +8,51 @@
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3088b9ab47979dd906360da2fb19d5f8&libraries=services"></script>
 <script type="text/javascript">
-
+	
 	$(document).ready(function(){
-		// 자동으로 열리는 modal
-		// $('#srModal').modal({remote:'<%=cp%>/studyroom/modal/created'});
-		
-		
 		// 지도를 띄우는 코드 작성
 		var container = document.getElementById('srMap'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
-				center: new daum.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-				level: 4 											 //지도의 레벨(확대, 축소 정도)
+				center: new daum.maps.LatLng(33, 126.570667), //지도의 중심좌표.
+				level: 4 									  //지도의 레벨(확대, 축소 정도)
 			};
 		
 		var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
+		
+		// 각 주소별 마커를 생성하는 것
+		$("input[name=roadAddrs]").each(function(){
+			var roadAddr = $(this).val();
+			var cafeNum = $(this).next().val();
+			var cafeName = $(this).next().next().val();
+			var setMarker = "";
+			// 주소-좌표 변환 객체를 생성합니다.
+			var geocoder = new daum.maps.services.Geocoder();
+			geocoder.addressSearch( roadAddr , function(result, status){
+				 // 정상적으로 검색이 완료됐으면 
+			     if (status === daum.maps.services.Status.OK) {
+					
+			    	var coords = new daum.maps.LatLng(result[0].y, result[0].x);   
+			    	
+					// 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new daum.maps.Marker({ 
+			        	map: map,
+			        	position : coords 
+			        	});
+					
+			        // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new daum.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+cafeName+'</div>'
+			        });
+			        infowindow.open(map, marker);
+			        
+			        setMarker = "<input type='text' name='markers' value='"+coords+"'>";
+			        $(this).parent().append(setMarker);
 
+			        map.setCenter(coords);
+			    } 
+			});
+		});
 	});
-	
-	
-	function viewMapSearch(){
-
-		var places = new daum.maps.services.Places();
-
-		var callback = function(result, status) {
-		    if (status === daum.maps.services.Status.OK) {
-		        console.log(result);
-		    }
-		};
-
-		places.keywordSearch('판교 치킨', callback);
-	};
-	
 	
 	function close_pop(){
 		$('#srModal').on('hidden.bs.modal', function(e)
@@ -193,34 +207,45 @@
 	$(document).on("click","#srModalMainTime", function(){
 		// 먼저 안의 리스트를 지운다.
 		$("#scrollThirdModal").children().remove();
-		/*
 		var opentime = parseInt($("input[name=srTimeButtonOpen]").val());
 		var closetime = parseInt($("input[name=srTimeButtonClose]").val());
-		*/
+		$divSpace = "<div style='height:20px'>";
+		
 		$("input[name=modalRoomName]").each(function(){
-			alert($(this).val());
-			alert($(this).next().val());
+			var roomName = $(this).val();
+			var roomNum  = $(this).next().val();
 			$divCol = "<div class='col-xs-12 col-sm-12 col-md-12'>";
 			$divName = "<div class='srRoomName'>"+$(this).val()+"</div>";
 			$divTime = "<div class='srTimeButton'>";
-			/*
-			for ( var i = opentime ; i < closetime ; i++) {
-				if( $("input[name=roomTime]"))
-				
-				var label  = "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
-					label += "<span>|"+i+":00|</span>";
-					label += "<input type='hidden' name='timeValues' value='"+i+"'>";
-					$(".srTimeButton").last().append(label);
-			}
-			*/
 			
+						
 			$("#scrollThirdModal").append($divCol);
 			$("#scrollThirdModal").children().last().append($divName);
 			$("#scrollThirdModal").children().last().append($divTime);
 			
-			
+			for ( var i = opentime ; i < closetime ; i++) {
+				// if( $("input[name=roomTime"+roomNum+"]"))
+				var label = "";
+				$("input[name=roomTime"+roomNum+"]").each(function(){
+					var time = $(this).val();
+					if ( i == time ){
+						label += "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off' checked='checked'>";
+						return;
+					}
+				});
+				if ( label == "") {
+					label += "<label class='srTimeColor'><input class='srTimeCB' type='checkbox' autocomplete='off'>";
+				}
+				
+				label += "<span>|"+i+":00|</span>";
+				label += "<input type='hidden' name='timeValues' value='"+i+"'>";
+				$(".srTimeButton").last().append(label);
+			}
 		});
-	});
+		
+		$("#scrollThirdModal").children().last().append($divSpace);
+		checked();
+	});	
 	
 	// 주소검색 API
 	function srPostcode() {
@@ -367,6 +392,9 @@
 							</div>
 						</div>
 					</div>
+					<input type="hidden" name="roadAddrs" value="${dto.roadAddr}">
+					<input type="hidden" name="cafeNums" value="${dto.cafeNum}">
+					<input type="hidden" name="cafeNames" value="${dto.cafeName}">
 				</div>
 			</c:forEach>
 			
