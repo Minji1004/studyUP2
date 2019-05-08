@@ -8,5 +8,6 @@ public interface BlackService {
 	public int dataBlackCount(Map<String, Object> map) throws Exception;
 	public List<Black> listBlack(Map<String, Object> map) throws Exception;
 	public void updateBlack(String userId) throws Exception;
+	public Black readBlack(int num) throws Exception;
 		
 }

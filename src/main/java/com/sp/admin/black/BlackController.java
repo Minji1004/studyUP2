@@ -32,6 +32,7 @@ public class BlackController {
 	@RequestMapping(value="/admin/blacklist/list")
 	public String reportlist(
 		@RequestParam(value="page", defaultValue="1") int current_page,
+		@RequestParam(value="bpage", defaultValue="1") int bpage,
 		@RequestParam(defaultValue="") String keyword,
 		HttpServletRequest req,
 		Model model
@@ -102,6 +103,66 @@ public class BlackController {
 		
 		model.addAttribute("keyword", keyword);		
 		
+		int row=6;
+		int total=0;
+		int blackCount=0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword=URLDecoder.decode(keyword, "UTF-8");
+		}
+		
+		Map<String, Object> bmap = new HashMap<>();
+		bmap.put("keyword", keyword);
+		
+		blackCount=bservice.dataBlackCount(bmap);
+		
+		total=util.pageCount(row, blackCount);
+		
+		if(total<bpage) {
+			bpage=total;
+		}
+		
+		int first = (bpage-1)*row;
+		if(first<0) {
+			first=0;
+		}
+		
+		bmap.put("first", first);
+		bmap.put("row", row);
+		
+		List<Black> blist = bservice.listBlack(bmap);
+		
+		int blistNum, b=0;
+		for(Black bdto:blist) {
+			blistNum=blackCount-(first+b);
+			bdto.setBlistNum(blistNum);
+			b++;
+		}
+		
+		String bquery="";
+		String urlList;
+		
+		if(keyword.length()!=0) {
+			bquery="keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		urlList = cp+"/admin/blacklist/list";
+		
+		if(bquery.length()!=0) {
+			urlList=urlList+"?"+bquery;
+		}
+		
+		String phase=util.paging(bpage, total);
+		
+		model.addAttribute("blist", blist);
+		model.addAttribute("urlList", urlList);
+		model.addAttribute("phase", phase);
+		model.addAttribute("total", total);
+		model.addAttribute("bpage", bpage);
+		
+		model.addAttribute("keyword", keyword);
+		
+		
 		return ".admin.blacklist.list";
 	}
 	
@@ -145,6 +206,37 @@ public class BlackController {
 		return "admin/blacklist/article";
 	}
 	
+	@RequestMapping(value="/admin/blacklist/brticle")
+	public String blackArticle(
+		@RequestParam(defaultValue="") String keyword,
+		@RequestParam int blackNum,
+		@RequestParam String bpage,
+		HttpServletRequest req,
+		Model model
+		) throws Exception{
+		
+		String query="page="+bpage;
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		if(keyword.length()!=0) {
+			query+="&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		Black bdto = bservice.readBlack(blackNum);
+		if(bdto==null) {
+			return "redirect:/admin/blacklist/list";
+		}
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("blackNum", blackNum);
+		
+		model.addAttribute("bdto", bdto);
+		model.addAttribute("page", bpage);
+		model.addAttribute("query", query);
+				
+		return "admin/blacklist/brticle";
+	}
+	
 	@RequestMapping(value="/admin/blacklist/insert", method=RequestMethod.GET)
 	public String insertForm(Model model) {
 		model.addAttribute("mode", "insert");
@@ -156,78 +248,6 @@ public class BlackController {
 	public String insertReport(Report rdto, HttpServletRequest req) throws Exception {
 		rservice.insertReport(rdto);
 		return "redirect:/main";	//리스트 띄우는 법 알아보기		
-	}
-	
-	@RequestMapping(value="/admin/blacklist/listblack")
-	public String listBlack(
-		@RequestParam(value="page", defaultValue="1") int page,
-		@RequestParam(value="") String keyword,
-		HttpServletRequest req,
-		Model model
-		) throws Exception {
-		
-		String cp = req.getContextPath();
-		
-		int row=6;
-		int total=0;
-		int blackCount=0;
-		
-		if(req.getMethod().equalsIgnoreCase("GET")) {
-			keyword=URLDecoder.decode(keyword, "UTF-8");
-		}
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("keyword", keyword);
-		
-		blackCount=bservice.dataBlackCount(map);
-		
-		total=util.pageCount(row, blackCount);
-		
-		if(total<page) {
-			page=total;
-		}
-		
-		int first = (page-1)*row;
-		if(first<0) {
-			first=0;
-		}
-		
-		map.put("first", first);
-		map.put("row", row);
-		
-		List<Black> blist = bservice.listBlack(map);
-		
-		int blistNum, n=0;
-		for(Black bdto:blist) {
-			blistNum=blackCount-(first+n);
-			bdto.setBlistNum(blistNum);
-			n++;
-		}
-		
-		String bquery="";
-		String urlList;
-		
-		if(keyword.length()!=0) {
-			bquery="keyword="+URLEncoder.encode(keyword, "utf-8");
-		}
-		
-		urlList = cp+"/admin/blacklist/list";
-		
-		if(bquery.length()!=0) {
-			urlList=urlList+"?"+bquery;
-		}
-		
-		String phase=util.paging(page, total);
-		
-		model.addAttribute("blist", blist);
-		model.addAttribute("urlList", urlList);
-		model.addAttribute("phase", phase);
-		model.addAttribute("total", total);
-		model.addAttribute("page", page);
-		
-		model.addAttribute("keyword", keyword);
-		
-		return "admin.blacklist.list"; 
-	}
+	}	
 	
 }
