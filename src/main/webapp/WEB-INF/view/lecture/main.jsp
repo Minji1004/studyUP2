@@ -5,7 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript">
 var activeTab="allStudy";
 $(function(){
@@ -126,6 +126,11 @@ $(function() {
 	});
 });
 	
+$(function(){
+	var IMP = window.IMP; // 생략가능
+	IMP.init('imp75300319'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+});
+
 </script>
 
 <div  style="width:66%; height: 100%; margin-left:17%;">

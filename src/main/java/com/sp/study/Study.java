@@ -25,6 +25,7 @@ public class Study {
 	
 	private int tnum;
 	private int price;
+	private int lectureNum;
 	private String registerEnd;
 	
 	public int getStudyNum() {
@@ -146,6 +147,12 @@ public class Study {
 	}
 	public void setRegisterEnd(String registerEnd) {
 		this.registerEnd = registerEnd;
+	}
+	public int getLectureNum() {
+		return lectureNum;
+	}
+	public void setLectureNum(int lectureNum) {
+		this.lectureNum = lectureNum;
 	}
 	
 }

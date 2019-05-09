@@ -47,8 +47,8 @@ $(function(){
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
-        <li class="studyMainLi ${active=='1'?'on':''}"><a href="<%=cp%>/study/main"><i class="fa fa-link"></i> <span>강의</span></a></li>
-        <li class="myStudyMainLi ${active=='2'?'on':''}"><a href="<%=cp%>/study/myStudy"><i class="fa fa-link"></i> <span>My강의</span></a></li>
+        <li class="studyMainLi ${active=='1'?'on':''}"><a href="<%=cp%>/lecture/main"><i class="fa fa-link"></i> <span>강의</span></a></li>
+        <li class="myStudyMainLi ${active=='2'?'on':''}"><a href="<%=cp%>/lecture/myLecture"><i class="fa fa-link"></i> <span>My강의</span></a></li>
 
       </ul>
       <!-- /.sidebar-menu -->
