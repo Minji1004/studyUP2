@@ -47,14 +47,16 @@ $(function(){
 $(function(){
 	$(document).on("click", ".blist", function(){
 		var num=$(this).attr("data-blackNum");
-		alert(num);
-		var url="<%=cp%>/admin/blacklist/brticle?blackNum="+num+"&page=${bpage}";
+		
+		var url="<%=cp%>/admin/blacklist/brticle?blackNum="+num+"&bpage=${bpage}";
 
 		$('#reportModal .modal-content').load(url, function(){
 			$('#reportModal').modal('show');
 		});
 	});
 });
+
+
 </script>
 
 <section class="features section">

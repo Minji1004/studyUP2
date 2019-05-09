@@ -205,7 +205,7 @@ $(function(){
 			                                  <button type="button" class="btn btn-primary" onclick="sendOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
 			                                  <button type="button" class="btn btn-primary" onclick="javascript:location.href='<%=cp%>/customer/inquiry/list';"> 취소 </button>
 			                            	<c:if test="${mode=='update'}">
-			                            		<input type="hidden" name="noticeNum" value="${dto.inquiryNum}">
+			                            		<input type="hidden" name="inquiryNum" value="${dto.inquiryNum}">
 			                            		<input type="hidden" name="page" value="${page}">
 			                            	</c:if>
 			                            

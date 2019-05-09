@@ -148,13 +148,7 @@
 		from Blacklist b1
 		join memberInfo as m1
 		on b1.blackUserNum = m1.userNum
-		<where>
-		<if test="keyword!=null and keyword!=''">
-			<include refid="black-list"/>
-		</if>
-		</where>
-		ORDER BY b1.blackUserNum DESC
-		LIMIT #{start}, #{rows}
+		where b1.blackNum=#{blackNum}	
 	</select>
 	
 	<select id="dataBlackCount" parameterType="map" resultType="Integer">
@@ -173,7 +167,7 @@
 	</select>
 	
 	<select id="listBlack" parameterType="map" resultType="com.sp.admin.black.Black">
-		Select b1.blackUserNum, b1.blackStart, m1.userId, m1.nickName
+		Select b1.blackNum, b1.blackUserNum, b1.blackStart, m1.userId, m1.nickName
 		from Blacklist b1
 		join memberInfo as m1
 		on b1.blackUserNum = m1.userNum

@@ -66,7 +66,7 @@
                      </tr>
                      <tr>
                          <td colspan="2" style="height: 40px; padding-bottom: 15px; text-align: center;">
-                              <button type="button" class="btn btn-default btn-sm wbtn" style="background: white;" onclick="sendLikeBoard('${dto.num}')"><span class="glyphicon glyphicon-hand-up"></span> <span id="boardLikeCount">${boardLikeCount}</span></button>
+                              <button type="button" class="btn btn-default btn-sm wbtn" style="background: white;" onclick="sendLikeBoard('${dto.num}')"><span class="glyphicon glyphicon-hand-up"></span> <span id="boardLikeCount">${boardLikeCount}</span></button>                            
                          </td>
                      </tr>
                      <tr>
@@ -109,5 +109,4 @@
                 </tfoot>
             </table>
        </div>
-       
    </div>

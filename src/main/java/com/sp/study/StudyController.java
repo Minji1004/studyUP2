@@ -32,8 +32,12 @@ public class StudyController {
 	private MyUtil myUtil;
 
 	@RequestMapping(value="/study/main")
-	public String main(Model model) {
+	public String main(Model model, HttpSession session) {
 		model.addAttribute("active", "1");
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(info.getUserType().contains(1)) {
+			return ".admins.study.main";
+		}
 		return ".four.study.main";
 	}
 	
@@ -45,9 +49,12 @@ public class StudyController {
 		
 		if(info==null) {
 			return "redirect:/member/login";
-		}
+		} 
 		
 		model.addAttribute("active", "2");
+		if(info.getUserType().contains(1)) {
+			return ".admins.study.myStudy";
+		}
 		return ".four.study.myStudy";
 	}
 	

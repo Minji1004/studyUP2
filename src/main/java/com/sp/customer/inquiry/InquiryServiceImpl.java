@@ -27,7 +27,27 @@ public class InquiryServiceImpl implements InquiryService {
 			int inquiryNum=maxNum+1;
 			dto.setInquiryNum(inquiryNum);
 			
-			dao.insertData("inquiry.insertInquiry",dto);
+			dao.insertData("inquiry.insertInquiry", dto);
+			
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf:dto.getUpload()) {
+					if(mf.isEmpty())
+						continue;
+					
+					String saveFilename=fileManager.doFileUpload(mf, pathname);
+					if(saveFilename!=null) {
+						String originalFilename=mf.getOriginalFilename();
+						long fileSize=mf.getSize();
+						
+						dto.setOriginalFilename(originalFilename);
+						dto.setSaveFilename(saveFilename);
+						dto.setFileSize(fileSize);
+						
+						insertFile(dto);
+					}
+				}
+			}
+			result=1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -184,7 +204,6 @@ public class InquiryServiceImpl implements InquiryService {
 		return listFile;
 	}
 
-
 	@Override
 	public Inquiry readFile(int fileNum) {
 		Inquiry dto=null;
@@ -196,7 +215,7 @@ public class InquiryServiceImpl implements InquiryService {
 		}
 		return dto;
 	}
-
+	
 	@Override
 	public int deleteFile1(int inquiryNum) {
 		int result=0;

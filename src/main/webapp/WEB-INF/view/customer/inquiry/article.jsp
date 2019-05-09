@@ -151,8 +151,7 @@ function deleteInquiry(){
 		                         	<td colspan="2" style="height: 230px;">
 		                              ${dto.content}
 		                         </td>
-		                     </tr>
-		                     
+		                     </tr>		                     
 			                     <c:forEach var="vo" items="${listFile}">
 			                   		<tr>
 			                   			<td colspan="2">

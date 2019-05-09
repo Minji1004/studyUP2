@@ -12,7 +12,7 @@
                 <nav class="navigation" role="navigation">
                     <ul class="primary-nav">
 						<li><a href="<%=cp%>/admin/member/list">회원 관리</a></li>
-						<li><a href="<%=cp%>/study/main">스터디 관리</a></li>
+						<li><a href="<%=cp%>/damin/study/main">스터디 관리</a></li>
 						<li><a href="<%=cp%>/studyroom/main">스터디룸 관리</a></li>
 						<li><a href="<%=cp%>/lecture/main">강의</a></li>						
 						<li><a href="<%=cp%>/admin/blacklist/list">블랙리스트</a></li>						

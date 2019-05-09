@@ -113,7 +113,6 @@
 		DELETE FROM notice WHERE noticeNum=#{noticeNum}
 	</delete>
 	
-	
 	<!-- 파일 -->
 	<insert id="insertFile" parameterType="com.sp.customer.notice.Notice">
 	  INSERT INTO noticeFile(noticeNum, saveFilename, 
