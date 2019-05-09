@@ -32,16 +32,16 @@ $(function() {
                     <label class="col-sm-2 control-label">일정분류</label>
                     <div class="col-sm-10"  id="schClassify">
                         <div class="btn-group" id="classifyGroup">
-                                <button type="button" class="btn btn-blue" id="btnTitle" style="background-image: none;">개인일정</button>
-                                <button type="button" class="btn dropdown-toggle btn-blue" id="btnDropdown" style="border-left-color: #ccc;" data-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-success" id="btnTitle" style="background-image: none;">일반일정</button>
+                                <button type="button" class="btn dropdown-toggle btn-success" id="btnDropdown" style="border-left-color: #ccc;" data-toggle="dropdown" aria-expanded="false">
                                 <span class="caret"></span>
                                 <span class="sr-only"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href='javascript:classifyChange("blue");'>개인일정</a></li>
+                                <li><a href='javascript:classifyChange("blue");'>일반일정</a></li>
                                 <li><a href='javascript:classifyChange("black");'>가족일정</a></li>
-                                <li><a href='javascript:classifyChange("green");'>회사일정</a></li>
-                                <li><a href='javascript:classifyChange("red");'>부서일정</a></li>
+                                <li><a href='javascript:classifyChange("green");'>오답노트</a></li>
+                                <li><a href='javascript:classifyChange("red");'>중요일정</a></li>
                             </ul>
                         </div>
                         <input type="hidden" name="color" value="blue">
@@ -94,6 +94,6 @@ $(function() {
             </form>
       
             <div style="text-align: right;" id="schFooter">
-                <button type="button" class="btn btn-primary" id="btnModalOk" onclick="insertOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
+                <button type="button" class="btn btn-success" id="btnModalOk" onclick="insertOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 0px;"> 닫기 </button>
             </div>

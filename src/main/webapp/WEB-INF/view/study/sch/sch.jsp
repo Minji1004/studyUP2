@@ -140,7 +140,7 @@ $(function() {
 				var endDay=end.format("YYYY-MM-DD");
 		        
 				var url="<%=cp%>/study/sch/month";
-                var query="start="+startDay+"&end="+endDay+"&group="+group+"&tmp="+new Date().getTime();
+                var query="start="+startDay+"&end="+endDay+"&group="+group +"&studyNum=${studyNum}"+"&tmp="+new Date().getTime();
 
 				$.ajax({
 				    url: url,
@@ -202,8 +202,8 @@ function articleForm(calEvent) {
 	var classify="";
 	if(color=="blue") classify="개인일정";
 	else if(color=="black") classify="가족일정";
-	else if(color=="green") classify="회사일정";
-	else if(color=="red") classify="부서일정";
+	else if(color=="green") classify="오답노트";
+	else if(color=="red") classify="중요일정";
 	
 	var allDay=calEvent.allDay;
 	var startDay="", startTime="", sday="";
@@ -324,7 +324,7 @@ function insertOk() {
 		return;
 	
 	var query=$("form[name=schForm]").serialize();
-	var url="<%=cp%>/study/sch/created";
+	var url="<%=cp%>/study/sch/created?studyNum=${studyNum}";
     
      $.ajax({
         type:"post"
@@ -638,11 +638,11 @@ function classifyChange(classify) {
 		$("#btnTitle").addClass("btn-black");
 		$("#btnDropdown").addClass("btn-black");
 	} else if(classify=="green") {
-		$("#btnTitle").html("회사일정")
+		$("#btnTitle").html("오답노트")
 		$("#btnTitle").addClass("btn-green");
 		$("#btnDropdown").addClass("btn-green");
 	} else if(classify=="red") {
-		$("#btnTitle").html("부서일정")
+		$("#btnTitle").html("중요일정")
 		$("#btnTitle").addClass("btn-red");
 		$("#btnDropdown").addClass("btn-red");
 	}
@@ -681,9 +681,9 @@ $(function(){
                  <a class="hbtn" style="background-color:black;"
                        href="javascript:classification('black', 2);">가족일정</a>
                  <a class="hbtn" style="background: green;"
-                       href="javascript:classification('green', 3);">회사일정</a>
+                       href="javascript:classification('green', 3);">오답노트</a>
                  <a class="hbtn" style="background: red;"
-                       href="javascript:classification('red', 4);">부서일정</a>
+                       href="javascript:classification('red', 4);">중요일정</a>
              </div>      
         </div>
     </div>

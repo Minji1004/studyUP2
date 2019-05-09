@@ -121,10 +121,19 @@ $(function(){
 		if(uid == otherId) {
 			room = roomSub[0];
 		} else {
-			otherId = uid > otherId ? uid : otherId;
+			var roomId1 = uid > otherId ? uid : otherId;
+			var roomId2 = uid < otherId ? uid : otherId;
 			
-			var uidSub = "Ostudy" + "${studyNum}" + otherId;
+			roomId1 = roomId1.split("@", 1);
+			roomId1 = roomId1[0];
+			
+			roomId2 = roomId2.split("@", 1);
+			roomId2 = roomId2[0];
+			
+			var uidSub = "Ostudy" + "${studyNum}" + roomId1 + roomId2;
 			uidSub = uidSub.split("@", 1);
+			
+			alert(uidSub);
 			
 			room = uidSub[0]; 
 		}
