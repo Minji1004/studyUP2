@@ -180,11 +180,11 @@ public class InquiryController {
 		List<Inquiry> listFile=service.listFile(inquiryNum);
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("query", query);
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
 		model.addAttribute("listFile", listFile);
 		model.addAttribute("page", page);
+		model.addAttribute("query", query);
 		
 		model.addAttribute("subMenu", "2");
 		
@@ -274,6 +274,7 @@ public class InquiryController {
 			}
 		}
 	}
+	
 	@RequestMapping(value="/customer/inquiry/deleteFile", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteFile(
