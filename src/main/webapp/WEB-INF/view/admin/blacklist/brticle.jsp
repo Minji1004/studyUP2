@@ -12,7 +12,7 @@
 </div>
 <div class="smodal-body modal-body row"> 	
  	<div class="col-xs-4 col-sm-7">
- 		<div class="dialog-content-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>아이디:${bdto.reportedUserId }</div>
+ 		<div class="dialog-content-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>아이디:${bdto.userId }</div>
  		<div class="dialog-content-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>닉네임: ${bdto.nickName}</div>
  		<div class="dialog-content-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>전화번호: ${bdto.tel}</div>
  		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>등록 날짜: ${bdto.blackStart}</div>

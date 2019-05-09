@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.MyUtil;
+import com.sp.member.SessionInfo;
 import com.sp.study.Study;
-import com.sp.study.StudyService;
 
 @Controller("lecture.lectureController")
 public class LectureController {
@@ -28,8 +29,12 @@ public class LectureController {
 	private MyUtil myUtil;
 	
 	@RequestMapping(value ="/lecture/main", method=RequestMethod.GET)
-	public String main() {		
+	public String main(HttpSession session) {		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
+		if(info.getUserType().contains(1)) {
+			return ".admins.lecture.main";
+		}
 		return ".four.lecture.main";
 	}
 	

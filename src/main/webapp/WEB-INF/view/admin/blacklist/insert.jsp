@@ -132,7 +132,7 @@ function categoryList(){
 
 <div class="modal-header">
    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-   <h4 class="modal-title" id="myModalLabel" align="center">Make your study</h4>
+   <h4 class="modal-title" id="myModalLabel" align="center">신고하기</h4>
 </div>
 
 <div class="smodal-body modal-body row">
@@ -182,7 +182,7 @@ function categoryList(){
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">분류</label>
+				<label class="col-sm-2 control-label">신고분류</label>
 				<div class="col-sm-5">
 					<select id="category" name="category" onchange="categoryList();" class="selectField">
 	                   <option value="">분류선택</option>
