@@ -23,6 +23,11 @@ public class Study {
 	// jsp의 checkbox 이름
 	private List<StudyCourse> courseLists;
 	
+	private int tnum;
+	private int price;
+	private int lectureNum;
+	private String registerEnd;
+	
 	public int getStudyNum() {
 		return studyNum;
 	}
@@ -125,4 +130,29 @@ public class Study {
 	public void setApplyCount(int applyCount) {
 		this.applyCount = applyCount;
 	}
+	public int getTnum() {
+		return tnum;
+	}
+	public void setTnum(int tnum) {
+		this.tnum = tnum;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getRegisterEnd() {
+		return registerEnd;
+	}
+	public void setRegisterEnd(String registerEnd) {
+		this.registerEnd = registerEnd;
+	}
+	public int getLectureNum() {
+		return lectureNum;
+	}
+	public void setLectureNum(int lectureNum) {
+		this.lectureNum = lectureNum;
+	}
+	
 }

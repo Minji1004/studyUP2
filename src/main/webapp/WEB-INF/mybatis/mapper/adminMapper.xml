@@ -133,30 +133,42 @@
 	
 <!-- blacklist mapper -->
 	<insert id="insertBlack" parameterType="com.sp.admin.black.Black">
-		Insert into Black(blackUserNum) Values(#{blackUserNum})
+		Insert into Blacklist(blackUserNum) Values(#{blackUserNum})
 	</insert>
 	
 	<sql id="black-list">
-		(INSTR(blackUserNum, #{keyword}) &gt; 0)				
+		(INSTR(blackUserNum, #{keyword}) &gt; 0
+			OR INSTR(userId, #{keyword}) &gt; 0
+			OR INSTR(nickName, #{keyword}) &gt; 0		
+		)				
 	</sql>	
 	
 	<select id="readBlack" parameterType="map" resultType="com.sp.admin.black.Black">
-		Select b1.blackUserNum, b1.blackStart, m1.userId blackUserId, m1.userNickName blackNickName, b1.tel
-		from Black b1
+		Select b1.blackNum, b1.blackUserNum, b1.blackStart, m1.userId, m1.nickName, m1.tel
+		from Blacklist b1
 		join memberInfo as m1
 		on b1.blackUserNum = m1.userNum
+		where b1.blackNum=#{blackNum}	
+	</select>
+	
+	<select id="dataBlackCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0) FROM 
+			(       
+		      SELECT B1.blackNum, B1.blackUserNum, B1.blackStart, M1.userId, M1.nickName, M1.tel
+		       FROM blacklist AS B1
+		       JOIN memberInfo AS M1
+		       ON B1.blackUserNum = M1.userNum
+			) AS C
 		<where>
 		<if test="keyword!=null and keyword!=''">
 			<include refid="black-list"/>
 		</if>
 		</where>
-		ORDER BY b1.blackUserNum DESC
-		LIMIT #{start}, #{rows}
 	</select>
 	
 	<select id="listBlack" parameterType="map" resultType="com.sp.admin.black.Black">
-		Select b1.blackUserNum, b1.blackStart, m1.userId blackUserId, m1.userNickName blackNickName
-		from Black b1
+		Select b1.blackNum, b1.blackUserNum, b1.blackStart, m1.userId, m1.nickName
+		from Blacklist b1
 		join memberInfo as m1
 		on b1.blackUserNum = m1.userNum
 		<where>

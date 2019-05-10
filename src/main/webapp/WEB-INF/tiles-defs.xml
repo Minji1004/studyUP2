@@ -64,6 +64,15 @@
           <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
    </definition>
 
+	<!-- 4단 관리자 -->
+	<definition name=".admins.*.*" extends=".fourLayout">
+    	<put-attribute name="header" value="/WEB-INF/view/admin/layout/header2.jsp" />
+    	<put-attribute name="left" value="/WEB-INF/view/{1}/left.jsp" />
+      	<put-attribute name="body" value="/WEB-INF/view/{1}/{2}.jsp"/>
+    	<put-attribute name="head" value="/WEB-INF/view/">
+     	</put-attribute>
+ 	</definition>
+ 	
      <!-- 3단 관리자 -->
    <definition name=".adminLayout" template="/WEB-INF/view/admin/layout/layout3.jsp">
        <put-attribute name="title" value="admin" />

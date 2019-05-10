@@ -41,18 +41,22 @@ $(function(){
 			$('#reportModal .modal-content').load(url, function(){
 				$('#reportModal').modal('show');
 			});
-		});
-	
-		$(document).on("click", ".blist", function(){		
-			var num=$(this).attr("data-blackNum");		
-			var url="<%=cp%>/admin/blacklist/article?blackNum="+num+"&page=${page}";
-	
-			$('#blackModal .modal-content').load(url, function(){
-				$('#blackModal').modal('show');
-			});
-		});		
-	
+		});	
 });
+
+$(function(){
+	$(document).on("click", ".blist", function(){
+		var num=$(this).attr("data-blackNum");
+		
+		var url="<%=cp%>/admin/blacklist/brticle?blackNum="+num+"&bpage=${bpage}";
+
+		$('#reportModal .modal-content').load(url, function(){
+			$('#reportModal').modal('show');
+		});
+	});
+});
+
+
 </script>
 
 <section class="features section">
@@ -93,7 +97,7 @@ $(function(){
 		      <li style="width:15%;">${rdto.reportUserNickName}</li>
 		      <li style="width:18%;">${rdto.reportDate}</li>
 		  </ul>
-		</c:forEach>		 
+		</c:forEach>
 		</div>
 		<div style="width:100%; margin:0px auto; border-spacing:0px;">
 		   <ul style="height:25px;">
@@ -110,7 +114,7 @@ $(function(){
 		<div style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <ul style="height:20px;">
 		      <li style="width:10%; float:left;">
-		          ${blackCount }개(${page }/${total }페이지)
+		          ${blackCount }개(${bpage }/${total}페이지)
 		      </li>		      
 		   </ul>
 		</div>
@@ -124,11 +128,19 @@ $(function(){
 		  <c:forEach var="bdto" items="${blist}" >
 		  <ul class="blist" data-blackNum="${bdto.blackNum}"> 
 		      <li style="width:10%;">${bdto.blistNum }</li>
-		      <li style="width:27%;">${bdto.blackUserId }</li>
-		      <li style="width:27%;">${bdto.blackNickName }</li>	      
+		      <li style="width:27%;">${bdto.userId }</li>
+		      <li style="width:27%;">${bdto.nickName }</li>	      
 		      <li style="width:18%;">${bdto.blackStart}</li>		      
 		  </ul>		 
 		  </c:forEach> 
+		</div>
+		<div style="width:100%; margin:0px auto; border-spacing:0px;">
+		   <ul style="height:25px;">
+			<li style="width:100%;">
+		        <c:if test="${dataBlackCount==0}">등록된 게시물이 없습니다.</c:if>
+		        <c:if test="${dataBlackCount!=0}">${phase}</c:if>
+			</li>
+		   </ul>
 		</div>
 </c:if>
 	</div>

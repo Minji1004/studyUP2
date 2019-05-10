@@ -179,5 +179,23 @@ public class StudyServiceImpl implements StudyService{
 		return result;
 	}
 
-
-}
+	@Override
+	public List<Study> studyMember(int studyNum) {
+		List<Study> list = null;
+		
+		try {
+			list = dao.selectList("study.studyMember", studyNum);	
+			
+			for(Study s : list) {
+				s.setCourseLists(listStudyCourse(s.getStudyNum()));
+				s.setApplyCount(headCount(s.getStudyNum()));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+}	

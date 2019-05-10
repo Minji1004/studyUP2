@@ -18,4 +18,7 @@ public interface StudyService {
 	// 스터디의 가입된 인원
 	public int headCount(int studyNum);
 	
+	// 스터디의 멤버
+	public List<Study> studyMember(int studyNum);
+	
 }

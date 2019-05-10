@@ -15,9 +15,17 @@
 	border-color: #81BEF7;
 }
 
+.chatting-msg-more {
+	float:right; 
+	cursor: pointer; 
+	margin-right: 10px; 
+	margin-bottom: 10px;
+	padding-top: 25px;
+}
+
 </style>
 
-<script src="http://localhost:3001/socket.io/socket.io.js"></script>
+<script src="http://211.238.142.201:3001/socket.io/socket.io.js"></script>
 <script type="text/javascript">
 function convertStringToDate(str) {
 	// yyyy-mm-dd hh:mi:ss
@@ -102,21 +110,42 @@ $(function(){
 	var room = null;
 	
 	// 채팅 서버에 접속
-	var sock = io('http://localhost:3001/chat');
+	var sock = io('http://211.238.142.201:3001/chat');
 	
 	// 채팅방 입장
 	$(".chatting-room-btn").on("click", function(){
 		room = $(this).attr("data-room"); // 회원의 아이디로 처리할 시 카톡처럼 가능
+		var otherId = $(this).attr("data-userId");
 		var roomSub = room.split("@", 1);
-		room = roomSub[0];
+		
+		if(uid == otherId) {
+			room = roomSub[0];
+		} else {
+			var roomId1 = uid > otherId ? uid : otherId;
+			var roomId2 = uid < otherId ? uid : otherId;
+			
+			roomId1 = roomId1.split("@", 1);
+			roomId1 = roomId1[0];
+			
+			roomId2 = roomId2.split("@", 1);
+			roomId2 = roomId2[0];
+			
+			var uidSub = "Ostudy" + "${studyNum}" + roomId1 + roomId2;
+			uidSub = uidSub.split("@", 1);
+			
+			alert(uidSub);
+			
+			room = uidSub[0]; 
+		}
+		
 		first_date = last_date = new Date();
-		alert(room);
 		
 		var roomName = $(this).text();
 		$(".chatting-content-list").empty();
 		$(".chatting-room-name").html("["+roomName+"]");
 		
 		$('#chatting').css('display', 'block');
+		// $('#chatting').appendChild($(".direct-chat-success"));
 		
 		// 오늘 날짜의 룸 채팅 문자열 리스트 요청
 		sock.emit("chat-msg-list", {
@@ -209,16 +238,15 @@ $(function(){
 			out += "</div></div>";
 			
 			
-		} else {
+		} else {			
 			out = "<div style='width: 50%;'>"
-			out +=  "<div class='direct-chat-msg><div class='direct-chat-info clearfix'>";
-        	out += "<span class='direct-chat-name pull-left'>Alexander Pierce</span>";
-			out += "<span class='direct-chat-timestamp pull-right'>"+dispTime+"</span></div>";
+			out +=  "<div class='direct-chat-msg'><div class='direct-chat-info clearfix'>";
+			out += " <span class='direct-chat-name pull-left'>"+nickName+"</span>"
+			out += " <span class='direct-chat-timestamp pull-right'>"+dispTime+"</span></div>";
 			out += " <img class='direct-chat-img' alt='Message User Image' src='<%=cp%>/resource/study/images/happy.png'>";
-        	out += " <div class='direct-chat-text'>"+message+"</div>";
+			out += "  <div class='direct-chat-text'>"+message+"</div>";
 			out += " <div style='clear:both; height:3px;'></div>";
-			out += "</div></div>";
-			
+			out += "</div></div>";			
 		}
 		
 		$("."+cls).append(out);
@@ -240,21 +268,18 @@ $(function(){
             </div>
             <!-- /.box-header -->
             <div class="box-body"  style="height: 900px;">
-            	<div class="callout chatting-room-btn" data-room="study${studyNum}${sessionScope.member.userId}">
+            	<div class="callout chatting-room-btn" data-userId="${sessionScope.member.userId}" data-room="study${studyNum}${sessionScope.member.userId}">
 	                <h4>${sessionScope.member.userName}</h4>
 	             </div>
 	             
-	             <div class="callout right-callout chatting-room-btn" data-room="study${studyNum}${dto.userId}">
-	             	<h4>너님</h4>
-	             </div>
+	             <c:forEach var="dto" items="${list}">
+	             	<c:if test="${dto.userId ne sessionScope.member.userId}">	             	
+			             <div class="callout right-callout chatting-room-btn" data-userId="${dto.userId}" data-room="study${studyNum}${dto.userId}">
+			             	<h4>${dto.nickname}</h4>
+			             </div>	              	
+	             	</c:if>		             
+	             </c:forEach>
 	             
-	             <div class="callout right-callout chatting-room-btn">
-	                <h4>너님</h4>
-	             </div>
-	             
-	             <div class="callout right-callout chatting-room-btn">
-	                <h4>너님</h4>
-	             </div>
               
             </div>
             <!-- /.box-body -->
@@ -266,39 +291,33 @@ $(function(){
 		
 		
 	
-		<div class="col-md-4" id="chatting" style="display: none; height: 960px;">
+		<div class="col-md-4" id="chatting" style="display: none;">
           <!-- DIRECT CHAT SUCCESS -->
-          <div class="box box-success direct-chat direct-chat-success" style="height: 100%">
+          <div class="box box-success direct-chat direct-chat-success" style="height: 90%">
             <div class="box-header with-border chatting-header">
               <h3 class="box-title"><span class="chatting-room-name">Direct Chat</span></h3>
-			   
-              <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" type="button" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <button class="btn btn-box-tool" type="button" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+			  
             </div>
             <!-- /.box-header -->
-            <div class="box-body" style="height: 850px; min-height: 850px;">
-			<span class="chatting-msg-more" style="float:right; cursor: pointer; margin-right: 10px;">더보기</span>
-              <!-- Conversations are loaded here -->
-              <div class="direct-chat-messages chatting-content-list" style="clear: both">
-              
-                
-              </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
+            <div class="box-body" style="height: 920px; min-height: 920px;">
+				<span class="chatting-msg-more">더보기</span>
+				<!-- Conversations are loaded here -->
+				<div class="direct-chat-messages chatting-content-list" style="clear: both">			  
+				</div>
+            	<!-- /.box-body -->
+            	<div class="box-footer">
                 <div class="input-group">
                   <input id="chatMsg" name="message" class="form-control" type="text" placeholder="Type Message ...">
                       <span class="input-group-btn">
                         <button class="btn btn-success btn-flat" type="submit">Send</button>
                       </span>
                 </div>
-            </div>
+           	 </div>
             <!-- /.box-footer-->
           </div>
           <!--/.direct-chat -->
-        </div>	
-	</div>
+          </div>	
+		</div>
 	</div>
 </section>
 

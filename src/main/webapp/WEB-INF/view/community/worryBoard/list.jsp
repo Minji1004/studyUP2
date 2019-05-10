@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 70px;">번호</th>
-                        <th >제목</th>
+                        <th>제목</th>
                         <th class="text-center" style="width: 100px;">글쓴이</th>
                         <th class="text-center" style="width: 100px;">날짜</th>
                         <th class="text-center" style="width: 70px;">조회수</th>
@@ -62,12 +62,11 @@
 						      <option value="created"  ${condition=="created"?"selected='selected'":""}>등록일</option>
 						  </select>
 						  <input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">
-						  <button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
+						  <button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span>검색</button>
         		     </form>
         		</div>
         		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-        		    <button type="button" class="btn btn-primary btn-sm" onclick="insertForm();"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+        		    <button type="button" class="btn btn-primary btn-sm" onclick="insertForm();"><span class="glyphicon glyphicon glyphicon-pencil"></span>글쓰기</button>
         		</div>
-        </div>
-        
+        </div> 
     </div>

@@ -102,6 +102,12 @@ public class StudyRoomController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
 		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		if(info.getUserType().contains(1)) {
+			return ".admins.studyroom.main";
+		}
+		
 		return ".four.studyroom.main";
 	}
 	

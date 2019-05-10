@@ -2,6 +2,28 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lecture">
+
+<!-- 검색 조건 -->
+	<sql id="where-list">		
+		<if test="condition=='all'">
+			(INSTR(studyName, #{keyword}) &gt; 0
+			OR INSTR(studyIntro, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='studyName'">
+			INSTR(studyName, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userId'">
+			INSTR(nickname, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='categoryName'">
+			INSTR(categoryName, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='courseName'">
+			INSTR(courseName, #{keyword}) &gt; 0
+		</if>
+	</sql>
+
+
 	<!-- 강의 만들기 -->
 	<select id="maxLectureNum" resultType="Integer">
 		SELECT IFNULL(max(lectureNum), 0) FROM lecture
@@ -51,5 +73,107 @@
 	select courseName from course 
 		join studycourselist s on s.courseNum = course.courseNum
 		where studyNum = #{studyNum}
+	</select>
+	
+	<select id="listLecture" parameterType="map" resultType="com.sp.study.Study">
+		SELECT DISTINCT s.studyNum, studyName, studyIntro, tId as userId, 
+			studyLocation, studySday, studyEday, studyImg, headcount,
+	        categoryName, color, s.lectureNum, m.userNum as tnum, m.nickname
+		FROM study AS s 
+		LEFT OUTER JOIN studyCourseList AS l
+		ON l.studyNum = s.studyNum 
+		left outer join course AS c
+		ON l.courseNum = c.courseNum
+		left outer join category AS ca
+		ON c.categoryNum = ca.categoryNum
+		left outer join applystudy AS aps
+		on s.studyNum = aps.studyNum
+        left outer join lecture
+        on s.lectureNum = lecture.lectureNum
+        left outer join memberinfo as m
+        on lecture.tId = m.userId
+		
+		<where>
+			s.lectureNum IS not null		
+			
+			<if test="userId != null and userId != ''">
+				AND (aps.userId = #{userId} AND approval = 2)
+			</if>
+			
+			<if test="mode != 'allStudy'">
+				AND categoryName = #{categoryName}
+			</if>			
+			
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>		
+		</where>		
+		
+		ORDER BY studyNum DESC
+		LIMIT #{start}, #{rows}
+	</select>
+	
+	<select id="listStudyCourse" parameterType="Integer" resultType="com.sp.study.StudyCourse">
+			SELECT s.studyNum, c.courseName  FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		WHERE s.studyNum = #{studyNum}
+	</select>
+	
+	<select id="headCount" parameterType="Integer" resultType="Integer">
+		SELECT IFNULL(count(DISTINCT userId), 0) 
+		FROM applystudy WHERE studyNum = #{studyNum} AND approval = 2
+	</select>
+	
+	<select id="readLecture" parameterType="Integer" resultType="com.sp.study.Study">
+		SELECT DISTINCT s.studyNum, studyName, studyIntro, s.userId, nickname,
+				studyLocation, 
+				DATE_FORMAT(studySday, '%Y-%m-%d') AS studySday, DATE_FORMAT(studyEday, '%Y-%m-%d') AS studyEday, 
+				studyImg, headcount, s.lectureNum, price,  DATE_FORMAT(registerEnd, '%Y-%m-%d') AS registerEnd
+		FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		left outer join category as ca
+		on c.categoryNum = ca.categoryNum
+		left outer join memberInfo as m
+		on s.userId = m.userId
+        left outer join lecture
+        on s.lectureNum = lecture.lectureNum
+        where s.studyNum = #{studyNum}
+	</select>
+	
+	<insert id="insertStudent" parameterType="map">
+		insert into student (lectureNum, sId) values (#{lectureNum}, #{sId})
+	</insert>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(count(DISTINCT s.studyNum), 0) FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		left outer join category as ca
+		on c.categoryNum = ca.categoryNum
+		left outer join applystudy AS aps
+		on s.studyNum = aps.studyNum
+		<where>
+			lectureNum IS not null
+			
+			<if test="userId != null and userId != ''">
+				AND (aps.userId = #{userId} AND approval = 2)
+			</if>
+			
+			<if test="mode != 'allStudy'">
+				AND categoryName = #{categoryName}
+			</if>
+			
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>				
+		</where>
 	</select>
 </mapper>

@@ -4,49 +4,137 @@
 <mapper namespace="scheduler">
 
 	
-<select id="listResourceList" resultType="com.sp.mypage.ResourceJSON">
-		SELECT resourceNum id, rl.groupNum, groupName, resourceName title,
-		           color eventColor, occupancy
-        FROM resourceList rl
-        JOIN resourceGroup rg ON rl.groupNum = rg.groupNum
-        ORDER BY rl.groupNum, resourceNum
-</select>
+<!-- resourceGroup 테이블 -->
+	<insert id="insertResourceGroup" parameterType="com.sp.mypage.Resource">
+	     INSERT INTO resourceGroup(
+		          groupName) 
+		      VALUES(#{groupName})
+	</insert>
+	
+	<update id="updateResourceGroup" parameterType="com.sp.mypage.Resource">
+	     UPDATE resourceGroup SET groupName = #{groupName} 
+		      WHERE groupNum = #{groupNum}
+	</update>
+	
+	<delete id="deleteResourceGroup" parameterType="Integer">
+	     DELETE FROM resourceGroup  
+		      WHERE groupNum = #{groupNum}
+	</delete>
+	
+	<select id="readResourceGroup" parameterType="Integer"
+	           resultType="com.sp.mypage.Resource">
+	     SELECT groupNum, groupName
+	     FROM resourceGroup
+	     WHERE groupNum = #{groupNum}
+    </select>	
+	
+	<select id="listResourceGroup" resultType="com.sp.mypage.Resource">
+		SELECT groupNum, groupName FROM resourceGroup
+	</select>
 
-<select id="listResourceScheduler" resultType="com.sp.mypage.ResourceJSON"
-	            parameterType="map">
-		SELECT num id, groupName, rs.resourceNum resourceId, title, 
-		    NVL2(startTime, startDay||'T'||startTime, startDay) "start",
-		    NVL2(endTime, endDay||'T'||endTime, endDay) "end",
-		    startDay, startTime, endDay, endTime, 
-		    rs.userId, userName, occupancy, resourceName, rl.groupNum, inwon
-        FROM resourceScheduler rs
-        JOIN resourceList rl ON rs.resourceNum = rl.resourceNum
-        JOIN resourceGroup rg ON rl.groupNum = rg.groupNum
-        JOIN member1 m ON rs.userId = m.userId
-        WHERE TO_DATE(startDay, 'YYYY-MM-DD') &gt;= #{start}
-           AND TO_DATE(endDay, 'YYYY-MM-DD') &lt;= #{end}
-        ORDER BY groupNum, resourceId, num
-</select>
+
+<!-- resourceList 테이블 -->
+	<insert id="insertResourceList" parameterType="com.sp.mypage.Resource">
+	     INSERT INTO resourceList(
+		           groupNum, resourceName,
+		           color, occupancy) 
+		      VALUES(#{groupNum},#{resourceName}, #{color}, #{occupancy})         
+	</insert>
 	
+	<update id="updateResourceList" parameterType="com.sp.mypage.Resource">
+	     UPDATE resourceList SET groupNum = #{groupNum},
+	          resourceName = #{resourceName},
+	          color = #{color}, occupancy = #{occupancy}
+		      WHERE resourceNum = #{resourceNum}
+	</update>
 	
-		
-<select id="readResourceList" parameterType="Integer"
+	<delete id="deleteResourceList" parameterType="Integer">
+	     DELETE FROM resourceList  
+		      WHERE resourceNum = #{resourceNum}
+	</delete>
+	
+	<select id="readResourceList" parameterType="Integer"
 	           resultType="com.sp.mypage.Resource">
 	     SELECT resourceNum, groupNum, resourceName,
 		           color, occupancy
 		      FROM resourceList
 	          WHERE resourceNum = #{resourceNum}
-</select>	
-    
-<select id="listResourceGroup" resultType="com.sp.mypage.Resource">
-		SELECT groupNum, groupName FROM resourceGroup
-</select>
+    </select>	
+	
+	<select id="listResourceList" resultType="com.sp.mypage.ResourceJSON">
+		SELECT resourceNum id, rl.groupNum, groupName, resourceName title,
+		           color eventColor, occupancy
+        FROM resourceList rl
+        JOIN resourceGroup rg ON rl.groupNum = rg.groupNum
+        ORDER BY rl.groupNum, resourceNum
+	</select>
 
-<select id="listResourceList2" resultType="com.sp.mypage.Resource">
+	<select id="listResourceList2" resultType="com.sp.mypage.Resource">
 		SELECT resourceNum, resourceName, occupancy
         FROM resourceList
         WHERE groupNum=#{groupNum}
         ORDER BY resourceNum
-</select>
+	</select>
+
+<!-- resourceScheduler 테이블 -->
+	<insert id="insertResourceScheduler" parameterType="com.sp.mypage.Resource">
+	     INSERT INTO resourceScheduler(
+		          resourceNum, userId, title, startDay,
+		           endDay, startTime, endTime, inwon) 
+		      VALUES(
+		          #{resourceNum}, #{userId}, #{title}, 
+		          #{startDay}, #{endDay},
+		          #{startTime, jdbcType=VARCHAR},
+		          #{endTime, jdbcType=VARCHAR}, #{inwon})
+	</insert>
+	
+	<update id="updateResourceScheduler" parameterType="com.sp.mypage.Resource">
+	     UPDATE resourceScheduler SET resourceNum=#{resourceNum},
+	              title=#{title}, startDay=#{startDay}, 
+	              endDay=#{endDay}, 
+	              startTime=#{startTime, jdbcType=VARCHAR},
+	              endTime=#{endTime, jdbcType=VARCHAR},
+	              inwon=#{inwon}
+		      WHERE num = #{num} AND userId = #{userId}    
+	</update>
+	
+	<delete id="deleteResourceScheduler" parameterType="map">
+	     DELETE FROM resourceScheduler  
+		      WHERE num = #{num}
+		      <if test="userId!='admin'">
+		         AND userId = #{userId}
+		      </if>
+	</delete>
+	
+	<select id="readResourceScheduler" parameterType="Integer"
+	           resultType="com.sp.mypage.Resource">
+	     SELECT num, resourceNum, r.userId, userName, title, startDay,
+		           endDay, startTime, endTime, inwon, created
+		      FROM resourceScheduler r
+		      JOIN member1 m ON r.userId=m.userId
+	          WHERE num = #{num}
+    </select>	
+	
+	<select id="listResourceScheduler" resultType="com.sp.mypage.ResourceJSON"
+	            parameterType="map">
+			SELECT num id, groupName, rs.resourceNum resourceId, title, 
+				CASE
+					WHEN startTime IS NULL THEN startDay
+                    ELSE CONCAT(startDay,'T',startTime)
+                    END AS "start",
+				CASE 
+					WHEN endTime IS NULL THEN endDay
+                    ELSE CONCAT(endDay,'T',endTime)
+                    END AS "end",     
+				startDay, startTime, endDay, endTime, 
+				rs.userId,nickname userName, occupancy, resourceName, rl.groupNum, inwon
+			FROM resourceScheduler rs
+			JOIN resourceList rl ON rs.resourceNum = rl.resourceNum
+			JOIN resourceGroup rg ON rl.groupNum = rg.groupNum
+			JOIN memberInfo m ON rs.userId = m.userId
+			WHERE date_format(startDay, '%Y-%m-%d') &gt; #{start}
+			   AND date_format(endDay, '%Y-%m-%d') &lt; #{end}
+			ORDER BY groupNum, resourceId, num
+	</select>
 
 </mapper>
