@@ -28,7 +28,8 @@
       <ul class="sidebar-menu" data-widget="tree">
         <!-- Optionally, you can add icons to the links -->
         <li><a href="<%=cp%>/studyroom/main"><i class="fa fa-link"></i> <span>스터디룸리스트</span></a></li>
-        <li><a href="<%=cp%>/studyroom/payment/list"><i class="fa fa-link"></i> <span>결제하기</span></a></li>
+        <li><a href="<%=cp%>/studyroom/payment/bag"><i class="fa fa-link"></i> <span>결제하기</span></a></li>
+        <li><a href="<%=cp%>/studyroom/payment/list"><i class="fa fa-link"></i> <span>결제목록</span></a></li>
 		<!-- 
 		<li><a href="#"><i class="fa fa-link"></i> <span>예약현황</span></a></li>
 		<li><a href="#"><i class="fa fa-link"></i> <span>예약취소</span></a></li>

@@ -958,7 +958,7 @@ body {
 	
 	.srPayDoneBox {
 		padding : 10px;
-		width : 50%;
+		width : 60%;
 		min-width : 400px;
 		position : absolute;
 		top : 7%;
@@ -966,3 +966,16 @@ body {
 		border-radius: 5px;
 		border : 5px double #646b8ccc;
 	}
+	
+	.srPayListBox {
+		padding : 10px;
+		width : 70%;
+		min-width : 400px;
+		position : absolute;
+		top : 7%;
+		left : 13%;
+		border-radius: 5px;
+		border : 5px double #646b8ccc;
+		background-color: #ffffff;
+	}
+	
