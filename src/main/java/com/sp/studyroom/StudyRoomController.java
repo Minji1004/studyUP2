@@ -76,7 +76,6 @@ public class StudyRoomController {
 			dto.setFileList(pictures);
 		}
 		
-		
 		String query = "";
 		String listUrl;
 		String modalUrl;
@@ -104,9 +103,11 @@ public class StudyRoomController {
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
+		System.out.println(info +":"+info.getUserType());
+		
 		if(info.getUserType().contains(1)) {
 			return ".admins.studyroom.main";
-		}
+		}	
 		
 		return ".four.studyroom.main";
 	}
@@ -200,13 +201,17 @@ public class StudyRoomController {
 				dto.setMinUser(dto.getMinUsers().get(i));
 				service.insertRooms(dto);
 				
+				System.out.println(dto.getCheckboxCounts().get(i));
+				
+				
 				// cafeRoomDetail에 들어갈 값 넣기
-				int round = Integer.parseInt(dto.getCheckboxCounts().get(i));
+				int round = 0;
+				round = Integer.parseInt(dto.getCheckboxCounts().get(i));
 				for (int j=sum ; j<(sum+round) ; j++ ) {
 					dto.setCheckTime(Integer.parseInt(dto.getCheckTimes().get(j)));
 					service.insertRoomDetails(dto);
 				}
-				sum += round;
+				sum += round;					
 			}
 		}
 		

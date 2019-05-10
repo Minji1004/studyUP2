@@ -196,7 +196,10 @@
 					label += "<input type='hidden' name='timeValues' value='"+i+"'>";
 					$(".srTimeButton").last().append(label);
 			}
-			var checkboxCounts = "<input type='hidden' id='checkboxCounts' name='checkboxCounts' style='width:25px; height: 15px; border: 1px solid #cccccc; font-size:4pt;'>"
+			var checkboxCounts = "<input type='text' id='checkboxCounts' name='checkboxCounts' style='width:25px; height: 15px; border: 1px solid #cccccc; font-size:4pt;'>"
+			if(checkboxCounts=="") {
+				checkboxCounts = 0;
+			}  
 			$(".srTimeButton").last().append(checkboxCounts);
 		});
 		
