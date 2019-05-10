@@ -106,7 +106,7 @@
 											<div class="srBagInner">이용금액</div>
 										</div>
 										<div class="srBagContentsText">
-											<div class="srBagInner">
+											<div class="srBagInner" name="lecturePrices">
 												45000											
 											</div>
 										</div>
@@ -132,39 +132,37 @@
 						<div class="srBagItems">
 							<div class="srBagItemsBorder">
 							
-								<div class="srBagItemsName" style="background-color: #bad698">한성스터디카페</div>
+								<div class="srBagItemsName" style="background-color: #bad698">6월 공무원 시험 대비 특강</div>
 								<div class="srBagCloseBtn">
 									<div>x</div>
 								</div>
 								<div class="srBagItemsImg">
-									<img style="position:relative; top:2px;" height="95%" width="95%" src="<%=cp%>/resource/studyroom/images/pic01.jpg">
+									<img style="position:relative; top:2px;" height="95%" width="95%" src="<%=cp%>/resource/studyroom/images/coming_soon.jpg">
 								</div>
 								<div class="srBagContents">
-									<div class="srBagContentsLine" style="width:100%">									
-										<div class="srBagContentsTitle">
-											<div class="srBagInner">
-												주소
-											</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												서울시 중구 남동 성산대로 142 (범일빌딩) 2층 한성스터디카페
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine">
+									<div class="srBagContentsLine" style="width:100%">
 										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">방이름</div>
+											<div class="srBagInner">선생님</div>
 										</div>
 										<div class="srBagContentsText">
 											<div class="srBagInner">
-												흥인지문
+												이민지
 											</div>
 										</div>
 									</div>
-									<div class="srBagContentsLine">
+									<div class="srBagContentsLine" style="width:100%">
+										<div class="srBagContentsTitle" style="clear:left;">
+											<div class="srBagInner">위치</div>
+										</div>
+										<div class="srBagContentsText">
+											<div class="srBagInner">
+												홍대입구역 동교빌딩 204호 동교스터디
+											</div>
+										</div>
+									</div>
+									<div class="srBagContentsLine" style="width:50%">
 										<div class="srBagContentsTitle">
-											<div class="srBagInner">일자</div>
+											<div class="srBagInner">등록마감일</div>
 										</div>
 										<div class="srBagContentsText">
 											<div class="srBagInner">
@@ -172,43 +170,23 @@
 											</div>
 										</div>
 									</div>
-									<div class="srBagContentsLine" style="width:60%">
+									<div class="srBagContentsLine" style="width:50%">
 										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">기준</div>
+											<div class="srBagInner">강의가격</div>
 										</div>
 										<div class="srBagContentsText">
-											<div class="srBagInner">
-												1인(예약인원 5명)
+											<div class="srBagInner" name="lecturePrices">
+												500000
 											</div>
 										</div>
 									</div>
-									<div class="srBagContentsLine" style="width:40%">
+									<div class="srBagContentsLine" style="width:50%">
 										<div class="srBagContentsTitle">
-											<div class="srBagInner">시간당</div>
+											<div class="srBagInner">과목</div>
 										</div>
 										<div class="srBagContentsText">
 											<div class="srBagInner">
-												1500
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine" style="width:60%">
-										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">사용시간</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												10:00, 11:00
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine" style="width:40%">
-										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">이용금액</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												15000											
+												영어, 행정법
 											</div>
 										</div>
 									</div>
@@ -259,7 +237,7 @@
 								<div class="srBagContentsTitle" style="background-color: #fac2ad; clear:left; margin-top:30px; width:95%; position:relative; left: 5px;">
 									<div class="srBagInner">
 										<div style="font-size:11pt;">총 금액</div>
-										<input class="bagInput" type="text" name="srPay" value="60000" readonly="readonly">
+										<input class="bagInput" type="text" name="srPay" value="545000" readonly="readonly">
 									</div>
 								</div>
 								
