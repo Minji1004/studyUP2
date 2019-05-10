@@ -34,20 +34,19 @@ function searchList(){
 }
 
 $(function(){	
-		$(document).on("click", ".flist", function(){		
-			var num=$(this).attr("data-reportNum");		
-			var url="<%=cp%>/admin/blacklist/article?reportNum="+num+"&page=${page}";
-	
-			$('#reportModal .modal-content').load(url, function(){
-				$('#reportModal').modal('show');
-			});
-		});	
+	$(document).on("click", ".flist", function(){		
+		var num=$(this).attr("data-reportNum");		
+		var url="<%=cp%>/admin/blacklist/article?reportNum="+num+"&page=${page}";
+
+		$('#reportModal .modal-content').load(url, function(){
+			$('#reportModal').modal('show');
+		});
+	});	
 });
 
 $(function(){
 	$(document).on("click", ".blist", function(){
-		var num=$(this).attr("data-blackNum");
-		
+		var num=$(this).attr("data-blackNum");		
 		var url="<%=cp%>/admin/blacklist/brticle?blackNum="+num+"&bpage=${bpage}";
 
 		$('#reportModal .modal-content').load(url, function(){
@@ -55,7 +54,6 @@ $(function(){
 		});
 	});
 });
-
 
 </script>
 
