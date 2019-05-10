@@ -201,9 +201,6 @@ public class StudyRoomController {
 				dto.setMinUser(dto.getMinUsers().get(i));
 				service.insertRooms(dto);
 				
-				System.out.println(dto.getCheckboxCounts().get(i));
-				
-				
 				// cafeRoomDetail에 들어갈 값 넣기
 				int round = 0;
 				round = Integer.parseInt(dto.getCheckboxCounts().get(i));
@@ -223,12 +220,12 @@ public class StudyRoomController {
 		return "redirect:/studyroom/main";
 	}
 	
-	@RequestMapping(value = "/studyroom/payment/list", method=RequestMethod.GET)
-	public String paymentList(
+	@RequestMapping(value = "/studyroom/payment/bag", method=RequestMethod.GET)
+	public String paymentBag(
 			Model model
 			) throws Exception {		 
 		
-		return ".four.studyroom.payment.list";
+		return ".four.studyroom.payment.bag";
 	}
 	
 	@RequestMapping(value = "/studyroom/payment/done")
@@ -239,5 +236,11 @@ public class StudyRoomController {
 		return ".four.studyroom.payment.done";
 	}
 	
-	
+	@RequestMapping(value = "/studyroom/payment/list", method=RequestMethod.GET)
+	public String paymentList(
+			Model model
+			) throws Exception {		 
+		
+		return ".four.studyroom.payment.list";
+	}
 }
