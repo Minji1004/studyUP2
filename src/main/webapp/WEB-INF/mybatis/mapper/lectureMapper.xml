@@ -123,8 +123,7 @@
 	</select>
 	
 	<select id="headCount" parameterType="Integer" resultType="Integer">
-		SELECT IFNULL(count(DISTINCT userId), 0) 
-		FROM applystudy WHERE studyNum = #{studyNum} AND approval = 2
+		Select ifnull(count(*), 0) from student where lectureNum = #{lectureNum}
 	</select>
 	
 	<select id="readLecture" parameterType="Integer" resultType="com.sp.study.Study">
@@ -176,4 +175,64 @@
 			</if>				
 		</where>
 	</select>
+	
+	
+	<select id="myDataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(count(DISTINCT s.studyNum), 0) FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		left outer join category as ca
+		on c.categoryNum = ca.categoryNum
+		join student as st
+		on st.lectureNum =  s.lectureNum
+		<where>
+			st.sId = #{userId}
+			
+			<if test="mode != 'allStudy'">
+				AND categoryName = #{categoryName}
+			</if>
+			
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>				
+		</where>
+	</select>
+	
+	<select id="myListLecture" parameterType="map" resultType="com.sp.study.Study">
+		SELECT DISTINCT s.studyNum, studyName, studyIntro, tId as userId, 
+			studyLocation, studySday, studyEday, studyImg, headcount,
+	        categoryName, color, s.lectureNum, m.userNum as tnum, m.nickname
+		FROM study AS s 
+		LEFT OUTER JOIN studyCourseList AS l
+		ON l.studyNum = s.studyNum 
+		left outer join course AS c
+		ON l.courseNum = c.courseNum
+		left outer join category AS ca
+		ON c.categoryNum = ca.categoryNum
+        left outer join lecture
+        on s.lectureNum = lecture.lectureNum
+        left outer join memberinfo as m
+        on lecture.tId = m.userId
+		join student as st
+		on st.lectureNum =  s.lectureNum
+		<where>
+			st.sId = #{userId}				
+			<if test="mode != 'allStudy'">
+				AND categoryName = #{categoryName}
+			</if>			
+			
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>		
+		</where>		
+		
+		ORDER BY studyNum DESC
+		LIMIT #{start}, #{rows}
+	</select>	
+	
+	<insert id="insertBasket" parameterType="map">
+		insert into lreservation (lectureNum, sId) values (#{lectureNum}, #{sId})
+	</insert>
 </mapper>

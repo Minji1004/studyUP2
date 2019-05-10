@@ -37,7 +37,7 @@ function ajaxText(url, query, type, selector) {
 function listStudy(page) {
 	var selector="#"+activeTab;
 	
-	var url="<%=cp%>/lecture/list";
+	var url="<%=cp%>/lecture/${listMode}";
 	var query=$("form[name=studySearchForm]").serialize();
 	query+="&pageNo="+page;
 
@@ -55,7 +55,7 @@ function searchList() {
 	f.condition.value=condition;
 	f.keyword.value=keyword;	
 	
-	var url="<%=cp%>/lecture/list";
+	var url="<%=cp%>/lecture/${listMode}";
 	var query=$("form[name=studySearchForm]").serialize();
 	// alert(query);
 	
@@ -82,21 +82,28 @@ $(function(){
 $(function(){
 	// 스터디 상세 페이지 보기
 	$(document).on("click",".study-content", function(){
-		var studyTitle = $(this).find(".study-title").html();
-		var num=$(this).attr("data-studyNum");
-		var studyNum=1;
-		var url = "<%=cp%>/lecture/lectureDetail?studyNum="+num;
-		
-		$('#myStudyModal .modal-content').load(url, function() {
-			// $('#myStudyModal .modal-title').html(studyTitle);
-			$('#myStudyModal').modal('show');
-		});
+		if("${listMode}"=="list"){
+			var studyTitle = $(this).find(".study-title").html();
+			var num=$(this).attr("data-studyNum");
+			var studyNum=1;
+			var url = "<%=cp%>/lecture/lectureDetail?studyNum="+num;
+			
+			$('#myStudyModal .modal-content').load(url, function() {
+				// $('#myStudyModal .modal-title').html(studyTitle);
+				$('#myStudyModal').modal('show');
+			});
+			
+		}else if("${listMode}"=="myList"){
+			var num = $(this).attr("data-studyNum");
+			location.href="<%=cp%>/study/mystudy/main?studyNum="+num;
+		}
 	});
 });
 
 $(function() {
 	// apply for study - 스터디 가입신청
 	$(document).on("click", "#studyApply", function() {
+		
 		var num=$(this).attr("data-studyNum");
 		var url = "<%=cp%>/study/applyStudy?studyNum="+num;
 		
@@ -104,7 +111,6 @@ $(function() {
 			// $('#myStudyModal .modal-title').html(studyTitle);
 			$('#myStudyApply').modal('show');
 		});
-				
 	});
 });
 

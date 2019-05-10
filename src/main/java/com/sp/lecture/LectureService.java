@@ -15,4 +15,9 @@ public interface LectureService {
 	public Study readLecture(int studyNum);
 	
 	public void insertStudent(Map<String, Object> map) throws Exception;
+	public List<Study> myListLecture(Map<String, Object> map);
+	public int myDataCount(Map<String, Object> map);
+	
+	public void insertBasket(Map<String, Object> map) throws Exception;
+	
 }

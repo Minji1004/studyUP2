@@ -30,14 +30,18 @@ public class LectureController {
 	private MyUtil myUtil;
 	
 	@RequestMapping(value ="/lecture/main", method=RequestMethod.GET)
-	public String main(HttpSession session) {		
+	public String main(HttpSession session, Model model) {		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		if(info.getUserType().contains(1)) {
+		if(info != null && info.getUserType().contains(1)) {
 			return ".admins.lecture.main";
 		}
+		
+		model.addAttribute("listMode", "list");
+		
 		return ".four.lecture.main";
 	}
+	
 	@RequestMapping(value="/lecture/list")
 	public String list(
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
@@ -147,13 +151,27 @@ public class LectureController {
 	}
 	
 	@RequestMapping(value="/lecture/myLecture")
-	public String myLecture(@RequestParam(value="pageNo", defaultValue="1") int current_page,
+	public String myLecture(HttpSession session, Model model) {		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		if(info != null && info.getUserType().contains(1)) {
+			return ".admins.lecture.main";
+		}
+		
+		model.addAttribute("listMode", "myList");
+		return ".four.lecture.main";
+	}
+	
+	@RequestMapping(value="/lecture/myList")
+	public String myList(
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			@RequestParam(defaultValue="allStudy") String mode,
-			@RequestParam(defaultValue="") String userId,
+			HttpSession session,
 			HttpServletRequest req,
-			Model model) throws Exception {	
+			Model model) throws Exception {
+		
 		int rows = 6;
 		int total_page = 0;
 		int dataCount = 0;
@@ -181,9 +199,14 @@ public class LectureController {
 		map.put("keyword", keyword);
 		map.put("mode", mode);
 		map.put("categoryName", categoryName);
+		
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String userId = info.getUserId();
+		
 		map.put("userId", userId);
 
-		//dataCount = service.myDataCount(map);
+		dataCount = service.myDataCount(map);
 		
 		if(dataCount != 0)
 			total_page = myUtil.pageCount(rows, dataCount);
@@ -196,7 +219,7 @@ public class LectureController {
 		map.put("start", start);
 		map.put("rows", rows);
 		
-		List<Study> list = service.listStudy(map);
+		List<Study> list = service.myListLecture(map);
 		        
         String paging = myUtil.pagingMethod(current_page, total_page, "listStudy");       
         
@@ -208,5 +231,26 @@ public class LectureController {
         model.addAttribute("paging", paging);
 		
 		return "lecture/list";
+	}
+	
+	@RequestMapping(value="/lecture/insertBasket", method=RequestMethod.POST)
+	@ResponseBody 
+	public Map<String, Object> insertBasket(@RequestParam int lectureNum, HttpSession session) throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String sId = info.getUserId();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("lectureNum", lectureNum);
+		map.put("sId", sId);
+		
+		try {
+			service.insertBasket(map);
+		} catch (Exception e) {
+		}
+		
+		return model;
 	}
 }

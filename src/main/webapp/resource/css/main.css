@@ -27,7 +27,7 @@ h4 {
   font-weight: 400; }
 
 h5 {
-  font-size: 14px;
+  font-size: 16px;
   color: #2d3033;
   text-transform: uppercase;
   font-weight: 700; }
@@ -91,7 +91,7 @@ ul li {
   position: fixed;
   width: 100%;
   z-index: 999; 
-  background: rgba(51,51,51,0.5);
+  background: rgba(51,51,51,0.7);
   }  
   
   #header .header-content{
@@ -127,7 +127,8 @@ ul li {
   transition: opacity 0.5s; }
 
 .navigation {
-  float: left; }
+  float: left; 
+  padding-top: 7px;}
   .navigation li {
     display: inline-block; }
   .navigation a {
@@ -266,6 +267,7 @@ ul li {
       #login{
       float: right;
       color: white;
+      padding-top: 7px;
       }
 
 
@@ -273,24 +275,23 @@ ul li {
 	$Banner
 ========================================================================== */
 .banner {
-  background-image: url(../images/banner2.jpg);
+  background-image: url(../images/banner.jpg);
   background-position: center top;
   background-repeat: no-repeat;
   -moz-background-size: cover;
   -o-background-size: cover;
   -webkit-background-size: cover;
   background-size: cover;
-  min-height: 750px; }
+  min-height: 650px; }
 
 .banner-text {
   padding-top: 25%; }
   .banner-text h1 {
-    color: #fff;
+    color: black;
     font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    text-transform: uppercase; }
+    font-weight: 700; }
   .banner-text p {
-    color: #fff;
+    color: #333;
     font-size: 22px;
     font-weight: 300;
     line-height: 1.5;

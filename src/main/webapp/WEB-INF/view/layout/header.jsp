@@ -9,7 +9,7 @@
 <section class="banner" role="banner">
         <header id="header">
             <div class="header-content clearfix">
-                <a class="logo" href="<%=cp%>/main"><img src="<%=cp%>/resource/images/logo.png" alt=""></a>
+                <a class="logo" href="<%=cp%>/main"><img src="<%=cp%>/resource/images/logo3.png" alt=""></a>
                 <nav class="navigation" role="navigation">
                     <ul class="primary-nav">
 						<li><a href="<%=cp%>/mypage/main">마이페이지</a></li>
@@ -48,9 +48,9 @@
         <div class="container">
             <div class="col-md-10 col-md-offset-1">
                 <div class="banner-text text-center">
-                    <h1>Your Favorite One Page Multi Purpose Template</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna vel scelerisque nisl consectetur et.</p>
-                    <a href="#" class="btn btn-large">Find out more</a>
+                    <h1>공부의 모든걸 도와드립니다. <span style="color: #e84545">StudyUp</span>과 함께하세요!</h1>
+                    <p>스터디 모임, 스터디룸 예약, 현장 강의, 커뮤니티까지 모든 걸 지원합니다!<br>당신의 꿈을 StudyUp과 함께하세요.</p>
+                    <a href="<%=cp%>/study/main" class="btn btn-large">스터디 보러가기</a>
                 </div><!-- banner text -->
             </div>
         </div>

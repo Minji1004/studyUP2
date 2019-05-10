@@ -12,24 +12,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-6 feature text-center">
-                    <span class="icon icon-tools"></span>
+                   <span class="icon"><i class='fa fa-group'></i></span>
                     <div class="feature-content">
-                        <h5>Easily Customised</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        <h5>스터디 그룹</h5>
+                        <p>스터디그룹을 만들거나 가입해서 스터디원들과 함께 공부해보세요. 스터디그룹을 위한 게시판, 일정, 채팅 기능을제공합니다.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 feature text-center">
+                    <span class="icon icon-calendar"></span>
+                    <div class="feature-content">
+                        <h5>스터디룸 예약</h5>
+                        <p>스터디원들과 함께할 스터디룸을 예약해보세요.<br>스터디룸을 조회하고 예약할 수 있습니다.</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 feature text-center">
                     <span class="icon icon-desktop"></span>
                     <div class="feature-content">
-                        <h5>Responsive Ready</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 feature text-center">
-                    <span class="icon icon-lightbulb"></span>
-                    <div class="feature-content">
-                        <h5>Modern Design</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                        <h5>오프라인 수업</h5>
+                        <p>다양한 선생님들이 여러분께 강의를 제공합니다.<br>오프라인 수업을 구매해 참여해보세요!</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 feature text-center">

@@ -45,6 +45,28 @@ function buy() {
 	});
 
 }
+
+function basket(){
+
+	var url = "<%=cp%>/lecture/insertBasket";
+
+	$.ajax({
+		type:"post",
+		url: url,
+		dataType: "JSON",
+		data: {
+			lectureNum : "${dto.lectureNum}"
+		},
+		success: function(data){
+			if(confirm("장바구니로 이동하시겠습니까?"))
+				location.href="<%=cp%>/studyroom/payment/bag";
+		},
+		error: function(e){
+			console.log(e.responseText);
+		}
+	});	
+	
+}
 </script>
 
 
@@ -67,7 +89,7 @@ function buy() {
 </div>
 <div class="modal-footer">
    <button type="button" class="btn btn-primary" onclick="buy()">구매하기</button>
-   <button type="button" class="btn btn-primary" id="shoppingBasket" data-target ="#myStudyApply">장바구니</button>
+   <button type="button" class="btn btn-primary" onclick="basket()" data-target ="#myStudyApply">장바구니</button>
    <button type="button" class="btn btn-default" data-dismiss="modal">취소하기</button>
 </div>
     
