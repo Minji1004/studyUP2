@@ -34,20 +34,19 @@ function searchList(){
 }
 
 $(function(){	
-		$(document).on("click", ".flist", function(){		
-			var num=$(this).attr("data-reportNum");		
-			var url="<%=cp%>/admin/blacklist/article?reportNum="+num+"&page=${page}";
-	
-			$('#reportModal .modal-content').load(url, function(){
-				$('#reportModal').modal('show');
-			});
-		});	
+	$(document).on("click", ".flist", function(){		
+		var num=$(this).attr("data-reportNum");		
+		var url="<%=cp%>/admin/blacklist/article?reportNum="+num+"&page=${page}";
+
+		$('#reportModal .modal-content').load(url, function(){
+			$('#reportModal').modal('show');
+		});
+	});	
 });
 
 $(function(){
 	$(document).on("click", ".blist", function(){
-		var num=$(this).attr("data-blackNum");
-		
+		var num=$(this).attr("data-blackNum");		
 		var url="<%=cp%>/admin/blacklist/brticle?blackNum="+num+"&bpage=${bpage}";
 
 		$('#reportModal .modal-content').load(url, function(){
@@ -56,6 +55,25 @@ $(function(){
 	});
 });
 
+$(function(){
+	$("body").on("click","#blackApply", function(){
+		var num=$(this).closest("div").children("input").val();
+		
+		var query="reportNum="+num;
+		var url = "<%=cp%>/admin/blacklist/apply";
+		alert(num);
+		$.ajax({
+			type : "post",
+			url : url,
+			data : query,
+			dataType : "json",
+			success : function(data){
+				alert('블랙리스트에 추가되었습니다.');				
+				return;
+			}
+		});
+	});
+});
 
 </script>
 
@@ -90,7 +108,7 @@ $(function(){
 		</div>
 		<c:forEach var="rdto" items="${rlist}">
 		  <ul class="flist" data-reportNum="${rdto.reportNum}">
-		      <li style="width:10%;">${rdto.rlistNum}</li>
+		      <li style="width:10%;">${rdto.rlistNum}</li>		      
 		      <li style="width:21%;">${rdto.reportedUserId}</li>
 		      <li style="width:21%;">${rdto.reportedNickName}</li>
 		      <li style="width:15%;">${rdto.reportType}</li>

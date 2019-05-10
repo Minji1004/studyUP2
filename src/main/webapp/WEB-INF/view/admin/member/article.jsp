@@ -12,7 +12,7 @@
 </div>
 <div class="smodal-body modal-body row">
  	<div class="col-xs-8 col-sm-5" align="center">
- 		<img class="img-circle img-dialog" src="">
+ 		<img class="img-circle img-dialog" src="<%=cp%>/uploads/member_profile/${mdto.picture}">
  	</div>
  	<div class="col-xs-4 col-sm-7">
  		<div class="dialog-content-title">회원번호: ${mdto.userNum}</div>
@@ -20,7 +20,7 @@
  		<div class="dialog-content"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>전화번호: ${mdto.tel}</div> 		
  		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>가입일: ${mdto.created}</div>
  		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>최근 접속일: ${mdto.lastLogin}</div> 	
- 		<div class="dialog-content"><span class="glyphicon glyphicon-list" aria-hidden="true"></span>스터디:</div> 	
+ 		 	
  	</div>
 </div>
 <div class="modal-footer">   
