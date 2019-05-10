@@ -201,7 +201,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12">
 					<div class="modalButtons">
 						&nbsp;
-						<button type="button" class="btn-srModal" onclick="#" style="float:left;">수정하기</button>
+						<!-- <button type="button" class="btn-srModal" onclick="#" style="float:left;">수정하기</button>  -->
 						<button type="button" class="btn-srModal" data-dismiss="modal" onClick="close_pop();">닫기</button>
 					</div>
 				</div>

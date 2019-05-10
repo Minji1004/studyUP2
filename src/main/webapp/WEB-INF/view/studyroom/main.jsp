@@ -306,7 +306,6 @@
 	<div>
 		<!-- 페이지 맨 윗단 소개글 -->
 		<div class="col-md-12" style="padding: 20px 10px 10px 20px;">
-			<!-- <img class="col-md-1" src="<%=cp%>/resource/studyroom/images/icons/idea.png" height="100%" width="100%" style="max-height: 100px; max-width: 100px;" alt="...">  -->
 			<div  class="col-md-12">
 				<h2 style="font-weight: 700; font-family: '맑은고딕';">언제나, 목표를 향한 공간을</h2>
 				<p style="font-family: '맑은고딕';">목표를 향한 노력에는 그에 알맞는 공간이 필요합니다. 'StudyUp'은 당신이 공간을 찾도록 돕겠습니다.</p>

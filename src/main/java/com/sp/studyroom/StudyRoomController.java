@@ -212,4 +212,21 @@ public class StudyRoomController {
 		return "redirect:/studyroom/main";
 	}
 	
+	@RequestMapping(value = "/studyroom/payment/list", method=RequestMethod.GET)
+	public String paymentList(
+			Model model
+			) throws Exception {		 
+		
+		return ".four.studyroom.payment.list";
+	}
+	
+	@RequestMapping(value = "/studyroom/payment/done")
+	public String paymentDone(
+			Model model
+			) throws Exception {		 
+		
+		return ".four.studyroom.payment.done";
+	}
+	
+	
 }
