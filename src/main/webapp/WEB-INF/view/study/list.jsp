@@ -27,10 +27,10 @@
 					</select>
 				</div>
 				<div class="col-xs-6">
-							<input class="form-control" type="text" placeholder="Search" aria-label="Search" id="inputKeyword" style="width: 100%">
-						</div>	
-						<div class="col-xs-2" style="padding:2px 0px 0px 25px;" align="center">
-							<button  class="btn btn-unique btn-rounded btn-sm my-0" type="button" onclick="searchList();" style="background: #04B486;">Search</button>
+					<input class="form-control" type="text" placeholder="Search" aria-label="Search" id="inputKeyword" style="width: 100%">
+				</div>	
+				<div class="col-xs-1" align="center">
+					<button  class="btn btn-unique btn-rounded btn-sm" type="button" onclick="searchList();" style="background: #04B486;">Search</button>
 				</div>								
 			</div>
 					

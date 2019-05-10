@@ -25,7 +25,9 @@ public class ChatController {
 		
 		List<Study> list = service.studyMember(studyNum);
 		
+		Study dto = service.readStudy(studyNum);
 		
+		model.addAttribute("dto", dto);		
 		model.addAttribute("list", list);
 		model.addAttribute("studyNum", studyNum);
 		model.addAttribute("left", left);

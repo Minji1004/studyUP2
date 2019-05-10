@@ -135,6 +135,11 @@ public class NoticeController {
 		model.addAttribute("studyNum", studyNum);
 		model.addAttribute("left", left);
 		
+		
+		Study dto = study.readStudy(studyNum);
+		
+		model.addAttribute("dto", dto);
+		
 		return ".study.notice.list";
 	}
 	

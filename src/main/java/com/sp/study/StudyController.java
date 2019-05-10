@@ -35,7 +35,7 @@ public class StudyController {
 	public String main(Model model, HttpSession session) {
 		model.addAttribute("active", "1");
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		if(info.getUserType().contains(1)) {
+		if(info != null && info.getUserType().contains(1)) {
 			return ".admins.study.main";
 		}
 		return ".four.study.main";

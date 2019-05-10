@@ -17,17 +17,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.member.SessionInfo;
+import com.sp.study.Study;
+import com.sp.study.StudyService;
 
 @Controller("study.scheduleController")
 public class ScheduleController {
 	@Autowired 
 	private ScheduleService service;
 	
+	@Autowired
+	private StudyService study;
+	
 	@RequestMapping(value="/study/sch/sch")
 	public String sch(
 			@RequestParam int studyNum,
 			@RequestParam int left,
 			Model model) throws Exception {
+		
+		Study dto = study.readStudy(studyNum);
+		
+		model.addAttribute("dto", dto);
 		
 		model.addAttribute("studyNum", studyNum);
 		model.addAttribute("left", left);

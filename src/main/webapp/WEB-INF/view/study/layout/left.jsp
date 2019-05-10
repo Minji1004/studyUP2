@@ -52,7 +52,7 @@
           </ul>
         </li>
         <li><a href="<%=cp%>/study/sch/sch?studyNum=${studyNum}&left=5"><i class="fa fa-link"></i> <span>일정</span></a></li>
-        <li><a href="<%=cp%>/study/mystudy/record/list?studyNum=${studyNum}&left=6"><i class="fa fa-link"></i> <span>순공시간</span></a></li>
+        <li><a href="<%=cp%>/study/record/main?studyNum=${studyNum}&left=6"><i class="fa fa-link"></i> <span>순공시간</span></a></li>
 		<li><a href="<%=cp%>/study/chat/main?studyNum=${studyNum}&left=7"><i class="fa fa-link"></i> <span>채팅</span></a></li>
 		<li><a href="<%=cp%>/study/buy/list?studyNum=${studyNum}&left=8"><i class="fa fa-link"></i> <span>공구</span></a></li>
 		

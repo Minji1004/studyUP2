@@ -6,8 +6,40 @@
 	String cp = request.getContextPath();
 %>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/wordcloud.js"></script>
 
 <script type="text/javascript">
+$(function() {
+	var text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum erat ac justo sollicitudin, quis lacinia ligula fringilla. Pellentesque hendrerit, nisi vitae posuere condimentum, lectus urna accumsan libero, rutrum commodo mi lacus pretium erat. Phasellus pretium ultrices mi sed semper. Praesent ut tristique magna. Donec nisl tellus, sagittis ut tempus sit amet, consectetur eget erat. Sed ornare gravida lacinia. Curabitur iaculis metus purus, eget pretium est laoreet ut. Quisque tristique augue ac eros malesuada, vitae facilisis mauris sollicitudin. Mauris ac molestie nulla, vitae facilisis quam. Curabitur placerat ornare sem, in mattis purus posuere eget. Praesent non condimentum odio. Nunc aliquet, odio nec auctor congue, sapien justo dictum massa, nec fermentum massa sapien non tellus. Praesent luctus eros et nunc pretium hendrerit. In consequat et eros nec interdum. Ut neque dui, maximus id elit ac, consequat pretium tellus. Nullam vel accumsan lorem.';
+	var lines = text.split(/[,\. ]+/g),
+	    data = Highcharts.reduce(lines, function (arr, word) {
+	        var obj = Highcharts.find(arr, function (obj) {
+	            return obj.name === word;
+	        });
+	        if (obj) {
+	            obj.weight += 1;
+	        } else {
+	            obj = {
+	                name: word,
+	                weight: 1
+	            };
+	            arr.push(obj);
+	        }
+	        return arr;
+	    }, []);
+
+	Highcharts.chart('wordcloud', {
+	    series: [{
+	        type: 'wordcloud',
+	        data: data,
+	        name: 'Occurrences'
+	    }],
+	    title: {
+	        text: '빈출영단어'
+	    }
+	});
+});
 
 </script>
 
@@ -25,8 +57,29 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-4 col-md-offset-1">
-			<div class="box box-danger">
+		<div class="col-md-5 col-md-offset-1">
+			<div class="box box-warning">
+				<div class="box-header with-border">
+			      <h3 class="box-title">빈출단어</h3>
+			
+			      <div class="box-tools pull-right">
+			        <button class="btn btn-box-tool" type="button" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			      </div>
+			    </div>
+			    
+			    <div class="box-body" style="height: 630px;">
+	              <div class="table-responsive" id="wordcloud">
+	              </div>
+	              <div class="box-footer clearfix">
+		            
+		          </div>
+	            </div>
+			
+			</div>
+   		</div>
+   		 
+   		 <div class="col-md-5">
+   		 	<div class="box box-danger">
 			    <div class="box-header with-border">
 			      <h3 class="box-title">공지사항</h3>
 			
@@ -92,9 +145,10 @@
             </div>
             <!-- /.box-footer -->
             </div>
-   		 </div>
    		 
-   		 <div class="col-md-6">
+   		 
+   		 
+   		 
 			<div class="box box-success">
 			    <div class="box-header with-border">
 			      <h3 class="box-title">자유게시판</h3>
@@ -165,12 +219,12 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">              
-            	<span class="pull-right">더보기...</span>
+            	<span class="pull-right"><a href="<%=cp%>/study/free/list?studyNum=${studyNum}&left=2">더보기...</a></span>
             </div>
             <!-- /.box-footer -->
             </div>
    		 </div>  
-  </div>
+  	</div>
 </section>
 
 	
