@@ -57,38 +57,62 @@
     right: 18px;
 }
 .btn-db{
-	position: fixed;
-    top: 290px;
-    right: 187px;
 }
 </style>
-
 <script type="text/javascript">
 $(function(){
 	$(document).on("click",".timer", function(){
-		
 		var url = "<%=cp%>/timer/main";
+		var userId = "${sessionScope.member.userId}";
 		
-		
-		if(${sessionScope.member.userId == null}){
+		if(userId=="" || userId == null){
 			url = "<%=cp%>/member/login";
 			location.href = url;
 		} 
-		
 		$('#myTimerModal .modal-content').load(url, function() {
 			$('#myTimerModal').modal('show');
 		});
 	});
-	
-	$(".btn-success").hide();
-	$(".btn-danger").hide();
-	$(".btn-info").hide();
-	$(".btn-db").hide();
-	
 });
+$(function(){
+	//1. 중도에 그만 멈추기(저장 까지)
+	$("body").on("click", ".btn-db", function(){
+		//var time = $("#DateCountdown").TimeCircles().getTime();	
+		
+		var hours = $(".textDiv_Hours").children("span").text();
+		var minutes = $(".textDiv_Minutes").children("span").text();
+		var seconds = $(".textDiv_Seconds").children("span").text();
+		
+		hours = parseInt(hours);
+		minutes = parseInt(minutes);
+		seconds = parseInt(seconds);
 
-
-
+		alert(hours + ":" + minutes + ":" + seconds);
+		
+		var second = (hours * 3600)+(minutes * 60) + seconds;
+		
+		var url = "<%=cp%>/timer/etime";
+		var query = "second=" + second + "&timerCheck=${sessionScope.member.timerCheck}";
+		alert(query);
+		$.ajax({
+			type : "POST"
+			,url : url
+			,data : query 
+			,dataType : "JSON"
+			,success : function(data){
+				if(data.state == "true"){
+					$("#DateCountdownLoc").empty();
+					alert("시간이 저장되었습니다.");
+				}else{
+					
+				}
+			}
+			,error : function(e){
+				console.log(e);
+			}
+		});
+	});
+});
 
 </script>
 
@@ -105,17 +129,11 @@ $(function(){
     <tiles:insertAttribute name="body"/>
 </div>
 
-<div id="DateCountdown"  data-timer="70" style="width: 100%;"></div>
-<button class="btn btn-success start">시작</button>
-<button class="btn btn-danger stop">정지</button>
-<button class="btn btn-info restart">재시작</button>
-<button class="btn btn-db">여기까지</button>
+<div id="DateCountdownLoc" style="height:300px; width:300px;position: fixed;top: 113px;right: 0px;"></div>
 
 <div class="footer">
     <tiles:insertAttribute name="footer"/>
 </div>
-
-
 
 <div class="smodal modal fade" id="myTimerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="timer-modal-dialog">

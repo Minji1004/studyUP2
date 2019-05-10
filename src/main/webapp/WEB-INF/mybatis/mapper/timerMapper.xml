@@ -7,12 +7,19 @@
 	INSERT INTO timer(userId, goalNum) VALUES (#{userId}, #{goalNum})
 </insert>
 
-<select id="selectRecentTimer" parameterType="String" resultType="Integer">
-	SELECT timerNum FROM timer WHERE userId = #{userId} ORDER BY sTime DESC LIMIT 1
+<select id="selectRecentTimer" parameterType="String" resultType="com.sp.timer.Timer">
+	SELECT timerNum, goalNum FROM timer WHERE userId = #{userId} ORDER BY sTime DESC LIMIT 1
 </select>
 
-<update id="updateETimer" parameterType="Integer">
-	UPDATE  timer SET eTime = NOW() WHERE timerNum = #{timerNum}
+<update id="updateETimer" parameterType="map">
+	UPDATE  timer SET eTime = NOW(), pureStudyTime = #{pureStudyTime} WHERE timerNum = #{timerNum}
 </update>
 
-</mapper>
+<select id="readTimer" parameterType="String" resultType="com.sp.timer.Timer">
+	SELECT MAX(timerNum) timerNum,userId,sTime, eTime, goalNum, pureStudyTime  FROM timer WHERE userId=#{userId};
+</select>
+
+<select id="readTimer2" parameterType="Integer" resultType="com.sp.timer.Timer">
+	SELECT * FROM timer WHERE timerNum = #{timerNum}
+</select>
+</mapper>  

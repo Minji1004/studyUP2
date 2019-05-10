@@ -136,5 +136,4 @@
 			   AND date_format(endDay, '%Y-%m-%d') &lt; #{end}
 			ORDER BY groupNum, resourceId, num
 	</select>
-
 </mapper>

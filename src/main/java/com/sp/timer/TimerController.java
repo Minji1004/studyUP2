@@ -21,7 +21,6 @@ public class TimerController {
 	
 	@RequestMapping(value = "/timer/main")
 	public String timerMain() {
-		
 		return "timer/main";
 	}
 	
@@ -41,36 +40,76 @@ public class TimerController {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		map.put("userId", info.getUserId());
+		String userId = info.getUserId();
+		map.put("userId", userId);
 		map.put("goalNum", second);
 		
-		int result = timerService.insertTimer(map);
-		
-		if(result == 0) {
-			model.put("state", "false");
-		}else {
-			model.put("state", "true");
-		}
+		timerService.insertTimer(map);
+		Timer timerDto = timerService.readTimer2(userId);
+		info.setTimerCheck(timerDto.getTimerNum());
+		model.put("state", "true");
+
+		return model;
+	}
+	@RequestMapping(value = "layout/timer/start", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> startTime(
+			@RequestParam int second,
+			@RequestParam(defaultValue = "0") int timerCheck,
+			HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+
+		Timer timerDto = timerService.readTimer(timerCheck);
+
+		model.put("state", "true");
 
 		return model;
 	}
 	
 	@RequestMapping(value = "/timer/etime", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateEndTime(HttpSession session){
+	public Map<String, Object> updateEndTime(
+			HttpSession session
+			,@RequestParam int second
+			,@RequestParam(defaultValue = "0") int timerCheck){
 		
 		Map<String, Object> model = new HashMap<>();
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-	
-		int result = timerService.insertETimer(info.getUserId());
 		
+		int result = timerService.insertETimer(timerCheck, second);
+
 		if(result == 0) {
 			model.put("state", "false");
 		}else {
 			model.put("state", "true");
+			info.setTimerCheck(0);
 		}
 
 		return model;
+	}
+	
+	@RequestMapping(value = "/timer/timer_main", method = RequestMethod.GET)
+	public String timer_Main() {
+		
+		return "timer/timer_main";
+	}
+	
+	@RequestMapping(value = "/timer/getSecond", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getSecond() throws Exception{
+		
+		Map<String, Object> model = new HashMap<>();
+		
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/timer/setSecond", method = RequestMethod.POST)
+	public void setSecond(@RequestParam int second, HttpSession session) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		info.setTimerSecond(second);
 	}
 }

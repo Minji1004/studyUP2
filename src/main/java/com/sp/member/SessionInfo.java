@@ -12,7 +12,9 @@ public class SessionInfo {
 	private String tel;
 	private List<Integer> blicenseNum;
 	private List<Integer> userType;
-	
+	private int timerCheck;
+	private int timerSecond;
+
 	public String getTel() {
 		return tel;
 	}
@@ -55,5 +57,17 @@ public class SessionInfo {
 	public void setUserNum(int userNum) {
 		this.userNum = userNum;
 	}
-	
+	public int getTimerCheck() {
+		return timerCheck;
+	}
+	public void setTimerCheck(int timerCheck) {
+		this.timerCheck = timerCheck;
+	}
+	public int getTimerSecond() {
+		return timerSecond;
+	}
+	public void setTimerSecond(int timerSecond) {
+		this.timerSecond = timerSecond;
+	}
+
 }

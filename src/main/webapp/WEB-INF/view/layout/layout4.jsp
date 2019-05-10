@@ -75,6 +75,7 @@
 }
 </style>
 <script type="text/javascript">
+//페이지 들어왔을 때
 
 </script>
 </head>
@@ -99,7 +100,7 @@
      </div>
 </div>
 </section>
-
+<div id="DateCountdownLoc" style="height:300px; width:300px;position: fixed;top: 113px;right: 0px;"></div>
 <div style="position:relative; bottom:0;z-index:1020;">
     <tiles:insertAttribute name="footer"/>
 </div>
@@ -112,6 +113,8 @@
 <script src="<%=cp%>/resource/js/jquery.fancybox.pack.js"></script>
 <script src="<%=cp%>/resource/js/jquery.waypoints.min.js"></script>
 <script src="<%=cp%>/resource/js/main.js"></script>
+<script type="text/javascript">
+</script>
 </body>
 
 
@@ -140,6 +143,11 @@
 		<div class="modal-content modal-eight">
 		</div>
 	</div>	
+</div>
+<div class="smodal modal fade" id="myTimerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="timer-modal-dialog">
+    <div class="modal-content" style="background: #FBFDF8;"></div>
+  </div>
 </div>	
 	
 
