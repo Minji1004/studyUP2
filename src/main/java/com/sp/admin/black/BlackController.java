@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
 
@@ -159,6 +161,7 @@ public class BlackController {
 		model.addAttribute("phase", phase);
 		model.addAttribute("total", total);
 		model.addAttribute("bpage", bpage);
+		model.addAttribute("blackCount",blackCount);
 		
 		model.addAttribute("keyword", keyword);
 		
@@ -237,17 +240,22 @@ public class BlackController {
 		return "admin/blacklist/brticle";
 	}
 	
-	@RequestMapping(value="/admin/blacklist/insert", method=RequestMethod.GET)
-	public String insertForm(Model model) {
-		model.addAttribute("mode", "insert");
+	@RequestMapping(value="/admin/blacklist/apply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> blackApply(
+		@RequestParam int reportNum,
+		HttpSession session
+		) throws Exception {
+		Report rdto = rservice.readReport(reportNum);
+		int rNum = rdto.getReportedUser();
 		
-		return "admin/blacklist/insert";
-	}
-	
-	@RequestMapping(value="/admin/blacklist/insert", method=RequestMethod.POST)
-	public String insertReport(Report rdto, HttpServletRequest req) throws Exception {
-		rservice.insertReport(rdto);
-		return "redirect:/main";	//리스트 띄우는 법 알아보기		
+		Map<String, Object> rmap = new HashMap<>();
+		Black bdto = new Black();
+		
+		bdto.setBlackUserNum(rNum);
+		bservice.insertBlack(bdto);
+		
+		return rmap;
 	}	
 	
 }

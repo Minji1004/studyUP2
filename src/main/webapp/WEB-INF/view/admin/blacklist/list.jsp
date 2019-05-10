@@ -55,6 +55,26 @@ $(function(){
 	});
 });
 
+$(function(){
+	$("body").on("click","#blackApply", function(){
+		var num=$(this).closest("div").children("input").val();
+		
+		var query="reportNum="+num;
+		var url = "<%=cp%>/admin/blacklist/apply";
+		alert(num);
+		$.ajax({
+			type : "post",
+			url : url,
+			data : query,
+			dataType : "json",
+			success : function(data){
+				alert('블랙리스트에 추가되었습니다.');				
+				return;
+			}
+		});
+	});
+});
+
 </script>
 
 <section class="features section">
@@ -88,7 +108,7 @@ $(function(){
 		</div>
 		<c:forEach var="rdto" items="${rlist}">
 		  <ul class="flist" data-reportNum="${rdto.reportNum}">
-		      <li style="width:10%;">${rdto.rlistNum}</li>
+		      <li style="width:10%;">${rdto.rlistNum}</li>		      
 		      <li style="width:21%;">${rdto.reportedUserId}</li>
 		      <li style="width:21%;">${rdto.reportedNickName}</li>
 		      <li style="width:15%;">${rdto.reportType}</li>
