@@ -14,16 +14,18 @@ public class WorryBoardServiceImpl implements WorryBoardService {
 	private CommonDAO dao;
 	
 	@Override
-	public int insertWorBoard(WorryBoard dto, String pathname) {
+	public int insertWorryBoard(WorryBoard dto, String pathname) {
 		int result=0;
+		
 		try {
-			int maxNum=dao.selectOne("worboard.w_postNum");
-			dto.setW_postNum(maxNum+1);
+			int maxNum=dao.selectOne("worryboard.worryPostnum");
+			dto.setWorryPostnum(maxNum+1);
 			
-			result=dao.insertData("worboard.insertBoard",dto);
+			result=dao.insertData("worryboard.insertBoard",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return result;
 	}
 
@@ -32,7 +34,7 @@ public class WorryBoardServiceImpl implements WorryBoardService {
 		int result=0;
 		
 		try {
-			result=dao.selectOne("worboard.dataCount", map);
+			result=dao.selectOne("worryboard.dataCount", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -41,55 +43,67 @@ public class WorryBoardServiceImpl implements WorryBoardService {
 	}
 
 	@Override
-	public List<WorryBoard> listWorBoard(Map<String, Object> map) {
+	public List<WorryBoard> listWorryBoard(Map<String, Object> map) {
 		List<WorryBoard> list=null;
 		
 		try {
-			//list=dao.selectList()
+			list=dao.selectList("worryboard.listWorry", map);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
-	public List<WorryBoard> listWorBoardTop() {
+	public List<WorryBoard> listWorryBoardTop() {
+		List<WorryBoard> list=null;
+		
+		try {
+			list=dao.selectList("worryBoard.listWorryBoardTop");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int updateHitCount(int worryPostnum) {
+		int result=0;
+		
+		try {
+			result=dao.updateData("worryBoard.updateHitCount", worryPostnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public WorryBoard readWorryBoard(int num) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public WorryBoard preReadWorryBoard(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WorryBoard nextReadWorryBoard(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateWorryBoard(WorryBoard dto, String pathname) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public WorryBoard readWorBoard(int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WorryBoard preReadWorBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WorryBoard nextReadWorBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateWorBoard(WorryBoard dto, String pathname) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteWorBoard(int num, String pathname) {
+	public int deleteWorryBoard(int num, String pathname) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

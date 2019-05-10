@@ -30,7 +30,7 @@
 	</select> 
 	
 	<select id="listFaq" parameterType="map" resultType="com.sp.customer.faq.Faq">
-		SELECT faqNum, f.userId, subject 
+		SELECT faqNum, f.userId, subject, content
 		FROM faq f
 		JOIN memberInfo m ON f.userId=m.userId
 		<where>
@@ -39,7 +39,7 @@
 			</if>
 		</where>
 		ORDER BY faqNum DESC
-		LIMIT #{start}, #{rows}	
+		LIMIT #{start}, #{rows}
 	</select>
 	
 	<select id="readFaq" parameterType="Integer" resultType="com.sp.customer.faq.Faq">

@@ -112,7 +112,7 @@
 	
 	<select id="readFile" parameterType="Integer" resultType="com.sp.customer.inquiry.Inquiry">
 		SELECT fileNum, inquiryNum, saveFilename, originalFilename, fileSize
-		FROM inquiry 
+		FROM inquiryFile 
 		WHERE fileNum=#{fileNum} 
 	</select>
 	

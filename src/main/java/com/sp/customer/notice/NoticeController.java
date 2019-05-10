@@ -273,7 +273,7 @@ public class NoticeController {
 			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
 		}
 		
-		if (!b) {
+		if (! b) {
 			try {
 				resp.setContentType("text/html; charset=utf-8");
 				PrintWriter out = resp.getWriter();

@@ -9,20 +9,20 @@
 <script type="text/javascript">
 
 function updateNotice(){
-	<c:if test="${sessionScope.member.userId==dto.userId}">
+	<c:if test="${sessionScope.member.userType.get(0)==1}">
 		var q="noticeNum=${dto.noticeNum}&page=${page}";
 		var url="<%=cp%>/customer/notice/update?"+q;
 		
 		location.href=url;
 	</c:if>
 
-	<c:if test="${sessionScope.member.userId!=dto.userId}">
+	<c:if test="${sessionScope.member.userType.get(0)!=1}">
 		alert("게시물 작성자만 게시물을 수정할 수 있습니다.");
 	</c:if>
 	}
 	
 function deleteNotice(){
-<c:if test="${sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userType.get(0)==1}">
 	var q="noticeNum=${dto.noticeNum}&${query}";
 	var url="<%=cp%>/customer/notice/delete?"+q;
 	
@@ -30,7 +30,7 @@ function deleteNotice(){
 		location.href=url;
 	}
 </c:if>
-<c:if test="${sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userType.get(0)!=1}">
 	alert("게시물 작성자만 게시물을 삭제할 수 있습니다.");
 </c:if>
 }

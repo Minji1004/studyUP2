@@ -164,7 +164,9 @@ function searchList() {
 		        		     </form>
 		        		</div>
 		        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-		        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+		        		   <c:if test="${sessionScope.member.userType.get(0)==1}">
+		        		       <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/notice/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+		        		   </c:if>
 		        	</div>
 		        </div>		        
 		    </div>

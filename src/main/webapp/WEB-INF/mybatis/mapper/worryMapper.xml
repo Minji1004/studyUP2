@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="worry">
+
+	<select id="maxWorryNum" resultType="Integer">
+		select IFNULL(max(worryPostnum), 0) from worry
+	</select>
+	
+	<insert id="insertWorry" parameterType="com.sp.community.worryBoard.WorryBoard">
+		INSERT INTO worry(worryPostnum, userId, subject, content, views, created, boardLike, replyNum, replyLike)
+		VALUES (#{worryPostnum}, #{userId}, #{subject}, #{content}, #{views}, #{created}, #{boardLike}, #{replyNum}, #{replyLike})
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			(INSTR(subject, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userId'">
+			INSTR(userId, #{keyword})=1
+		</if>
+		<if test="condition=='created'">
+			DATE FORMAT(w.created, '%Y-%m-%d')=#{keyword}
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0)
+		FROM worry w
+		JOIN memberInfo w.userId==m.userId
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listWorryTop" resultType="com.sp.community.worryBoard.WorryBoard">
+		SELECT worryPostnum, w.userId, nickName, subject, views,
+			   DATE_FORMAT(w.created, '%Y-%m-%d') created
+		FROM worry w
+		JOIN memberInfo m ON w.userId==m.userId
+		WHERE worryWhether=1
+		ORDER BY worryPostnum DESC
+	</select>
+	
+		<select id="listInquiry" parameterType="map" resultType="com.sp.community.worryBoard.WorryBoard">
+			SELECT worryPostnum, w.userId, nickName, subject, w.created , view, created
+			FROM worry w
+			JOIN memberInfo m ON w.userId=m.userId
+			<where>
+				<if test="keyword!=null and keyword!=''">
+					<include refid="where-list"/>
+				</if>
+			</where>
+				ORDER BY worryPostnum DESC
+				LIMIT #{start}, #{rows}
+		</select>
+
+		<select id="readWorry" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
+			SELECT worryPostnum, w.userId, nickName, subject, content, w.created, view
+			FROM worry w
+			JOIN memberInfo m ON w.userId=m.userId
+			WHERE worryPostnum=#{worryPostnum}
+		</select>
+		
+		<select id="preReadWorry" parameterType="Integer" resultType="com.sp.customer.worryBoard.WorryBoard">
+			SELECT worryPostnum, subject
+			FROM worry w
+			JOIN memberInfo m ON w.userId=m.userId
+			<where>
+				<if test="keyword !=null and keyword !=''">
+					<include refid="where-list"/>
+				</if>
+			AND (worryNum &gt; #{worryPostnum})
+			</where>
+			ORDER BY worryPostnum ASC
+			LIMIT 1
+		</select>
+		
+		<select id="nextReadInquiry" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
+			SELECT worryPostnum, subject
+			FROM worry w
+			JOIN memberInfo m On w.userId=m.userId
+		<where>
+			<if test="keyword !=null and keyword !=''">
+				<include refid="where-list"/>
+			</if>	
+			AND (worryPostnum &lt; #{worryPostNum})
+		</where>
+		ORDER BY worryPostnum DESC
+		LIMIT 1
+		</select>
+		
+		<update id="updateHitCount" parameterType="Integer">
+			UPDATE worry SET views=views+1 WHERE worryPostnum=#{worryPostnum}
+		</update>
+		
+		<update id="updateWorry" parameterType="com.sp.community.worryBoard.WorryBoard">
+			UPDATE worry SET subject=#{subject}, content=#{content}
+			WHERE worryPostnum=#{worryPostnum}
+		</update>
+		
+		<delete id="deleteWorry" parameterType="Integer">
+			DELETE FROM worry WHERE worryPostnum=#{worryPostnum}
+		</delete>
+		
+		<!-- 파일 -->
+		<insert id="insertFile" parameterType="com.sp.community.worryBoard.WorryBoard">
+			INSERT INTO worryFile(worryPostnum, saveFilename, originalFilename, fileSize) 
+			VALUES (#{worryPostnum, #{saveFilename}, #{originalFilename}, #{fileSize})
+		</insert>
+		
+		<select id="listFile" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
+		SELECT fileNum, worryPostnum, saveFilename, originalFilename, fileSize
+		FROM worryFile
+		WHERE worryPostnum=#{worryPostnum}
+		</select>
+		
+		<select id="readFile" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
+			SELECT fileNum, worryPostnum, saveFilename, originalFilename, fileSize
+			FROM worryFile
+			WHERE fileNum=#{fileNum}
+		</select>
+		
+		<delete id="deleteFile1" parameterType="Integer">
+			DELETE FROM worryFile WHERE worryPostnum=#{worryPostnum}
+		</delete>
+		
+		<delete id="deleteFile2" parameterType="Integer">
+			DELETE FROM worryFile WHERE fileNum=#{fileNum}
+		</delete>
+</mapper>

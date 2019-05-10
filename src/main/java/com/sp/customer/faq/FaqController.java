@@ -66,6 +66,8 @@ public class FaqController {
 			listNum=dataCount-(start+n);
 			dto.setListNum(listNum);
 			
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			
 			n++;
 		}
 		
@@ -91,6 +93,7 @@ public class FaqController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
+		model.addAttribute("query", query);
 		
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);

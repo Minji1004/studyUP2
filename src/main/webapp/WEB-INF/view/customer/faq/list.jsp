@@ -76,8 +76,20 @@ function searchList() {
 		var f=document.searchForm;
 		f.submit();
 }
-</script>
 
+function deleteFaq(faqNum){
+	<c:if test="${sessionScope.member.userType.get(0)==1}">
+		var q="faqNum="+faqNum+"&${query}";
+		var url="<%=cp%>/customer/faq/delete?"+q;
+		if(confirm("게시물을 삭제하시겠습니까?")){
+			location.href=url;
+		}
+</c:if>
+<c:if test="${sessionScope.member.userType.get(0)!=1}">
+	alert("게시물 작성자만 게시물을 삭제할 수 있습니다.");
+</c:if>
+}
+</script>
 
 <section class="section" id="srcontianer" >
 
@@ -95,72 +107,59 @@ function searchList() {
 		    <div class="alert alert-info">
 		        <i class="glyphicon glyphicon-info-sign"></i> 자주하는 질문과 답변을 모아놓은 게시판 입니다.
 		    </div>
+		    
+		    
+		    
+			<div class="panel-group" id="accordion">
+			<c:forEach var="dto" items="${list}">
+			  <div class="panel panel-default">
+			    	<div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse${dto.faqNum}">${dto.subject}</a>
+				      </h4>
+			    	</div>
+			    	<div id="collapse${dto.faqNum}" class="panel-collapse collapse">
+			      		<div class="panel-body">${dto.content}</div>
+  						<div style="text-align: right;">
+  						    <c:if test="${sessionScope.member.userType.get(0)==1}">
+	        		    	   <button type="button" class="btn btn-default btn-sm" style="color:#333333; background: #ffffff;" onclick="javascript:location.href='<%=cp%>/customer/faq/update?faqNum=${dto.faqNum}&page=${page}';"> 수정</button>
+	        		    	   <button type="button" class="btn btn-default btn-sm" style="color:#333333; background: #ffffff;" onclick="deleteFaq('${dto.faqNum}');"> 삭제 </button>
+	        		        </c:if>
+  						</div>
+			    	</div>
+			  </div>
+			</c:forEach>
+			</div>
+		    
 		
-		    <div>
-		        <div style="clear: both; height: 30px; line-height: 30px;">
-		            <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
-		            <div style="float: right;">&nbsp;</div>
-		        </div>
+	        <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
+	        	<c:if test="${dataCount==0}">등록된 게시물이 없습니다.</c:if>
+	        	<c:if test="${dataCount!=0}">${paging}</c:if>
+	        </div>        
 		        
-		        <div class="table-responsive" style="clear: both;"> 
-		            <table class="table table-hover">
-		                <thead>
-		                    <tr>
-		                        <th class="text-center" style="width: 70px;">번호</th>
-		                        <th >제목</th>
-		                        <th class="text-center" style="width: 100px;">글쓴이</th>
-		                    </tr>
-		                </thead>
-		                
-		                <tbody>
-		            
-	<c:forEach var="dto" items="${faqList}">		                
-		                    <tr>
-		                        <td><a href="${articleUrl}&faqNum=${dto.faqNum}">${dto.subject}</a></td>
-		                        <td class="text-center">${dto.faqNum}</td>
-		                        <td class="text-center">${dto.userId}</td>
-		                    </tr>     
-	 </c:forEach>     
-	 <c:forEach var="dto" items="${list}">
-	 						<tr>
-	 							<td class="text-center">${dto.listNum}</td>
-	 							<td>
-	 								<a href="${articleUrl}&faqNum=${dto.faqNum}">${dto.subject}</a>
-	 							</td>
-	 							<td class="text-center">${dto.userId}</td> 
-	 						</tr>
-	 </c:forEach>
-		                </tbody>
-		            </table>
-		        </div>
-		
-		        <div class="paging" style="text-align: center; min-height: 50px; line-height: 50px;">
-		        	<c:if test="${dataCount==0}">등록된 게시물이 없습니다.</c:if>
-		        	<c:if test="${dataCount!=0}">${paging}</c:if>
-		        </div>        
+	        <div style="clear: both;">
+	        		<div style="float: left; width: 20%; min-width: 85px;">
+	        		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/list';">새로고침</button>
+	        		</div>
+	        		<div style="float: left; width: 60%; text-align: center;">
+	        		     <form name="searchForm" action="<%=cp%>/customer/faq/list" method="post" class="form-inline">
+							  <select class="form-control input-sm" name="condition" >
+								  <option value="all"     ${condition=="all"?"selected='selected'":""}>모두</option>
+								  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
+								  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
+								  <option value="userName" ${condition=="userId"?"selected='selected'":""}>작성자</option>
+							  </select>
+							  <input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">
+							  <button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
+	        		     </form>
+	        		</div>
+	        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
+	        			<c:if test="${sessionScope.member.userType.get(0)==1}">
+	        		    	<button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
+	        		    </c:if>
+	        		</div>
+	        </div>
 		        
-		        <div style="clear: both;">
-		        		<div style="float: left; width: 20%; min-width: 85px;">
-		        		    <button type="button" class="btn btn-default btn-sm wbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/list';">새로고침</button>
-		        		</div>
-		        		<div style="float: left; width: 60%; text-align: center;">
-		        		     <form name="searchForm" action="<%=cp%>/customer/faq/list" method="post" class="form-inline">
-								  <select class="form-control input-sm" name="condition" >
-									  <option value="all"     ${condition=="all"?"selected='selected'":""}>모두</option>
-									  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
-									  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-									  <option value="userName" ${condition=="userId"?"selected='selected'":""}>작성자</option>
-								  </select>
-								  <input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">
-								  <button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span> 검색</button>
-		        		     </form>
-		        		</div>
-		        		<div style="float: left; width: 20%; min-width: 85px; text-align: right;">
-		        		    <button type="button" class="btn btn-primary btn-sm bbtn" onclick="javascript:location.href='<%=cp%>/customer/faq/created';"><span class="glyphicon glyphicon glyphicon-pencil"></span> 글쓰기</button>
-		        		</div>
-		        </div>
-		        
-		    </div>
 
 
         </div>

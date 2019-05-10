@@ -1,157 +1,130 @@
 package com.sp.community.freeBoard;
 
 public class FreeBoard {
-	private int f_PostNum;
+	private int freePostNum;
 	private int userNum;
-	private String Id;
-	private String Subject;
-	private String Content;
+	private String userId, Nickname;
+	private String subject;
+	private String content;
 	private int views;
-	private String c_DT;
-	private int FileNum;
-	private String og_FileName;
-	private String sv_FileName;
-	private int b_Like;
-	private int r_Num;
-	private int r_Like;
+	private String created;
+	private int fileNum;
+	private String originalFilename;
+	private String saveFilename;
+	private int boardLike;
+	private int replyNum;
+	private int replyLike;
 
 	private int groupNum;
 	private int depth;
 	private int orderNo;
 	private int parent;
-
-	public int getF_PostNum() {
-		return f_PostNum;
+	
+	public String getNickname() {
+		return Nickname;
 	}
-
-	public void setF_PostNum(int f_PostNum) {
-		this.f_PostNum = f_PostNum;
+	public void setNickname(String nickname) {
+		Nickname = nickname;
 	}
-
+	public int getFreePostNum() {
+		return freePostNum;
+	}
+	public void setFreePostNum(int freePostNum) {
+		this.freePostNum = freePostNum;
+	}
 	public int getUserNum() {
 		return userNum;
 	}
-
 	public void setUserNum(int userNum) {
 		this.userNum = userNum;
 	}
-
-	public String getId() {
-		return Id;
+	public String getUserId() {
+		return userId;
 	}
-
-	public void setId(String id) {
-		Id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-
 	public String getSubject() {
-		return Subject;
+		return subject;
 	}
-
 	public void setSubject(String subject) {
-		Subject = subject;
+		this.subject = subject;
 	}
-
 	public String getContent() {
-		return Content;
+		return content;
 	}
-
 	public void setContent(String content) {
-		Content = content;
+		this.content = content;
 	}
-
 	public int getViews() {
 		return views;
 	}
-
 	public void setViews(int views) {
 		this.views = views;
 	}
-
-	public String getC_DT() {
-		return c_DT;
+	public String getCreated() {
+		return created;
 	}
-
-	public void setC_DT(String c_DT) {
-		this.c_DT = c_DT;
+	public void setCreated(String created) {
+		this.created = created;
 	}
-
 	public int getFileNum() {
-		return FileNum;
+		return fileNum;
 	}
-
 	public void setFileNum(int fileNum) {
-		FileNum = fileNum;
+		this.fileNum = fileNum;
 	}
-
-	public String getOg_FileName() {
-		return og_FileName;
+	public String getOriginalFilename() {
+		return originalFilename;
 	}
-
-	public void setOg_FileName(String og_FileName) {
-		this.og_FileName = og_FileName;
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
 	}
-
-	public String getSv_FileName() {
-		return sv_FileName;
+	public String getSaveFilename() {
+		return saveFilename;
 	}
-
-	public void setSv_FileName(String sv_FileName) {
-		this.sv_FileName = sv_FileName;
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
 	}
-
-	public int getB_Like() {
-		return b_Like;
+	public int getBoardLike() {
+		return boardLike;
 	}
-
-	public void setB_Like(int b_Like) {
-		this.b_Like = b_Like;
+	public void setBoardLike(int boardLike) {
+		this.boardLike = boardLike;
 	}
-
-	public int getR_Num() {
-		return r_Num;
+	public int getReplyNum() {
+		return replyNum;
 	}
-
-	public void setR_Num(int r_Num) {
-		this.r_Num = r_Num;
+	public void setReplyNum(int replyNum) {
+		this.replyNum = replyNum;
 	}
-
-	public int getR_Like() {
-		return r_Like;
+	public int getReplyLike() {
+		return replyLike;
 	}
-
-	public void setR_Like(int r_Like) {
-		this.r_Like = r_Like;
+	public void setReplyLike(int replyLike) {
+		this.replyLike = replyLike;
 	}
-
 	public int getGroupNum() {
 		return groupNum;
 	}
-
 	public void setGroupNum(int groupNum) {
 		this.groupNum = groupNum;
 	}
-
 	public int getDepth() {
 		return depth;
 	}
-
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-
 	public int getOrderNo() {
 		return orderNo;
 	}
-
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-
 	public int getParent() {
 		return parent;
 	}
-
 	public void setParent(int parent) {
 		this.parent = parent;
 	}
