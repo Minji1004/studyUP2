@@ -16,13 +16,13 @@
 <!-- Main content -->
 <section class="content container-fluid">
 
-	<div class="box box-primary" style="width: 1500px; margin: 30px auto; padding: 10px;">
+	<div class="box box-primary" style="width: 80%; margin: 30px auto; padding: 10px;">
 		<div class="box-header with-border">
 			<h3 class="box-title">
 				공지사항
 			</h3>
 		</div>
-		<div class="box-body" style="width: 1200px; margin: 0 auto;">
+		<div class="box-body" style="width: 80%; margin: 0 auto;">
 		<p>${dataCount}개(${page}/${total_page} 페이지)</p>
 		     
 		<table class="table" style="text-align:center;">
@@ -67,21 +67,8 @@
 		</c:forEach>
   
 		</table>
-		 
-		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
-		   <tr height="35">
-			<td align="center">
- 			        <c:if test="${dataCount==0 }">
-			                등록된 게시물이 없습니다.
-			         </c:if>
-			        <c:if test="${dataCount!=0 }"> 
-			              ${paging}
- 			         </c:if>
-			 </td>
-		   </tr>
-		</table>
 		
-		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
+		<table style="width: 100%; margin: 20px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
 		          <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/study/notice/list?studyNum=${studyNum}&left=${left}';">새로고침</button>
@@ -110,7 +97,23 @@
 		      </td>
 		   </tr>
 		</table>
-		</div>
+		
+		
+		 
+		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+		   <tr height="35">
+			<td align="center">
+ 			        <c:if test="${dataCount==0 }">
+			                등록된 게시물이 없습니다.
+			         </c:if>
+			        <c:if test="${dataCount!=0 }"> 
+			              ${paging}
+ 			         </c:if>
+			 </td>
+		   </tr>
+		</table>
+		
+	</div>
 	</div>
 </section>
 

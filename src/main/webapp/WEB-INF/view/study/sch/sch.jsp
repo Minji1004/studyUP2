@@ -200,8 +200,7 @@ function articleForm(calEvent) {
 	
 	var color=calEvent.color;
 	var classify="";
-	if(color=="blue") classify="개인일정";
-	else if(color=="black") classify="가족일정";
+	if(color=="blue") classify="일반일정";
 	else if(color=="green") classify="오답노트";
 	else if(color=="red") classify="중요일정";
 	
@@ -253,7 +252,7 @@ function articleForm(calEvent) {
 		$("#schEndDay").html(eday);
 		$("#schContent").html(content);
 		
-		str="<button type='button' class='btn btn-primary' style='margin-right: 5px;' onclick='updateForm(\""+num+"\", \""+title+"\", \""+allDay+"\", \""+startDay+"\",\""+endDay+"\",\""+startTime+"\",\""+endTime+"\",\""+color+"\");'> 수정 <span class='glyphicon glyphicon-ok'></span></button>";
+		str="<button type='button' class='btn btn-success' style='margin-right: 5px;' onclick='updateForm(\""+num+"\", \""+title+"\", \""+allDay+"\", \""+startDay+"\",\""+endDay+"\",\""+startTime+"\",\""+endTime+"\",\""+color+"\");'> 수정 <span class='glyphicon glyphicon-ok'></span></button>";
 		str+="<button type='button' class='btn btn-danger' style='margin-right: 5px;' onclick='deleteOk(\""+num+"\");'> 삭제 <span class='glyphicon glyphicon-remove'></span></button>";
 		str+="<button type='button' class='btn btn-default' data-dismiss='modal' style='margin-left: 0px;'> 닫기 </button>";
 		$("#schFooter").html(str);
@@ -463,7 +462,7 @@ function updateForm(num, title, allDay, startDay, endDay, startTime, endTime, co
 			$("#endTime").show();
 		}
 		
-		str="<button type='button' class='btn btn-primary' style='margin-right: 5px;' onclick='updateOk("+num+");'> 확인 <span class='glyphicon glyphicon-ok'></span></button>";
+		str="<button type='button' class='btn btn-success' style='margin-right: 5px;' onclick='updateOk("+num+");'> 확인 <span class='glyphicon glyphicon-ok'></span></button>";
 		str+="<button type='button' class='btn btn-default' data-dismiss='modal' style='margin-left: 0px;'> 닫기 </button>";
 		$("#schFooter").html(str);
 		
@@ -630,13 +629,9 @@ function classifyChange(classify) {
 	                              .removeClass("btn-red");
 	
 	if(classify=="blue") {
-		$("#btnTitle").html("개인일정")
+		$("#btnTitle").html("일반일정")
 		$("#btnTitle").addClass("btn-blue");
 		$("#btnDropdown").addClass("btn-blue");
-	} else if(classify=="black") {
-		$("#btnTitle").html("가족일정")
-		$("#btnTitle").addClass("btn-black");
-		$("#btnDropdown").addClass("btn-black");
 	} else if(classify=="green") {
 		$("#btnTitle").html("오답노트")
 		$("#btnTitle").addClass("btn-green");
@@ -677,11 +672,9 @@ $(function(){
                  <a class="hbtn hbtn-bottom" style="background: white ; color:#2f3741;"
                        href="javascript:classification('all', 0);">전체일정</a>
                  <a class="hbtn" style="background: blue;"
-                       href="javascript:classification('blue', 1);">개인일정</a>
-                 <a class="hbtn" style="background-color:black;"
-                       href="javascript:classification('black', 2);">가족일정</a>
+                       href="javascript:classification('blue', 1);">일반일정</a>
                  <a class="hbtn" style="background: green;"
-                       href="javascript:classification('green', 3);">오답노트</a>
+                       href="javascript:classification('green', 2);">오답노트</a>
                  <a class="hbtn" style="background: red;"
                        href="javascript:classification('red', 4);">중요일정</a>
              </div>      

@@ -4,6 +4,7 @@ public class ApplyStudy {
 	private int applyNum;
 	private int studyNum;
 	private String userId;
+	private String userName;
 	private String goal;
 	private String hope;
 	private int approval;
@@ -25,6 +26,12 @@ public class ApplyStudy {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getGoal() {
 		return goal;

@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 
+
 <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
@@ -54,7 +55,11 @@
         <li><a href="<%=cp%>/study/mystudy/record/list?studyNum=${studyNum}&left=6"><i class="fa fa-link"></i> <span>순공시간</span></a></li>
 		<li><a href="<%=cp%>/study/chat/main?studyNum=${studyNum}&left=7"><i class="fa fa-link"></i> <span>채팅</span></a></li>
 		<li><a href="<%=cp%>/study/buy/list?studyNum=${studyNum}&left=8"><i class="fa fa-link"></i> <span>공구</span></a></li>
-		<li><a href="<%=cp%>/study/mystudy/member/list?studyNum=${studyNum}&left=9"><i class="fa fa-link"></i> <span>메이트관리</span></a></li>
+		
+		<c:if test="${sessionScope.member.userId eq dto.userId}">
+			<li><a href="<%=cp%>/study/member/main?studyNum=${studyNum}&left=9"><i class="fa fa-link"></i> <span>메이트관리</span></a></li>		
+		</c:if>
+     
       </ul>
       <!-- /.sidebar-menu -->
     </section>

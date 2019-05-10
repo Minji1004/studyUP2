@@ -41,6 +41,7 @@ public class MyStudyController {
 		model.addAttribute("studyNum", studyNum);
 		model.addAttribute("left", left);
 		model.addAttribute("dto", dto);
+		// System.out.println("여기!!!!"+dto.getUserId());
 		
 		return ".studyLayout";
 	}

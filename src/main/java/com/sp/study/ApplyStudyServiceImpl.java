@@ -32,7 +32,7 @@ public class ApplyStudyServiceImpl implements ApplyStudyService{
 		List<ApplyStudy> list = null;
 		
 		try {
-			list=dao.selectList("study.listApplyStudy", map);
+			list=dao.selectList("studyMember.listStudyApply", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,7 +45,7 @@ public class ApplyStudyServiceImpl implements ApplyStudyService{
 		ApplyStudy dto = null;
 		
 		try {
-			dto = dao.selectOne("study.readApplyStudy", applyNum);
+			dto = dao.selectOne("studyMember.readApplyStudy", applyNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +71,7 @@ public class ApplyStudyServiceImpl implements ApplyStudyService{
 		int result = 0;
 		
 		try {
-			result = dao.updateData("study.updateApplyStudy", dto);
+			result = dao.updateData("studyMember.approveApply", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

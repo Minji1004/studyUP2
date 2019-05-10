@@ -15,7 +15,7 @@
  		<img class="img-circle img-dialog" src="<%=cp%>/uploads/study/${dto.studyImg}">
  	</div>
  	<div class="col-xs-4 col-sm-7">
- 		<div class="dialog-content-title">${dto.studyIntro}</div>
+ 		<div class="dialog-content-title" data-applyForNum ="${dto.studyNum}">${dto.studyIntro}</div>
  		<div class="dialog-content"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.nickname}</div>
  		<div class="dialog-content"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> ${dto.studyLocation}</div>
  		<div class="dialog-content"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> ${dto.studySday} ~ ${dto.studyEday}</div>

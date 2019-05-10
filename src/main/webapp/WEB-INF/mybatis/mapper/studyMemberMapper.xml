@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="studyMember">
+
+	<!-- 스터디 가입신청 리스트 -->
+	<select id="listStudyApply" parameterType="map" resultType="com.sp.study.ApplyStudy">
+		
+		SELECT DISTINCT max(applyNum) applyNum, studyNum, a.userId, nickname userName, goal, hope, approval, applyDay
+		FROM applystudy a
+		JOIN memberinfo m ON a.userId=m.userId
+		where studyNum = #{studyNum} AND approval = 1
+        group by  a.userId
+		ORDER BY applyNum DESC	
+	</select>
+	
+	<!-- 가입신청 정보-->
+	<select id="readApplyStudy" parameterType="Integer" resultType="com.sp.study.ApplyStudy">
+		SELECT applyNum, studyNum, a.userId, nickname userName, goal, hope, approval, applyDay
+		FROM applystudy a
+		JOIN memberinfo m ON a.userId=m.userId
+		where applyNum = #{applyNum}
+	
+	</select>
+	
+	<!-- 가입신청 허가해주기 -->
+	<update id="approveApply" parameterType="com.sp.study.ApplyStudy">
+		update applystudy set approval = 2 where applyNum= #{applyNum}		
+	</update>
+
+</mapper>

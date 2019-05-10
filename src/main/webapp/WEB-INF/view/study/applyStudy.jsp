@@ -25,7 +25,9 @@ function makeStudy() {
 	
 	// studyNum 고치기
 	
-	var num=$(".study-content").attr("data-studyNum");
+	var num=$(".dialog-content-title").attr("data-applyForNum");
+	
+	alert(num);
 	
 	f.action = "<%=cp%>/study/applyStudy?studyNum="+num;
 	

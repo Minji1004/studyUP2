@@ -133,7 +133,6 @@ $(function(){
 			var uidSub = "Ostudy" + "${studyNum}" + roomId1 + roomId2;
 			uidSub = uidSub.split("@", 1);
 			
-			alert(uidSub);
 			
 			room = uidSub[0]; 
 		}
