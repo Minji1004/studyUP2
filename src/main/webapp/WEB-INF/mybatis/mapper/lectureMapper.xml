@@ -127,11 +127,11 @@
 		FROM applystudy WHERE studyNum = #{studyNum} AND approval = 2
 	</select>
 	
-	<select id="readStudy" parameterType="Integer" resultType="com.sp.study.Study">
+	<select id="readLecture" parameterType="Integer" resultType="com.sp.study.Study">
 		SELECT DISTINCT s.studyNum, studyName, studyIntro, s.userId, nickname,
 				studyLocation, 
 				DATE_FORMAT(studySday, '%Y-%m-%d') AS studySday, DATE_FORMAT(studyEday, '%Y-%m-%d') AS studyEday, 
-				studyImg, headcount 
+				studyImg, headcount, s.lectureNum, price,  DATE_FORMAT(registerEnd, '%Y-%m-%d') AS registerEnd
 		FROM study as s 
 		left outer join studyCourseList as l
 		on l.studyNum = s.studyNum 
@@ -141,6 +141,39 @@
 		on c.categoryNum = ca.categoryNum
 		left outer join memberInfo as m
 		on s.userId = m.userId
-		where s.studyNum = #{studyNum}
+        left outer join lecture
+        on s.lectureNum = lecture.lectureNum
+        where s.studyNum = #{studyNum}
+	</select>
+	
+	<insert id="insertStudent" parameterType="map">
+		insert into student (lectureNum, sId) values (#{lectureNum}, #{sId})
+	</insert>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(count(DISTINCT s.studyNum), 0) FROM study as s 
+		left outer join studyCourseList as l
+		on l.studyNum = s.studyNum 
+		left outer join course as c
+		on l.courseNum = c.courseNum
+		left outer join category as ca
+		on c.categoryNum = ca.categoryNum
+		left outer join applystudy AS aps
+		on s.studyNum = aps.studyNum
+		<where>
+			lectureNum IS not null
+			
+			<if test="userId != null and userId != ''">
+				AND (aps.userId = #{userId} AND approval = 2)
+			</if>
+			
+			<if test="mode != 'allStudy'">
+				AND categoryName = #{categoryName}
+			</if>
+			
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>				
+		</where>
 	</select>
 </mapper>

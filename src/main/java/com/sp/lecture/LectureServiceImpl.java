@@ -37,8 +37,15 @@ public class LectureServiceImpl implements LectureService{
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
+		int result = 0;
 		
-		return 0;
+		try {
+			result = dao.selectOne("lecture.dataCount",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -69,15 +76,24 @@ public class LectureServiceImpl implements LectureService{
 	}
 
 	@Override
-	public Study readStudy(int num) {
+	public Study readLecture(int num) {
 		Study dto = null;
 		
 		try {
-			dto = dao.selectOne("lecture.readStudy", num);
+			dto = dao.selectOne("lecture.readLecture", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return dto;
+	}
+
+	@Override
+	public void insertStudent(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("lecture.insertStudent", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 }

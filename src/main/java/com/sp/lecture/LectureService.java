@@ -12,5 +12,7 @@ public interface LectureService {
 	public int dataCount(Map<String, Object> map);
 	public List<StudyCourse> listStudyCourse(int studyNum);
 	public int headCount(int studyNum);
-	public Study readStudy(int studyNum);
+	public Study readLecture(int studyNum);
+	
+	public void insertStudent(Map<String, Object> map) throws Exception;
 }
