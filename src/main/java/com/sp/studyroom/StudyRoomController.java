@@ -105,7 +105,7 @@ public class StudyRoomController {
 		
 		System.out.println(info +":"+info.getUserType());
 		
-		if(info.getUserType().contains(1)) {
+		if(info !=null && info.getUserType().contains(1)) {
 			return ".admins.studyroom.main";
 		}	
 		
