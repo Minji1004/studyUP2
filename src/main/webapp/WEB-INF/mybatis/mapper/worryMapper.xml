@@ -71,7 +71,7 @@
 			WHERE worryPostnum=#{worryPostnum}
 		</select>
 		
-		<select id="preReadWorry" parameterType="Integer" resultType="com.sp.customer.worryBoard.WorryBoard">
+		<select id="preReadWorry" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
 			SELECT worryPostnum, subject
 			FROM worry w
 			JOIN memberInfo m ON w.userId=m.userId
@@ -115,7 +115,7 @@
 		<!-- 파일 -->
 		<insert id="insertFile" parameterType="com.sp.community.worryBoard.WorryBoard">
 			INSERT INTO worryFile(worryPostnum, saveFilename, originalFilename, fileSize) 
-			VALUES (#{worryPostnum, #{saveFilename}, #{originalFilename}, #{fileSize})
+			VALUES (#{worryPostnum}, #{saveFilename}, #{originalFilename}, #{fileSize})
 		</insert>
 		
 		<select id="listFile" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
