@@ -244,9 +244,17 @@
 				label += "<input type='hidden' name='timeValues' value='"+i+"'>";
 				$(".srTimeButton").last().append(label);
 			}
+			var roomNums = "<input type='hidden' name='roomNums' value='"+roomNum+"'>";
+			var checkboxCounts = "<input type='hidden' id='checkboxCounts' name='checkboxCounts' style='width:25px; height: 15px; border: 1px solid #cccccc; font-size:4pt;'>"
+			if(checkboxCounts=="") {
+				checkboxCounts = 0;
+			}
+			$(".srTimeButton").last().append(roomNums);
+			$(".srTimeButton").last().append(checkboxCounts);
 		});
 		
 		$("#scrollThirdModal").children().last().append($divSpace);
+		
 		checked();
 	});	
 	

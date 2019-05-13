@@ -15,4 +15,9 @@ public interface StudyRoomService {
 	public StudyRoom studyRoom(int cafeNum);
 	public List<StudyRoomDetail> studyRoomList(int num);
 	public List<StudyRoomDetail> studyRoomDetailList(int num);
+	public int insertCafeWish(StudyRoom dto);
+	public int insertCafeWishDetail(StudyRoom dto);
+	public List<StudyRoom> listCafeWish(int userNum);
+	public List<StudyRoomDetail> listCafeWishDetail(int reserveNum);
+	public StudyRoom checkCafeNum(int roomNum);
 }

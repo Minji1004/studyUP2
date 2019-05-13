@@ -28,93 +28,95 @@
 						</div>
 						<div style="height:1px;"></div>
 						
-						<div class="srBagItems">
-							<div class="srBagItemsBorder">
-							
-								<div class="srBagItemsName">자바스터디카페</div>
-								<div class="srBagCloseBtn">
-									<div>x</div>
-								</div>
-								<div class="srBagItemsImg">
-									<img style="position:relative; top:2px;" height="95%" width="95%" src="<%=cp%>/resource/studyroom/images/pic02.jpg">
-								</div>
-								<div class="srBagContents">
-									<div class="srBagContentsLine" style="width:100%">									
-										<div class="srBagContentsTitle">
-											<div class="srBagInner">
-												주소
-											</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												서울시 영등포구 여의도동 여의벚길로 153 풍성빌딩 304호 자바스터디카페
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine">
-										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">방이름</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												JAVA반
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine">
-										<div class="srBagContentsTitle">
-											<div class="srBagInner">일자</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												2019-06-29
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine" style="width:60%">
-										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">기준</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												방
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine" style="width:40%">
-										<div class="srBagContentsTitle">
-											<div class="srBagInner">시간당</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												15000
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine" style="width:60%">
-										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">사용시간</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner">
-												15:00, 16:00, 17:00
-											</div>
-										</div>
-									</div>
-									<div class="srBagContentsLine" style="width:40%">
-										<div class="srBagContentsTitle" style="clear:left;">
-											<div class="srBagInner">이용금액</div>
-										</div>
-										<div class="srBagContentsText">
-											<div class="srBagInner" name="lecturePrices">
-												45000											
-											</div>
-										</div>
-									</div>
-								</div>
+						<c:forEach var="dto" items="${list}">
+							<div class="srBagItems">
+								<div class="srBagItemsBorder">
 								
+									<div class="srBagItemsName">${dto.cafeName}</div>
+									<div class="srBagCloseBtn">
+										<div>x</div>
+									</div>
+									<div class="srBagItemsImg">
+										<img style="position:relative; top:2px;" height="95%" width="95%" src="<%=cp%>/resource/studyroom/images/pic02.jpg">
+									</div>
+									<div class="srBagContents">
+										<div class="srBagContentsLine" style="width:100%">									
+											<div class="srBagContentsTitle">
+												<div class="srBagInner">
+													주소
+												</div>
+											</div>
+											<div class="srBagContentsText">
+												<div class="srBagInner">
+													${dto.roadAddr}${dto.bname}&nbsp;${dto.detailAddr}
+												</div>
+											</div>
+										</div>
+										<div class="srBagContentsLine">
+											<div class="srBagContentsTitle" style="clear:left;">
+												<div class="srBagInner">방이름</div>
+											</div>
+											<div class="srBagContentsText">
+												<div class="srBagInner">
+													${dto.roomName}
+												</div>
+											</div>
+										</div>
+										<div class="srBagContentsLine">
+											<div class="srBagContentsTitle">
+												<div class="srBagInner">일자</div>
+											</div>
+											<div class="srBagContentsText">
+												<div class="srBagInner">
+													${dto.useDate}
+												</div>
+											</div>
+										</div>
+										<div class="srBagContentsLine" style="width:60%">
+											<div class="srBagContentsTitle" style="clear:left;">
+												<div class="srBagInner">기준</div>
+											</div>
+											<div class="srBagContentsText">
+												<div class="srBagInner">
+													방
+												</div>
+											</div>
+										</div>
+										<div class="srBagContentsLine" style="width:40%">
+											<div class="srBagContentsTitle">
+												<div class="srBagInner">시간당</div>
+											</div>
+											<div class="srBagContentsText">
+												<div class="srBagInner">
+													${dto.unitPrice}
+												</div>
+											</div>
+										</div>
+										<div class="srBagContentsLine" style="width:60%">
+											<div class="srBagContentsTitle" style="clear:left;">
+												<div class="srBagInner">사용시간</div>
+											</div>
+											<div class="srBagContentsText">
+												<div class="srBagInner">
+													${dto.timelists}
+												</div>
+											</div>
+										</div>
+										<div class="srBagContentsLine" style="width:40%">
+											<div class="srBagContentsTitle" style="clear:left;">
+												<div class="srBagInner">이용금액</div>
+											</div>
+											<div class="srBagContentsText">
+												<div class="srBagInner" name="lecturePrices">
+													${dto.itemPrice}										
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
 							</div>
-						</div>
+						</c:forEach>
 					</div>
 					
 					<!-- 강의부분 -->

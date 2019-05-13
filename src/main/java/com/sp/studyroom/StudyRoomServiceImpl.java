@@ -154,4 +154,59 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		return list;
 	}
 	
+	@Override
+	public int insertCafeWish(StudyRoom dto) {
+		int result=0;
+		try {
+			result=dao.insertData("studyroom.insertCafeWish", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
+	public int insertCafeWishDetail(StudyRoom dto) {
+		int result=0;
+		try {
+			result=dao.insertData("studyroom.insertCafeWishDetail", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
+	public List<StudyRoom> listCafeWish(int userNum) {
+		List<StudyRoom> list = null;
+		try {
+			list = dao.selectList("studyroom.listCafeWish", userNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public List<StudyRoomDetail> listCafeWishDetail(int reserveNum) {
+		List<StudyRoomDetail> list = null;
+		try {
+			list = dao.selectList("studyroom.listCafeWishDetail", reserveNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public StudyRoom checkCafeNum(int roomNum) {
+		StudyRoom dto=null;
+		try {
+			dto = dao.selectOne("studyroom.checkCafeNum", roomNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
 }
