@@ -90,9 +90,9 @@ function updateMyprofile(){
 }
 </script>
 
-<div id="myPageMain">
+<div id="myPageMain" class="box box-primary" style="margin-top: 50px; width: 400px; background: #E0F8E5;">
 	<table
-		style="margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+		style="margin-left:18px; margin-top:20px; border-spacing: 0px; border-collapse: collapse;">
 	
 		<tr height="100">
 			<td colspan="2" align="left" style="padding-left: 5px;"><c:if
@@ -112,14 +112,11 @@ function updateMyprofile(){
 		<tr style="height: 50">
 			<td colspan="2" align="left"  height="50px">전화 번호 : ${dto.tel }</td>
 		</tr>
-	
-	</table>
-	
-	<table style="margin: 0px auto 20px; border-spacing: 0px;">
-		<tr height="45">
+		<tr height="80">
 			<td width="300" align="left">
 				<button type="button" class="btn" onclick="mypageUpdate();">수정</button>
 			</td>
 		</tr>
 	</table>
+	
 </div>

@@ -5,11 +5,18 @@
 <%
    String cp = request.getContextPath();
 %>
-
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="<%=cp%>/resource/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<%=cp%>/resource/css/font-awesome.css" />
+<link rel="stylesheet" href="<%=cp%>/resource/css/ionicons.css" />
+<link rel="stylesheet" href="<%=cp%>/resource/css/AdminLTE.css" />
+<link rel="stylesheet" href="<%=cp%>/resource/css/blue.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link href="<%=cp %>/resource/jquery/css/jquery-ui.min.css" rel= "stylesheet" type="text/css">
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
-<link href="<%=cp %>/resource/jquery/css/jquery-ui.min.css" rel= "stylesheet" type="text/css">
+
 
 <style type="text/css">
 .certifyBtn{
@@ -65,20 +72,14 @@ function registerMember(){
 		str.focus();
 		return;
 	}
-	str = f.tel;
-	if(!str.value){
-		alert("전화번호 채워 주세요");
-		str.focus();
-		return;
-	}
-
+ 
 	f.action = "<%=cp%>/member/member";
-	f.submit();
-	
+	f.submit();	
 }
 
 
 function certifyEmail(){
+	
 		$("#certifyEmailDialog").dialog({
 			width : 900
 			,modal : false
@@ -87,22 +88,17 @@ function certifyEmail(){
 					$(this).dialog("close");
 					$("input[name=userEmail]").val("");
 					$("input[name=confirmEmailNum]").val("");
-					
 				}
 			}
 		});
 }
 
-
 $(function(){
-
 	$("#certifyEmailDialog").hide();
-	
-
 	$("body").on("change", "#userPwdConfirm" , function(){
 		var $password = $("input[name=userPwd]").val();
 		var $passwordConfirm = $("input[name=userPwdConfirm]").val();
-		
+		alert($password + ":" + $passwordConfirm);
 		if($password != $passwordConfirm){
 			$("input[name=userPwdConfirm]").focus();
 			$("#passwordConfirmText").html("<mark style='color: red;'>위의 비밀번호와 일치하지 않습니다.</mark>");
@@ -143,64 +139,67 @@ $(function(){
 	
 });
 </script>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a><b>회원 가입</b></a>
+  </div>
 
-<div style="width : 900px ; margin:30px auto 0; border: 1px solid black; border-radius: 3px">
-<form name="memberForm" method="post" enctype="multipart/form-data">
-	<div>
-	<table style="width: 900px; height: 500px;">
-		<tbody><tr>
-			<td style="width: 150; padding-left: 30">이메일 :</td>
-			<td><input  type="text" name="userId" readonly="readonly" style="width: 300"> </td>
-			<td><button type="button" onclick="certifyEmail()">인증</button></td>
-		</tr>
-		<tr>
-			<td style="width: 150; padding-left: 30">비밀번호 :</td>
-			<td><input type="password" name="userPwd" style="width: 300"></td>
-		</tr>
-		<tr>
-			<td style="width: 150; padding-left: 10">비밀번호확인 :</td>
-			<td><input id = "userPwdConfirm" type="password" name="userPwdConfirm" style="width: 300"></td>
-			<td id="passwordConfirmText" style="width: 300; padding-left: 10"></td>
-		</tr>
-		<tr>
-			<td style="width: 150; padding-left: 30">닉네임 :</td>
-			<td><input type="text" name="nickname" style="width: 300"></td>
-		</tr>
-		<tr>
-			<td style="width: 150; padding-left: 30">전화번호 :</td>
-			<td><input type="text" name="tel" style="width: 300"></td>
-		</tr>
-		<tr>
-			<td style="width: 100; padding-left: 30">프로필 사진 :</td>
-			<td><input type="file" name="pictureM" style="width: 300; border: 1px solid #eee; border-radius: 3px"></td>
-		</tr>
-		
-	
-		
-		</tbody>
+  <div class="register-box-body">
+    <p class="login-box-msg">회원을 등록합니다.</p>
 
-	</table>
-	
-	<table style="width: 900px;">
-		<tr style="width: 100%" align="center">
-			<td colspan="2">
-				<button type="button" onclick="registerMember()">등록하기</button>
-				<button type="button" onclick = "location.href = '<%=cp%>/main'">등록취소</button>
-			</td>
-		</tr>
-	</table>
-	</div>
+    <form name="memberForm" method="post" enctype="multipart/form-data">
+      <div class="form-group has-feedback">
+      	<input type="text" name="userId" class="form-control" readonly="readonly" placeholder="이메일">
+      	
+      </div>
+      
+      <div class="form-group has-feedback">
+        <input type="password" name="userPwd" class="form-control" placeholder="비밀번호">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" name="nickname" class="form-control" placeholder="닉네임">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+       <div class="form-group has-feedback">
+        <input type="text" name="tel" class="form-control" placeholder="전화번호">
+        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+      </div>
+        <div class="form-group has-feedback">
+        <input type="file" name="pictureM" class="form-control" placeholder="프로필 사진">
+      </div>
+     
+      
 
-	
-		
-
-	
-	
-	
-</form>
+      <div class="row">
+        <div id="passwordConfirmText" class="col-xs-8">
+        </div>
+        <div class="col-xs-4">
+          <button type="button" class="btn btn-primary btn-block btn-flat" style ="background: #2C2323; border:2px solid #2C2323;font-weight: 200px" onclick="certifyEmail()">메일 인증</button>
+          <button type="button" class="btn btn-primary btn-block btn-flat" onclick="registerMember()">Register</button>
+          <button type="button" class="btn btn-primary btn-block btn-flat" style ="background: #D25252; border:2px solid #D25252" onclick = "location.href = '<%=cp%>/main'">Cancel</button>
+        </div>
+      </div>
+  	</form>
+  </div>
 </div>
 
-<!-- ------------------------------------------------- -->
+
+
+<!-- Bootstrap 3.3.7 -->
+<script src="<%=cp%>/resource/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="<%=cp%>/resource/js/icheck.min.js"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' /* optional */
+    });
+  });
+</script>
 
 <script type="text/javascript">
 
@@ -251,19 +250,14 @@ $(function(){
 				console.log(jqXHR.responseText);
 			}
 		});
-      	
-     	
-    }
-    
+
+    } 
  	// 이메일 형식 검사
     function isValidEmail(data){
         var format = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
         return format.test(data); // true : 올바른 포맷 형식
     }
- 	
 
-
-    
     function confirmEmailNumF(confirmKey){
  		var $confirmKey = $("input[name=confirmEmailNum]").val();
  		var $userEmail = $("input[name=userEmail]").val();
@@ -280,17 +274,6 @@ $(function(){
 		$("input[name=userEmail]").val("");
 		$("input[name=confirmEmailNum]").val("");
  	}
-   		
-   		
-   		
-   		
-   		
-   		
-  
-  
-    
-    
-
 </script>
 
 <div id="certifyEmailDialog" title="이메일 인증">
@@ -310,4 +293,8 @@ $(function(){
  	</div>
 </form>
 </div>
+
+
+</body>
+
 
