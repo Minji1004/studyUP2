@@ -34,15 +34,6 @@
             f.content.focus();
             return false;
         }
-
-    	str = f.pwd.value;
-        if(!str) {
-            alert("패스워드를 입력하세요. ");
-            f.pwd.focus();
-            return false;
-        }
-    	
-       	f.action = "<%=cp%>/teacher/notice/created";
        	
        	return true;
   }
@@ -81,7 +72,7 @@
 	<div class="box box-primary" style="width: 1500px; margin: 30px auto; padding: 10px;">
 		<div class="box-header with-border">
 			<h3 class="box-title">
-				공지사항 등록
+				자유게시판
 			</h3>
 		</div>
 		<div class="box-body" style="width: 1200px; margin: 0 auto;">
@@ -91,19 +82,13 @@
   <tr align="left" style="border-top: 2px solid #cccccc;"> 
       <th width="80" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</th>
       <td style="padding-left:10px;"> 
-        <input type="text" name="nSubject" maxlength="100" class="boxTF" style="width: 97%;" value="${dto.nSubject}">
-      </td>
-  </tr>
-  <tr align="left"> 
-      <th width="80" bgcolor="#eeeeee" style="text-align: center;">공&nbsp;&nbsp;&nbsp;&nbsp;지</th>
-      <td style="padding-left:10px;"> 
-        <label><input type="checkbox" name="notice" value="1">공지여부</label>
+        <input type="text" name="fSubject" maxlength="100" class="boxTF" style="width: 97%;" value="${dto.fSubject}">
       </td>
   </tr>
   <tr align="left"> 
       <th width="80" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
       <td valign="top" style="padding:5px 10px 5px 10px;"> 
-        <textarea name="nContent" id="content" style="width:95%; height: 450px;">${dto.nContent}</textarea>
+        <textarea name="fContent" id="content" style="width:95%; height: 450px;">${dto.fContent}</textarea>
       </td>
   </tr>
 
@@ -126,7 +111,7 @@
       <td align="center" >
         <button type="submit" class="btn btn-danger">${mode=='update'?'수정완료':'등록하기'}</button>
         <button type="reset" class="btn btn-default" onclick="resetEditor();">다시입력</button>
-        <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/study/notice/list?studyNum=${studyNum}&left=1';">${mode=='update'?'수정취소':'등록취소'}</button>
+        <button type="button" class="btn btn-default" onclick="javascript:location.href='<%=cp%>/study/free/list?studyNum=${studyNum}&left=2';">${mode=='update'?'수정취소':'등록취소'}</button>
 		</td>
     </tr>
   </table>

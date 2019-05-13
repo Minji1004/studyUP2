@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sfree">
+	<insert id="insertBoard" parameterType="map">
+		INSERT INTO
+		sfree(studyNum, userId, fSubject, fContent, saveFilename,
+		originalFilename) VALUES
+		(#{studyNum}, #{userId}, #{fSubject}, #{fContent} , #{saveFilename} ,
+		#{originalFilename})
+	</insert>
+
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			(INSTR(subject, #{keyword}) &gt; 0
+			OR INSTR(content, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='subject' ">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content' ">
+			INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='name' ">
+			INSTR(name, #{keyword}) = 1
+		</if>
+		<if test="condition=='created' ">
+			DATE_FORMAT(created, '%Y-%m-%d') = #{keyword}
+		</if>
+	</sql>
+
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*), 0)
+		FROM sfree
+		<where>
+			<if test="keyword != null and keyword !='' ">
+				<include refid="where-list" />
+			</if>
+		</where>
+	</select>
+
+	<select id="listBoard" parameterType="map"
+		resultType="com.sp.study.mystudy.free.Board">
+		SELECT sFreeNum, studyNum, userId, fSubject, fContent, saveFilename, originalFilename, hitCount,
+		DATE_FORMAT(created, '%Y-%m-%d') AS created
+		FROM sfree
+		<where>
+			<if test="keyword != null and keyword !='' ">
+				<include refid="where-list" />
+			</if>
+		</where>
+		ORDER BY sFreeNum DESC
+		LIMIT #{start}, #{rows}
+	</select>
+
+	<select id="readBoard" parameterType="Integer"
+		resultType="com.sp.study.mystudy.free.Board">
+		SELECT sFreeNum, studyNum, userId, fSubject, fContent, saveFilename, originalFilename, hitCount,
+		DATE_FORMAT(created, '%Y-%m-%d') AS created
+		FROM sfree
+		WHERE sFreeNum=#{sFreeNum}
+	</select>
+
+	<select id="preReadBoard" parameterType="map"
+		resultType="com.sp.study.mystudy.free.Board">
+		SELECT sFreeNum, fSubject
+		FROM sfree
+		<where>
+			<if test="keyword != null and keyword !='' ">
+				<include refid="where-list" />
+			</if>
+			AND (sFreeNum &gt; #{sFreeNum})
+		</where>
+		ORDER BY sFreeNum ASC
+		LIMIT 1
+	</select>
+
+	<select id="nextReadBoard" parameterType="map"
+		resultType="com.sp.study.mystudy.free.Board">
+		SELECT sFreeNum, fSubject
+		FROM sfree
+		<where>
+			<if test="keyword != null and keyword !='' ">
+				<include refid="where-list" />
+			</if>
+			AND (sFreeNum &lt; #{sFreeNum})
+		</where>
+		ORDER BY sFreeNum DESC
+		LIMIT 1
+	</select>
+
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE sfree SET hitCount=hitCount+1 WHERE sFreeNum=#{sFreeNum}
+	</update>
+
+	<update id="updateBoard" parameterType="com.sp.study.mystudy.free.Board">
+		 UPDATE sfree SET fSubject=#{fSubject}, fContent=#{fContent}
+                    ,saveFilename=#{saveFilename, jdbcType=VARCHAR}
+                    ,originalFilename=#{originalFilename, jdbcType=VARCHAR}
+          WHERE sFreeNum = #{sFreeNum}
+	</update>
+
+	<delete id="deleteBoard" parameterType="Integer">
+		DELETE FROM sfree WHERE sFreeNum=#{sFreeNum}
+	</delete>
+
+
+</mapper>
