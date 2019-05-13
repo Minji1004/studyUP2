@@ -39,7 +39,7 @@ public class MemberController {
 			) {
 		List<Member>mList =service.loginMember(userId);
 		List<Integer> list = new ArrayList<>();
- 		if(mList.size() == 0 ||  !mList.get(0).getUserPwd().equals(userPwd)) {
+ 		if(mList.size() == 0 || !mList.get(0).getUserPwd().equals(userPwd)) {
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return "member/login";
 		}

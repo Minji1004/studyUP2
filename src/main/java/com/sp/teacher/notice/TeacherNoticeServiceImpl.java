@@ -26,6 +26,7 @@ public class TeacherNoticeServiceImpl implements TeacherNoticeService{
 		try {			
 			int maxNum = dao.selectOne("tnotice.maxNoticeNum");
 			int tnoticeNum = maxNum+1;
+			System.out.println("::::::::::::::"+tnoticeNum);
 			dto.setTnoticeNum(tnoticeNum);
 			
 			dao.insertData("tnotice.insertNotice", dto);

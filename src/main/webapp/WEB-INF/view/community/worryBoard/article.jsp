@@ -6,36 +6,7 @@
 	String cp=request.getContextPath();
 %>
 
-<style type="text/css">
-.bbs-article .table {
-    margin-top: 15px;
-}
-.bbs-article .table thead tr, .bbs-article .table tbody tr {
-    height: 30px;
-}
-.bbs-article .table thead tr th, .bbs-article .table tbody tr td {
-    font-weight: normal;
-    border-top: none;
-    border-bottom: none;
-}
-.bbs-article .table thead tr {
-    border-top: #d5d5d5 solid 1px;
-    border-bottom: #dfdfdf solid 1px;
-} 
-.bbs-article .table tbody tr {
-    border-bottom: #dfdfdf solid 1px;
-}
-.bbs-article .table i {
-    background: #424951;
-    display: inline-block;
-    margin: 0 7px 0 7px;
-    position: relative;
-    top: 2px;
-    width: 1px;
-    height: 13px;
-}
 
-</style>
    <div class="alert alert-info">
         <i class="glyphicon glyphicon-info-sign"></i> 고민을 같이 해결하는 공간입니다.
     </div>
@@ -78,7 +49,7 @@
                      <tr>
                          <td colspan="2">
                               <span style="display: inline-block; min-width: 45px;">이전글</span> :
-                              <c:if test="${not empty preReadDto }">
+                              <c:if test="${not empty preReadDto}">
                                   <a href="javascript:articleBoard('${preReadDto.num}', '${pageNo}');">${preReadDto.subject}</a>
                               </c:if>					
                          </td>
@@ -86,7 +57,7 @@
                      <tr>
                          <td colspan="2" style="border-bottom: #d5d5d5 solid 1px;">
                               <span style="display: inline-block; min-width: 45px;">다음글</span> :
-                              <c:if test="${not empty nextReadDto }">
+                              <c:if test="${not empty nextReadDto}">
                                   <a href="javascript:articleBoard('${nextReadDto.num}', '${pageNo}');">${nextReadDto.subject}</a>
                               </c:if>
                          </td>

@@ -21,7 +21,7 @@
   function check() {
         var f = document.boardForm;
 
-    	var str = f.subject.value;
+        var str = f.subject.value;
         if(!str) {
             alert("제목을 입력하세요. ");
             f.subject.focus();
@@ -154,8 +154,9 @@ $(function(){
   </tr>
   </table>
 
+<c:if test="${not empty dto.tnoticeNum}">
 	<input type="hidden" name="tnoticeNum" value="${dto.tnoticeNum}">
-
+</c:if>
   <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
      <tr height="45"> 
       <td align="center" >
