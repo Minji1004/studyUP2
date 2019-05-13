@@ -11,7 +11,7 @@
 </div>
 
     <div>
-<c:if test="${dataCount!=0 }">
+<c:if test="${dataCount!=0}">
         <div style="clear: both; height: 30px; line-height: 30px;">
             <div style="float: left;">${dataCount}개(${page}/${total_page} 페이지)</div>
             <div style="float: right;">&nbsp;</div>
