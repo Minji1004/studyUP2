@@ -17,6 +17,7 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	private CommonDAO dao;
 	@Autowired
 	private FileManager fileManager;
+	
 	@Override
 	public int insertWorryBoard(WorryBoard dto, String pathname) {
 		int result=0;
@@ -25,7 +26,7 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 			int maxNum=dao.selectOne("worryBoard.worryPostnum");
 			dto.setWorryPostnum(maxNum+1);
 			
-			result=dao.insertData("worryBoard.insertBoard",dto);
+			result=dao.insertData("worryBoard.insertBoard", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,11 +84,11 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public WorryBoard readWorryBoard(int worryBoardnum) {
+	public WorryBoard readWorryBoard(int worryPostnum) {
 		WorryBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("worryBoard.readworryBoard", worryBoardnum);
+			dto=dao.selectOne("worryBoard.readworryBoard", worryPostnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -151,11 +152,11 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public int deleteWorryBoard(int worryBoardnum, String pathname) {
+	public int deleteWorryBoard(int worryPostnum, String pathname) {
 		int result=0;
 		try {
 			// 파일 지우기
-			List<WorryBoard> listFile=listFile(worryBoardnum);
+			List<WorryBoard> listFile=listFile(worryPostnum);
 			if(listFile!=null) {
 				Iterator<WorryBoard> it=listFile.iterator();
 				while(it.hasNext()) {
@@ -165,9 +166,9 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 			}
 			
 			//파일 테이블 내용 지우기
-			deleteFile1(worryBoardnum);
+			deleteFile1(worryPostnum);
 			
-			result=dao.deleteData("worryBoard.deleteWorryBoard", worryBoardnum);
+			result=dao.deleteData("worryBoard.deleteWorryBoard", worryPostnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -187,11 +188,11 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public List<WorryBoard> listFile(int worryBoardnum) {
+	public List<WorryBoard> listFile(int worryPostnum) {
 		List<WorryBoard> listFile=null;
 		
 		try {
-			listFile=dao.selectList("worryBoard.listFile", worryBoardnum);
+			listFile=dao.selectList("worryBoard.listFile", worryPostnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -211,11 +212,11 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public int deleteFile1(int worryBoardnum) {
+	public int deleteFile1(int worryPostnum) {
 		int result=0;
 		
 		try {
-			result=dao.deleteData("worryBoard.deleteFile1", worryBoardnum);
+			result=dao.deleteData("worryBoard.deleteFile1", worryPostnum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
