@@ -100,10 +100,17 @@
 	
 	<!-- 장바구니 리스트 가져오기 -->
 	<select id="listCafeWish" parameterType="Integer" resultType="com.sp.studyroom.StudyRoom">
-		SELECT reserveNum, userNum, roomNum, date_format(useDate, '%Y-%m-%d'), unitPrice, peopleNum
+		SELECT reserveNum, userNum, roomNum, date_format(useDate, '%Y-%m-%d') useDate, unitPrice, peopleNum
 		FROM cafewish
 		Where userNum=#{userNum}
 		ORDER BY reserveNum DESC
+	</select>
+	
+	<!-- 장바구니용 방정보 가져오기 -->
+	<select id="studyRoomCafeWish" parameterType="Integer" resultType="com.sp.studyroom.StudyRoomDetail">
+		SELECT roomNum, cafeNum, roomName, minUser, maxUser, timeOrRoom, unitPrice
+		FROM cafeRoom
+		WHERE roomNum=#{roomNum}
 	</select>
 	
 	<!-- 장바구니 시간 리스트 가져오기 -->
@@ -114,6 +121,14 @@
 		ORDER BY reserveNum ASC
 	</select>
 	
+	<!-- 장바구니 상세내역 지우기 -->
+	<delete id="deleteBagDetail" parameterType="Integer">
+		delete from cafewishDetail where reserveNum=#{reserveNum}
+	</delete>
 	
+	<!-- 장바구니 상세내역 지우기 -->
+	<delete id="deleteBag" parameterType="Integer">
+		delete from cafewish where reserveNum=#{reserveNum}
+	</delete>
 	
 </mapper>

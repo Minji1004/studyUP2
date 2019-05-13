@@ -20,4 +20,7 @@ public interface StudyRoomService {
 	public List<StudyRoom> listCafeWish(int userNum);
 	public List<StudyRoomDetail> listCafeWishDetail(int reserveNum);
 	public StudyRoom checkCafeNum(int roomNum);
+	public StudyRoomDetail checkCafeWishRoom(int roomNum);
+	public int deleteBag(int reserveNum);
+	public int deleteBagDetail(int reserveNum);
 }

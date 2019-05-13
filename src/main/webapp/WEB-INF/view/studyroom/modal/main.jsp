@@ -34,18 +34,21 @@
 			var f = document.srModalMain;
 			
 			var userNum = $("input[name=userNum]").val();
-			alert(userNum);
-			if(userNum==0){
-				alert("인원수는 0보다 커야 합니다.");
-				return;
+			var useDate = $("input[name=useDate]").val();
+			
+			if(useDate==null || useDate==""){
+				alert("예약할 날짜를 선택해주세요.");
 			}
 			
-			f.action = "<%=cp%>/studyroom/insertBag"
+			if(userNum==0){
+				alert("인원수는 0보다 커야 합니다.");
+			}
 			
-			f.submit();
-			
-			alert("장바구니에 입력되었습니다.");
-			
+			if(userNum!=0 && useDate!=null && useDate!="") {
+				f.action = "<%=cp%>/studyroom/insertBag"
+				f.submit();
+				alert("장바구니에 입력되었습니다.");				
+			}
 		});
 	});
 	 

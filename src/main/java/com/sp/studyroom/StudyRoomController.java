@@ -236,6 +236,11 @@ public class StudyRoomController {
 		for( StudyRoom dto : list ) {
 			List<StudyRoomDetail> tlist = service.listCafeWishDetail(dto.getReserveNum());
 			
+			// 룸 정보 가져오기 
+			StudyRoomDetail tempdto2 = service.checkCafeWishRoom(dto.getRoomNum());
+			dto.setRoomName(tempdto2.getRoomName());
+			dto.setTimeOrRoom(tempdto2.getTimeOrRoom());
+			
 			// 카페넘버, 정보 가져오기
 			StudyRoom tempdto = service.checkCafeNum(dto.getRoomNum());
 			int cafeNum = tempdto.getCafeNum();
@@ -335,7 +340,7 @@ public class StudyRoomController {
 			}
 		}
 		
-		return ".four.studyroom.payment.bag";
+		return "redirect:/studyroom/payment/bag";
 	}
 	
 	@RequestMapping(value = "/studyroom/payment/done")
@@ -352,6 +357,27 @@ public class StudyRoomController {
 			) throws Exception {		 
 		
 		return ".four.studyroom.payment.list";
+	}
+	
+	@RequestMapping(value = "/studyroom/payment/deleteBag", method=RequestMethod.POST)
+	public String deleteBag(
+			StudyRoom dto,
+			HttpSession session
+			) throws Exception {		 
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		if(info!= null && dto!=null) {
+			System.out.println("=================================");
+			System.out.println("ReserveNum"+" : "+ dto.getReserveNum());
+			System.out.println("=================================");
+			
+			service.deleteBagDetail(dto.getReserveNum());
+			service.deleteBag(dto.getReserveNum());
+			
+		}
+		
+		return "redirect:/studyroom/payment/bag";
 	}
 	
 }
