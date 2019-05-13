@@ -117,4 +117,10 @@
 		INSERT INTO questionFile(questionPostnum, saveFilename, originalFilename, fileSize)
 		VALUES (#{questionPostnum}, #{saveFilename}, #{originalFilename}, #{fileSize})
 	</insert>
+	
+	<select id="listFile" parameterType="com.sp.community.questionBoard.QuestionBoard">
+	SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
+	FROM questionBoardFile
+	WHERE questionPostnum=#{questionPostnum}
+	</select>
 </mapper>
