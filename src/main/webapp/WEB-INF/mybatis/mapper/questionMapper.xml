@@ -119,8 +119,22 @@
 	</insert>
 	
 	<select id="listFile" parameterType="com.sp.community.questionBoard.QuestionBoard">
-	SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
-	FROM questionBoardFile
-	WHERE questionPostnum=#{questionPostnum}
+		SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
+		FROM questionBoardFile
+		WHERE questionPostnum=#{questionPostnum}
 	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
+		FROM questionboardFile
+		WHERE fileNum=#{fileNum}
+	</select>
+	
+	<delete id="deleteFile1" parameterType="Integer">
+		DELETE FROM questionboardFile WHERE questionpostNum=#{questionPostnum}
+	</delete>
+	
+	<delete id="deleteFile2" parameterType="Integer">
+		DELETE FROM questionboardFile WHERE fileNum=#{fileNum}
+	</delete>
 </mapper>
