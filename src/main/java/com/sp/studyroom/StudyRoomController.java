@@ -222,10 +222,125 @@ public class StudyRoomController {
 	
 	@RequestMapping(value = "/studyroom/payment/bag", method=RequestMethod.GET)
 	public String paymentBag(
+			HttpSession session,
 			Model model
 			) throws Exception {		 
 		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info== null) {
+			return "redirect:/member/login";
+		}
+		
+		int userNum = info.getUserNum();
+		List<StudyRoom> list = service.listCafeWish(userNum);
+		for( StudyRoom dto : list ) {
+			List<StudyRoomDetail> tlist = service.listCafeWishDetail(dto.getReserveNum());
+			
+			// 룸 정보 가져오기 
+			StudyRoomDetail tempdto2 = service.checkCafeWishRoom(dto.getRoomNum());
+			dto.setRoomName(tempdto2.getRoomName());
+			dto.setTimeOrRoom(tempdto2.getTimeOrRoom());
+			
+			// 카페넘버, 정보 가져오기
+			StudyRoom tempdto = service.checkCafeNum(dto.getRoomNum());
+			int cafeNum = tempdto.getCafeNum();
+			StudyRoom dto2 = service.studyRoom(cafeNum);
+			
+			System.out.println("================================");
+			System.out.println("dto.getRoomNum()"+":"+dto.getRoomNum());
+			System.out.println("cafeNum"+":"+cafeNum);
+			System.out.println("dto2.getCafeName"+":"+dto2.getCafeName());
+			System.out.println("================================");
+			
+			dto.setCafeName(dto2.getCafeName());
+			dto.setRoadAddr(dto2.getRoadAddr());
+			dto.setBuildName(dto2.getBuildName());
+			dto.setDetailAddr(dto2.getDetailAddr());
+			
+			int count = tlist.size();
+			int peopleNum = dto.getPeopleNum();
+			int unitPrice = dto.getUnitPrice();
+			
+			int totPrice = count * peopleNum * unitPrice ;
+			
+			dto.setItemPrice(totPrice);
+			
+			String timelists ="";
+			for ( int i=0 ; i<count ; i++ ) {
+				if( (i+1)!=count ) {
+					timelists += tlist.get(i).getCheckTime()+":00, ";					
+				} else {
+					timelists += tlist.get(i).getCheckTime()+":00";
+				}
+			}
+			dto.setTimelists(timelists);
+		}
+		
+		model.addAttribute("list", list);
+		
 		return ".four.studyroom.payment.bag";
+	}
+	
+	@RequestMapping(value = "/studyroom/insertBag", method=RequestMethod.POST)
+	public String insertBag(
+			StudyRoom dto,
+			StudyRoomTable tdto,
+			HttpSession session
+			) throws Exception {		 
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		if(info!= null && dto!=null) {
+			dto.setUserNum(info.getUserNum());
+			
+			int rnum = dto.getRoomNums().size();
+			if( rnum==0 ) {
+				return "refirect:/studyroom/main";
+			}
+			int sum = 0;
+			for ( int i=0 ; i <rnum ; i++ ) {
+				if( dto.getCheckboxCounts().get(i) != "0") {
+					
+					tdto.setSearchName("reserveNum");
+					tdto.setTableName("cafewish");
+					int reserveNum = ((int)service.checkNum(tdto))+1;
+					dto.setReserveNum(reserveNum);
+					
+					// 룸가격
+					dto.setUnitPrice(dto.getUnitPrices().get(i));
+					
+					// 룸번호
+					dto.setRoomNum(dto.getRoomNums().get(i));
+					
+					// 체크한 시간
+					int round = 0;
+					round = Integer.parseInt(dto.getCheckboxCounts().get(i));
+					
+					// 시간을 체크한 부분이 있다면,
+					if(round >0) {
+						service.insertCafeWish(dto);
+					}
+					
+					for ( int j=sum ; j<(sum+round) ; j++ ) {
+						dto.setCheckTime(Integer.parseInt(dto.getCheckTimes().get(j)));
+						
+						// 확인용
+						System.out.println("=================================");
+						System.out.println("UserNum"+" : "+ dto.getUserNum());
+						System.out.println("RoomNum"+" : "+ dto.getRoomNum());
+						System.out.println("useDate"+" : "+ dto.getUseDate());
+						System.out.println("CheckTime"+" : "+ dto.getCheckTime());
+						System.out.println("unitPrice"+" : "+ dto.getUnitPrice());
+						System.out.println("=================================");
+						
+						service.insertCafeWishDetail(dto);
+					}
+					sum+=round;
+				}
+			}
+		}
+		
+		return "redirect:/studyroom/payment/bag";
 	}
 	
 	@RequestMapping(value = "/studyroom/payment/done")
@@ -243,4 +358,26 @@ public class StudyRoomController {
 		
 		return ".four.studyroom.payment.list";
 	}
+	
+	@RequestMapping(value = "/studyroom/payment/deleteBag", method=RequestMethod.POST)
+	public String deleteBag(
+			StudyRoom dto,
+			HttpSession session
+			) throws Exception {		 
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		if(info!= null && dto!=null) {
+			System.out.println("=================================");
+			System.out.println("ReserveNum"+" : "+ dto.getReserveNum());
+			System.out.println("=================================");
+			
+			service.deleteBagDetail(dto.getReserveNum());
+			service.deleteBag(dto.getReserveNum());
+			
+		}
+		
+		return "redirect:/studyroom/payment/bag";
+	}
+	
 }

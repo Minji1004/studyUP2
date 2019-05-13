@@ -715,7 +715,7 @@ body {
 		text-align: center;
 		background-color: #ffffff;
 		clear: left;
-		height : 400px;
+		height : 415px;
 		overflow: auto;
 	}
 	
@@ -840,7 +840,6 @@ body {
 		border-bottom:3px double #cccccc; 
 		font-size: 14pt; 
 		font-weight: 700; 
-		margin: 0px 0px 20px 0px; 
 		padding: 10px;
 		background-color: #646b8c;
 		color:#ffffff;

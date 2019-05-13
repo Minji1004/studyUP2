@@ -53,7 +53,7 @@ public class MailSender {
 	    	  
 	          String username =  "ehdrjs1346@naver.com"; // 네이버 사용자;
 	          // String username =  "지메일아이디"; // gmail 사용자;  
-	          String password = "gy2127gy"; // 패스워드;  
+	          String password = "비밀번호"; // 패스워드;  
 	          return new PasswordAuthentication(username, password);  
 	       }  
 	}

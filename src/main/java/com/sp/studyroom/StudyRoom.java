@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class StudyRoom {
 	private int	userNum;
 	private int roomNum;
+	private List<Integer> roomNums;
 	private int cafeNum;
 	private String cafeName;
 	private String cafeTel;
@@ -39,9 +40,49 @@ public class StudyRoom {
 	private String saveFilename;
 	private String fileList;
 	private List<StudyRoomDetail> studyRoomList;
+	private String useDate;
+	private int reserveNum;
+	private String timelists;
+	private int peopleNum;
+	private int itemPrice;
 	
 	
-	
+	public int getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+	public int getPeopleNum() {
+		return peopleNum;
+	}
+	public void setPeopleNum(int peopleNum) {
+		this.peopleNum = peopleNum;
+	}
+	public String getTimelists() {
+		return timelists;
+	}
+	public void setTimelists(String timelists) {
+		this.timelists = timelists;
+	}
+	public int getReserveNum() {
+		return reserveNum;
+	}
+	public void setReserveNum(int reserveNum) {
+		this.reserveNum = reserveNum;
+	}
+	public String getUseDate() {
+		return useDate;
+	}
+	public void setUseDate(String useDate) {
+		this.useDate = useDate;
+	}
+	public List<Integer> getRoomNums() {
+		return roomNums;
+	}
+	public void setRoomNums(List<Integer> roomNums) {
+		this.roomNums = roomNums;
+	}
 	public List<StudyRoomDetail> getStudyRoomList() {
 		return studyRoomList;
 	}
