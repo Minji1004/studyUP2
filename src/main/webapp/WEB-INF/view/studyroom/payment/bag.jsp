@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(){
@@ -31,6 +32,19 @@
 			    return;
 			}
 		});
+		
+		// 결제하기
+		$(".srBagContentsTitleBtn").click(function(){
+			var email = $("input[name=srUserId]").val();
+			var tel   = $("input[name=srUserTel]").val();
+			var name  = $("input[name=srUserName]").val();
+			var price = $("input[name=srPay]").val();
+			price = 10;
+			
+			alert(email+" : "+tel+" : "+name+" : "+price);
+			
+			buy(email, tel, name, price);
+		});
 	});
 	
 	
@@ -44,6 +58,40 @@
 		$("input[id=srPay]").val(sum);
 	});
 	
+	$(function(){
+		var IMP = window.IMP; 
+		IMP.init('imp75300319');
+	});
+	
+	// 결제관련
+	function buy(email, tel, name, price) {
+		IMP.request_pay({
+		    pg : 'inicis', // version 1.1.0부터 지원.
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '주문명:결제테스트', // 주문명
+		    amount : price, // 금액
+		    buyer_email : email, // 구매자 이메일(없어도 됨)
+		    buyer_tel : tel, // 구매자 연락처(없어도 됨)
+		    buyer_name : name, // 구매자 이름(없어도 됨)
+		    m_redirect_url : 'http://localhost:9090/studyUp/studyroom/buy/list?studyNum=24&left=7' // 여기에는 본인들 주소 쓰세여
+		}, function(rsp) {
+		    if ( rsp.success ) {
+				// 여기에서 결제 정보 넘겨요
+				// https://github.com/iamport/iamport-manual/blob/master/인증결제/README.md 
+				// 참고
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		    }
+		    alert(msg);
+		});
+	}
 	
 	
 </script>
@@ -263,52 +311,48 @@
 				<div class="col-sm-12 col-md-3">
 					<div class="srBagLine">
 					</div>
-					
-					<div class="srBagPay" style="background-color: #ffffff; width: 200px; height : 353px; position:fixed;">
-						<div class="srBagName">결제정보</div>
-							<div class="srBagPayLine">
-								<div class="srBagContentsTitle" style="clear:left; margin-top:10px; width:95%; position:relative; left: 5px;">
-									<div class="srBagInner">
-										<div>- 아이디</div>
-										<input class="bagInput" type="text" name="srUserId" value="farland@gmail.com" readonly="readonly">
-									</div>
-								</div>
-								<div class="srBagContentsTitle" style="clear:left; margin-top:10px; width:95%; position:relative; left: 5px;">
-									<div class="srBagInner">
-										<div>
-											- 구매자
-											<span class="srBagSub">(변경가능)</span>
+						<div class="srBagPay" style="background-color: #ffffff; width: 200px; height : 353px; position:fixed;">
+							<div class="srBagName">결제정보</div>
+								<div class="srBagPayLine">
+									<div class="srBagContentsTitle" style="clear:left; margin-top:10px; width:95%; position:relative; left: 5px;">
+										<div class="srBagInner">
+											<div>- 아이디</div>
+											<input class="bagInput" type="text" name="srUserId" value="${info.userId}" readonly="readonly">
 										</div>
-										<input class="bagInput" type="text" name="srUserName" value="이재민">
 									</div>
-								</div>
-								<div class="srBagContentsTitle" style="clear:left; margin-top:10px; width:95%; position:relative; left: 5px;">
-									<div class="srBagInner">
-										<div>
-											- 연락처
-											<span class="srBagSub">(변경가능)</span>
+									<div class="srBagContentsTitle" style="clear:left; margin-top:10px; width:95%; position:relative; left: 5px;">
+										<div class="srBagInner">
+											<div>
+												- 구매자
+												<span class="srBagSub">(변경가능)</span>
+											</div>
+											<input class="bagInput" type="text" name="srUserName" value="${info.userName}">
 										</div>
-										<input class="bagInput" type="text" name="srUserTel" value="010-2323-4524">
+									</div>
+									<div class="srBagContentsTitle" style="clear:left; margin-top:10px; width:95%; position:relative; left: 5px;">
+										<div class="srBagInner">
+											<div>
+												- 연락처
+												<span class="srBagSub">(변경가능)</span>
+											</div>
+											<input class="bagInput" type="text" name="srUserTel" value="${info.tel}">
+										</div>
+									</div>
+									
+									<div class="srBagContentsTitle" style="background-color: #fac2ad; clear:left; margin-top:30px; width:95%; position:relative; left: 5px;">
+										<div class="srBagInner">
+											<div style="font-size:11pt;">총 금액</div>
+											<input id="srPay" class="bagInput" type="text" name="srPay" readonly="readonly">
+										</div>
+									</div>
+									
+									<div class="srBagContentsTitleBtn">
+										<div class="srBagPayBtn">
+											<div style="font-size:11pt; color:#ffffff;">결제하기</div>
+										</div>									
 									</div>
 								</div>
-								
-								<div class="srBagContentsTitle" style="background-color: #fac2ad; clear:left; margin-top:30px; width:95%; position:relative; left: 5px;">
-									<div class="srBagInner">
-										<div style="font-size:11pt;">총 금액</div>
-										<input id="srPay" class="bagInput" type="text" name="srPay" readonly="readonly">
-									</div>
-								</div>
-								
-								<div class="srBagContentsTitleBtn">
-									<div class="srBagPayBtn">
-										<div style="font-size:11pt; color:#ffffff;">결제하기</div>
-									</div>									
-								</div>
-							</div>
-							
-						
-						
-					</div>
+						</div>
 				</div>
 				
 			</div>

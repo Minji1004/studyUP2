@@ -275,7 +275,7 @@ public class StudyRoomController {
 			}
 			dto.setTimelists(timelists);
 		}
-		
+		model.addAttribute("info", info);
 		model.addAttribute("list", list);
 		
 		return ".four.studyroom.payment.bag";
@@ -292,7 +292,6 @@ public class StudyRoomController {
 		
 		if(info!= null && dto!=null) {
 			dto.setUserNum(info.getUserNum());
-			
 			int rnum = dto.getRoomNums().size();
 			if( rnum==0 ) {
 				return "refirect:/studyroom/main";

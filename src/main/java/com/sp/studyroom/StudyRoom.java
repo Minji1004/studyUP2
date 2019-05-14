@@ -45,8 +45,23 @@ public class StudyRoom {
 	private String timelists;
 	private int peopleNum;
 	private int itemPrice;
+	private String userName;
+	private String userTel;
 	
 	
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserTel() {
+		return userTel;
+	}
+	public void setUserTel(String userTel) {
+		this.userTel = userTel;
+	}
 	public int getItemPrice() {
 		return itemPrice;
 	}
