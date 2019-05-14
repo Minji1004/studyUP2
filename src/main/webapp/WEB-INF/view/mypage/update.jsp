@@ -30,11 +30,13 @@ $(function(){
 <form name="mypageProfileUpdateForm" method="post" enctype="multipart/form-data">
 <table style="margin: 20px auto">
 	<tr>
-		<td><img width="300px" height="300px" id = "LoadMyprofile" alt="" src="<%=cp%>/uploads/member_profile/${dto.picture}"> </td>
-		<td><input type="file" name="pictureM" onchange="LoadImg(this)"></td>
+		<td><img class ="myPageMainPic" width="300px" height="300px" id = "LoadMyprofile" alt="" src="<%=cp%>/uploads/member_profile/${dto.picture}"> </td>
+		<td><input style="margin-left: 30px" type="file" name="pictureM" onchange="LoadImg(this)"></td>
 	</tr>
-	<tr>
-		<td>아이디 : </td>
+</table>
+<table style="margin: 0px auto">
+	<tr height="30px">
+		<td width="100px">아이디 : </td>
 		<td>${dto.userId }</td>
 	</tr>
 	<tr>
@@ -65,7 +67,7 @@ $(function(){
 			<tr height="45">
 			    <td width="300" align="left">
 			      <button type="button" class="btn" onclick="updateMyprofile();">수정완료</button>
-			      <button type="button" class="btn" onclick="mypageMain();">취소</button>
+			      <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/main';">취소</button>
 			    </td>
 			</tr>
 </table>

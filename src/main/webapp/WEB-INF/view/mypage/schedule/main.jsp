@@ -405,6 +405,7 @@ function validCheck() {
 //---------------------------------------------
 // 상세 일정 보기
 function articleForm(calEvent) {
+	
 	var num=calEvent.id;
 	var resourceNum=calEvent.resourceId;
 	var start=calEvent.start.format();
@@ -440,7 +441,7 @@ function articleForm(calEvent) {
 		    endDay=calEvent.end.add("-1", "days").format("YYYY-MM-DD");
 		endTime="";
 	}
-
+	
 	var dlg = $("#resourceModal").dialog({
 		  autoOpen: false,
 		  modal: true,
@@ -457,12 +458,14 @@ function articleForm(calEvent) {
 		  },
 		  height: 480,
 		  width: 550,
+		  dialogClass : "dialogZ",
 		  title: "상세 스케쥴러",
 		  close: function(event, ui) {
 		  }
 	});	
 	
 	$('#resourceModal').load("<%=cp%>/mypage/schedule/articleForm", function() {
+		$("#ui-id-1").removeClass("ui-dialog-title");
 		$("#schGroup").html(groupName);
 		$("#schResource").html(resourceName);
 		$("#schTitle").html(title);
