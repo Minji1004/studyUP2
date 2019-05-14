@@ -166,9 +166,7 @@
 					<div class="srBagItemsBorder">
 					
 						<div class="srBagItemsName">한가람스터디카페</div>
-						<div class="srBagCloseBtn">
-							<div>x</div>
-						</div>
+						
 						<div class="srBagItemsImg">
 							<img style="position:relative; top:2px;" height="95%" width="95%" src="<%=cp%>/resource/studyroom/images/pic02.jpg">
 						</div>
@@ -253,9 +251,7 @@
 					<div class="srBagItemsBorder">
 					
 						<div class="srBagItemsName">자바스터디카페</div>
-						<div class="srBagCloseBtn">
-							<div>x</div>
-						</div>
+						
 						<div class="srBagItemsImg">
 							<img style="position:relative; top:2px;" height="95%" width="95%" src="<%=cp%>/resource/studyroom/images/pic02.jpg">
 						</div>
