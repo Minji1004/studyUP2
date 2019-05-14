@@ -90,33 +90,51 @@ function updateMyprofile(){
 }
 </script>
 
-<div id="myPageMain" class="box box-primary" style="margin-top: 50px; width: 400px; background: #E0F8E5;">
-	<table
-		style="margin-left:18px; margin-top:20px; border-spacing: 0px; border-collapse: collapse;">
-	
-		<tr height="100">
-			<td colspan="2" align="left" style="padding-left: 5px;"><c:if
-					test="${not empty dto.picture }">
-					<img width="300px" height="300px" alt=""
-						src="<%=cp%>/uploads/member_profile/${dto.picture}">
-				</c:if></td>
-		</tr>
-	
-		<tr style="height: 50">
-			<td colspan="2" align="left" height="50px">아이디 : ${dto.userId }</td>
-		</tr>
-	
-		<tr style="height: 50">
-			<td colspan="2" align="left" height="50px" >닉네임 : ${dto.nickname }</td>
-		</tr>
-		<tr style="height: 50">
-			<td colspan="2" align="left"  height="50px">전화 번호 : ${dto.tel }</td>
-		</tr>
-		<tr height="80">
-			<td width="300" align="left">
-				<button type="button" class="btn" onclick="mypageUpdate();">수정</button>
-			</td>
-		</tr>
-	</table>
-	
+<div id="myPageMain" class="box box-primary" style="width : 1000px; height: 430px; border-top :4px dashed #95004a66 ;">
+	<div class="col-xs-5">
+		<div class="myPageMainPicFrame">
+			<c:if test="${not empty dto.picture }">
+				<img class="myPageMainPic" width="300px" height="300px" alt=""
+					 src="<%=cp%>/uploads/member_profile/${dto.picture}">
+			</c:if>
+		</div>
+	</div>
+	<div class="col-xs-7" >
+		<h3 style="margin-top:30px; font-weight :900;">나의 기본 정보</h3>
+		<div style="height:20px;"></div>
+		<div style="width:100%; float:left; margin-top : 10px">
+			<div class="srBagContentsTitle" style="font-size: 13pt; background-color: #884794aa; color : #ffffff;">
+				<div class="srBagInner" >아이디</div>
+			</div> 
+			<div class="srBagContentsText">
+				<div class="srBagInner" style="font-size: 13pt;">&nbsp;${dto.userId}</div>
+			</div>
+		</div>
+		<div style="width:100%; float:left; margin-top : 10px">	
+			<div class="srBagContentsTitle" style="font-size: 13pt; background-color: #884794aa; color : #ffffff;">
+				<div class="srBagInner" style="font-size: 13pt;">닉네임</div>
+			</div> 
+			<div class="srBagContentsText">
+				<div class="srBagInner" style="font-size: 13pt;">&nbsp;${dto.nickname}</div>
+			</div>
+		</div>
+		<div style="width:100%; float:left; margin-top : 10px">
+			<div class="srBagContentsTitle" style="font-size: 13pt; background-color: #884794aa; color : #ffffff;">
+				<div class="srBagInner" style="font-size: 13pt;">전화번호</div>
+			</div> 
+			<div class="srBagContentsText">
+				<div class="srBagInner" style="font-size: 13pt;">&nbsp;${dto.tel}</div>
+			</div>
+		</div>
+		<div style="width:100%; float:left; margin-top : 10px">	
+			<div class="srBagContentsTitle" style="font-size: 13pt; background-color: #884794aa; color : #ffffff; z-index: 1000;">
+				<div class="srBagInner" style="font-size: 13pt;">자기소개</div>
+			</div>
+			<div class="srBagContentsText" style="border-left: 1px solid #dddddd;border-top: 1px solid #dddddd;border-right: 3px solid #dddddd;border-bottom: 3px solid #dddddd;background-color:#eeeeee22; width:80%; height: 130px; position: relative; top: -2px; border-radius: 5px; ">
+				<div class="srBagInner" style="top:10%; left: 10px; padding:10px;font-size: 10pt;">안녕하세요.<br>"교육행정직" 교육스터디원을 찾습니다.<br>010-23xx-5242로 문자 한통만 넣어주세요.<br>감사합니다.</div>
+			</div>
+		</div>
+		
+		<button type="button" class="btn" onclick="mypageUpdate();" style="position:relative; top:10px; left:495px;">수정</button>
+	</div>
 </div>
