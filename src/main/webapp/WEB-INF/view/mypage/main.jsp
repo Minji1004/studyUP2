@@ -93,26 +93,30 @@ function updateMyprofile(){
 <div id="myPageMain" class="box box-primary" style="width : 1000px; height: 430px; border-top :4px dashed #95004a66 ;">
 	<div class="col-xs-5">
 		<div class="myPageMainPicFrame">
-			<c:if test="${not empty dto.picture }">
+			<c:if test="${not empty dto.picture}">
 				<img class="myPageMainPic" width="300px" height="300px" alt=""
 					 src="<%=cp%>/uploads/member_profile/${dto.picture}">
 			</c:if>
+			<c:if test="${empty dto.picture}">
+				<img class="myPageMainPic" width="300px" height="300px" alt=""
+					 src="<%=cp%>/resource/studyroom/images/picture.png">
+			</c:if>
 		</div>
 	</div>
-	<div class="col-xs-7" >
+	<div class="col-xs-7" style="padding-left:0px;">
 		<h3 style="margin-top:30px; font-weight :900;">나의 기본 정보</h3>
 		<div style="height:20px;"></div>
 		<div style="width:100%; float:left; margin-top : 10px">
-			<div class="srBagContentsTitle" style="font-size: 13pt; background-color: #884794aa; color : #ffffff;">
-				<div class="srBagInner" >아이디</div>
+			<div class="srBagContentsTitle" style="width:83px;font-size: 13pt; background-color: #884794aa; color : #ffffff;">
+				<div class="srBagInner" >아 이 디</div>
 			</div> 
 			<div class="srBagContentsText">
 				<div class="srBagInner" style="font-size: 13pt;">&nbsp;${dto.userId}</div>
 			</div>
 		</div>
 		<div style="width:100%; float:left; margin-top : 10px">	
-			<div class="srBagContentsTitle" style="font-size: 13pt; background-color: #884794aa; color : #ffffff;">
-				<div class="srBagInner" style="font-size: 13pt;">닉네임</div>
+			<div class="srBagContentsTitle" style="width:83px;font-size: 13pt; background-color: #884794aa; color : #ffffff;">
+				<div class="srBagInner" style="font-size: 13pt;">닉 네 임</div>
 			</div> 
 			<div class="srBagContentsText">
 				<div class="srBagInner" style="font-size: 13pt;">&nbsp;${dto.nickname}</div>
