@@ -1,36 +1,46 @@
 package com.sp.community.questionBoard;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.sp.common.FileManager;
 import com.sp.common.dao.CommonDAO;
 
-@Service("questionBoard.questionboardService")
+@Service("community.questionboardService")
 public class QuestionBoardServiceImpl implements QuestionBoardService{
 	@Autowired
 	private CommonDAO dao;
-	@Autowired
-	private FileManager fileManager;
 	
 	@Override
-	public int insertQuestionBoard(QuestionBoard dto, String pathname) {
+	public int insertQuestionBoard(QuestionBoard dto, String mode) {
 		int result=0;
 		
 		try {
-			int maxNum=dao.selectOne("questionBoard.qusetionPostnum");
-			dto.setQuestionPostnum(maxNum+1);
+			int seq=dao.selectOne("questionBoard.seq");
+			dto.setQuestionPostnum(seq);
+			
+			if(mode.equals("created")) {
+				dto.setGroupNum(seq);
+			}else if(mode.equals("reply")) {
+				//orderNo 변경
+				Map<String, Object> map=new HashMap<String,Object>();
+				map.put("groupNum" , dto.getGroupNum());
+				map.put("orderNo", dto.getOrderNo());
+				
+				dao.updateData("questionBoard.updateOrderNo", map);
+				
+				dto.setDepth(dto.getDepth()+1);
+				dto.setOrderNo(dto.getOrderNo()+1);
+			}
 			
 			result=dao.insertData("questionBoard.insertBoard", dto);
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
-		
 		return result;
 	}
 	@Override
@@ -44,6 +54,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		}
 		return result;
 	}
+	
 	@Override
 	public List<QuestionBoard> listQuestionBoard(Map<String, Object> map) {
 		List<QuestionBoard> list=null;
@@ -51,33 +62,9 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		try {
 			list=dao.selectList("questionBoard.listQusetionBoard", map);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
 		return list;
-	}
-	
-	@Override
-	public List<QuestionBoard> listQuestionBoardTop() {
-		List<QuestionBoard> list=null;
-		
-		try {
-			list=dao.selectList("questionBoard.listquestionBoardTop");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-	
-	@Override
-	public int updateHitCount(int questionPostnum) {
-		int result=0;
-		
-		try {
-			result=dao.updateData("questionBoard.updateHitCount", questionPostnum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
 	}
 	
 	@Override
@@ -93,13 +80,25 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 	}
 	
 	@Override
+	public int updateHitCount(int questionPostnum) {
+		int result=0;
+		
+		try {
+			result=dao.updateData("questionBoard.updateHitCount", questionPostnum);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
 	public QuestionBoard preReadQuestionBoard(Map<String, Object> map) {
 		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("questionBoard.preReadquetionBoard", map);
+			dto=dao.selectOne("questionBoard.preReadQuestionBoard", map);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
 		return dto;
 	}
@@ -109,115 +108,29 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("questionBoard.preReadquestionBoard", map);
+			dto=dao.selectOne("questionBoard.nextReadquestionBoard", map);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		} 
 		return dto;
 	}
 	@Override
-	public int updateQuestionBoard(QuestionBoard dto, String pathname) {
+	public int updateQuestionBoard(QuestionBoard dto) {
 		int result=0;
 		
 		try {
-			result=dao.updateData("questionBoard.updatequestionBoard", dto);
-			
-			if(! dto.getUpload().isEmpty()) {
-				for(MultipartFile mf:dto.getUpload()) {
-					if(mf.isEmpty())
-						continue;
-					
-					String saveFilename=fileManager.doFileUpload(mf, pathname);
-					if(saveFilename!=null) {
-						String originalFilename=mf.getOriginalFilename();
-						long fileSize=mf.getSize();
-						
-						dto.setOriginalFilename(originalFilename);
-						dto.setSaveFilename(saveFilename);
-						dto.setFileSize(fileSize);
-						
-						insertFile(dto);
-					}
-				}
-			}
+			result=dao.updateData("questionBoard.updateQuestionBoard", dto);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
 		return result;
 	}
+	
 	@Override
-	public int deleteQuestionBoard(int questionPostnum, String pathname) {
+	public int deleteQuestionBoard(int questionPostnum) {
 		int result=0;
 		try {
-			List<QuestionBoard> listFile=listFile(questionPostnum);
-			if(listFile!=null) {
-				Iterator<QuestionBoard> it=listFile.iterator();
-				while(it.hasNext()) {
-					QuestionBoard dto=it.next();
-					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
-				}
-			}
-			
-			deleteFile1(questionPostnum);
-			
 			result=dao.deleteData("questionBoard.deleteQuestionBoard", questionPostnum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	@Override
-	public int insertFile(QuestionBoard dto) {
-		int result=0;
-		
-		try {
-			result=dao.insertData("questionBoard.insertFile", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	@Override
-	public List<QuestionBoard> listFile(int questionPostnum) {
-		List<QuestionBoard> listFile=null;
-		
-		try {
-			listFile=dao.selectList("questionBoard.listFile", questionPostnum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return listFile;
-	}
-	
-	@Override
-	public QuestionBoard readFile(int fileNum) {
-		QuestionBoard dto=null;
-		
-		try {
-			dto=dao.selectOne("questionBOard.readFile", fileNum);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return dto;
-	}
-	@Override
-	public int deleteFile1(int questionPostnum) {
-		int result=0;
-		
-		try {
-			result=dao.deleteData("questionBoard.deleteFile1", questionPostnum);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-	@Override
-	public int deleteFile2(int fileNum) {
-		int result=0;
-		
-		try {
-			result=dao.deleteData("questionBoard.deleteFile2", fileNum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

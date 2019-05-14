@@ -86,6 +86,7 @@ function insertForm() {
 	var active=$("#boardTab").children(".active").children().attr("aria-controls");
 	var selector=$("#boardTab").children(".active").children().attr("href");
 	var url="<%=cp%>/community/"+active+"/created";
+alert(url);
 
 	var query="tmp="+new Date().getTime();
 	ajaxText(url, query, "get", selector)
