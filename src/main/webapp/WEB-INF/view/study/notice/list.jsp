@@ -31,7 +31,7 @@
 		      <th style="text-align:center;">제목</th>
 		      <th style="width:10%; text-align:center;">첨부파일</th>
 		      <th style="width:20%; text-align:center;">작성일</th>
-		      <th style="width:5%; text-align:center;">조회수</th>
+		      <th style="width:8%; text-align:center;">조회수</th>
 		  </tr>	 
 		  
 		  <c:forEach var="dto" items="${noticeList}">

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="worry">
+<mapper namespace="worryBoard">
 
-	<select id="maxWorryNum" resultType="Integer">
-		select IFNULL(max(worryPostnum), 0) from worry
+	<select id="maxWorryBoardNum" resultType="Integer">
+		select IFNULL(max(worryPostnum), 0) from worryBoard
 	</select>
 	
-	<insert id="insertWorry" parameterType="com.sp.community.worryBoard.WorryBoard">
-		INSERT INTO worry(worryPostnum, userId, subject, content, views, created, boardLike, replyNum, replyLike)
+	<insert id="insertWorryBoard" parameterType="com.sp.community.worryBoard.WorryBoard">
+		INSERT INTO worryBoard(worryPostnum, userId, subject, content, views, created, boardLike, replyNum, replyLike)
 		VALUES (#{worryPostnum}, #{userId}, #{subject}, #{content}, #{views}, #{created}, #{boardLike}, #{replyNum}, #{replyLike})
 	</insert>
 	
@@ -33,7 +33,7 @@
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT IFNULL(COUNT(*),0)
-		FROM worry w
+		FROM worryBoard w
 		JOIN memberInfo w.userId==m.userId
 		<where>
 			<if test="keyword!=null and keyword!=''">
@@ -42,18 +42,18 @@
 		</where>
 	</select>
 	
-	<select id="listWorryTop" resultType="com.sp.community.worryBoard.WorryBoard">
+	<select id="listWorryBoardTop" resultType="com.sp.community.worryBoard.WorryBoard">
 		SELECT worryPostnum, w.userId, nickName, subject, views,
 			   DATE_FORMAT(w.created, '%Y-%m-%d') created
-		FROM worry w
+		FROM worryBoard w
 		JOIN memberInfo m ON w.userId==m.userId
-		WHERE worryWhether=1
+		WHERE worrynoticeWhether=1
 		ORDER BY worryPostnum DESC
 	</select>
 	
-		<select id="listInquiry" parameterType="map" resultType="com.sp.community.worryBoard.WorryBoard">
-			SELECT worryPostnum, w.userId, nickName, subject, w.created , view, created
-			FROM worry w
+		<select id="listWorryBoard" parameterType="map" resultType="com.sp.community.worryBoard.WorryBoard">
+			SELECT worryPostnum, w.userId, nickName, subject, w.created , views, w.created
+			FROM worryBoard w
 			JOIN memberInfo m ON w.userId=m.userId
 			<where>
 				<if test="keyword!=null and keyword!=''">
@@ -64,16 +64,16 @@
 				LIMIT #{start}, #{rows}
 		</select>
 
-		<select id="readWorry" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
-			SELECT worryPostnum, w.userId, nickName, subject, content, w.created, view
-			FROM worry w
+		<select id="readWorryBoard" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
+			SELECT worryPostnum, w.userId, nickName, subject, content, w.created, views
+			FROM worryBoard w
 			JOIN memberInfo m ON w.userId=m.userId
 			WHERE worryPostnum=#{worryPostnum}
 		</select>
 		
-		<select id="preReadWorry" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
+		<select id="preReadWorryBoard" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
 			SELECT worryPostnum, subject
-			FROM worry w
+			FROM worryBoard w
 			JOIN memberInfo m ON w.userId=m.userId
 			<where>
 				<if test="keyword !=null and keyword !=''">
@@ -85,10 +85,10 @@
 			LIMIT 1
 		</select>
 		
-		<select id="nextReadInquiry" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
+		<select id="nextReadWorryBoard" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
 			SELECT worryPostnum, subject
-			FROM worry w
-			JOIN memberInfo m On w.userId=m.userId
+			FROM worryBoard w
+			JOIN memberInfo m ON w.userId=m.userId
 		<where>
 			<if test="keyword !=null and keyword !=''">
 				<include refid="where-list"/>
@@ -100,16 +100,16 @@
 		</select>
 		
 		<update id="updateHitCount" parameterType="Integer">
-			UPDATE worry SET views=views+1 WHERE worryPostnum=#{worryPostnum}
+			UPDATE worryBoard SET views=views+1 WHERE worryPostnum=#{worryPostnum}
 		</update>
 		
-		<update id="updateWorry" parameterType="com.sp.community.worryBoard.WorryBoard">
-			UPDATE worry SET subject=#{subject}, content=#{content}
+		<update id="updateWorryBoard" parameterType="com.sp.community.worryBoard.WorryBoard">
+			UPDATE worryBoard SET subject=#{subject}, content=#{content}
 			WHERE worryPostnum=#{worryPostnum}
 		</update>
 		
-		<delete id="deleteWorry" parameterType="Integer">
-			DELETE FROM worry WHERE worryPostnum=#{worryPostnum}
+		<delete id="deleteWorryBoard" parameterType="Integer">
+			DELETE FROM worryBoard WHERE worryPostnum=#{worryPostnum}
 		</delete>
 		
 		<!-- 파일 -->
@@ -120,21 +120,21 @@
 		
 		<select id="listFile" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
 		SELECT fileNum, worryPostnum, saveFilename, originalFilename, fileSize
-		FROM worryFile
+		FROM worryboardFile
 		WHERE worryPostnum=#{worryPostnum}
 		</select>
 		
 		<select id="readFile" parameterType="Integer" resultType="com.sp.community.worryBoard.WorryBoard">
 			SELECT fileNum, worryPostnum, saveFilename, originalFilename, fileSize
-			FROM worryFile
+			FROM worryboardFile
 			WHERE fileNum=#{fileNum}
 		</select>
 		
 		<delete id="deleteFile1" parameterType="Integer">
-			DELETE FROM worryFile WHERE worryPostnum=#{worryPostnum}
+			DELETE FROM worryboardFile WHERE worryPostnum=#{worryPostnum}
 		</delete>
 		
 		<delete id="deleteFile2" parameterType="Integer">
-			DELETE FROM worryFile WHERE fileNum=#{fileNum}
+			DELETE FROM worryboardFile WHERE fileNum=#{fileNum}
 		</delete>
 </mapper>

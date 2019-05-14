@@ -3,7 +3,7 @@ package com.sp.community.questionBoard;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("queboard.QueController")
+@Controller("questionBoard.questionboardController")
 public class QuestionBoardController {
 	
 	@RequestMapping("/community/questionBoard/list")

@@ -1,4 +1,4 @@
-package com.sp.community.worryBoard;
+package com.sp.community.questionBoard;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,120 +11,116 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sp.common.FileManager;
 import com.sp.common.dao.CommonDAO;
 
-@Service("worryBoard.worryboardService")
-public class WorryBoardServiceImpl implements WorryBoardService{
+@Service("questionBoard.questionboardService")
+public class QuestionBoardServiceImpl implements QuestionBoardService{
 	@Autowired
 	private CommonDAO dao;
 	@Autowired
 	private FileManager fileManager;
 	
 	@Override
-	public int insertWorryBoard(WorryBoard dto, String pathname) {
+	public int insertQuestionBoard(QuestionBoard dto, String pathname) {
 		int result=0;
 		
 		try {
-			int maxNum=dao.selectOne("worryBoard.worryPostnum");
-			dto.setWorryPostnum(maxNum+1);
+			int maxNum=dao.selectOne("questionBoard.qusetionPostnum");
+			dto.setQuestionPostnum(maxNum+1);
 			
-			result=dao.insertData("worryBoard.insertBoard", dto);
+			result=dao.insertData("questionBoard.insertBoard", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return result;
 	}
-
 	@Override
 	public int dataCount(Map<String, Object> map) {
 		int result=0;
 		
 		try {
-			result=dao.selectOne("worryBoard.dataCount", map);
+			result=dao.selectOne("questionBoard.dataCount", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
 		return result;
 	}
-
 	@Override
-	public List<WorryBoard> listWorryBoard(Map<String, Object> map) {
-		List<WorryBoard> list=null;
+	public List<QuestionBoard> listQuestionBoard(Map<String, Object> map) {
+		List<QuestionBoard> list=null;
 		
 		try {
-			list=dao.selectList("worryBoard.listWorryBoard", map);
+			list=dao.selectList("questionBoard.listQusetionBoard", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-
+	
 	@Override
-	public List<WorryBoard> listWorryBoardTop() {
-		List<WorryBoard> list=null;
+	public List<QuestionBoard> listQuestionBoardTop() {
+		List<QuestionBoard> list=null;
 		
 		try {
-			list=dao.selectList("worryBoard.listworryBoardTop");
+			list=dao.selectList("questionBoard.listquestionBoardTop");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-
+	
 	@Override
-	public int updateHitCount(int worryPostnum) {
+	public int updateHitCount(int questionPostnum) {
 		int result=0;
 		
 		try {
-			result=dao.updateData("worryBoard.updateHitCount", worryPostnum);
+			result=dao.updateData("questionBoard.updateHitCount", questionPostnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-
+	
 	@Override
-	public WorryBoard readWorryBoard(int worryPostnum) {
-		WorryBoard dto=null;
+	public QuestionBoard readQuestionBoard(int questionPostnum) {
+		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("worryBoard.readworryBoard", worryPostnum);
+			dto=dao.selectOne("questionBoard.readquestionBoard", questionPostnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return dto;
 	}
-
+	
 	@Override
-	public WorryBoard preReadworryBoard(Map<String, Object> map) {
-		WorryBoard dto=null;
+	public QuestionBoard preReadQuestionBoard(Map<String, Object> map) {
+		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("worryBoard.preReadworryBoard", map);
+			dto=dao.selectOne("questionBoard.preReadquetionBoard", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return dto;
 	}
-
+	
 	@Override
-	public WorryBoard nextReadworryBoard(Map<String, Object> map) {
-		WorryBoard dto=null;
+	public QuestionBoard nextReadQuestionBoard(Map<String, Object> map) {
+		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("worryBoard.preReadworryBoard", map);
+			dto=dao.selectOne("questionBoard.preReadquestionBoard", map);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		return dto;
 	}
-
 	@Override
-	public int updateWorryBoard(WorryBoard dto, String pathname) {
+	public int updateQuestionBoard(QuestionBoard dto, String pathname) {
 		int result=0;
 		
 		try {
-			result=dao.updateData("worryBoard.updateworryBoard", dto);
+			result=dao.updateData("questionBoard.updatequestionBoard", dto);
 			
 			if(! dto.getUpload().isEmpty()) {
 				for(MultipartFile mf:dto.getUpload()) {
@@ -147,80 +143,73 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
-
 	@Override
-	public int deleteWorryBoard(int worryPostnum, String pathname) {
+	public int deleteQuestionBoard(int questionPostnum, String pathname) {
 		int result=0;
 		try {
-			// 파일 지우기
-			List<WorryBoard> listFile=listFile(worryPostnum);
+			List<QuestionBoard> listFile=listFile(questionPostnum);
 			if(listFile!=null) {
-				Iterator<WorryBoard> it=listFile.iterator();
+				Iterator<QuestionBoard> it=listFile.iterator();
 				while(it.hasNext()) {
-					WorryBoard dto=it.next();
+					QuestionBoard dto=it.next();
 					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
 				}
 			}
 			
-			//파일 테이블 내용 지우기
-			deleteFile1(worryPostnum);
+			deleteFile1(questionPostnum);
 			
-			result=dao.deleteData("worryBoard.deleteWorryBoard", worryPostnum);
+			result=dao.deleteData("questionBoard.deleteQuestionBoard", questionPostnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-
+	
 	@Override
-	public int insertFile(WorryBoard dto) {
+	public int insertFile(QuestionBoard dto) {
 		int result=0;
 		
 		try {
-			result=dao.insertData("worryBoard.insertFile", dto);
+			result=dao.insertData("questionBoard.insertFile", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-
 	@Override
-	public List<WorryBoard> listFile(int worryPostnum) {
-		List<WorryBoard> listFile=null;
+	public List<QuestionBoard> listFile(int questionPostnum) {
+		List<QuestionBoard> listFile=null;
 		
 		try {
-			listFile=dao.selectList("worryBoard.listFile", worryPostnum);
+			listFile=dao.selectList("questionBoard.listFile", questionPostnum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return listFile;
 	}
-
+	
 	@Override
-	public WorryBoard readFile(int fileNum) {
-		WorryBoard dto=null;
+	public QuestionBoard readFile(int fileNum) {
+		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("worryBoard.readFile", fileNum);
+			dto=dao.selectOne("questionBOard.readFile", fileNum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return dto;
 	}
-
 	@Override
-	public int deleteFile1(int worryPostnum) {
+	public int deleteFile1(int questionPostnum) {
 		int result=0;
 		
 		try {
-			result=dao.deleteData("worryBoard.deleteFile1", worryPostnum);
+			result=dao.deleteData("questionBoard.deleteFile1", questionPostnum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
 		return result;
 	}
 	@Override
@@ -228,7 +217,7 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 		int result=0;
 		
 		try {
-			result=dao.deleteData("worryBoard.deleteFile2", fileNum);
+			result=dao.deleteData("questionBoard.deleteFile2", fileNum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

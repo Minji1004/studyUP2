@@ -94,10 +94,7 @@ function insertForm() {
 //글등록, 수정등록
 function sendOk(mode, page) {
 	var active=$("#boardTab").children(".active").children().attr("aria-controls");
-	var url="<%=cp%>/community/"+active+"/" + mode;
-	
-	
-	
+	var url="<%=cp%>/community/"+active+"/" + mode;	
 }
 
 //글쓰기 취소, 수정 취소, 답변 취소
@@ -134,7 +131,7 @@ function updateForm(num, page) {
 			  <ul id="boardTab" class="nav nav-tabs" role="tablist">
 			      <li role="presentation" class="active"><a href="#tabFreeBoard" aria-controls="freeBoard" role="tab" data-toggle="tab">자유 게시판</a></li>
 		          <li role="presentation"><a href="#tabQuestion" aria-controls="questionBoard" role="tab" data-toggle="tab">질문과 답변</a></li>
-		          <li role="presentation"><a href="#tabWorry" aria-controls="worryBoard" role="tab" data-toggle="tab">고민 사항</a></li>
+		          <li role="presentation"><a href="#tabWorry" aria-controls="worryBoard" role="tab" data-toggle="tab">고민 게시판</a></li>
 			  </ul>
 			
 			  <div class="tab-content" style="padding: 5px; margin-top: 15px;">

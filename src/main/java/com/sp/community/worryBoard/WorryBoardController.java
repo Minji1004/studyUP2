@@ -26,7 +26,7 @@ import com.sp.common.FileManager;
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 
-@Controller("worryboard.WorryBoardController")
+@Controller("worryBoard.worryboardController")
 public class WorryBoardController {
 	@Autowired
 	private WorryBoardService service;
@@ -37,7 +37,7 @@ public class WorryBoardController {
 	
 	@RequestMapping("/community/worryBoard/list")
 	public String list(
-			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
@@ -123,7 +123,9 @@ public class WorryBoardController {
 	}
 	
 	@RequestMapping(value="/community/worryBoard/created", method=RequestMethod.GET) 
-	public String createdForm(Model model) throws Exception{
+	public String createdForm(
+			Model model
+			) throws Exception{
 		
 		model.addAttribute("mode", "created");
 		model.addAttribute("subMenu", "4");
@@ -177,8 +179,8 @@ public class WorryBoardController {
 		map.put("keyword", keyword);
 		map.put("worryPostnum", worryPostnum);
 		
-		WorryBoard preReadDto=service.preReadWorryBoard(map);
-		WorryBoard nextReadDto=service.preReadWorryBoard(map);
+		WorryBoard preReadDto=service.preReadworryBoard(map);
+		WorryBoard nextReadDto=service.nextReadworryBoard(map);
 		
 		List<WorryBoard> listFile=service.listFile(worryPostnum);
 		
@@ -290,8 +292,9 @@ public class WorryBoardController {
 			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
 		}
 		
-		//service.deleteFile2(fileNum);
-	
+		service.deleteFile2(fileNum);
+		
+		// 작업 결과를 json으로 전송
 		Map<String, Object> model=new HashMap<>();
 		model.put("state", "true");
 		return model;	

@@ -1,5 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="worry">
+<mapper namespace="questionBoard">
+
+	<select id="maxQuestionBoardNum" resultType="Integer">
+		select IFNULL(max(questionPostnum), 0) from questionBoard
+	</select>
+	
+	<insert id="insertQuestionBoard" parameterType="com.sp.community.questionBoard.QuestionBoard">
+		INSERT INTO questionBoard(questionPostnum, userId, subject, content, views, created, boardLike, replyNum, replyLike)
+		VALUES (#{questionPostnum}, #{userId}, #{subject}, #{content}, #{views}, #{created}, #{boardLike}, #{replyNum}, #{replyLike})
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			(INSTR(subject, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userId'">
+			INSTR(userId, #{keyword})=1
+		</if>
+		<if test="condition=='created'">
+			DATE FORMAT(w.created, '%Y-%m-%d')=#{keyword}
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0)
+		FROM questionBoard q
+		JOIN memberInfo q.userId=m.userid
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listQuestionBoardTop" resultType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT questionPostnum, q.userId, nickName, subject, views, 
+			DATE_FORMAT(q.created, '%Y-%m-%d') created
+		FROM questionBoard q
+		JOIN memberInfo m ON q.userId==m.userId
+		WHERE questionnoticeWhether=1
+		ORDER BY questionPostnum DESC
+	</select>
+	
+	<select id="listQuestionBoard" parameterType="map" resultType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT questionPostnum, q.userId, nickName, subject, q.created, views, q.created
+		FROM questionBoard q
+		JOIN memberInfo m ON q.userId=m.userId
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY questionPostnum DESC
+		LIMIT #{start}, #{rows}
+	</select>
+	
+	<select id="readQuestionBoard" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT questionPostnum, q.userId, nickName, subject, content, q.created, views
+		FROM questionBoard q
+		JOIN memberInfo m ON q.userID=m.userId
+		WHERE questionPostnum=#{questionPostnum}
+	</select>
+	
+	<select id="preReadQuestionBoard" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT questionPostnum, subject
+		FROM questionBoard q
+		JOIN memberInfo m ON q.userId=m.userId
+		<where>
+			<if test="keyword !=null and keyword !=''">
+				<include refid="where-list"/>
+			</if>
+		AND (questionPostnum &gt; #{questionPostnum})
+		</where>
+		ORDER BY questionPostnum ASC
+		LIMIT 1
+	</select>
+	
+	<select id="nextReadQuestionBoard" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT questionPostnum, subject
+		FROM questionBoard q
+		JOIN memberInfo m ON q.userId=m.userId
+	<where>
+		<if test="keyword !=null and keyword !=''">
+			<include refid="where-list"/>
+		</if>
+		AND (questionPostnum &lt; #{questionPostNum})
+	</where>
+	ORDER BY questionPostnum DESC
+	LIMIT 1
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE questionBoard SET views=views+1 WHERE questionPostnum=#{questionPostnum}
+	</update>
+	
+	<update id="updateQuestionBoard" parameterType="com.sp.community.questionBoard.QuestionBoard">
+		UPDATE questionBoard SET subject=#{subject}, content=#{content}
+		WHERE questionPostnum=#{questionPostnum}
+	</update>
+	
+	<delete id="deleteQuestionBoard" parameterType="Integer">
+		DELETE FROM questionBoard WHERE questionPostnum=#{questionPostnum}
+	</delete>
+	
+	<!-- 파일 -->
+	<insert id="insertFile" parameterType="com.sp.community.questionBoard.QuestionBoard">
+		INSERT INTO questionFile(questionPostnum, saveFilename, originalFilename, fileSize)
+		VALUES (#{questionPostnum}, #{saveFilename}, #{originalFilename}, #{fileSize})
+	</insert>
+	
+	<select id="listFile" parameterType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
+		FROM questionBoardFile
+		WHERE questionPostnum=#{questionPostnum}
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
+		SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
+		FROM questionboardFile
+		WHERE fileNum=#{fileNum}
+	</select>
+	
+	<delete id="deleteFile1" parameterType="Integer">
+		DELETE FROM questionboardFile WHERE questionpostNum=#{questionPostnum}
+	</delete>
+	
+	<delete id="deleteFile2" parameterType="Integer">
+		DELETE FROM questionboardFile WHERE fileNum=#{fileNum}
+	</delete>
 </mapper>
