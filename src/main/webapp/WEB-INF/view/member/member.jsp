@@ -166,19 +166,26 @@ $(function(){
         <input type="text" name="tel" class="form-control" placeholder="전화번호">
         <span class="glyphicon glyphicon-phone form-control-feedback"></span>
       </div>
-        <div class="form-group has-feedback">
+      
+      
+      <div class="form-group has-feedback">
+      	프로필 사진
         <input type="file" name="pictureM" class="form-control" placeholder="프로필 사진">
       </div>
      
       
 
       <div class="row">
-        <div id="passwordConfirmText" class="col-xs-8">
+        <div id="passwordConfirmText" class="col-xs-12" style="height:20px;">
         </div>
         <div class="col-xs-4">
-          <button type="button" class="btn btn-primary btn-block btn-flat" style ="background: #2C2323; border:2px solid #2C2323;font-weight: 200px" onclick="certifyEmail()">메일 인증</button>
-          <button type="button" class="btn btn-primary btn-block btn-flat" onclick="registerMember()">Register</button>
-          <button type="button" class="btn btn-primary btn-block btn-flat" style ="background: #D25252; border:2px solid #D25252" onclick = "location.href = '<%=cp%>/main'">Cancel</button>
+          <button type="button" class="btn btn-primary btn-block btn-flat" style ="float:left; background: #2C2323; border:2px solid #2C2323;font-weight: 200px" onclick="certifyEmail()">메일인증</button>
+        </div>
+        <div class="col-xs-4">
+          <button type="button" class="btn btn-primary btn-block btn-flat" style ="float:left;" onclick="registerMember()">등록</button>
+        </div>
+        <div class="col-xs-4">
+          <button type="button" class="btn btn-primary btn-block btn-flat" style ="float:left; background: #D25252; border:2px solid #D25252" onclick = "location.href = '<%=cp%>/main'">취소</button>
         </div>
       </div>
   	</form>
