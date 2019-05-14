@@ -37,6 +37,7 @@ public class LectureController {
 			return ".admins.lecture.main";
 		}
 		
+		model.addAttribute("active", "1");
 		model.addAttribute("listMode", "list");
 		
 		return ".four.lecture.main";
@@ -105,7 +106,9 @@ public class LectureController {
         model.addAttribute("total_page", total_page);
         model.addAttribute("dataCount", dataCount);
         model.addAttribute("paging", paging);
-		
+        
+        
+        
 		return "lecture/list";
 	}	
 	
@@ -158,6 +161,7 @@ public class LectureController {
 			return ".admins.lecture.main";
 		}
 		
+		model.addAttribute("active", "2");
 		model.addAttribute("listMode", "myList");
 		return ".four.lecture.main";
 	}

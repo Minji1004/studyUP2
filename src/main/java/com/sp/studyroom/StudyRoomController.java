@@ -100,6 +100,7 @@ public class StudyRoomController {
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("active", "1");
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
@@ -277,6 +278,7 @@ public class StudyRoomController {
 		}
 		model.addAttribute("info", info);
 		model.addAttribute("list", list);
+		model.addAttribute("active", "2");
 		
 		return ".four.studyroom.payment.bag";
 	}
@@ -354,6 +356,8 @@ public class StudyRoomController {
 	public String paymentList(
 			Model model
 			) throws Exception {		 
+		
+		model.addAttribute("active", "3");
 		
 		return ".four.studyroom.payment.list";
 	}

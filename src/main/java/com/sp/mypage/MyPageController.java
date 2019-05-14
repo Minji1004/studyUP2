@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,27 +57,48 @@ public class MyPageController {
 		Member dto =  memberService.readMember(info.getUserId());
 		
 		model.addAttribute("dto", dto);
-
+		model.addAttribute("active", "1");
+		
 		return ".four.mypage.main";
 	}
 	
 	@RequestMapping(value = "/mypage/basket/main")
-	public String basket() throws Exception{
+	public String basket(
+			Model model
+			) throws Exception{
+		
+		model.addAttribute("active", "4");
+		
 		return ".four.mypage.basket.main";
 	}
 	
 	@RequestMapping(value = "/mypage/study/main")
-	public String study() throws Exception{
+	public String study(
+			Model model
+			) throws Exception{
+		
+		model.addAttribute("active", "5");
+		
 		return ".four.mypage.study.main";
 	}
 	
 	@RequestMapping(value = "/mypage/studyroom/main")
-	public String studyroom() throws Exception{
+	public String studyroom(
+			Model model
+			) throws Exception{
+		
+		model.addAttribute("active", "6");
+		
 		return ".four.mypage.studyroom.main";
 	}
 	
 	@RequestMapping(value = "/mypage/schedule/main")
-	public String schedule() throws Exception{
+	public String schedule(
+			Model model
+			) throws Exception{
+		
+		model.addAttribute("active", "3");
+		
 		return ".four.mypage.schedule.main";
 	}
 	
@@ -150,6 +172,8 @@ public class MyPageController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
         
+		model.addAttribute("active", "2");
+		
 		return ".four.mypage.wanote.main";
 	}
 	
