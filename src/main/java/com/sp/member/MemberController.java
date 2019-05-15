@@ -88,7 +88,7 @@ public class MemberController {
 			uri = "redirect:" + uri;
 		
 		if(info.getUserType().get(0)==1){
-			return "redirect:/admin";
+			return "redirect:/admin/member/list";
 		}
 		return uri;
 	}
