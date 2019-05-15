@@ -162,15 +162,13 @@ $(function(){
 		      <li style="color: #787878; width:30%;">닉네임</li>		      
 		      <li style="color: #787878; width:25%;">등록일</li>		           
 		  </ul>
-		  <c:forEach var="bdto" items="${blist}" >
-		  <c:if test="">
+		  <c:forEach var="bdto" items="${blist}" >		  
 		  <ul class="blist" data-blackNum="${bdto.blackNum}">
 		      <li style="width:10%;">${bdto.blistNum }</li>
 		      <li style="width:35%;">${bdto.userId }</li>
 		      <li style="width:30%;">${bdto.nickName }</li>	      
 		      <li style="width:25%;">${bdto.blackStart}</li>
-		  </ul>
-		  </c:if>
+		  </ul>		  
 		  </c:forEach> 
 		</div>
 		<div style="width:100%; margin:0px auto; border-spacing:0px;">

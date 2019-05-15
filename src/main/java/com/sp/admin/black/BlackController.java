@@ -249,10 +249,10 @@ public class BlackController {
 		
 		Map<String, Object> rmap = new HashMap<>();
 		Black bdto = new Black();
-		
+
 		bdto.setBlackUserNum(rNum);
 		bservice.insertBlack(bdto);
-		
+
 		return rmap;
 	}
 	
@@ -262,9 +262,9 @@ public class BlackController {
 		@RequestParam int blackNum
 		) throws Exception{
 		Map<String, Object> bmap=new HashMap<>();
-				
+
 		bservice.updateBlack(blackNum);
-		
+
 		return bmap;
 	}
 	

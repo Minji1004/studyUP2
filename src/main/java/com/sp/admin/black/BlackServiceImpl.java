@@ -49,14 +49,14 @@ public class BlackServiceImpl implements BlackService{
 	}
 
 	@Override
-	public void updateBlack(int blackNum) throws Exception {
-				
+	public int updateBlack(int blackNum) throws Exception {
+		int result=0;
 		try {
-			dao.updateData("admin.blackCancle", blackNum);
+			result=dao.updateData("admin.blackCancle", blackNum);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return result;
 	}
 
 	@Override

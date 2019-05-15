@@ -7,7 +7,7 @@ public interface BlackService {
 	public void insertBlack(Black bdto) throws Exception;
 	public int dataBlackCount(Map<String, Object> map) throws Exception;
 	public List<Black> listBlack(Map<String, Object> map) throws Exception;
-	public void updateBlack(int blackNum) throws Exception;
+	public int updateBlack(int blackNum) throws Exception;
 	public Black readBlack(int num) throws Exception;
 		
 }
