@@ -145,15 +145,15 @@ function listPage(page) {
 // 댓글 추가
 function sendReply() {
 	var sFreeNum="${dto.sFreeNum}";
-	var content=$("#content").val().trim();
-	if(! content ) {
+	var sfrContent=$("#sfrContent").val().trim();
+	if(! sfrContent ) {
 		alert("내용을 입력하세요 !!! ");
-		$("#content").focus();
+		$("#sfrContent").focus();
 		return;
 	}
-	content = encodeURIComponent(content);
+	sfrContent = encodeURIComponent(sfrContent);
 	
-	var query="sFreeNum="+sFreeNum+"&content="+content+"&answer=0";
+	var query="sFreeNum="+sFreeNum+"&sfrContent="+sfrContent+"&answer=0"+"&studyNum="+${studyNum}+"&left="+${left};
 	var url="<%=cp%>/study/free/insertReply";
 	$.ajax({
 		type:"post"
@@ -161,7 +161,7 @@ function sendReply() {
 		,data:query
 		,dataType:"json"
 		,success:function(data) {
-			$("#content").val("");
+			$("#sfrContent").val("");
 			
 			var state=data.state;
 			if(state=="true") {
@@ -190,7 +190,7 @@ function deleteReply(sfReplyNum, page) {
 	    return;
 		
 	var url="<%=cp%>/study/free/deleteReply";
-	var query="sfReplyNum="+sfReplyNum;
+	var query="sfReplyNum="+sfReplyNum+"&studyNum="+${studyNum}+"&left="+${left};
 		
 	$.ajax({
 		type:"post"
@@ -253,7 +253,7 @@ function deleteReply(sfReplyNum, page) {
                          <td colspan="2">
                               <span style="display: inline-block; min-width: 45px;">첨부</span> :
                               <c:if test="${not empty dto.saveFilename}">
-                                  <a href="<%=cp%>/study/free/download?num=${dto.sFreeNum}"><span class="glyphicon glyphicon-download-alt"></span> ${dto.originalFilename}</a>
+                                  <a href="<%=cp%>/study/free/download?sFreeNum=${dto.sFreeNum}"><span class="glyphicon glyphicon-download-alt"></span> ${dto.originalFilename}</a>
                               </c:if>
                          </td>
                      </tr>
@@ -300,7 +300,7 @@ function deleteReply(sfReplyNum, page) {
 		           	       <div style="float: right; text-align: right;"></div>
 		               </div>
 		               <div style="clear: both; padding-top: 10px;">
-		                   <textarea id="content" class="form-control" rows="3" style="resize : none;"></textarea>
+		                   <textarea id="sfrContent" class="form-control" rows="3" style="resize : none;"></textarea>
 		               </div>
 		               <div style="text-align: right; padding-top: 10px;">
 		                   <button type="button" class="btn btn-primary btn-sm" onclick="sendReply();"> 댓글등록 <span class="glyphicon glyphicon-ok"></span></button>

@@ -51,7 +51,7 @@ public class StudyServiceImpl implements StudyService{
 			adto.setStudyNum(studyNum);
 			adto.setApproval(2);
 			
-			dao.insertData("study.applyStudy", adto);
+			dao.insertData("study.applyStudyMaster", adto);
 			
 			
 			result = 1;

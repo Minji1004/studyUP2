@@ -2,7 +2,7 @@ package com.sp.study.mystudy.free;
 
 public class Reply {
 	private int sfReplyNum, sFreeNum, listNum;
-	private String userId, userName, sfrContent, created;
+	private String userId, userName, sfrContent, created, answer;
 	
 	public int getSfReplyNum() {
 		return sfReplyNum;
@@ -45,6 +45,12 @@ public class Reply {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public String getAnswer() {
+		return answer;
+	}
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 	
 }
