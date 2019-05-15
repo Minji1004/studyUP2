@@ -49,8 +49,13 @@ public class BlackServiceImpl implements BlackService{
 	}
 
 	@Override
-	public void updateBlack(String userId) throws Exception {
-		// TODO Auto-generated method stub
+	public void updateBlack(int blackNum) throws Exception {
+				
+		try {
+			dao.updateData("admin.blackCancle", blackNum);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -243,8 +242,7 @@ public class BlackController {
 	@RequestMapping(value="/admin/blacklist/apply", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> blackApply(
-		@RequestParam int reportNum,
-		HttpSession session
+		@RequestParam int reportNum		
 		) throws Exception {
 		Report rdto = rservice.readReport(reportNum);
 		int rNum = rdto.getReportedUser();
@@ -256,6 +254,18 @@ public class BlackController {
 		bservice.insertBlack(bdto);
 		
 		return rmap;
-	}	
+	}
+	
+	@RequestMapping(value="/admin/blacklist/cancle", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> blackCancle(
+		@RequestParam int blackNum
+		) throws Exception{
+		Map<String, Object> bmap=new HashMap<>();
+				
+		bservice.updateBlack(blackNum);
+		
+		return bmap;
+	}
 	
 }

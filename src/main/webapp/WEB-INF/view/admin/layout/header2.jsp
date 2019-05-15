@@ -8,7 +8,7 @@
 
         <header id="header" class="fixed2">
             <div class="header-content clearfix">
-                <a class="logo" href="<%=cp%>/admin"><img src="<%=cp%>/resource/images/logo.png" alt=""></a>
+                <a class="logo" href="<%=cp%>/admin"><img src="<%=cp%>/resource/images/logo3.png" alt=""></a>
                 <nav class="navigation" role="navigation">
                     <ul class="primary-nav">
 						<li><a href="<%=cp%>/admin/member/list">회원 관리</a></li>

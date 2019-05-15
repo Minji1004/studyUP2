@@ -20,7 +20,7 @@ li{
 	padding-top: 7px;
 }
 
-.flist{
+.flist, .blist{
 	text-align:center; 
 	height:24px; 
 	border-bottom: 1px solid #cccccc;"
@@ -60,8 +60,7 @@ $(function(){
 		var num=$(this).closest("div").children("input").val();
 		
 		var query="reportNum="+num;
-		var url = "<%=cp%>/admin/blacklist/apply";
-		alert(num);
+		var url = "<%=cp%>/admin/blacklist/apply";		
 		$.ajax({
 			type : "post",
 			url : url,
@@ -74,6 +73,26 @@ $(function(){
 		});
 	});
 });
+
+$(function(){
+	$("body").on("click", "#blackClear", function(){
+		
+		var num=$(this).closest("div").children("input").val();
+		var query="blackNum="+num;
+		var url= "<%=cp%>/admin/blacklist/cancle";
+		$.ajax({
+			type: "post",
+			url : url,
+			data : query,
+			dataType : "json",
+			success : function(data){
+				alert("블랙리스트에서 해제되었습니다.");
+				return;
+			}
+		});
+	});
+});
+
 
 </script>
 
@@ -139,17 +158,19 @@ $(function(){
 		<div style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 		  <ul class="line"> 
 		      <li style="color: #787878; width:10%;">번호</li>
-		      <li style="color: #787878; width:27%;">아이디</li>
-		      <li style="color: #787878; width:27%;">닉네임</li>		      
-		      <li style="color: #787878; width:18%;">등록일</li>		      
+		      <li style="color: #787878; width:35%;">아이디</li>
+		      <li style="color: #787878; width:30%;">닉네임</li>		      
+		      <li style="color: #787878; width:25%;">등록일</li>		           
 		  </ul>
 		  <c:forEach var="bdto" items="${blist}" >
-		  <ul class="blist" data-blackNum="${bdto.blackNum}"> 
+		  <c:if test="">
+		  <ul class="blist" data-blackNum="${bdto.blackNum}">
 		      <li style="width:10%;">${bdto.blistNum }</li>
-		      <li style="width:27%;">${bdto.userId }</li>
-		      <li style="width:27%;">${bdto.nickName }</li>	      
-		      <li style="width:18%;">${bdto.blackStart}</li>		      
-		  </ul>		 
+		      <li style="width:35%;">${bdto.userId }</li>
+		      <li style="width:30%;">${bdto.nickName }</li>	      
+		      <li style="width:25%;">${bdto.blackStart}</li>
+		  </ul>
+		  </c:if>
 		  </c:forEach> 
 		</div>
 		<div style="width:100%; margin:0px auto; border-spacing:0px;">
