@@ -28,7 +28,6 @@
 }
 </style>
 
-
 	<div class="alert alert-info">
 		<i class="glyphicon glyphichon-info-sign"></i> 질문과 답변을 할 수 있는 공간입니다.
 	</div>
@@ -72,7 +71,7 @@
                                   <button type="button" class="btn btn-danger" onclick="sendCancel('${pageNo}');"> 취소 </button>
 				                                  
 					         <c:if test="${mode=='update'}">
-					         	 <input type="hidden" name="boardNum" value="${dto.freePostnum}">
+					         	 <input type="hidden" name="boardNum" value="${dto.questionPostNum}">
 					        	 <input type="hidden" name="pageNo" value="${pageNo}">
 					        </c:if>
 					        <c:if test="${mode=='reply'}">
@@ -80,7 +79,7 @@
 					        	<input type="hidden" name="groupNum" value="${dto.groupNum}">
 					        	<input type="hidden" name="orderNo" value="${dto.orderNo}">
 					        	<input type="hidden" name="depth" value="${dto.depth}">
-					        	<input type="hidden" name="parent" value="${dto.freePostnum}">
+					        	<input type="hidden" name="parent" value="${dto.questionPostNum}">
 					        </c:if>
 	                       </td>
                         </tr>

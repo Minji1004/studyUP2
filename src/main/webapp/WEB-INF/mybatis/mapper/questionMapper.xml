@@ -4,13 +4,18 @@
 <mapper namespace="questionBoard">
 
 	<select id="maxQuestionBoardNum" resultType="Integer">
-		select IFNULL(max(questionPostnum), 0) from questionBoard
+		select IFNULL(max(questionPostNum), 0) from questionBoard
 	</select>
 	
 	<insert id="insertQuestionBoard" parameterType="com.sp.community.questionBoard.QuestionBoard">
-		INSERT INTO questionBoard(questionPostnum, userId, subject, content, views, created, boardLike, replyNum, replyLike)
-		VALUES (#{questionPostnum}, #{userId}, #{subject}, #{content}, #{views}, #{created}, #{boardLike}, #{replyNum}, #{replyLike})
+		INSERT INTO questionBoard(questionPostNum, userId, subject, content, views, groupNum, depth, orderNo, parent)
+		VALUES (#{questionPostNum}, #{userId}, #{subject}, #{content}, #{views}, #{groupNum}, #{depth}, #{orderNo}, #{parent})	
 	</insert>
+	
+	<update id="updateOrderNo" parameterType="map">
+		UPDATE questionBoard SET orderNo=orderNo+1
+			WHERE groupNum=#{groupNum} AND orderNo &gt; #{orderNo}
+	</update>
 	
 	<sql id="where-list">
 		<if test="condition=='all'">
@@ -27,14 +32,14 @@
 			INSTR(userId, #{keyword})=1
 		</if>
 		<if test="condition=='created'">
-			DATE FORMAT(w.created, '%Y-%m-%d')=#{keyword}
+			DATE FORMAT(q.created, '%Y-%m-%d')=#{keyword}
 		</if>
 	</sql>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT IFNULL(COUNT(*),0)
 		FROM questionBoard q
-		JOIN memberInfo q.userId=m.userid
+		JOIN memberInfo m ON q.userId=m.userId
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
@@ -42,17 +47,8 @@
 		</where>
 	</select>
 	
-	<select id="listQuestionBoardTop" resultType="com.sp.community.questionBoard.QuestionBoard">
-		SELECT questionPostnum, q.userId, nickName, subject, views, 
-			DATE_FORMAT(q.created, '%Y-%m-%d') created
-		FROM questionBoard q
-		JOIN memberInfo m ON q.userId==m.userId
-		WHERE questionnoticeWhether=1
-		ORDER BY questionPostnum DESC
-	</select>
-	
 	<select id="listQuestionBoard" parameterType="map" resultType="com.sp.community.questionBoard.QuestionBoard">
-		SELECT questionPostnum, q.userId, nickName, subject, q.created, views, q.created
+		SELECT questionPostNum, q.userId, nickName, subject, DATE_FORMAT(q.created, '%Y-%m-%d') created, views, q.created, depth, groupNum, orderNo
 		FROM questionBoard q
 		JOIN memberInfo m ON q.userId=m.userId
 		<where>
@@ -60,81 +56,65 @@
 				<include refid="where-list"/>
 			</if>
 		</where>
-		ORDER BY questionPostnum DESC
+		ORDER BY groupNum DESC, orderNo ASC
 		LIMIT #{start}, #{rows}
 	</select>
 	
 	<select id="readQuestionBoard" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
-		SELECT questionPostnum, q.userId, nickName, subject, content, q.created, views
+		SELECT questionPostNum, q.userId, nickName, subject, content, q.created, views, groupNum, orderNo, depth, parent
 		FROM questionBoard q
-		JOIN memberInfo m ON q.userID=m.userId
-		WHERE questionPostnum=#{questionPostnum}
+		JOIN memberInfo m ON q.userId=m.userId
+		WHERE questionPostNum=#{questionPostNum}
 	</select>
 	
 	<select id="preReadQuestionBoard" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
-		SELECT questionPostnum, subject
+		SELECT questionPostNum, subject
 		FROM questionBoard q
 		JOIN memberInfo m ON q.userId=m.userId
 		<where>
 			<if test="keyword !=null and keyword !=''">
 				<include refid="where-list"/>
 			</if>
-		AND (questionPostnum &gt; #{questionPostnum})
+		AND ((groupNum=#{groupNum} AND orderNo &lt; #{orderNo})
+		OR (groupNum &gt; #{groupNum}))
 		</where>
-		ORDER BY questionPostnum ASC
+		ORDER BY groupNum ASC, orderNo DESC
 		LIMIT 1
 	</select>
 	
 	<select id="nextReadQuestionBoard" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
-		SELECT questionPostnum, subject
+		SELECT questionPostNum, subject
 		FROM questionBoard q
 		JOIN memberInfo m ON q.userId=m.userId
 	<where>
 		<if test="keyword !=null and keyword !=''">
 			<include refid="where-list"/>
 		</if>
-		AND (questionPostnum &lt; #{questionPostNum})
+		AND ((groupNum=#{groupNum} AND orderNo &gt; #{orderNo})
+		OR (groupNum &lt; #{groupNum}))
 	</where>
-	ORDER BY questionPostnum DESC
+	ORDER BY groupNum DESC, orderNo ASC
 	LIMIT 1
 	</select>
 	
 	<update id="updateHitCount" parameterType="Integer">
-		UPDATE questionBoard SET views=views+1 WHERE questionPostnum=#{questionPostnum}
+		UPDATE questionBoard SET views=views+1 WHERE questionPostNum=#{questionPostNum}
 	</update>
 	
 	<update id="updateQuestionBoard" parameterType="com.sp.community.questionBoard.QuestionBoard">
 		UPDATE questionBoard SET subject=#{subject}, content=#{content}
-		WHERE questionPostnum=#{questionPostnum}
+		WHERE questionPostNum=#{questionPostNum} AND userId=#{userId}
 	</update>
 	
+	<select id="deleteListQuestionBoard" resultType="com.sp.community.questionBoard.QuestionBoard" parameterType="Integer">
+		SELECT questionPostNum, depth, orderNo
+		FROM questionBoard
+		WHERE groupNum=(SELECT groupNum FROM questionBoard WHERE questionPostNum=#{questionPostNum})
+		AND orderNo >=(SELECT orderNo FROM questionBoard WHERE questionPostNum=#{questionPostNum})
+		ORDER BY orderNo ASC
+	</select>
+	
 	<delete id="deleteQuestionBoard" parameterType="Integer">
-		DELETE FROM questionBoard WHERE questionPostnum=#{questionPostnum}
-	</delete>
-	
-	<!-- 파일 -->
-	<insert id="insertFile" parameterType="com.sp.community.questionBoard.QuestionBoard">
-		INSERT INTO questionFile(questionPostnum, saveFilename, originalFilename, fileSize)
-		VALUES (#{questionPostnum}, #{saveFilename}, #{originalFilename}, #{fileSize})
-	</insert>
-	
-	<select id="listFile" parameterType="com.sp.community.questionBoard.QuestionBoard">
-		SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
-		FROM questionBoardFile
-		WHERE questionPostnum=#{questionPostnum}
-	</select>
-	
-	<select id="readFile" parameterType="Integer" resultType="com.sp.community.questionBoard.QuestionBoard">
-		SELECT fileNum, questionPostnum, saveFilename, originalFilename, fileSize
-		FROM questionboardFile
-		WHERE fileNum=#{fileNum}
-	</select>
-	
-	<delete id="deleteFile1" parameterType="Integer">
-		DELETE FROM questionboardFile WHERE questionpostNum=#{questionPostnum}
-	</delete>
-	
-	<delete id="deleteFile2" parameterType="Integer">
-		DELETE FROM questionboardFile WHERE fileNum=#{fileNum}
+		DELETE FROM questionBoard WHERE questionPostNum=#{questionPostNum}
 	</delete>
 </mapper>

@@ -28,7 +28,6 @@
 }
 </style>
 
-
 	<div class="alert alert-info">
 		<i class="glyphicon glyphichon-info-sign"></i> 자유롭게 게시글을 공유하는 공간입니다.
 	</div>

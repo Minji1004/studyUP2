@@ -19,7 +19,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		int result=0;
 		
 		try {
-			int seq=dao.selectOne("questionboard.maxQuestionBoardNum");
+			int seq=dao.selectOne("questionBoard.maxQuestionBoardNum");
 			dto.setQuestionPostNum(seq+1);
 			
 			if(mode.equals("created")) {
@@ -30,13 +30,13 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 				map.put("groupNum" , dto.getGroupNum());
 				map.put("orderNo", dto.getOrderNo());
 				
-				dao.updateData("questionboard.updateOrderNo", map);
+				dao.updateData("questionBoard.updateOrderNo", map);
 				
 				dto.setDepth(dto.getDepth()+1);
 				dto.setOrderNo(dto.getOrderNo()+1);
 			}
 			
-			result=dao.insertData("questionboard.insertQuestionBoard", dto);
+			result=dao.insertData("questionBoard.insertQuestionBoard", dto);
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -49,7 +49,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		int result=0;
 		
 		try {
-			result=dao.selectOne("questionboard.dataCount", map);
+			result=dao.selectOne("questionBoard.dataCount", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -61,7 +61,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		List<QuestionBoard> list=null;
 		
 		try {
-			list=dao.selectList("questionboard.listQusetionBoard", map);
+			list=dao.selectList("questionBoard.listQuestionBoard", map);
 		} catch (Exception e) {
 			System.out.println();
 		}
@@ -73,7 +73,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("questionboard.readquestionBoard", questionBoardnum);
+			dto=dao.selectOne("questionBoard.readQuestionBoard", questionBoardnum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -85,7 +85,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("questionboard.preReadQuestionBoard", map);
+			dto=dao.selectOne("questionBoard.preReadQuestionBoard", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -97,7 +97,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		QuestionBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("questionboard.nextReadquestionBoard", map);
+			dto=dao.selectOne("questionBoard.nextReadQuestionBoard", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		} 
@@ -105,11 +105,11 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 	}
 	
 	@Override
-	public int updateHitCount(int questionPostnum) {
+	public int updateHitCount(int questionBoardnum) {
 		int result=0;
 		
 		try {
-			result=dao.updateData("questionBoard.updateHitCount", questionPostnum);
+			result=dao.updateData("questionBoard.updateHitCount", questionBoardnum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -123,7 +123,7 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		try {
 			result=dao.updateData("questionBoard.updateQuestionBoard", dto);
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 		return result;
 	}
@@ -134,17 +134,17 @@ public class QuestionBoardServiceImpl implements QuestionBoardService{
 		try {
 			boolean isStart=true;
 			int depth=0;
-			List<QuestionBoard> list=dao.selectList("questionboard.deleteListQuestionBoard", questionBoardNum);
+			List<QuestionBoard> list=dao.selectList("questionBoard.deleteListQuestionBoard", questionBoardNum);
 			for(QuestionBoard dto:list) {
 				if(isStart) {
 					depth=dto.getDepth();
 					isStart=false;
-					dao.deleteData("questionboard.deleteQuestionBoard", dto.getQuestionPostNum());
+					dao.deleteData("questionBoard.deleteQuestionBoard", dto.getQuestionPostNum());
 					continue;
 				}
 				
 				if(depth < dto.getDepth()) {
-					dao.deleteData("questionboard.deleteQuestionBoard", dto.getQuestionPostNum());
+					dao.deleteData("questionBoard.deleteQuestionBoard", dto.getQuestionPostNum());
 				} else {
 					break;
 				}

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 
-@Controller("freBoard.FreBoardController")
+@Controller("freeBoard.FreeBoardController")
 public class FreeBoardController {
 	
 	@Autowired

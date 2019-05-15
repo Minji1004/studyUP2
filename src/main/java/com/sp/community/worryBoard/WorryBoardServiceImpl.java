@@ -20,7 +20,7 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 		
 		try {
 			int seq=dao.selectOne("worryBoard.seq");
-			dto.setWorryPostnum(seq);
+			dto.setWorryPostNum(seq);
 			
 			if(mode.equals("created")) {
 				dto.setGroupNum(seq);

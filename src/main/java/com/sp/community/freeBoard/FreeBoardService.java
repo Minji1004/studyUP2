@@ -6,7 +6,6 @@ import java.util.Map;
 public interface FreeBoardService {
 	public int insertFreeBoard(FreeBoard dto,String mode);
 	public int dataCount(Map<String, Object> map);
-	
 	public List<FreeBoard> listFreeBoard(Map<String, Object> map);
 	
 	public FreeBoard readFreeBoard(int freeBoardnum);
