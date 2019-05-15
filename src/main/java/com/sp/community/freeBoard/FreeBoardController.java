@@ -259,5 +259,4 @@ public class FreeBoardController {
 		model.put("state", state);
 		return model;
 	}
-
 }

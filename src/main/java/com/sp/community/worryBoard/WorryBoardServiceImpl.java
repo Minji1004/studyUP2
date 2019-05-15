@@ -69,11 +69,11 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public WorryBoard readWorryBoard(int worryPostnum) {
+	public WorryBoard readWorryBoard(int worryPostNum) {
 		WorryBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("worryBoard.readworryBoard", worryPostnum);
+			dto=dao.selectOne("worryBoard.readWorryBoard", worryPostNum);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -81,11 +81,11 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public int updateHitCount(int worryPostnum) {
+	public int updateHitCount(int worryPostNum) {
 		int result=0;
 		
 		try {
-			result=dao.updateData("worryBoard.updateHitCount", worryPostnum);
+			result=dao.updateData("worryBoard.updateHitCount", worryPostNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,10 +129,10 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public int deleteWorryBoard(int worryPostnum) {
+	public int deleteWorryBoard(int worryPostNum) {
 		int result=0;
 		try {
-			result=dao.deleteData("worryBoard.deleteWorryBoard, worryPostnum");
+			result=dao.deleteData("worryBoard.deleteWorryBoard, worryPostNum");
 		} catch (Exception e) {
 		}
 		return result;

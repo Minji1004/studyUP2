@@ -9,13 +9,13 @@ public interface WorryBoardService {
 	
 	public List<WorryBoard> listWorryBoard(Map<String, Object> map);
 	
-	public WorryBoard readWorryBoard(int worryPostnum);
+	public WorryBoard readWorryBoard(int worryPostNum);
 	
 	public WorryBoard preReadWorryBoard(Map<String, Object> map);
 	public WorryBoard nextReadWorryBoard(Map<String, Object> map);
 	
-	public int updateHitCount(int worryPostnum);
+	public int updateHitCount(int worryPostNum);
 
 	public int updateWorryBoard(WorryBoard dto);
-	public int deleteWorryBoard(int worryPostnum);
+	public int deleteWorryBoard(int worryPostNum);
 }
