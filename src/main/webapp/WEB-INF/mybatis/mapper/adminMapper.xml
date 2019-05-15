@@ -144,7 +144,7 @@
 	</sql>	
 	
 	<select id="readBlack" parameterType="map" resultType="com.sp.admin.black.Black">
-		Select b1.blackNum, b1.blackUserNum, b1.blackStart, m1.userId, m1.nickName, m1.tel
+		Select b1.blackNum, b1.blackUserNum, b1.blackStart, b1.blackEnd, m1.userId, m1.nickName, m1.tel
 		from Blacklist b1
 		join memberInfo as m1
 		on b1.blackUserNum = m1.userNum
@@ -179,5 +179,9 @@
 		ORDER BY b1.blackUserNum DESC
 		LIMIT #{first}, #{row}
 	</select>
+	
+	<update id="blackCancle">
+		Update blacklist set blackEnd=current_timestamp() where blackNum=#{blackNum}
+	</update>
 
 </mapper>

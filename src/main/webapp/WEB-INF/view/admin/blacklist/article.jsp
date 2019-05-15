@@ -22,6 +22,6 @@
 </div>
 <div class="modal-footer">
 	<input type="hidden" name="reportedUserNum" value="${rdto.reportNum }">
-   <button type="button" class="btn btn-primary" id="blackApply" data-target ="#blackListApply">블랙리스트 추가</button>
-   <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	<button type="button" class="btn btn-primary" id="blackApply" data-target ="#blackListApply">블랙리스트 추가</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 </div>

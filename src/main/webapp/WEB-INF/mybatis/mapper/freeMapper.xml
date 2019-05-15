@@ -1,5 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="worry">
+<mapper namespace="freeboard">
+	<select id="maxFreeBoardNum" resultType="Integer">
+		select IFNULL(max(freePostnum), 0) from freeBoard
+	</select>
+	
+	<insert id="insertFreeBoard" parameterType="com.sp.community.freeBoard.FreeBoard">
+		INSERT INTO freeBoard(freePostnum, userId, subject, content, views, created, boardLike, replyNum, replyLike)
+		VALUES (#{freePostnum}, #{userId}, #{subject}, #{content}, #{views}, #{created}, #{boardLike}, #{replyNum}, #{replyLike})
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			(INSTR(subject, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userId'">
+			INSTR(userId, #{keyword})=1
+		</if>
+		<if test="condition=='created'">
+			DATE FORMAT(f.created, '%Y-%m-%d')=#{keyword}
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0)
+		FROM freeBoard f
+		JOIN memberInfo m ON f.userId=m.userId
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listFreeBoardTop" resultType="com.sp.community.freeBoard.FreeBoard">
+		SELECT freePostnum, f.userId, nickName, subject, views,
+			   DATE_FORMAT(f.created, '%Y-%m-%d') created
+		FROM freeBoard f
+		JOIN memberInfo m ON f.userId=m.userId
+		WHERE freenoticeWhether=1
+		ORDER BY freePostnum DESC
+	</select>
+	
+		<select id="listFreeBoard" parameterType="map" resultType="com.sp.community.freeBoard.FreeBoard">
+			SELECT freePostnum, f.userId, nickName, subject, f.created , views, f.created, groupNum, orderNo
+			FROM freeBoard f
+			JOIN memberInfo m ON f.userId=m.userId
+			<where>
+				<if test="keyword!=null and keyword!=''">
+					<include refid="where-list"/>
+				</if>
+			</where>
+				ORDER BY groupNum DESC, orderNo ASC
+				LIMIT #{start}, #{rows}
+		</select>
+
+		<select id="readFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
+			SELECT freePostnum, f.userId, nickName, subject, content, f.created, views, groupNum, orderNo, depth, parent
+			FROM freeBoard f
+			JOIN memberInfo m ON f.userId=m.userId
+			WHERE freePostnum=#{freePostnum}
+		</select>
+		
+		<select id="preReadFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
+			SELECT freePostnum, subject
+			FROM freeBoard f
+			JOIN memberInfo m ON f.userId=m.userId
+			<where>
+				<if test="keyword !=null and keyword !=''">
+					<include refid="where-list"/>
+				</if>
+			AND ((groupNum = #{groupNum} AND orderNo &lt; #{orderNo})
+			OR (groupNum &gt; #{groupNum} ))
+			</where>
+			ORDER BY groupNum ASC, orderNo DESC
+			LIMIT 1
+		</select>
+		
+		<select id="nextReadFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
+			SELECT freePostnum, subject
+			FROM freeBoard f
+			JOIN memberInfo m ON f.userId=m.userId
+		<where>
+			<if test="keyword !=null and keyword !=''">
+				<include refid="where-list"/>
+			</if>	
+			AND ((groupNum = #{groupNum} AND orderNo &gt; #{orderNo})
+			OR (groupNum &lt; #{groupNum} ))
+		</where>
+		ORDER BY groupNum DESC, orderNo ASC
+		LIMIT 1
+		</select>
+		
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE freeBoard SET views=views+1 WHERE freePostnum=#{freePostnum}
+	</update>		
+		
+		
 </mapper>

@@ -1,7 +1,7 @@
 package com.sp.community.freeBoard;
 
 public class FreeBoard {
-	private int freePostNum;
+	private int listNum, freePostNum;
 	private int userNum;
 	private String userId, Nickname;
 	private String subject;
@@ -127,5 +127,11 @@ public class FreeBoard {
 	}
 	public void setParent(int parent) {
 		this.parent = parent;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 }

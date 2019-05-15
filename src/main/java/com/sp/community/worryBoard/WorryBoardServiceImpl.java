@@ -1,34 +1,44 @@
 package com.sp.community.worryBoard;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.sp.common.FileManager;
 import com.sp.common.dao.CommonDAO;
 
 @Service("worryBoard.worryboardService")
 public class WorryBoardServiceImpl implements WorryBoardService{
 	@Autowired
 	private CommonDAO dao;
-	@Autowired
-	private FileManager fileManager;
 	
 	@Override
-	public int insertWorryBoard(WorryBoard dto, String pathname) {
+	public int insertWorryBoard(WorryBoard dto, String mode) {
 		int result=0;
 		
 		try {
-			int maxNum=dao.selectOne("worryBoard.worryPostnum");
-			dto.setWorryPostnum(maxNum+1);
+			int seq=dao.selectOne("worryBoard.seq");
+			dto.setWorryPostnum(seq);
 			
+			if(mode.equals("created")) {
+				dto.setGroupNum(seq);
+			}else if(mode.equals("reply")) {
+				//orderNo 변경
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("groupNum", dto.getGroupNum()+1);
+				map.put("orderno",  dto.getOrderNo()+1);
+				
+				dao.updateData("worryBoard.updateOrderNo", map);
+				
+				dto.setDepth(dto.getDepth()+1);
+				dto.setOrderNo(dto.getOrderNo()+1);
+			}
 			result=dao.insertData("worryBoard.insertBoard", dto);
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
 		
 		return result;
@@ -43,7 +53,6 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
 		return result;
 	}
 
@@ -54,21 +63,21 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 		try {
 			list=dao.selectList("worryBoard.listWorryBoard", map);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
 		return list;
 	}
 
 	@Override
-	public List<WorryBoard> listWorryBoardTop() {
-		List<WorryBoard> list=null;
+	public WorryBoard readWorryBoard(int worryPostnum) {
+		WorryBoard dto=null;
 		
 		try {
-			list=dao.selectList("worryBoard.listworryBoardTop");
+			dto=dao.selectOne("worryBoard.readworryBoard", worryPostnum);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.toString());
 		}
-		return list;
+		return dto;
 	}
 
 	@Override
@@ -82,129 +91,13 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 		}
 		return result;
 	}
-
+	
 	@Override
-	public WorryBoard readWorryBoard(int worryPostnum) {
+	public WorryBoard preReadWorryBoard(Map<String, Object> map) {
 		WorryBoard dto=null;
 		
 		try {
-			dto=dao.selectOne("worryBoard.readworryBoard", worryPostnum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public WorryBoard preReadworryBoard(Map<String, Object> map) {
-		WorryBoard dto=null;
-		
-		try {
-			dto=dao.selectOne("worryBoard.preReadworryBoard", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public WorryBoard nextReadworryBoard(Map<String, Object> map) {
-		WorryBoard dto=null;
-		
-		try {
-			dto=dao.selectOne("worryBoard.preReadworryBoard", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public int updateWorryBoard(WorryBoard dto, String pathname) {
-		int result=0;
-		
-		try {
-			result=dao.updateData("worryBoard.updateworryBoard", dto);
-			
-			if(! dto.getUpload().isEmpty()) {
-				for(MultipartFile mf:dto.getUpload()) {
-					if(mf.isEmpty())
-						continue;
-					
-					String saveFilename=fileManager.doFileUpload(mf, pathname);
-					if(saveFilename!=null) {
-						String originalFilename=mf.getOriginalFilename();
-						long fileSize=mf.getSize();
-						
-						dto.setOriginalFilename(originalFilename);
-						dto.setSaveFilename(saveFilename);
-						dto.setFileSize(fileSize);
-						
-						insertFile(dto);
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-
-	@Override
-	public int deleteWorryBoard(int worryPostnum, String pathname) {
-		int result=0;
-		try {
-			// 파일 지우기
-			List<WorryBoard> listFile=listFile(worryPostnum);
-			if(listFile!=null) {
-				Iterator<WorryBoard> it=listFile.iterator();
-				while(it.hasNext()) {
-					WorryBoard dto=it.next();
-					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
-				}
-			}
-			
-			//파일 테이블 내용 지우기
-			deleteFile1(worryPostnum);
-			
-			result=dao.deleteData("worryBoard.deleteWorryBoard", worryPostnum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	@Override
-	public int insertFile(WorryBoard dto) {
-		int result=0;
-		
-		try {
-			result=dao.insertData("worryBoard.insertFile", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	@Override
-	public List<WorryBoard> listFile(int worryPostnum) {
-		List<WorryBoard> listFile=null;
-		
-		try {
-			listFile=dao.selectList("worryBoard.listFile", worryPostnum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return listFile;
-	}
-
-	@Override
-	public WorryBoard readFile(int fileNum) {
-		WorryBoard dto=null;
-		
-		try {
-			dto=dao.selectOne("worryBoard.readFile", fileNum);
+			dto=dao.selectOne("worryBoard.preReadWorryBoard", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -212,25 +105,35 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	}
 
 	@Override
-	public int deleteFile1(int worryPostnum) {
-		int result=0;
+	public WorryBoard nextReadWorryBoard(Map<String, Object> map) {
+		WorryBoard dto=null;
 		
 		try {
-			result=dao.deleteData("worryBoard.deleteFile1", worryPostnum);
+			dto=dao.selectOne("worryBoard.preReadWorryBoard", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
-		return result;
+		return dto;
 	}
+
 	@Override
-	public int deleteFile2(int fileNum) {
+	public int updateWorryBoard(WorryBoard dto) {
 		int result=0;
 		
 		try {
-			result=dao.deleteData("worryBoard.deleteFile2", fileNum);
+			result=dao.updateData("worryBoard.updateWorryBoard", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteWorryBoard(int worryPostnum) {
+		int result=0;
+		try {
+			result=dao.deleteData("worryBoard.deleteWorryBoard, worryPostnum");
+		} catch (Exception e) {
 		}
 		return result;
 	}

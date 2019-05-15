@@ -90,7 +90,7 @@ function updateMyprofile(){
 }
 </script>
 
-<div id="myPageMain" class="box box-primary" style="width : 1000px; height: 430px; border-top :4px dashed #95004a66 ;">
+<div id="myPageMain" class="box box-primary" style="width : 1000px; height: 550px; border-top :4px dashed #95004a66 ;">
 	<div class="col-xs-5">
 		<div class="myPageMainPicFrame">
 			<c:if test="${not empty dto.picture}">

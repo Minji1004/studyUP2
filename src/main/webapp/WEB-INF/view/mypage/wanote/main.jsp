@@ -5,7 +5,9 @@
 <%
    String cp = request.getContextPath();
 %>
+<style type="">
 
+</style>
 <script type="text/javascript">
 var pageNo = 1;
 var keyword = "";
@@ -180,14 +182,14 @@ $(function(){
 		</table>
 		
 		<table style="width: 80%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+		  <tr align="center" bgcolor="#884794aa;" height="50" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 		      <th width="60" style="color: #787878;">번호</th>
 		      <th style="color: #787878;">제목</th>
 		      <th width="80" style="color: #787878;">작성일</th>
 		  </tr>
 		 
 		<c:forEach var="dto" items="${list }">
-		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+		  <tr align="center" bgcolor="#ffffff" height="50" style="border-bottom: 1px solid #cccccc;"> 
 		      <td>${dto.listNum }</td>
 		      <td align="left" style="padding-left: 10px;">
 		           <a href="javascript:articleWanoteBoard('${dto.waNum }')">${dto.subject }</a>
