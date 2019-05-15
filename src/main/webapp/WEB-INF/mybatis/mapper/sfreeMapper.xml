@@ -41,9 +41,12 @@
 
 	<select id="listBoard" parameterType="map"
 		resultType="com.sp.study.mystudy.free.Board">
-		SELECT sFreeNum, studyNum, userId, fSubject, fContent, saveFilename, originalFilename, hitCount,
-		DATE_FORMAT(created, '%Y-%m-%d') AS created
-		FROM sfree
+		SELECT sFreeNum, studyNum, s.userId, fSubject, fContent, saveFilename, originalFilename, hitCount,
+				nickname userName,
+		DATE_FORMAT(s.created, '%Y-%m-%d') AS created
+		FROM sfree s
+		LEFT OUTER JOIN memberinfo m
+			ON s.userId = m.userId
 		<where>
 			<if test="keyword != null and keyword !='' ">
 				<include refid="where-list" />
@@ -55,9 +58,12 @@
 
 	<select id="readBoard" parameterType="Integer"
 		resultType="com.sp.study.mystudy.free.Board">
-		SELECT sFreeNum, studyNum, userId, fSubject, fContent, saveFilename, originalFilename, hitCount,
-		DATE_FORMAT(created, '%Y-%m-%d') AS created
-		FROM sfree
+		SELECT sFreeNum, studyNum, fSubject, fContent, saveFilename, originalFilename, hitCount,
+			   DATE_FORMAT(s.created, '%Y-%m-%d') AS created,
+			    s.userId, nickname userName
+		FROM sfree s
+		LEFT OUTER JOIN memberinfo m
+			ON s.userId = m.userId
 		WHERE sFreeNum=#{sFreeNum}
 	</select>
 
@@ -102,6 +108,34 @@
 
 	<delete id="deleteBoard" parameterType="Integer">
 		DELETE FROM sfree WHERE sFreeNum=#{sFreeNum}
+	</delete>
+	
+	
+	<!-- 댓글 -->	
+	<insert id="insertReply" parameterType="com.sp.study.mystudy.free.Reply">
+	INSERT INTO sfreereply(sFreeNum, userId, sfrContent)
+	   VALUES (#{sFreeNum}, #{userId}, #{sfrContent})
+	</insert>	
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*), 0)
+		FROM sfreereply
+		WHERE sFreeNum = #{sFreeNum} 
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.sp.study.mystudy.free.Reply">
+		SELECT sfReplyNum, sFreeNum, sfrContent, s.userId,
+		DATE_FORMAT(s.created, '%Y-%m-%d') AS created, nickname userName
+		FROM sfreereply s
+		LEFT OUTER JOIN memberinfo m
+			ON s.userId = m.userId
+		
+		ORDER BY sfReplyNum DESC
+		LIMIT #{start}, #{rows}
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		 DELETE sfreereply WHERE sfReplyNum = #{sfReplyNum}
 	</delete>
 
 

@@ -336,10 +336,8 @@ public class BoardController {
 	}
 
 	// 댓글 리스트
-	@RequestMapping(value = "/study/free/listReply")
+	@RequestMapping(value = "/study/free/listReply") // /studyUp/study/free/listReply
 	public String listReply(
-			@RequestParam int studyNum, 
-			@RequestParam(defaultValue = "2") int left,
 			@RequestParam int sFreeNum, 
 			@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
 			Model model) throws Exception {
@@ -385,13 +383,14 @@ public class BoardController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 
-		return "study/free/listReply" +"?studyNum="+studyNum+"&left="+left;
+		return "study/free/listReply";
 	}
 
 	// 댓글 및 리플별 답글 추가
 	@RequestMapping(value = "/study/free/insertReply", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertReply(
+			@RequestParam int sFreeNum,
 			Reply dto, 
 			HttpSession session) throws Exception {
 
@@ -399,6 +398,7 @@ public class BoardController {
 
 		String state = "true";
 		dto.setUserId(info.getUserId());
+		dto.setsFreeNum(sFreeNum);
 		int result = service.insertReply(dto);
 		if (result == 0)
 			state = "false";
@@ -413,7 +413,7 @@ public class BoardController {
 	@RequestMapping(value = "/study/free/deleteReply", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> deleteReply(
-			@RequestParam int replyNum, 
+			@RequestParam int sfReplyNum, 
 			@RequestParam String mode, 
 			HttpSession session)
 			throws Exception {
@@ -423,7 +423,7 @@ public class BoardController {
 		String state = "true";
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mode", mode);
-		map.put("replyNum", replyNum);
+		map.put("sfReplyNum", sfReplyNum);
 		map.put("userId", info.getUserId());
 
 		// 좋아요/싫어요 는 ON DELETE CASCADE 로 자동 삭제

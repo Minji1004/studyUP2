@@ -7,7 +7,7 @@
 %>
 
 <div class="alert alert-info">
-	<i class="glyphicon glyphicon-info-sign"></i>게시글을 자유롭게 공유할 수 있는 게시판입니다.
+	<i class="glyphicon glyphicon-info-sign"></i> 자유롭게 게시글을 공유하는 공간입니다.
 </div>
 	<div>
 			<c:if test="${dataCount!=0}">
@@ -31,10 +31,16 @@
 			<c:forEach var="dto" items="${list}">
 				<tr>
 					<td class="text-center">${dto.listNum}</td>
-					<td><a href="javascript:articleBoard('${dto.num}', '${pageNo}');">${dto.subject}</a></td>
-					<td class="text-center">${dto.userName}</td>
+					<td>
+			            <c:forEach var="n" begin="1" end="${dto.depth}">
+			               &nbsp;
+			            </c:forEach>
+			            <c:if test="${dto.depth!=0}">└&nbsp;</c:if>					
+					    <a href="javascript:articleBoard('${dto.freePostNum}', '${pageNo}');">${dto.subject}</a>
+					</td>
+					<td class="text-center">${dto.nickName}</td>
 					<td class="text-center">${dto.created}</td>
-					<td class="text-center">${dto.hitCount}</td>
+					<td class="text-center">${dto.views}</td>
 				</tr>
 			</c:forEach>
 					</tbody>
@@ -55,7 +61,7 @@
 							<option value="all" 	 ${condition=="all"?"selected='selected'":""}>모두</option>
 							<option value="subject"  ${condition=="subject"?"selected='selected'":""}>제목</option>
 							<option value="content"  ${condition=="content"?"selected='selected'":""}>내용</option>
-							<option value="userName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
+							<option value="nickName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
 							<option value="created"  ${condition=="created"?"selected='selected'":""}>등록일</option>
 						</select>
 						<input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">

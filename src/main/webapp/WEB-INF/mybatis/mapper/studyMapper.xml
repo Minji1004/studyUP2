@@ -48,6 +48,12 @@
 		VALUES(#{studyNum}, #{userId}, #{goal}, #{hope})	
 	</insert>
 	
+	<!-- 스터디 가입신청 -->
+	<insert id="applyStudyMaster" parameterType="com.sp.study.ApplyStudy">
+		INSERT INTO applyStudy(studyNum, userId, goal, hope, approval) 
+		VALUES(#{studyNum}, #{userId}, #{goal}, #{hope}, #{approval})	
+	</insert>
+	
 	
 	<!-- 스터디 리스트 가져오기 -->
 	<select id="listStudy" parameterType="map" resultType="com.sp.study.Study">

@@ -30,28 +30,6 @@
         <div style="clear: both; padding: 5px 0 5px 0px;  min-height: 70px;">
             ${vo.sfrContent}
         </div>
-        <div style="clear: both; min-height: 30px;">
-            <div style="float: left;">
-                <button type="button" class="btn btn-primary btn-sm" onclick="replyAnswerLayout('${vo.sfReplyNum}');">답글<span id="answerCount${vo.replyNum}">(${vo.answerCount})</span> <span id="answerGlyphicon${vo.replyNum}" class="glyphicon glyphicon-triangle-bottom"></span></button>
-            </div>
-            <div style="float: right; text-align: rigth;">
-                <button type="button" class="btn btn-info btn-sm" onclick="sendReplyLike('${vo.sfReplyNum}', '1')"><span class="glyphicon glyphicon-hand-up"></span> 좋아요 <span id="likeCount${vo.replyNum}">${vo.likeCount}</span></button>
-                <button type="button" class="btn btn-warning btn-sm" onclick="sendReplyLike('${vo.sfReplyNum}', '0')"><span class="glyphicon glyphicon-hand-down"></span> 싫어요 <span id="disLikeCount${vo.replyNum}">${vo.disLikeCount}</span></button>
-            </div>                        
-        </div>
-
-        <!-- 답글 시작 -->
-        <div id="replyAnswerLayout${vo.sfReplyNum}" style="display: none;">
-            <div style="clear: both; margin-top:10px; padding: 5px; border-top: #d5d5d5 solid 1px;">
-                <textarea id="replyContent${vo.sfReplyNum}" class="form-control" rows="3" required="required" style="resize : none;"></textarea>
-            </div>
-            <div style="text-align: right; padding-top: 7px;">
-                <button type="button" class="btn btn-primary btn-sm" onclick="sendReplyAnswer('${vo.sFreeNum}', '${vo.sfReplyNum}')"> 답글등록 </button>
-            </div>
-
-            <!-- 답글 리스트 -->       
-            <div id="listReplyAnswer${vo.sfReplyNum}" style="padding-top: 5px;"></div>
-        </div> <!-- 답글 끝 -->
                         
     </div>  <!-- 리플 내용 리스트 끝 -->
 </c:forEach>
