@@ -12,7 +12,7 @@
 </div>
 <div class="smodal-body modal-body row">
  	<div class="col-xs-8 col-sm-5" align="center">
- 		<img class="img-circle img-dialog" src="<%=cp%>/uploads/member_profile/${mdto.picture}">
+ 		<img class="img-circle img-dialog" style="max-width:50%;" src="<%=cp%>/uploads/member_profile/${mdto.picture}">
  	</div>
  	<div class="col-xs-4 col-sm-7">
  		<div class="dialog-content-title">회원번호: ${mdto.userNum}</div>
