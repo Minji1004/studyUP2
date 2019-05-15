@@ -107,7 +107,6 @@ public class FreeBoardController {
 		String state="true";
 		
 		dto.setUserId(info.getUserId());
-		dto.setUserNum(info.getUserNum());
 		service.insertFreeBoard(dto, "created");
 		
 		Map<String, Object> model=new HashMap<>();
@@ -131,7 +130,7 @@ public class FreeBoardController {
 		
 		FreeBoard dto = service.readFreeBoard(freePostNum);
 		if(dto==null) {
-			return "customer/error";
+			return "community/error";
 		}
 		
         dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
@@ -152,6 +151,113 @@ public class FreeBoardController {
 		model.addAttribute("pageNo", pageNo);
 		
 		return "community/freeBoard/article";
+	}
+	
+	
+	@RequestMapping(value="/community/freeBoard/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int freePostNum,
+			@RequestParam String pageNo,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		FreeBoard dto = service.readFreeBoard(freePostNum);
+		if(dto==null) {
+			return "community/error";
+		}
+		
+		if(! info.getUserId().equals(dto.getUserId())) {
+			return "community/error";
+		}
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("dto", dto);		
+
+		return "community/freeBoard/created";
+	}
+
+	@RequestMapping(value="/community/freeBoard/update", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateSubmit(
+			FreeBoard dto,
+			HttpSession session) throws Exception {
+
+		String state="true";		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		dto.setUserId(info.getUserId());
+		service.updateFreeBoard(dto);
+
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+
+	@RequestMapping(value="/community/freeBoard/reply", method=RequestMethod.GET)
+	public String replyForm(
+			@RequestParam int freePostNum,
+			@RequestParam String pageNo,
+			HttpSession session,			
+			Model model) throws Exception {
+		
+/*		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info.getUserType().get(0)!=1) {
+			return "community/error";
+		}
+*/
+		
+		FreeBoard dto = service.readFreeBoard(freePostNum);
+		if(dto==null) {
+			return "community/error";
+		}
+		
+		String str = "["+dto.getSubject()+"] 에 대한 답변입니다.\n";
+		dto.setContent(str);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("mode", "reply");
+
+		return "community/freeBoard/created";
+	}
+
+	@RequestMapping(value="/community/freeBoard/reply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> replySubmit(
+			FreeBoard dto,
+			HttpSession session) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		String state="true";
+		
+		dto.setUserId(info.getUserId());
+		service.insertFreeBoard(dto, "reply");
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+	@RequestMapping(value="/community/freeBoard/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(
+			@RequestParam int freePostNum,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		String state="false";
+		FreeBoard dto = service.readFreeBoard(freePostNum);
+		if(dto!=null) {
+			if(info.getUserType().get(0)==1 || info.getUserId().equals(dto.getUserId())) {
+				service.deleteFreeBoard(freePostNum);
+				state="true";
+			}
+		}
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		return model;
 	}
 
 }

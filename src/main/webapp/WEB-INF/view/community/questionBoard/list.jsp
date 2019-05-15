@@ -10,7 +10,3 @@
   질문과 답변 게시판 리스트
 </div>
 
-	<div>
-<c:if test="${dataCount!=0}">
-</c:if>
-</div>

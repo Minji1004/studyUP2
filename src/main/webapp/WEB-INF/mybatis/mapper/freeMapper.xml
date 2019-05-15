@@ -7,9 +7,16 @@
 	</select>
 	
 	<insert id="insertFreeBoard" parameterType="com.sp.community.freeBoard.FreeBoard">
-		INSERT INTO freeBoard(freePostnum, userId, subject, content, views, created, boardLike, replyNum, replyLike)
-		VALUES (#{freePostnum}, #{userId}, #{subject}, #{content}, #{views}, #{created}, #{boardLike}, #{replyNum}, #{replyLike})
+		INSERT INTO freeBoard(freePostNum, userId, subject, content, views, groupNum,
+		                              depth, orderNo, parent)
+		        VALUES (#{freePostNum}, #{userId}, #{subject}, #{content},
+		                #{views}, #{groupNum}, #{depth}, #{orderNo}, #{parent}) 		
 	</insert>
+
+	<update id="updateOrderNo" parameterType="map">
+		UPDATE freeBoard SET orderNo=orderNo+1
+		       WHERE groupNum=#{groupNum} AND orderNo &gt; #{orderNo}
+	</update>	
 	
 	<sql id="where-list">
 		<if test="condition=='all'">
@@ -22,8 +29,8 @@
 		<if test="condition=='content'">
 			INSTR(content, #{keyword}) &gt; 0
 		</if>
-		<if test="condition=='userId'">
-			INSTR(userId, #{keyword})=1
+		<if test="condition=='nickName'">
+			INSTR(nickName, #{keyword})=1
 		</if>
 		<if test="condition=='created'">
 			DATE FORMAT(f.created, '%Y-%m-%d')=#{keyword}
@@ -41,68 +48,78 @@
 		</where>
 	</select>
 	
-	<select id="listFreeBoardTop" resultType="com.sp.community.freeBoard.FreeBoard">
-		SELECT freePostnum, f.userId, nickName, subject, views,
-			   DATE_FORMAT(f.created, '%Y-%m-%d') created
+	<select id="listFreeBoard" parameterType="map" resultType="com.sp.community.freeBoard.FreeBoard">
+		SELECT freePostNum, f.userId, nickName, subject, DATE_FORMAT(f.created, '%Y-%m-%d') created , views, f.created, depth, groupNum, orderNo
 		FROM freeBoard f
 		JOIN memberInfo m ON f.userId=m.userId
-		WHERE freenoticeWhether=1
-		ORDER BY freePostnum DESC
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+			ORDER BY groupNum DESC, orderNo ASC
+			LIMIT #{start}, #{rows}
+	</select>
+
+	<select id="readFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
+		SELECT freePostNum, f.userId, nickName, subject, content, f.created, views, groupNum, orderNo, depth, parent
+		FROM freeBoard f
+		JOIN memberInfo m ON f.userId=m.userId
+		WHERE freePostNum=#{freePostNum}
 	</select>
 	
-		<select id="listFreeBoard" parameterType="map" resultType="com.sp.community.freeBoard.FreeBoard">
-			SELECT freePostnum, f.userId, nickName, subject, f.created , views, f.created, groupNum, orderNo
-			FROM freeBoard f
-			JOIN memberInfo m ON f.userId=m.userId
-			<where>
-				<if test="keyword!=null and keyword!=''">
-					<include refid="where-list"/>
-				</if>
-			</where>
-				ORDER BY groupNum DESC, orderNo ASC
-				LIMIT #{start}, #{rows}
-		</select>
-
-		<select id="readFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
-			SELECT freePostnum, f.userId, nickName, subject, content, f.created, views, groupNum, orderNo, depth, parent
-			FROM freeBoard f
-			JOIN memberInfo m ON f.userId=m.userId
-			WHERE freePostnum=#{freePostnum}
-		</select>
-		
-		<select id="preReadFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
-			SELECT freePostnum, subject
-			FROM freeBoard f
-			JOIN memberInfo m ON f.userId=m.userId
-			<where>
-				<if test="keyword !=null and keyword !=''">
-					<include refid="where-list"/>
-				</if>
-			AND ((groupNum = #{groupNum} AND orderNo &lt; #{orderNo})
-			OR (groupNum &gt; #{groupNum} ))
-			</where>
-			ORDER BY groupNum ASC, orderNo DESC
-			LIMIT 1
-		</select>
-		
-		<select id="nextReadFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
-			SELECT freePostnum, subject
-			FROM freeBoard f
-			JOIN memberInfo m ON f.userId=m.userId
+	<select id="preReadFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
+		SELECT freePostNum, subject
+		FROM freeBoard f
+		JOIN memberInfo m ON f.userId=m.userId
 		<where>
 			<if test="keyword !=null and keyword !=''">
 				<include refid="where-list"/>
-			</if>	
-			AND ((groupNum = #{groupNum} AND orderNo &gt; #{orderNo})
-			OR (groupNum &lt; #{groupNum} ))
+			</if>
+		AND ((groupNum = #{groupNum} AND orderNo &lt; #{orderNo})
+		OR (groupNum &gt; #{groupNum} ))
 		</where>
-		ORDER BY groupNum DESC, orderNo ASC
+		ORDER BY groupNum ASC, orderNo DESC
 		LIMIT 1
-		</select>
+	</select>
+	
+	<select id="nextReadFreeBoard" parameterType="Integer" resultType="com.sp.community.freeBoard.FreeBoard">
+		SELECT freePostNum, subject
+		FROM freeBoard f
+		JOIN memberInfo m ON f.userId=m.userId
+	<where>
+		<if test="keyword !=null and keyword !=''">
+			<include refid="where-list"/>
+		</if>	
+		AND ((groupNum = #{groupNum} AND orderNo &gt; #{orderNo})
+		OR (groupNum &lt; #{groupNum} ))
+	</where>
+	ORDER BY groupNum DESC, orderNo ASC
+	LIMIT 1
+	</select>
 		
 	<update id="updateHitCount" parameterType="Integer">
-		UPDATE freeBoard SET views=views+1 WHERE freePostnum=#{freePostnum}
+		UPDATE freeBoard SET views=views+1 WHERE freePostNum=#{freePostNum}
 	</update>		
-		
-		
+
+	
+	<update id="updateFreeBoard" parameterType="com.sp.community.freeBoard.FreeBoard">
+		UPDATE freeBoard SET subject=#{subject}, content=#{content}
+		    WHERE freePostNum = #{freePostNum} AND userId = #{userId}
+	</update>
+
+    <select id="deleteListFreeBoard" resultType="com.sp.community.freeBoard.FreeBoard" parameterType="Integer">
+        SELECT freePostnum, depth, orderNo
+        FROM freeBoard
+        WHERE groupNum = (SELECT groupNum FROM freeBoard WHERE freePostNum=#{freePostNum})
+        AND orderNo >= (SELECT orderNo FROM freeBoard WHERE freePostNum=#{freePostNum})
+        ORDER BY orderNo ASC
+    </select>
+
+    <delete id="deleteFreeBoard" parameterType="Integer">
+        DELETE FROM freeBoard WHERE freePostNum = #{freePostNum}
+    </delete>
+
+
+
 </mapper>

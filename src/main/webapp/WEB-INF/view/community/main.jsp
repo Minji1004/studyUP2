@@ -86,16 +86,67 @@ function insertForm() {
 	var active=$("#boardTab").children(".active").children().attr("aria-controls");
 	var selector=$("#boardTab").children(".active").children().attr("href");
 	var url="<%=cp%>/community/"+active+"/created";
-alert(url);
 
 	var query="tmp="+new Date().getTime();
-	ajaxText(url, query, "get", selector)
+	ajaxText(url, query, "get", selector);
 }
 
 //글등록, 수정등록
 function sendOk(mode, page) {
 	var active=$("#boardTab").children(".active").children().attr("aria-controls");
-	var url="<%=cp%>/community/"+active+"/" + mode;	
+	
+    var f = document.boardForm;
+
+	var str = f.subject.value;
+    if(!str) {
+        alert("제목을 입력하세요. ");
+        f.subject.focus();
+        return;
+    }
+
+	str = f.content.value;
+    if(!str) {
+        alert("내용을 입력하세요. ");
+        f.content.focus();
+        return;
+    }
+    
+	
+	var url="<%=cp%>/community/"+active+"/" + mode;
+    var query = new FormData(f); // IE는 10이상에서만 가능
+
+	$.ajax({
+        type:"post"
+        ,url:url
+        ,processData: false  // file 전송시 필수
+        ,contentType: false  // file 전송시 필수
+        ,data: query
+        ,dataType:"json"
+        ,success:function(data) {
+            var state=data.state;
+            if(state=="false")
+                alert("게시물을 추가(수정)하지 못했습니다. !!!");
+
+        	if(page==undefined || page=="")
+        		page="1";
+        	
+        	if(mode=="created" || mode=="reply") {
+        		reloadBoard()
+        	} else {
+        		listPage(page);
+        	}
+        }
+        ,beforeSend : function(jqXHR) {
+            jqXHR.setRequestHeader("AJAX", true);
+        }
+        ,error : function(jqXHR) {
+        	if(jqXHR.status==403) {
+	    		location.href="<%=cp%>/member/login";
+	    		return;
+	    	}
+	    	console.log(jqXHR.responseText);
+        }
+	});
 }
 
 //글쓰기 취소, 수정 취소, 답변 취소
@@ -111,14 +162,94 @@ function articleBoard(num, page) {
 	var active=$("#boardTab").children(".active").children().attr("aria-controls");
 	var selector=$("#boardTab").children(".active").children().attr("href");
 	var url="<%=cp%>/community/"+active+"/article";
+	
+	var query;
+	if(active=="freeBoard")
+		query="freePostNum="+num;
+	else if(active=="questionBoard")
+		query="questionPostNum="+num;
+	else if(active=="worryBoard")
+		query="worryPostNum="+num;
+	
+	var search=$('form[name=customerSearchForm]').serialize();
+	query=query+"&pageNo="+page+"&"+search;
+	
+	ajaxText(url, query, "get", selector);
 
 }
+
+//글 답변폼
+function replyForm(num, page) {
+	var active=$("#boardTab").children(".active").children().attr("aria-controls");
+	var selector=$("#boardTab").children(".active").children().attr("href");
+	var url="<%=cp%>/community/"+active+"/reply";
+	
+	var query;
+	if(active=="freeBoard")
+		query="freePostNum="+num;
+	else if(active=="questionBoard")
+		query="questionPostNum="+num;
+	else if(active=="worryBoard")
+		query="worryPostNum="+num;
+	query=query+"&pageNo="+page
+	
+	ajaxText(url, query, "get", selector);
+}
+
 //글 수정폼
 function updateForm(num, page) {
 	var active=$("#boardTab").children(".active").children().attr("aria-controls");
 	var selector=$("#boardTab").children(".active").children().attr("href");
 	var url="<%=cp%>/community/"+active+"/update";
+	
+	var query;
+	if(active=="freeBoard")
+		query="freePostNum="+num;
+	else if(active=="questionBoard")
+		query="questionPostNum="+num;
+	else if(active=="worryBoard")
+		query="worryPostNum="+num;
+	query=query+"&pageNo="+page
+	
+	ajaxText(url, query, "get", selector);
+}
 
+//글 삭제
+function deleteBoard(num, page) {
+	var active=$("#boardTab").children(".active").children().attr("aria-controls");
+	var selector=$("#boardTab").children(".active").children().attr("href");
+	var url="<%=cp%>/community/"+active+"/delete";
+
+	var query;
+	if(active=="freeBoard")
+		query="freePostNum="+num;
+	else if(active=="questionBoard")
+		query="questionPostNum="+num;
+	else if(active=="worryBoard")
+		query="worryPostNum="+num;
+	
+	if(! confirm("위 게시물을 삭제 하시 겠습니까 ? "))
+		  return;
+	  
+	$.ajax({
+	        type:"post"
+	        ,url:url
+	        ,data: query
+	        ,dataType:"json"
+	        ,success:function(data) {
+	            listPage(page);
+	        }
+	        ,beforeSend : function(jqXHR) {
+	            jqXHR.setRequestHeader("AJAX", true);
+	        }
+	        ,error : function(jqXHR) {
+	        	if(jqXHR.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+		    	console.log(jqXHR.responseText);
+	        }
+	});
 }
 </script>
 

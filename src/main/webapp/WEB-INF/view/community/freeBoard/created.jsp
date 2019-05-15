@@ -63,12 +63,6 @@
                             </td>
                         </tr>
                         
-                        <tr>
-                            <td class="td1">첨부</td>
-                            <td colspan="3" class="td3">
-                                <input type="file" name="upload" class="form-control input-sm" style="height: 35px;">
-                            </td>
-                        </tr>
                     </tbody>
                     
                     <tfoot>
@@ -78,7 +72,7 @@
                                   <button type="button" class="btn btn-danger" onclick="sendCancel('${pageNo}');"> 취소 </button>
 				                                  
 					         <c:if test="${mode=='update'}">
-					         	 <input type="hidden" name="boardNum" value="${dto.freePostnum}">
+					         	 <input type="hidden" name="freePostNum" value="${dto.freePostNum}">
 					        	 <input type="hidden" name="pageNo" value="${pageNo}">
 					        </c:if>
 					        <c:if test="${mode=='reply'}">
@@ -86,7 +80,7 @@
 					        	<input type="hidden" name="groupNum" value="${dto.groupNum}">
 					        	<input type="hidden" name="orderNo" value="${dto.orderNo}">
 					        	<input type="hidden" name="depth" value="${dto.depth}">
-					        	<input type="hidden" name="parent" value="${dto.freePostnum}">
+					        	<input type="hidden" name="parent" value="${dto.freePostNum}">
 					        </c:if>
 	                       </td>
                         </tr>

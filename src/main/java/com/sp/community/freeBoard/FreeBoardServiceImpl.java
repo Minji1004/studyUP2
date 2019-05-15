@@ -28,7 +28,7 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 				// orderNo 변경
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("groupNum", dto.getGroupNum());
-				map.put("orerNo", dto.getOrderNo());
+				map.put("orderNo", dto.getOrderNo());
 				
 				dao.updateData("freeboard.updateOrderNo", map);
 				
@@ -36,7 +36,7 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 				dto.setOrderNo(dto.getOrderNo()+1);
 			}
 			
-			result=dao.insertData("freeboard.insertBoard", dto);
+			result=dao.insertData("freeboard.insertFreeBoard", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -128,11 +128,28 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	}
 
 	@Override
-	public int deleteFreeBoard(int freeBoardnum) {
+	public int deleteFreeBoard(int freeBoardNum) {
 		int result=0;
 		
 		try {
-			result=dao.deleteData("freeboard.deleteFreeBoard", freeBoardnum);
+			boolean isStart=true;
+            int depth=0;
+            List<FreeBoard> list=dao.selectList("freeboard.deleteListFreeBoard", freeBoardNum);
+            for(FreeBoard dto : list) {
+                if(isStart) {
+                    depth = dto.getDepth();
+                    isStart=false;
+                    dao.deleteData("freeboard.deleteFreeBoard", dto.getFreePostNum());
+                    continue;
+                }
+				
+                if(depth < dto.getDepth()) {
+                    dao.deleteData("freeboard.deleteFreeBoard", dto.getFreePostNum());
+                } else {
+                    break;
+                }
+            }
+            
 		} catch (Exception e) {
 		}
 		return result;

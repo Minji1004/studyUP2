@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class QuestionBoard {
-	private int questionPostnum;
+	private int questionPostNum;
 	private int userNum;
 	private String userId;
 	private String subject;
@@ -54,12 +54,12 @@ public class QuestionBoard {
 		this.gap = gap;
 	}
 
-	public int getQuestionPostnum() {
-		return questionPostnum;
+	public int getQuestionPostNum() {
+		return questionPostNum;
 	}
 
-	public void setQuestionPostnum(int questionPostnum) {
-		this.questionPostnum = questionPostnum;
+	public void setQuestionPostNum(int questionPostNum) {
+		this.questionPostNum = questionPostNum;
 	}
 
 	public int getUserNum() {

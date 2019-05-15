@@ -6,7 +6,7 @@
 	String cp=request.getContextPath();
 %>
    <div class="alert alert-info">
-        <i class="glyphicon glyphicon-info-sign"></i> 질문과 답변을 하는 게시판입니다.
+        <i class="glyphicon glyphicon-info-sign"></i> 질문과 답변을 할 수 있는 공간입니다.
     </div>
     
     <div class="table-responsive" style="clear: both;">
