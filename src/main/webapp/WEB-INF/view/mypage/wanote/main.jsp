@@ -65,7 +65,6 @@ function sendWanote(mode){
 		});	
 	
 }
-
 //오답노트 올리기 폼
 function insertWanote(){
 	var url = "<%=cp%>/mypage/wanote/created";

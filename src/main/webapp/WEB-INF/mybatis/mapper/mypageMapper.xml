@@ -40,11 +40,14 @@
 <select id= "dataCount" parameterType="map" resultType="Integer">
 	SELECT IFNULL(COUNT(*), 0)
 	     FROM wanote
+	     
 	     <where>
+	     	userId = #{userId}
 	     	<if test="keyword != null and keyword !='' ">
 	     	    <include refid="where-list"/>
 	     	</if>
 	     </where>
+	     
 </select>
 
 <select id="listWanote" parameterType="map" resultType="com.sp.mypage.Wanote">

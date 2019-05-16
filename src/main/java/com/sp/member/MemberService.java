@@ -3,6 +3,8 @@ package com.sp.member;
 import java.util.List;
 import java.util.Map;
 
+import com.sp.admin.black.Black;
+
 public interface MemberService {
 	public List<Member> loginMember(String userId);
 	public int confirmUserId(String userId);
@@ -20,5 +22,6 @@ public interface MemberService {
 	
 	public int dataCount(Map<String, Object> map);
 	public List<Member> listMember(Map<String, Object> map);
+	public List<Black> readBlack(String userId);
 	
 }

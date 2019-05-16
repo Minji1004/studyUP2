@@ -54,4 +54,14 @@
 		VALUES (#{userNum}, #{userId}, #{nickname})
 </insert>
 
+<select id="selectBlackList" parameterType="Integer" resultType="com.sp.admin.black.Black">
+SELECT blackUserNum blackUserNum, blackEnd, m.userId 
+FROM blacklist b JOIN memberInfo m ON b.blackUserNum = m.userNum 
+WHERE b.blackUserNum = #{userNum};
+</select>
+
+<select id="selectUserNumWithUserId" parameterType="String" resultType="Integer">
+SELECT userNum FROM memberInfo WHERE userId = #{userId};
+</select>
+
 </mapper>

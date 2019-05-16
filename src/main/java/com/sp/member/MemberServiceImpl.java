@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.admin.black.Black;
 import com.sp.common.dao.CommonDAO;
 
 @Service("member.memberService")
@@ -115,6 +116,22 @@ public class MemberServiceImpl implements MemberService{
 		return null;
 	}
 
+	@Override
+	public List<Black> readBlack(String userId) {
+		List<Black> list = null;
+		
+		try {
+			
+			int userNum = dao.selectOne("member.selectUserNumWithUserId", userId);
+			list = dao.selectList("member.selectBlackList", userNum);
+			
+		} catch (Exception e) {
+		 e.printStackTrace();
+		}
+		return list;
+	}
+
+	
 
 
 }

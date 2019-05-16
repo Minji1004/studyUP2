@@ -114,6 +114,7 @@ public class MyPageController {
 		int rows = 5;
 		int total_page = 0;
 		int dataCount = 0;
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
 			keyword = URLDecoder.decode(keyword, "utf-8");
@@ -121,6 +122,7 @@ public class MyPageController {
 		Map<String, Object> map = new HashMap<String, Object>();
 	    map.put("condition", condition);
 	    map.put("keyword", keyword);
+	    map.put("userId", info.getUserId());
 		
 	    dataCount = mypageService.dataCount(map);
 	    if(dataCount != 0)
@@ -133,7 +135,7 @@ public class MyPageController {
 		map.put("start", start);
 		map.put("rows", rows);
 		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
 		map.put("userId", info.getUserId());
 	    
 		List<Wanote> list = mypageService.listWanote(map);
