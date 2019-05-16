@@ -189,6 +189,18 @@ public class MemberController {
 			service.insertMember(dto);	
 		}
 		
+		//블랙리스트 가져와서 막아주기
+ 		List<Black> blackList = service.readBlack(userId);
+ 		
+ 		if(blackList != null) {
+ 			for(Black blackDto : blackList) {
+ 				if(blackDto.getBlackEnd() == null) {
+ 					model.addAttribute("message", "당신은 블랙 리스트 입니다.");
+ 					return "member/login";
+ 				}
+ 			}
+ 		}
+		
 		List<Member>mList =service.loginMember(userId);
 		List<Integer> list = new ArrayList<>();
 		
