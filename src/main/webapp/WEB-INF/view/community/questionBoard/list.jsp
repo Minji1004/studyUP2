@@ -30,16 +30,16 @@
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td class="text-center">${dto.listNum}</td>
-					<td>
-						<c:forEach var="n" begin="1" end="${dto.depth}">
-							&nbsp;
-						</c:forEach>
-						<c:if test="${dto.depth!=0}">┕&nbsp;</c:if>
-						<a href="javascript:articleBoard('${dto.questionPostNum}', '${pageNo}');">${dto.subject}</a>
-					</td>
-					<td class="text-center">${dto.nickName}</td>
-					<td class="text-center">${dto.created}</td>
-					<td class="text-center">${dto.views}</td>
+						<td>
+							<c:forEach var="n" begin="1" end="${dto.depth}">
+								&nbsp;
+							</c:forEach>
+							<c:if test="${dto.depth!=0}">┕&nbsp;</c:if>
+							<a href="javascript:articleBoard('${dto.questionPostNum}', '${pageNo}');">${dto.subject}</a>
+						</td>
+						<td class="text-center">${dto.nickName}</td>
+						<td class="text-center">${dto.created}</td>
+						<td class="text-center">${dto.views}</td>
 					</tr>
 				</c:forEach>
 						</tbody>
@@ -55,15 +55,15 @@
 						<button type="button" class="btn btn-default btn-sm" onclick="reloadBoard();">새로고침</button>
 					</div>
 					<div style="float: left; width: 60%; text-align: center;">
-						<form name="searchForm" action="" method="post" class="form-inline">
-							<select class="form-control input-sm" name="condition">
+						<form class="form-inline">
+							<select class="form-control input-sm" name="condition"  id="condition">
 								<option value="all" 	 ${condition=="all"?"selected='selected'":""}>모두</option>
 								<option value="subject"  ${condition=="subject"?"selected='selected'":""}>제목</option>
 								<option value="content"  ${condition=="content"?"selected='selected'":""}>내용</option>
 								<option value="nickName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
 								<option value="created"  ${condition=="created"?"selected='selected'":""}>등록일</option>
 							</select>
-							<input type="text" class="form-control input-sm input-search" name="keyword" value="${keyword}">
+							<input type="text" class="form-control input-sm input-search" name="keyword" id="keyword" value="${keyword}">
 							<button type="button" class="btn btn-info btn-sm btn-search" onclick="searchList();"><span class="glyphicon glyphicon-search"></span>검색</button>
 						</form>
 					</div>

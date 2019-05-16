@@ -24,7 +24,7 @@
                  <tbody>
                      <tr>
                          <td style="text-align: left;">
-                             이름 : ${dto.nickName}
+                             이름 : 익명
                          </td>
                          <td style="text-align: right;">
                           ${dto.created}<i></i>조회 ${dto.views}
