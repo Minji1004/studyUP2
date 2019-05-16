@@ -87,13 +87,13 @@ $(function(){
 		minutes = parseInt(minutes);
 		seconds = parseInt(seconds);
 
-		alert(hours + ":" + minutes + ":" + seconds);
+		
 		
 		var second = (hours * 3600)+(minutes * 60) + seconds;
 		
 		var url = "<%=cp%>/timer/etime";
-		var query = "second=" + second + "&timerCheck=${sessionScope.member.timerCheck}";
-		alert(query);
+		var query = "second=" + second;
+		
 		$.ajax({
 			type : "POST"
 			,url : url
@@ -102,7 +102,6 @@ $(function(){
 			,success : function(data){
 				if(data.state == "true"){
 					$("#DateCountdownLoc").empty();
-					alert("시간이 저장되었습니다.");
 				}else{
 					
 				}

@@ -183,9 +183,9 @@ $(function(){
 		
 		<table style="width: 80%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 		  <tr align="center" bgcolor="#884794aa;" height="50" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <th width="60" style="color: #787878;">번호</th>
-		      <th style="color: #787878;">제목</th>
-		      <th width="80" style="color: #787878;">작성일</th>
+		      <th width="60" style="color: #fff;">번호</th>
+		      <th style="color: #fff;">제목</th>
+		      <th width="80" style="color: #fff;">작성일</th>
 		  </tr>
 		 
 		<c:forEach var="dto" items="${list }">
@@ -222,7 +222,7 @@ $(function(){
 		<table style="width: 80%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/wanote/main'">새로고침</button>
+		          <button style="background: #884794aa;" type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/wanote/main'">새로고침</button>
 		      </td>
 		      <td align="center">
 		      
@@ -234,11 +234,11 @@ $(function(){
 		            </select>
 		            <input type="text" name="keyword" id="keyword" value = "${keyword }"class="boxTF">
 		            <!-- input type text가 하나밖에없기 때문에 바로 서버로 간다 그래서 form 태그를 삭제한다. -->
-		            <button type="button" class="btn" onclick="searchWanoteList()">검색</button>
+		            <button style="background: #884794aa;" type="button" class="btn" onclick="searchWanoteList()">검색</button>
 		       
 		      </td>
 		      <td align="right" width="100">
-		          <button type="button" class="btn" onclick="insertWanote();">글올리기</button>
+		          <button style="background: #884794aa;"  type="button" class="btn" onclick="insertWanote();">글올리기</button>
 		      </td>
 		   </tr>
 		</table>

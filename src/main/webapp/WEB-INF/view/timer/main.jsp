@@ -56,12 +56,18 @@ $(function(){
 				console.log(e);
 			}
 		});
+		var studyCategory  = $("select[name=studyKindCategory]").val();
+		var f = document.timerContent;
+		var content = f.content.value;
+		var subject = f.subject.value;
 		
 		var timerurl = "<%=cp%>/timer/start";
+		
+		var query = "second=" + second + "&studyCategory=" + studyCategory + "&subject=" + subject + "&content=" + content;  
 		$.ajax({
 			type : "POST"
 			,url : timerurl
-			,data : {"second": second}
+			,data : query
 			,dataType : "JSON"
 			,success : function(data){					
 				$("#DateCountdown").attr("data-timer" , second);
@@ -97,33 +103,33 @@ $(function(){
 				$("canvas").css("width", "400px");
 				
 				$(".textDiv_Hours").css("top", "158px");
-				$(".textDiv_Hours").css("right", "-135px");
+				$(".textDiv_Hours").css("right", "-156px");
 				$(".textDiv_Hours").css("width", "420px");
 				$(".textDiv_Hours").css("position", "fixed");
 				$(".textDiv_Hours").css("left", "");
 				
 				$(".textDiv_Minutes").css("top", "158px");
-				$(".textDiv_Minutes").css("right", "-237px");
+				$(".textDiv_Minutes").css("right", "-245px");
 				$(".textDiv_Minutes").css("width", "420px");
 				$(".textDiv_Minutes").css("position", "fixed");
 				$(".textDiv_Minutes").css("left", "");
 				
 				$(".textDiv_Seconds").css("top", "158px");
-				$(".textDiv_Seconds").css("right", "-320px");
+				$(".textDiv_Seconds").css("right", "-346px");
 				$(".textDiv_Seconds").css("width", "420px");
 				$(".textDiv_Seconds").css("position", "fixed");
 				$(".textDiv_Seconds").css("left", "");
 				
 				$(".textDiv_Hours").children("h4").css("font-size", "15px");
-				$(".textDiv_Hours").children("span").css("font-size", "30px");
+				$(".textDiv_Hours").children("span").css("font-size", "25px");
 				$(".textDiv_Hours").children("h4").css("color", "#49C8F7");
 				$(".textDiv_Hours").children("span").css("color", "#49C8F7");
 				$(".textDiv_Minutes").children("h4").css("font-size", "15px");
-				$(".textDiv_Minutes").children("span").css("font-size", "30px");
+				$(".textDiv_Minutes").children("span").css("font-size", "25px");
 				$(".textDiv_Minutes").children("h4").css("color", "#49C8F7");
 				$(".textDiv_Minutes").children("span").css("color", "#49C8F7");	
 				$(".textDiv_Seconds").children("h4").css("font-size", "15px");
-				$(".textDiv_Seconds").children("span").css("font-size", "30px");
+				$(".textDiv_Seconds").children("span").css("font-size", "25px");
 				$(".textDiv_Seconds").children("h4").css("color", "#49C8F7");
 				$(".textDiv_Seconds").children("span").css("color", "#49C8F7");
 				

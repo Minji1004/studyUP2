@@ -1,12 +1,14 @@
 package com.sp.timer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sp.common.dao.CommonDAO;
+import com.sp.study.Study;
 
 @Service("timer.timerServcie")
 public class TimerServiceImpl implements TimerServcie{
@@ -71,5 +73,20 @@ public class TimerServiceImpl implements TimerServcie{
 		}
 		return dto;
 	}
+
+	@Override
+	public List<Study> readCategory(String userId) {
+		List<Study> list = null;
+		
+		try {
+			list = dao.selectList("timer.readCategory" , userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	
 
 }

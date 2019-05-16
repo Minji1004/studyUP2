@@ -4,7 +4,7 @@
 <mapper namespace="timer">
 
 <insert id="insertTimer" parameterType="map">
-	INSERT INTO timer(userId, goalNum) VALUES (#{userId}, #{goalNum})
+	INSERT INTO timer (userId, goalNum, subject, content, studyCategory) VALUES (#{userId}, #{goalNum}, #{subject}, #{content}, #{studyCategory})
 </insert>
 
 <select id="selectRecentTimer" parameterType="String" resultType="com.sp.timer.Timer">
@@ -22,4 +22,10 @@
 <select id="readTimer2" parameterType="Integer" resultType="com.sp.timer.Timer">
 	SELECT * FROM timer WHERE timerNum = #{timerNum}
 </select>
+
+<select id="readCategory" parameterType="String" resultType="com.sp.study.Study">
+	SELECT userId, studyName FROM study WHERE userId = #{userId};
+</select>
+
+
 </mapper>  
