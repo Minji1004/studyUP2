@@ -32,10 +32,16 @@
     <c:forEach var="dto" items="${list}">
                     <tr>
                         <td class="text-center">${dto.listNum}</td>
-                        <td><a href="javascript:articleBoard('${dto.num}', '${pageNo}');">${dto.subject}</a></td>
-                        <td class="text-center">${dto.userName}</td>
+                        <td>
+                        	<c:forEach var="n" begin="1" end="${dto.depth}">
+                        	&nbsp;
+                        	</c:forEach>
+                        	<c:if test="${dto.depth!=0}">┕&nbsp;</c:if>          	                  
+                       		<a href="javascript:articleBoard('${dto.worryPostNum}', '${pageNo}');">${dto.subject}</a>
+                        </td>
+                        <td class="text-center">${dto.nickName}</td>
                         <td class="text-center">${dto.created}</td>
-                        <td class="text-center">${dto.hitCount}</td>
+                        <td class="text-center">${dto.views}</td>
                     </tr>
      </c:forEach>                    
                 </tbody>

@@ -19,23 +19,23 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 		int result=0;
 		
 		try {
-			int seq=dao.selectOne("worryBoard.seq");
-			dto.setWorryPostNum(seq);
+			int seq=dao.selectOne("worryBoard.maxWorryBoardNum");
+			dto.setWorryPostNum(seq+1);
 			
 			if(mode.equals("created")) {
-				dto.setGroupNum(seq);
+				dto.setGroupNum(seq+1);
 			}else if(mode.equals("reply")) {
 				//orderNo 변경
 				Map<String, Object> map=new HashMap<String, Object>();
-				map.put("groupNum", dto.getGroupNum()+1);
-				map.put("orderno",  dto.getOrderNo()+1);
+				map.put("groupNum", dto.getGroupNum());
+				map.put("orderno",  dto.getOrderNo());
 				
 				dao.updateData("worryBoard.updateOrderNo", map);
 				
 				dto.setDepth(dto.getDepth()+1);
 				dto.setOrderNo(dto.getOrderNo()+1);
 			}
-			result=dao.insertData("worryBoard.insertBoard", dto);
+			result=dao.insertData("worryBoard.insertWorryBoard", dto);
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -132,7 +132,22 @@ public class WorryBoardServiceImpl implements WorryBoardService{
 	public int deleteWorryBoard(int worryPostNum) {
 		int result=0;
 		try {
-			result=dao.deleteData("worryBoard.deleteWorryBoard, worryPostNum");
+			boolean isStart=true;
+			int depth=0;
+			List<WorryBoard> list=dao.selectList("worryBoard.deleteListWorryBoard", worryPostNum);
+			for(WorryBoard dto:list) {
+				if(isStart) {
+					depth=dto.getDepth();
+					isStart=false;
+					dao.deleteData("worryBoard.deleteWorryBoard", dto.getWorryPostNum());
+					continue;
+				}
+				if(depth<dto.getDepth()) {
+					dao.deleteData("worryBoard.deleteWorryBoard", dto.getWorryPostNum());
+				} else {
+					break;
+				}
+			}		
 		} catch (Exception e) {
 		}
 		return result;

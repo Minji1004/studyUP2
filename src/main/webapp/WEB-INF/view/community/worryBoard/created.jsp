@@ -62,14 +62,7 @@
                             <td colspan="4" class="td4">
                             	<textarea name="content" class="form-control" rows="15">${dto.content}</textarea>
                             </td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="td1">첨부</td>
-                            <td colspan="3" class="td3">
-                                <input type="file" name="upload" class="form-control input-sm" style="height: 35px;">
-                            </td>
-                        </tr>
+                        </tr>                        
                     </tbody>
                     
                     <tfoot>
@@ -79,8 +72,15 @@
                                   <button type="button" class="btn btn-danger" onclick="sendCancel('${pageNo}');"> 취소 </button>
                                   
                                   <c:if test="${mode=='update'}">
-                                      <input type="hidden" name="num" value="${dto.num}">
-                                      <input type="hidden" name="page" value="${page}">
+                                      <input type="hidden" name="num" value="${dto.worryPostNum}">
+                                      <input type="hidden" name="page" value="${pageNo}">
+                                  </c:if>
+                                  <c:if test="${mode=='reply'}">
+                                  	<input type="hidden" name="pageNo" value="${pageNo}">
+                                  	<input type="hidden" name="groupNum" value="${dto.groupNum}">
+                                  	<input type="hidden" name="orderNo" value="${dto.orderNo}">
+                                  	<input type="hidden" name="depth" value="${dto.depth}">
+                                  	<input type="hidden" name="parent" value="${dto.worryPostNum}">
                                   </c:if>
                             </td>
                         </tr>
