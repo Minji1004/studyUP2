@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sp.admin.black.Black;
 import com.sp.common.FileManager;
 
 @Controller("member.memberController")
@@ -43,10 +44,18 @@ public class MemberController {
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return "member/login";
 		}
- 		/*if() {
- 			
+ 		//블랙리스트 가져와서 막아주기
+ 		List<Black> blackList = service.readBlack(userId);
+ 		
+ 		if(blackList != null) {
+ 			for(Black blackDto : blackList) {
+ 				if(blackDto.getBlackEnd() == null) {
+ 					model.addAttribute("message", "당신은 블랙 리스트 입니다.");
+ 					return "member/login";
+ 				}
+ 			}
  		}
-		*/
+		
 		//isAdmin "0" 일 때: 일반 사용자 , 1일 때 : 관리자
 		//getBlicenseKindNum == 1 일 때  : 스터디룸 사장님, getBlicenseKindNum == 2 일 때 : 강사
 		//sessionInfo userType 에서 0:사용자, 1:관리자, 2:스터디룸 사장님, 3:강사
