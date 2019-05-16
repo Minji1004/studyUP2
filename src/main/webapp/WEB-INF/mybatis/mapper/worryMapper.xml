@@ -8,10 +8,10 @@
 	</select>
 	
 	<insert id="insertWorryBoard" parameterType="com.sp.community.worryBoard.WorryBoard">
-		INSERT INTO worryBoard(worryPostNum, userId, subject, content, views, created, groupNum,
+		INSERT INTO worryBoard(worryPostNum, userId, subject, content, views, groupNum,
 		                              depth, orderNo, parent)
 		VALUES (#{worryPostNum}, #{userId}, #{subject}, #{content}, 
-				#{views}, #{created}, #{groupNum}, #{depth}, #{orderNo}, #{parent})
+				#{views}, #{groupNum}, #{depth}, #{orderNo}, #{parent})
 	</insert>
 	
 	<update id="updateOrderNo" parameterType="map">

@@ -21,7 +21,7 @@
                          </th>
                      </tr>
                 <thead>
-                 <tbody>
+                <tbody>
                      <tr>
                          <td style="text-align: left;">
                              이름 : 익명

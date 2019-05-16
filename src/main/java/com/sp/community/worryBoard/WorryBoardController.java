@@ -67,7 +67,7 @@ public class WorryBoardController {
 		Iterator<WorryBoard> it=list.iterator();
 		while(it.hasNext()) {
 			WorryBoard data=it.next();
-			listNum=dataCount-(start+n-1);
+			listNum=dataCount-(start+n);
 			data.setListNum(listNum);
 			n++;
 		}

@@ -69,7 +69,7 @@ public class QuestionBoardController {
 		Iterator<QuestionBoard> it=list.iterator();
 		while(it.hasNext()) {
 			QuestionBoard data=it.next();
-			listNum=dataCount-(start+n-1);
+			listNum=dataCount-(start+n);
 			data.setListNum(listNum);
 			n++;
 		}
