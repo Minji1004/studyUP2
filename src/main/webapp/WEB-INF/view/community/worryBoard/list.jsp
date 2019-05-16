@@ -42,6 +42,7 @@
 	                        <td class="text-center">익명</td>
 	                        <td class="text-center">${dto.created}</td>
 	                        <td class="text-center">${dto.views}</td>
+	                        
                     </tr>
      		</c:forEach>                    
                 	</tbody>
