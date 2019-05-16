@@ -41,6 +41,13 @@
 .radioUser{
 	font: 10px;
 }
+.banner {
+    background-image: url('<%=cp%>/resource/images/banner.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 1000px;
+}
 </style>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 
@@ -76,7 +83,7 @@ function sendLogin() {
 
 </script>
 
-<div class="body-container">
+<div class="body-container banner">
     <div style="margin: 0px auto; padding-top:90px; width:360px;">
     	<div style="text-align: center;">
         	<span style="font-weight: bold; font-size:27px; color: #424951;">회원 로그인</span>

@@ -43,7 +43,10 @@ public class MemberController {
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return "member/login";
 		}
-		
+ 		/*if() {
+ 			
+ 		}
+		*/
 		//isAdmin "0" 일 때: 일반 사용자 , 1일 때 : 관리자
 		//getBlicenseKindNum == 1 일 때  : 스터디룸 사장님, getBlicenseKindNum == 2 일 때 : 강사
 		//sessionInfo userType 에서 0:사용자, 1:관리자, 2:스터디룸 사장님, 3:강사

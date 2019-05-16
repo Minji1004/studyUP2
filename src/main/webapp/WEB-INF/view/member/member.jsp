@@ -35,7 +35,13 @@
 	padding: 1px; 
 	height: 18px; 
 }
-
+.banner {
+    background-image: url('<%=cp%>/resource/images/banner.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 1000px;
+}
 
 </style>
 
@@ -139,7 +145,7 @@ $(function(){
 	
 });
 </script>
-<body class="hold-transition register-page">
+<body class="hold-transition register-page banner" style="background-image: url('<%=cp%>/resource/images/banner.jpg')">
 <div class="register-box">
   <div class="register-logo">
     <a><b>회원 가입</b></a>

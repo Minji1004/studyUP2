@@ -39,19 +39,6 @@
         <li class="studyMainLi ${active=='1'?'on':''}"><a href="javascript:location.href='<%=cp %>/mypage/main'"><i class="fa fa-link"></i> <span>마이페이지</span></a></li>
         <li class="studyMainLi ${active=='2'?'on':''}"><a href="javascript:location.href='<%=cp %>/mypage/wanote/main'"><i class="fa fa-link"></i> <span>오답노트</span></a></li>
 		<li class="studyMainLi ${active=='3'?'on':''}"><a href="javascript:location.href='<%=cp %>/mypage/schedule/main'"><i class="fa fa-link"></i> <span>일정</span></a></li>
-		<li class="studyMainLi ${active=='4'?'on':''}"><a href="javascript:location.href='<%=cp %>/mypage/basket/main'"><i class="fa fa-link"></i> <span>장바구니</span></a></li>
-
-       <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>예약확인</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="studyMainLi ${active=='5'?'on':''}"><a href="javascript:location.href='<%=cp %>/mypage/study/main'">  <span>STUDY</span> </a></li>
-            <li class="studyMainLi ${active=='6'?'on':''}"><a href="javascript:location.href='<%=cp %>/mypage/studyroom/main'">  <span>STUDYROOM</span> </a></li>
-          </ul>
-  		</li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

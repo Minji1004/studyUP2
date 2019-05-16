@@ -66,7 +66,8 @@
     top: 290px;
     right: 18px;
 }
-
+.btn-db{
+}
 .content-wrapper {
   /*
   min-height: 100%;
